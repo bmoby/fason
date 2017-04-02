@@ -127,33 +127,33 @@ $(document).ready(function(){
   $('.connection').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.login-append').removeClass('hidden');
-    $('.photosContainer').addClass('hidden');
+    $('.allindex').addClass('hidden');
   });
 
 
   $('.apropos').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.apropos-append').removeClass('hidden');
-    $('.photosContainer').addClass('hidden');
+    $('.allindex').addClass('hidden');
   });
 
 
   $('.register').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.register-append').removeClass('hidden');
-    $('.photosContainer').addClass('hidden');
+    $('.allindex').addClass('hidden');
   });
 
   $('.home-xs-search-redirect-btn').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.xs-search-append').removeClass('hidden');
-    $('.photosContainer').addClass('hidden');
+    $('.allindex').addClass('hidden');
   });
 
   $('.close-icon').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.errorsBlock').addClass('hiddenclass');
-    $('.photosContainer').removeClass('hidden');
+    $('.allindex').removeClass('hidden');
   });
 
   $('.select-avatar').on('click', function(){
