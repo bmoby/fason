@@ -1,3 +1,4 @@
 {
-  "name": "Fason"
+  "name": "Fason",
+  "MONGODB_URI": "mongodb://heroku_c6gk9lsk:q11bs0ufch1ni7idbvq9lsf82j@ds145220.mlab.com:45220/heroku_c6gk9lsk"
 }
