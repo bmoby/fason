@@ -93,6 +93,7 @@ $(document).ready(function(){
       speed: 1800,
       preloadImages: "visible",
       useCSS: true,
-      pause: 10000
+      pause: 10000,
+      touchEnabled: false
     });
 })
