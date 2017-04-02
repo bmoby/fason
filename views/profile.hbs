@@ -1,0 +1,85 @@
+<script type="text/javascript" src="../js/updateprofile.js"></script>
+<link rel="stylesheet" href="../css/restylenavbar.css">
+<link rel="stylesheet" href="../css/header-padding.css">
+{{#if user}}
+  {{> userheader}}
+{{else}}
+  {{> header}}
+{{/if}}
+
+
+<div class="container" id="login-container">
+    <h2 class="login-register-title">Modifier mon profil</h2>
+    <div class="row errorsBlock hiddenclass">
+    </div>
+    <div class="row login-container-row text-center">
+      <img class="stylebox-display-avatar select-avatar" src="{{userAvatar}}">
+      </img>
+
+
+      <form  method="post" action="/users/updateavatar", enctype="multipart/form-data">
+        <input type="text" name="userId" class="hidden useridtoserver">
+        <input type="text" name="userType" class="hidden userType">
+        <input type="file" class="avatarUpload hidden" name="displayImage">
+        <input type="submit" value="Submit" class="hidden updateavatar">
+      </form>
+      <p>Séléctionez un avatar</p>
+    </div>
+    <div class="row login-container-row">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="icon ion-ios-person-outline firstname-icon"></i></div>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+            <input id="userFirstNameUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" placeholder="Nom" value="{{userFirstName}}">
+        </div>
+    </div>
+    <div class="row login-container-row">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="icon ion-ios-personadd-outline lastname-icon"></i></div>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+            <input id="userLastNameUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" placeholder="Prenom" value="{{userLastName}}">
+        </div>
+    </div>
+    <div class="row login-container-row">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-envelope-o email-icon"></i></div>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+            <input id="userEmailUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" inputmode="email" placeholder="Email" value="{{userEmail}}">
+        </div>
+    </div>
+    <div class="row login-container-row">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-envelope-o email-icon"></i></div>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+            <input id="userCityUpdate" class="input-sm mainLoginInput login-register-text-field city-search" type="text" inputmode="text" placeholder="Votre Ville" value="{{userCity}}" disabled>
+        </div>
+    </div>
+    <div class="row login-container-row">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-mobile-phone phone-icon"></i></div>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+            <input id="userPhoneUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" inputmode="tel" placeholder="Portable" value="{{userPhone}}">
+        </div>
+    </div>
+
+    {{#if userDescription}}
+    <div class="row stylebox-info-input-row general-row">
+      <div class="col-md-12 general-column">
+          <textarea class="stylebox-description mainLoginInput stylebox-create-textarea about-me" placeholder="Que diriez vous pour convaincre les clients?">{{userDescription}}</textarea>
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if userAvailability}}
+    <div class="row stylebox-info-input-row general-row">
+      <div class="col-md-12 general-column">
+        <textarea class="stylebox-create-textarea mainLoginInput availability-input" placeholder="Vos jours et heures de travail">{{userAvailability}}</textarea>
+      </div>
+    </div>
+    {{/if}}
+    <div class="row login-container-row">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-ellipsis-h password-icon"></i></div>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+            <input id="userPasswordUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" minlength="6" placeholder="Mot de pass">
+        </div>
+    </div>
+    <div class="row login-register-btn-row text-right">
+        <div>
+            <button class="btn btn-default login-register-btn update-btn" type="button">Mettre à jour</button>
+        </div>
+    </div>
+</div>

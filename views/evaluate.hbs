@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="../css/restylenavbar.css">
+<link rel="stylesheet" href="../css/header-padding.css">
+<script type="text/javascript" src="../js/evaluations.js"></script>
+{{#if user}}
+  {{> userheader}}
+{{else}}
+  {{> header}}
+{{/if}}
+
+{{#each evalsArray}}
+  {{#if this.stylistId}}
+    {{> evaluatestylist}}
+  {{/if}}
+  {{#if this.userId}}
+  {{> evaluateuser}}
+  {{/if}}
+{{/each}}

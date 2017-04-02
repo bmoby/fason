@@ -1,0 +1,32 @@
+
+<link rel="stylesheet" href="./css/searchbarxs.css">
+<script type="text/javascript" src="../js/jquery.paginate.js"></script>
+<script type="text/javascript" src="../js/paginateOptions.js"></script>
+<link rel="stylesheet" href="../css/restylenavbar.css">
+<link rel="stylesheet" href="../css/header-padding.css">
+
+{{#if user}}
+  {{> userheader}}
+{{else}}
+  {{> header}}
+{{/if}}
+
+{{> searchbar}}
+
+<div class="styleboxes-search-container">
+  {{errmsg}}
+
+  <ul class="listitems">
+    {{#each styleboxes}}
+    <li>{{> stylebox}}</li>
+    {{/each}}
+  </ul>
+
+  <div class="row general-row text-center paginationdiv">
+    <div id="listitems-pagination" style="display:none">
+      <a id="listitems-previous" class="previous pagenavlinks" class="disabled">&laquo; précédent</a>
+      <a id="listitems-next" class="next pagenavlinks" href="#">suivant &raquo;</a>
+    </div>
+  </div>
+
+</div>

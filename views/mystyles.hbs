@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="../css/fontawesome-stars-o.css">
+<script type="text/javascript" src="../js/jquery.barrating.js"></script>
+
+{{#if user}}
+  {{> userheader}}
+{{else}}
+  {{> header}}
+{{/if}}
+{{#if err}}
+  <div class="row errmsgdiv">
+    <h1 class="errmsg">{{err}}</h1></br>
+    <a href="/createstylebox">Créer un stylebox</a>
+  </div>
+{{else}}
+  {{#each styleboxes}}
+    {{> mystylebox}}
+  {{/each}}
+{{/if}}

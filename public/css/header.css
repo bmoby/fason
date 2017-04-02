@@ -1,0 +1,187 @@
+.hiddenclass{
+  display: none;
+}
+
+.register-append{
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  position: fixed;
+  background-color: white;
+  z-index: 99;
+}
+
+.login-append{
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  position: fixed;
+  background-color: white;
+  z-index: 99;
+}
+
+.xs-search-append{
+  width: 100%;
+  height: 100vh;
+  overflow: scroll;
+  position: fixed;
+  background-color: white;
+  z-index: 99;
+}
+
+.close-icon:hover{
+  cursor: pointer;
+}
+
+.errorMessage{
+  color: #d9534f !important;
+}
+
+.header-ava{
+  background-size: cover;
+  background-position: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.header-icon{
+  color: gray;
+  font-size: 1em;
+}
+
+.header-menu{
+  background-color: white;
+  width: 250px;
+  border: 1px solid #fafafa;
+  box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  z-index: 99999;
+}
+
+.link-p{
+  padding-left: 10px;
+  padding-top: 15px;
+  padding-bottom: 0px !important;
+  margin: 0px !important;
+  color: #37434d !important;
+  font-size: 0.8em !important;
+
+}
+
+.header-row{
+  border-bottom: 1px solid #fafafa;
+  color: #6f7a85;
+  margin-bottom: 0px !important;
+  padding-bottom: 10px !important;
+}
+
+.header-row:hover{
+  background-color: #f6f6f6;
+  cursor: pointer;
+}
+
+.header-column{
+  margin-bottom: 0px !important;
+  padding-bottom: 0px !important;
+  max-height: 50px;
+}
+
+.header-icons{
+  font-size: 1.4em !important;
+  color: #e0e0e0 !important;
+  padding-top: 12px !important;
+}
+
+.notif-count{
+  color: #d9534f !important;
+}
+
+.arrow-up{
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+  position: absolute;
+  right: 14px;
+  top: -10px;
+  z-index: 889;
+}
+
+.inner-arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid gray;
+  position: absolute;
+  right: 14px;
+  top: -10px;
+  z-index: 888;
+}
+
+.header-link{
+  outline: none !important;
+  text-decoration: none !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+.header-link:hover{
+  outline: none !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.header-link:active{
+  background-color: transparent !important;
+  outline: none !important;
+  text-decoration: none !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.notifCount{
+  position: absolute;
+  top: 50px;
+  right: 45px;
+
+}
+
+.notifCountIcon{
+  font-size: 1em !important;
+  border-radius: 5px;
+  background-color: rgb(217,83,79);
+  color: white;
+  font-size: 1em !important;
+  position: relative;
+  right: 6px;
+  bottom: 2px;
+  font-weight: bold;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.notifandava{
+  position: relative;
+  bottom: 10px;
+  z-index: 9999;
+}
+
+.xs-nav-links{
+  background-color: white;
+}
+
+.navbar-toggle:focus{
+  background-color: transparent !important;
+}

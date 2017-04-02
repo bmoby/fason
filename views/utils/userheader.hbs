@@ -1,0 +1,135 @@
+
+<link rel="stylesheet" href="/css/header.css">
+
+
+<div class="xs-search-append hidden full-page">
+  {{> searchxs}}
+</div>
+
+<nav class="navbar navbar-default" id="usernavbarhome">
+    <div class="row general-row">
+      <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+        <a href="/"><h1 class="header-icon" id="userheader-brand">FASON</h1></a>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 text-right notifandava">
+        <div class="notifCount {{#unless allNotifications}} hidden {{/unless}}">
+          <p class="notifCountIcon">{{allNotifications}}</p>
+        </div>
+        <div class="header-ava  menuitem" style="background-image: url({{user.avatar}})">
+        </div>
+        <div class="header-menu hidden menuitem">
+          <div class="arrow-up menuitem"></div>
+          <div class="inner-arrow-up menuitem"></div>
+          <a class="header-link menuitem" href="/inbox">
+            <div class="row header-row menuitem messagebtnlink">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-envelope-o header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+                <p class="link-p menuitem">Messages</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p notif-count menuitem newmessagesnotifs">{{#if newmessages}}{{newmessages}}{{/if}}</p>
+              </div>
+            </div>
+          </a>
+          <a class="header-link menuitem evalsheaderlink hidden" href="/evaluate">
+            <div class="row header-row menuitem messagebtnlink">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-comment-o header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+                <p class="link-p menuitem">Evaluer</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p notif-count menuitem newevalsnotifs">0</p>
+              </div>
+            </div>
+          </a>
+          <a class="demandslink" href="/demandes">
+            <div class="row header-row menuitem">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-bell-o header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+                <p class="link-p menuitem">Demandes</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p notif-count menuitem newdemandsnotifs">{{#if newdemands}}{{newdemands}}{{/if}}</p>
+              </div>
+            </div>
+          </a>
+          {{#if user.stylist.status}}
+          <a href="/mystyleboxes">
+            <div class="row header-row menuitem">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-files-o header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column general-column menuitem">
+                <p class="link-p menuitem">Looks</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p menuitem"></p>
+              </div>
+            </div>
+          </a>
+          {{/if}}
+          <a href="/users/updateprofil">
+            <div class="row header-row menuitem">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-user-o header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+                <p class="link-p menuitem">Profil</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p menuitem"></p>
+              </div>
+            </div>
+          </a>
+          {{#unless user.stylist.status}}
+          <a class="header-link menuitem" href="/createstylebox">
+            <div class="row header-row menuitem">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-pencil-square-o header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column general-column menuitem">
+                <p class="link-p menuitem">Devenir relooker</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p menuitem"></p>
+              </div>
+            </div>
+          </a>
+          {{else}}
+          <a class="header-link menuitem" href="/createstylebox">
+            <div class="row header-row menuitem">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-pencil-square-o header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column general-column menuitem">
+                <p class="link-p menuitem">Créer un look</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p menuitem"></p>
+              </div>
+            </div>
+          </a>
+          {{/unless}}
+          <a class="header-link menuitem" href="/users/logout">
+            <div class="row header-row menuitem">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-power-off header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+                <p class="link-p menuitem">Déconnexion</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p menuitem"></p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+</nav>

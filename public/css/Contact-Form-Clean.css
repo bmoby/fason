@@ -1,0 +1,38 @@
+
+
+
+@media (min-width:1200px) {
+  .contacter-container{
+    padding-top: 50px;
+    width: 70% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width:1199px) {
+  .contacter-container{
+    padding-top: 50px;
+    width: 70% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
+
+@media (max-width:991px) {
+  .contacter-container{
+    padding-top: 50px;
+    width: 90% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width:767px) {
+  .contacter-container{
+    width: 80% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

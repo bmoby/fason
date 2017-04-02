@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="./css/stylebox.css">
+
+
+
+<a href="/stylebox/{{this.id}}">
+  <div class="stylebox-container" data-stylebox-id="{{this.id}}">
+      <div class="row stylebox-images-row">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stylebox-image-colum">
+              <div class="image-div" style="background-image: url(https://s3.amazonaws.com/styleboxphotosbianor/{{this.photos.[0]}})"></div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs stylebox-image-colum">
+              <div class="image-div-2" style="background-image: url(https://s3.amazonaws.com/styleboxphotosbianor/{{this.photos.[1]}})"></div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs stylebox-image-colum">
+              <div class="image-div-3" style="background-image: url(https://s3.amazonaws.com/styleboxphotosbianor/{{this.photos.[2]}})"></div>
+          </div>
+      </div>
+      <div class="row stylebox-stylist-info-row rowpad">
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 stylebox-stylist-personal general-column">
+              <div class="row stylist-name-row">
+                  <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center stylis-ava-column">
+                      <div class="stylist-ava text-left" style="background-image: url({{this.stylistavatar}})"></div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-9 stylebox-info-left-column">
+                      <div class="row rating-row">
+                          <div class="col-md-12 rating-column rating" data-stylebox-id="{{this.id}}" data-rating-value="{{this.rating.general}}">
+                            <div class="row">
+                              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 general-column">
+                                <h3 class="stylist-name">{{this.stylistname}}</h3>
+                              </div>
+                            </div>
+                            <div class="row stylebox-rating-row">
+                              <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 general-column">
+                                <select class="general-rating-{{this.id}}">
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                </select>
+                              </div>
+                              <div class="col-lg-8 col-md-8 col-sm-8 hidden-xs general-column text-left">
+                                <p class="miniinfo hidden-xs inlinep searchminiinfo">({{this.rating.number}})</p>
+                              </div>
+
+                              <div class="col-xs-6 visible-xs general-column text-left">
+                                <p class="visible-xs searchminixs">({{this.rating.number}})</p>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 text-center hidden-sm hidden-xs">
+                    <div class="row style-name-row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 general-column">
+                          <h1 class="style-name">{{this.title}}</h1>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center stylebox-stylist-personal pricebackground">
+              <div class="row minbudget-row">
+
+                  <p class="timepricep timepricep2">{{this.price}}€ / h</p> <p class="timepricep">{{#if this.minTime}} {{this.minTime}} heures minimum{{/if}}</p>
+
+              </div>
+          </div>
+      </div>
+  </div>
+</a>

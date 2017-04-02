@@ -1,0 +1,258 @@
+<link rel="stylesheet" href="../css/fontawesome-stars-o.css">
+<script type="text/javascript" src="../js/jquery.barrating.js"></script>
+<!-- Included pages -->
+<div class="demand-page hidden full-page">
+  {{> demand}}
+</div>
+
+<div class="availabilities-page hidden full-page">
+  {{> availabilities}}
+</div>
+
+<div class="message-page hidden full-page">
+  {{> message}}
+</div>
+
+
+{{#if user}}
+  {{> userheader}}
+{{else}}
+  {{> header}}
+{{/if}}
+<div class="masoneryContainer text-center">
+  <div class="grid">
+    {{#each stylebox.photos}}
+      <div class="grid-item sizer4">
+        <a href="https://s3.amazonaws.com/styleboxphotosbianor/{{this}}" data-lightbox="image-{{this}}"><img src="https://s3.amazonaws.com/styleboxphotosbianor/{{this}}" class="item-masonry-photo"></a>
+      </div>
+    {{/each}}
+  </div>
+  <div class="visible-xs pricexs">
+    <p class="pricexsp">{{stylebox.price}}€ / h </p>
+  </div>
+</div>
+
+<link rel="stylesheet" href="../css/restylenavbar.css">
+<link rel="stylesheet" href="../css/header-padding.css">
+<div class="row general-row stylebox-display-stylist">
+  <div class="col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-12 text-center">
+      <div class="stylebox-display-avatar" style="background-image: url({{stylist.avatar}})"></div>
+      <p>{{stylist.lastName}}</p>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-7">
+      <div class="row">
+          <div class="col-md-12">
+              <h4>A propose de moi</h4></div>
+          <div class="col-md-12">
+              <p class="stylistDescription">{{stylist.description}}</p>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+            <select class="general-rating">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            <p class="miniinfo inlinep">Sur ({{rating.number}}) evaluations.</p>
+            <script type="text/javascript">
+               $(function() {
+                  $('.general-rating').barrating({
+                    theme: 'fontawesome-stars-o',
+                    initialRating: {{rating.general}},
+                    readonly: true
+                  });
+
+                  $('.precision-rating').barrating({
+                    theme: 'fontawesome-stars-o',
+                    initialRating: {{rating.precision}},
+                    readonly: true
+                  });
+
+                  $('.ponctuality-rating').barrating({
+                    theme: 'fontawesome-stars-o',
+                    initialRating: {{rating.ponctuality}},
+                    readonly: true
+                  });
+
+                  $('.quality-rating').barrating({
+                    theme: 'fontawesome-stars-o',
+                    initialRating: {{rating.quality}},
+                    readonly: true
+                  });
+
+                  $('.communication-rating').barrating({
+                    theme: 'fontawesome-stars-o',
+                    initialRating: {{rating.communication}},
+                    readonly: true
+                  });
+               });
+            </script>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">
+              <div class="row general-row">
+                  <div class="col-md-12">
+                      <p class="stylebox-display-city">{{stylebox.city}} </p>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="row general-row stylist-more-info-row">
+  <div class="col-lg-7 col-lg-offset-1 col-md-7 col-md-offset-1 col-sm-9 col-xs-12 stylebox-display-stylist-more-info">
+      <div class="row stylebox-display-info-rows">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 review-mobile-columns text-left">
+            <h4 class="notesh4">Notes</h4>
+        </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 review-mobile-columns text-left">
+              <div class="row general-row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 general-column">
+                      <p class="notes-text inlinep">Précision:</p>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 general-column">
+                    <select class="precision-rating">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 review-mobile-columns text-left">
+              <div class="row general-row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 general-column">
+                      <p class="notes-text inlinep">Qualité prix:</p>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 general-column">
+                    <select class="quality-rating">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 review-mobile-columns text-left">
+              <div class="row general-row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 general-column">
+                      <p class="notes-text inlinep">Communication: </p>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 general-column">
+                    <select class="communication-rating">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 review-mobile-columns text-left">
+              <div class="row general-row">
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 general-column">
+                      <p class="notes-text inlinep">Ponctualité: </p>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 general-column">
+                    <select class="ponctuality-rating">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row stylebox-display-info-rows">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <h4 class="forstyleTitle">{{style}}: {{stylebox.title}}</h4>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <p>{{stylebox.description}}</p>
+        </div>
+      </div>
+      <div class="row stylebox-display-info-rows">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p>Ce look est pour {{gender}}.</p>
+          </div>
+      </div>
+      <div class="row stylebox-display-info-rows">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p>Le temps minimum pour ce look est {{stylebox.minTime}}h.</p>
+          </div>
+      </div>
+      {{#if stylebox.minBudget}}
+      <div class="row stylebox-display-info-rows xs-last-option">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <p>Le budget minimum estimé est de {{stylebox.minBudget}}€, hors prix de relooking. </p>
+          </div>
+      </div>
+      {{/if}}
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 hidden-xs general-column">
+      <div class="row pricing-header general-row">
+          <div class="col-md-12">
+              <p class="pricer-header-price">{{stylebox.price}}€/h </p>
+          </div>
+      </div>
+      <div class="row text-center princing-options general-row">
+          <div class="col-lg-6 col-md-6 col-sm-6 general-column pricing-btns disponibility-btn"><i class="fa fa-calendar pricer-menu-icons"></i>
+              <p class="pricer-p">Disponibilité</p>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 pricer-footer-btn-colums pricing-btns general-column send-message-btn"><i class="fa fa-envelope-o pricer-menu-icons"></i>
+              <p class="pricer-p">Contacter</p>
+          </div>
+          <div class="col-md-12 general-column">
+              <button class="btn btn-default demand-btn send-demand-btn" type="button">Prendre rendez-vous</button>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="row commentRow">
+  {{#if styleboxcomments}}
+    <div class="commentTitle">
+      <h4>Commentaires</h4>
+    </div>
+    {{#each styleboxcomments}}
+      <div class="row commentrow">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 text-center">
+          <div class="commentOwnerAva" style="background-image: url({{this.creatorAva}})">
+          </div>
+          <p>{{this.creatorName}}</p>
+        </div>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
+          <p class="commentbody">{{this.commentBody}}</p>
+        </div>
+      </div>
+      <div class="row text-right commentCreatedDate">
+        <p>{{this.createdDate}}</p>
+      </div>
+    {{/each}}
+  {{/if}}
+</div>
+<div class="visible-xs-block xs-fixed-menu">
+  <div class="row visible-xs-block general-row">
+    <div class="col-xs-6 xs-contac-menu general-column">
+        <button class="btn btn-default pricer-footer-btns disponibility-btn" type="button">Disponibilité</button>
+    </div>
+      <div class="col-xs-6 xs-contac-menu general-column">
+          <button class="btn btn-default pricer-footer-btns send-message-btn" type="button">Contacter </button>
+      </div>
+      <div class="col-xs-12 text-center general-column">
+          <button class="btn btn-default demand-btn send-demand-btn pricer-footer-btns" type="button"> Prendre rendez-vous</button>
+      </div>
+  </div>
+</div>
+
+<div class="hidden-xs">
+  {{> footer}}
+</div>

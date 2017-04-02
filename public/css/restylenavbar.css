@@ -1,0 +1,22 @@
+.navbar-right li a{
+  color: black !important;
+}
+
+.navcol-1{
+  color: black !important;
+}
+
+.navbar-brand{
+  color: black !important;
+}
+
+.container-fluid{
+  background-color: white;
+  border-bottom: 1px solid rgb(230,230,230);
+}
+
+.header-not-connected-img{
+  background-image: url("/images/menublack.png") !important;
+  width: 40px !important;
+  height: 40px !important;
+}

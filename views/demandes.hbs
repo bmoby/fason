@@ -1,0 +1,65 @@
+{{#if user}}
+  {{> userheader}}
+{{else}}
+  {{> header}}
+{{/if}}
+{{#if err}}
+<div class="errmsgdiv">
+  <h1 class="errmsg">{{err}}</h1>
+</div>
+{{/if}}
+<script type="text/javascript" src="../js/demands.js"></script>
+<div class="container">
+    <div class="new-demands">
+      {{#if demands}}
+      <div class="demand-block">
+        <div class="demand-style-div-title">
+          <h3>Nouvelles demandes</h3>
+        </div>
+        {{#each demands}}
+          {{> demande}}
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+
+    <div class="reservations-div">
+      {{#if reservations}}
+      <div class="demand-block">
+        <div class="demand-style-div-title">
+          <h3>Mes missions</h3>
+        </div>
+        {{#each reservations}}
+          {{> reservations}}
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+
+
+    <div class="reservations-div">
+      {{#if mydemands}}
+      <div class="demand-block">
+        <div class="demand-style-div-title">
+          <h3>Mes demandes</h3>
+        </div>
+        {{#each mydemands}}
+          {{> mydemands}}
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+
+    <div class="reservations-div">
+      {{#if myreservations}}
+      <div class="demand-block">
+        <div class="demand-style-div-title">
+          <h3>Mes rendez-vous</h3>
+        </div>
+        {{#each myreservations}}
+          {{> reservations}}
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+</div>

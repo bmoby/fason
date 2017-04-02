@@ -1,0 +1,261 @@
+
+
+.stylebox-container {
+  padding:0;
+  margin:5px;
+  background-color: #f7f7f7;
+}
+
+.stylebox-image-colum {
+  padding:0;
+  overflow:hidden;
+}
+
+div.row.stylebox-images-row {
+  margin:0;
+  padding:5px;
+}
+
+div.image-div {
+  height:450px;
+  background-image:url(/img/headerbackground.jpg);
+  background-size:cover;
+  background-position:center;
+}
+
+@media (max-width:767px) {
+  div.image-div {
+    height:350px;
+    background-image:url(/img/headerbackground.jpg);
+    background-size:cover;
+    background-position:center;
+  }
+}
+
+div.image-div-2 {
+  height:450px;
+  background-image:url(/img/white.jpg);
+  background-size:cover;
+  background-position:center;
+  margin-left:5px;
+  margin-right:5px;
+}
+
+@media (max-width:767px) {
+  div.image-div-2 {
+    height:350px;
+    background-image:url(/img/white.jpg);
+    background-size:cover;
+    background-position:center;
+    margin-left:5px;
+    margin-right:0;
+  }
+}
+
+div.image-div-3 {
+  height:450px;
+  background-image:url(/img/meeting.jpg);
+  background-size:cover;
+  background-position:center;
+}
+
+@media (max-width:767px) {
+  div.image-div-3 {
+    height:150px;
+    background-image:url(/img/meeting.jpg);
+    background-size:cover;
+    background-position:center;
+  }
+}
+
+div.row.stylebox-stylist-info-row {
+  padding-left:5px;
+  margin:0;
+  padding-right:5px;
+}
+
+.stylebox-stylist-personal {
+  margin:0;
+  background-color:transparent;
+}
+
+div.stylist-ava {
+  border-radius:50%;
+  width:80px;
+  height:80px;
+  overflow:hidden;
+  background-image:url(/img/white.jpg);
+  background-size:cover;
+  background-position:center;
+  display:inline-block;
+  margin:5px;
+}
+
+@media (max-width:767px) {
+  div.stylist-ava {
+    width:70px;
+    height:70px;
+    overflow:hidden;
+    background-image:url(/img/white.jpg);
+    background-size:cover;
+    display:inline-block;
+    background-position:center;
+  }
+}
+
+.stylist-name {
+  padding-bottom:0;
+  font-size:1.1em;
+  color:#6f7a85;
+  font-family:serif;
+  padding-top:0;
+  font-weight:100;
+  margin-top:5px;
+  margin-bottom:0;
+}
+
+@media (max-width:767px) {
+  .stylist-name {
+    color:#505e6c;
+    margin:0;
+    padding-top:3px;
+    padding-bottom:3px;
+    font-size:1em;
+  }
+}
+
+div.row.stylist-name-row {
+  margin:0;
+  padding:0;
+}
+
+.stylis-ava-column {
+  margin:0;
+  padding:0;
+}
+
+.review {
+  color:#d9534f;
+  font-size:1.1em;
+}
+
+@media (max-width:767px) {
+  .review {
+    color:#d9534f;
+    font-size:1em;
+  }
+}
+
+.bad {
+  color:#6c7178 !important;
+}
+
+div.row.style-name-row {
+  margin:0;
+  padding-left:10px;
+  width:100%;
+}
+
+.stylebox-info-left-column {
+  padding:0;
+  margin:0;
+}
+
+.style-name {
+  margin:0;
+  padding-top:10px;
+  font-family:serif;
+  font-size:1.5em;
+  color:#30383a;
+}
+
+@media (max-width:991px) {
+  .style-name {
+    margin:0;
+    padding-top:10px;
+    font-family:serif;
+    font-size:1.6em;
+    color:#30383a;
+  }
+}
+
+@media (max-width:767px) {
+  .style-name {
+    margin:0;
+    padding-top:10px;
+    font-size:1.2em;
+    color:#30383a;
+  }
+}
+
+div.row.rating-row {
+  margin:0;
+  padding-left:10px;
+}
+
+.rating-column {
+  margin:0;
+}
+
+.budget-column {
+  padding-top:20px;
+}
+
+.time-column {
+  padding:13px;
+}
+
+@media (max-width:767px) {
+  div.row.minbudget-row {
+    background-color:#30383a;
+    padding:12px;
+  }
+}
+
+.price-header {
+  color:#3f3f3f;
+  font-size:1.6em;
+  display:block;
+}
+
+@media (max-width:767px) {
+  .price-header {
+    color:#fffdfd;
+    font-size:1.4em;
+  }
+}
+
+.inlinep {
+  display:inline;
+  padding-left:10px;
+}
+
+.stylebox-icon-textes {
+  padding-bottom:0;
+  font-size:1.3em;
+  color:#30383a;
+  font-family:serif;
+  padding-top:0;
+  font-weight:100;
+}
+
+@media (max-width:767px) {
+  .stylebox-icon-textes {
+    font-size:1.3em;
+    color:#ededed;
+    font-family:serif;
+    font-weight:100;
+  }
+}
+
+.miniinfo {
+  color:#b0afaf;
+  font-weight:100;
+  font-size:0.8em;
+  position:relative;
+  bottom:4px;
+}
+
+.price-column {
+  padding:13px;
+}

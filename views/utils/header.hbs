@@ -1,0 +1,84 @@
+
+<link rel="stylesheet" href="/css/header.css">
+
+<div class="login-append hidden full-page">
+  {{> login}}
+</div>
+
+<div class="register-append hidden full-page">
+  {{> register}}
+</div>
+
+<div class="xs-search-append hidden full-page">
+  {{> searchxs}}
+</div>
+
+<nav class="navbar hidden-xs navbar-default" id="navbarhome">
+    <div class="container-fluid">
+        <div class="navbar-header"><a class="navbar-brand navbar-link" href="/"><strong>FASON</strong></a>
+        </div>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="nav navbar-nav navbar-right hidden-xs">
+              <li role="presentation" class="apropos"><a href="/apropos">A propos</a></li>
+              <li role="presentation" class="connection"><a>Connexion </a></li>
+              <li role="presentation"><a class="register">Inscription </a></li>
+          </ul>
+      </div>
+  </div>
+  </div>
+</nav>
+
+<nav class="navbar visible-xs navbar-default" id="usernavbarhome">
+  <div class="row general-row">
+    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+      <a href="/"><h1 class="header-icon" id="userheader-brand">FASON</h1></a>
+    </div>
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9 text-right notifandava">
+      <div class="notifCount {{#unless allNotifications}} hidden {{/unless}}">
+        <p class="notifCountIcon">{{allNotifications}}</p>
+      </div>
+      <div class="header-ava header-not-connected-img menuitem" style="background-image: url(/images/menuu.png); width: 40px; height:40px;">
+      </div>
+      <div class="header-menu hidden menuitem">
+        <div class="arrow-up menuitem"></div>
+        <div class="inner-arrow-up menuitem"></div>
+        <a class="header-link menuitem apropos">
+          <div class="row header-row menuitem">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+              <i class="fa fa-info header-icons menuitem"></i>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+              <p class="link-p menuitem apropos">A propos</p>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            </div>
+          </div>
+        </a>
+        <a class="header-link menuitem">
+          <div class="row header-row menuitem">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+              <i class="fa fa-user-o header-icons menuitem"></i>
+            </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+                <p class="link-p menuitem connection">Connection</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+              </div>
+            </div>
+          </a>
+          <a class="header-link menuitem">
+            <div class="row header-row menuitem">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-plus-square-o header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+                <p class="link-p menuitem register">Inscription</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+</nav>

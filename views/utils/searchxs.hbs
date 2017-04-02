@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bianorDesignHomePage</title>
+</head>
+
+<body>
+    <div class="row visible-xs-block text-left close-row">
+        <div class="col-md-12"><i class="icon ion-android-close close-icon"></i></div>
+    </div>
+    <div class="container visible-xs-block search-xs-container">
+        <h2 class="text-center search-xs-title">Recherche </h2>
+        <p class="text-center search-xs-paragraph">Entrez vos criteres et retrouvez les meilleurs stylistes qui vous entourent.</p>
+        <form class="" action="/search" method="post">
+          <div class="row">
+              <div>
+                <!-- {{cityResend}} est celui qui revien la ville a remplacer dans value apres -->
+                  <input type="text" id="testgeo" class="mainLoginInput search-xs-city-field" placeholder="Entre une ville" value="Paris, France" name="city" disabled>
+              </div>
+          </div>
+          <div class="row search-xs-gender-select-row">
+              <div>
+                  <select class="mainLoginInput search-xs-gender-select widexs" name="gender">
+                      <optgroup label="This is a group">
+                        <option disable>Homme & Femme</option>
+                        <option value="men" {{#if men}} selected 1{{/if}}class="men">Homme</option>
+                        <option value="ladies" class="ladies" {{#if ladies}} selected 1{{/if}}>Femme</option>
+                      </optgroup>
+                  </select>
+              </div>
+          </div>
+          <div class="row search-xs-gender-select-row">
+              <div>
+                  <select class="mainLoginInput search-xs-style-select widexs" name="style">
+                      <optgroup label="This is a group">
+
+                          <option {{#if styleObj.vestimentaire}}selected 0{{/if}} value="vestimentaire">Vestimentaire</option>
+                          <option {{#if styleObj.beaute}}selected 0{{/if}} value="beaute">Beautée</option>
+
+                      </optgroup>
+                  </select>
+              </div>
+          </div>
+          <div class="row">
+              <div>
+                  <button class="btn btn-default search-xs-searchbtn" type="submit">Recherche</button>
+              </div>
+          </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<div class="full-page hidden messages-page">
+  {{> messages}}
+</div>
+
+{{#if user}}
+  {{> userheader}}
+{{else}}
+  {{> header}}
+{{/if}}
+
+
+<script type="text/javascript" src="../js/conversation.js"></script>
+<div class="container">
+  {{#if empty}}
+    <div class="messages-container-div-title">
+      <h1 class="errmsg">Vous n'avez aucun message pour le moment.</h1>
+    </div>
+  {{else}}
+    <div class="row">
+      <div class="messages-container-div-title">
+          <h1 class="inboxtitle">Messages</h1>
+      </div>
+    </div>
+    {{#each convers}}
+      <div class="row conversation-row" data-conv-id='{{this.conv.id}}'>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 text-center">
+              <div class="stylebox-display-avatar-inbox" style="background-image: url({{this.convAva}})"></div>
+              <p class="conversation-with">{{this.convName}}</p>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7 childOne">
+              <div class="row conversation-first-info-row hidden-xs childTwo">
+                  <div class="col-lg-4 col-md-4 col-sm-5 childThree"><i class="icon ion-ios-email-outline inbox-icons newMsg-large {{this.conv.id}}icon" {{#if hasNoRead}} style="color: rgb(217,83,79)"{{/if}}>{{#if hasNoRead}} <p class="newMessage inlinep {{this.conv.id}}new">Nouveau</p> {{/if}}</i></div>
+                  <div class="col-lg-8 col-md-8 col-sm-7 text-right">
+                      <p class="conversation-date">{{this.convCreatedTime}}</p>
+                  </div>
+              </div>
+              <div class="row last-message-row hidden-xs">
+                  <div class="col-md-12">
+                      <p class="conversation-last-message limit-large {{this.conv.id}}last">{{subject (last this.conv.messages)}}</p>
+                  </div>
+              </div>
+              <div class="row last-message-row visible-xs-block">
+                  <div class="col-md-12">
+                    <div class="row visible-xs-block"><div class="newMsg-xs"><i class="icon ion-ios-email-outline inbox-icons {{this.conv.id}}icon" {{#if hasNoRead}} style="color: rgb(217,83,79)" {{/if}}>{{#if hasNoRead}} <p class="newMessage inlinep {{this.conv.id}}new">Nouveau</p> {{/if}}</i></div></div></br>
+                    <div class="row visible-xs-block"><p class="conversation-last-message limit {{this.conv.id}}last">{{subject (last this.conv.messages)}}</p></div>
+                  </div>
+              </div>
+              <div class="row text-right conversation-menu">
+                  <div class="col-md-12 general-column"><i class="icon ion-ios-trash-outline inbox-menu-icons delete-conversation-icon"></i></div>
+              </div>
+          </div>
+      </div>
+    {{/each}}
+  {{/if}}
+</div>

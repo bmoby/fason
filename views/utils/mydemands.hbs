@@ -1,0 +1,41 @@
+
+    <div class="etladate">
+      <p>{{this.formatedcreatedTime}}</p>
+    </div>
+    <div class="demandbox demand{{this.id}}">
+        <div class="row general-row">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
+              <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="avatardemand" style="background-image: url({{this.demava}});"></div>
+                <h4>{{this.creatorName}}</h4>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="midleinfo">
+                    <div class="row">
+                        <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-1">
+                            <p class="">Stylebox: {{this.forstyle}} </p>
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-1">
+                            <p class="">Date: {{this.formatedtime}} </p>
+                        </div>
+                        <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-1">
+                            <p class="">Heure: {{this.formatedtimeHours}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 lastinfo">
+                <div>
+                    <div class="row">
+                        <div class="col-xs-offset-1">
+                            <p>Cette demande expire dans:</p>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            {{#if this.diff}}<h3 class="">{{this.diff}} heures</h3>{{else}} <h3 class="">Mois d'une heure</h3> {{/if}}
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>

@@ -1,0 +1,33 @@
+
+<div class="row text-left close-row">
+    <div class="col-md-12"><i class="icon ion-android-close close-icon"></i></div>
+</div>
+<div class="container" id="login-container">
+  <h2 class="login-register-title text-center">Poser une question</h2>
+  <div class="row general-row">
+      <div class="text-center">
+          <div class="stylebox-display-avatar" style="background-image: url({{stylist.avatar}})"></div>
+          <h4 class="availability-contact-demand-firstName">{{stylist.lastName}}</h4>
+      </div>
+  </div>
+    <p class="logn-register-paragraph">Envoyez un premier message a votre stylist et commencez une conversation. Une fois la conversation crée vous pourriez comunquer directement dans le messenger de Bianor.</p>
+    {{#if user}}
+    <div class="row envoyer-un-message-btn login-register-btn-row">
+        <div>
+            <textarea class="messageText mainLoginInput" placeholder="Tapez votre message ici."></textarea>
+        </div>
+    </div>
+    <div class="row login-register-btn-row text-right">
+        <div>
+            <button class="btn btn-default login-register-btn message-submit-btn" type="button">Envoyer</button>
+        </div>
+    </div>
+    {{else}}
+    <div class="row login-register-btn-row">
+        <div>
+            <button class="btn btn-default login-register-btn connection-btn" type="button">Enovyer un message</button>
+            <p class="register-link">Je n'ai pas de compte sur Bianor</p>
+        </div>
+    </div>
+    {{/if}}
+</div>
