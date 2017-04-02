@@ -16,7 +16,7 @@ var device = require('express-device');
 // Init App
 var app = express();
 
-mongoose.connect('mongodb://localhost:3001/bianor' || MONGODB_URI);
+mongoose.connect(MONGODB_URI);
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
