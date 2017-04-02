@@ -347,6 +347,7 @@ button.btn.btn-default.home-xs-search-redirect-btn:hover {
 
 .close-icon {
   font-size:3em;
+  z-index: 999999999999999;
 }
 
 input.search-xs-city-field {
