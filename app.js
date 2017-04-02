@@ -16,7 +16,7 @@ var device = require('express-device');
 // Init App
 var app = express();
 
-mongoose.connect(mongodb://heroku_c6gk9lsk:q11bs0ufch1ni7idbvq9lsf82j@ds145220.mlab.com:45220/heroku_c6gk9lsk);
+mongoose.connect("mongodb://heroku_c6gk9lsk:q11bs0ufch1ni7idbvq9lsf82j@ds145220.mlab.com:45220/heroku_c6gk9lsk");
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
