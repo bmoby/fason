@@ -131,13 +131,6 @@ $(document).ready(function(){
   });
 
 
-  $('.apropos').on('click', function(){
-    $('.full-page').addClass('hidden');
-    $('.apropos-append').removeClass('hidden');
-    $('.allindex').addClass('hidden');
-  });
-
-
   $('.register').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.register-append').removeClass('hidden');
