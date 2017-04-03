@@ -24,7 +24,7 @@
     {{#each convers}}
       <div class="row conversation-row" data-conv-id='{{this.conv.id}}'>
           <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 text-center">
-              <div class="stylebox-display-avatar-inbox" style="background-image: url({{this.convAva}})"></div>
+              <div class="stylebox-display-avatar-inbox" {{#if this.convAva}} style="background-image: url({{this.convAva}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
               <p class="conversation-with">{{this.convName}}</p>
           </div>
           <div class="col-lg-8 col-md-8 col-sm-8 col-xs-7 childOne">

@@ -21,7 +21,7 @@
               <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 stylebox-stylist-personal general-column">
                   <div class="row stylist-name-row">
                       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center stylis-ava-column">
-                          <div class="stylist-ava text-left" style="background-image: url({{this.stylistavatar}})"></div>
+                          <div class="stylist-ava text-left" {{#if this.stylistavatar}} style="background-image: url({{this.stylistavatar}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
                       </div>
                       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-9 stylebox-info-left-column">
                           <div class="row rating-row">

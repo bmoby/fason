@@ -14,7 +14,7 @@ var UserSchema = mongoose.Schema({
 	},
 	avatar: {
 		type: String,
-		default: "https://s3.amazonaws.com/styleboxphotosbianor/1fd5ea496ca11a97198aa3cdd3d7f8cb.png"
+		default: ""
 	},
 	email: {
 		type: String,

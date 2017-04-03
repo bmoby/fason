@@ -64,6 +64,10 @@ $(".limit-large").each(function(i){
             $('.messages-page').removeClass('hidden');
             response.conv.messages.forEach(function(msg, index){
               if(msg.msgOwner == response.userId){
+                var myava = response.myAva;
+                if(response.myAva == ""){
+                  myava = "https://fason.herokuapp.com/images/noavatar.png";
+                }
                 $('.messages-container-div').append(
                   '<div class="from-me">'+
                       '<div class="row general-row">'+
@@ -74,7 +78,7 @@ $(".limit-large").each(function(i){
                               '</div>'+
                           '</div>'+
                           '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 text-center">'+
-                              '<div class="messages-avatar" style="background-image: url('+response.myAva+')"></div>'+
+                              '<div class="messages-avatar" style="background-image: url('+myava+')"></div>'+
                           '</div>'+
                       '</div>'+
                   '</div>'
@@ -82,11 +86,15 @@ $(".limit-large").each(function(i){
               }
 
               if(msg.msgOwner != response.userId){
+                var theavatar = response.avatar;
+                if(response.avatar == ""){
+                  theavatar = "https://fason.herokuapp.com/images/noavatar.png"
+                }
                 $('.messages-container-div').append(
                   '<div class="not-from-me">'+
                       '<div class="row general-row">'+
                           '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 text-center">'+
-                              '<div class="messages-avatar" style="background-image: url('+response.avatar+')"></div>'+
+                              '<div class="messages-avatar" style="background-image: url('+theavatar+')"></div>'+
                           '</div>'+
                           '<div class="col-lg-8 col-md-8 col-sm-9 col-xs-10">'+
                               '<p class="message-body not-my-text">'+msg.msg+'</p>'+

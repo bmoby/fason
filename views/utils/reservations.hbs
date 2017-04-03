@@ -6,7 +6,7 @@
         <div class="row general-row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
               <div class="col-xs-6 col-lg-12 col-md-12 col-sm-12">
-                <div class="avatardemand" style="background-image: url({{this.demava}});"></div>
+                <div class="avatardemand" {{#if this.demava}} style="background-image: url({{this.demava}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
                 <h4>{{this.creatorName}}</h4>
               </div>
                 <div class=" col-xs-6 text-center visible-xs btnsxsdem demande-menu-bottom-row-{{this.id}}">

@@ -10,7 +10,8 @@
             </div>
             <div class="row">
                 <div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 text-center">
-                    <div class="eval-avatar" style="background-image: url({{this.stylistAvatar}})"></div>
+                    <div class="eval-avatar" {{#if this.stylistAvatar}} style="background-image: url({{this.stylistAvatar}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
+
                 </div>
                 <div class="col-lg-11 col-md-10 col-sm-10 col-xs-9 text-center">
                     <p class="paragraphzero leaveReview">Evaluer {{this.stylistName}}</p>
