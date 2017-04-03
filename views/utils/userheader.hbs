@@ -11,7 +11,7 @@
         <div class="notifCount {{#unless allNotifications}} hidden {{/unless}}">
           <p class="notifCountIcon">{{allNotifications}}</p>
         </div>
-        <div class="header-ava  menuitem" style="background-image: url({{user.avatar}})">
+        <div class="header-ava  menuitem" {{#if user.avatar}} style="background-image: url({{user.avatar}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}>
         </div>
         <div class="header-menu hidden menuitem">
           <div class="arrow-up menuitem"></div>
