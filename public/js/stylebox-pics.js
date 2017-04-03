@@ -59,7 +59,7 @@ $(document).on('ready', function() {
         data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description}),
         success:function(response){
           if (response){
-            alert('Félicitation votre look a été crée. Vous pouvez le modifier ou le supprimer dans "Mes looks"');
+            alert('Look a été publié. Vous pouvez le modifier ou le supprimer dans "Looks".');
             window.location.replace('https://fason.herokuapp.com/');
           }
         }

@@ -331,42 +331,42 @@ $(document).ready(function(){
 
 
     if(style == "nothing"){
-      $('.select-style-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Veuillez séléctioner un style</p></div></div>')
+      $('.select-style-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Choisissez un look</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
     if(budget != "" && $.isNumeric(budget) == false){
-      $('.style-minbudget-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Le budget dois etre numérique et sans symboles € ou $</p></div></div>')
+      $('.style-minbudget-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Budget minimum sans symbole (€)</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
     if(gender == "nothing"){
-      $('.select-gender-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Selectionnez homme ou femme</p></div></div>')
+      $('.select-gender-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Choisissez homme ou femme</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
     if(minTime == "nothing"){
-      $('.select-minTime-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Séléctionnez le temps nécéssaire pour réaliser ce travail</p></div></div>')
+      $('.select-minTime-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Choisissez le temps nécessaire pour ce look</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
     if(title == ""){
-      $('.style-title-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Donnez un titre a votre style</p></div></div>')
+      $('.style-title-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Donnez un titre à ce look</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
-    if(description == ""){
-      $('.stylebox-description-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Décrivez votre style</p></div></div>')
-      errorCounter = errorCounter+1;
-    }
+    // if(description == ""){
+    //   $('.stylebox-description-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Décrivez votre style</p></div></div>')
+    //   errorCounter = errorCounter+1;
+    // }
 
     if(descriptionCount < 200){
-      $('.stylebox-description-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Minimum 200 characters</p></div></div>')
+      $('.stylebox-description-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Décrivez ce look (minimum 200 caractères)</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
     if(price == "" || $.isNumeric(price) == false) {
-      $('.style-price-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Indiquez votre prix par heure sans les symboles € $</p></div></div>')
+      $('.style-price-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Prix horaire de ce look sans symbole (€)</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
@@ -409,5 +409,8 @@ $(document).ready(function(){
     });
   });
 
+  $('.select-minTime-proper').niceSelect();
+  $('.select-gender-proper').niceSelect();
+  $('.select-minTime-proper').niceSelect();
 
 })
