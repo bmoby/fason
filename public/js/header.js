@@ -125,33 +125,29 @@ $(document).ready(function(){
     }
   })
 
-  $('.login-append').hide();
-  $('.register-append').hide();
+  $('.login-append').addClass('hidden');
+  $('.register-append').addClass('hidden');
 
   $('.connection').on('click', function(){
-    $('.login-append').show();
-    $('.allindex').hide();
+    $('.login-append').removeClass('hidden');
+    $('.allindex').addClass('hidden');
+    $('.navbar').addClass('hidden');
   });
 
 
   $('.register').on('click', function(){
-    $('.register-append').show();
-    $('.allindex').hide();
+    $('.register-append').removeClass('hidden');
+    $('.allindex').addClass('hidden');
+    $('.navbar').addClass('hidden');
   });
 
-  $('.home-xs-search-redirect-btn').on('click', function(){
-    $('.full-page').addClass('hidden');
-    $('.xs-search-append').removeClass('hidden');
-    $('.allindex').addClass('overflowsettings');
-  });
 
   $('.close-icon').on('click', function(){
-    $('.full-page').addClass('hidden');
-    $('.errorsBlock').addClass('hiddenclass');
-    $('.allindex').removeClass('overflowsettings');
-    $('.hidejs').hide();
-    $('.allindex').show();
-
+    if(document.referrer){
+      window.location.replace(document.referrer);
+    } else {
+      window.location.replace("https://fason.herokuapp.com/");
+    }
   });
 
   $('.select-avatar').on('click', function(){
@@ -249,7 +245,8 @@ $(document).ready(function(){
             contentType: 'application/json',
             data: JSON.stringify({"email": email, "password": pass}),
             success: function(response){
-              location.reload();
+              window.location.replace(document.referrer);
+		          return false;
             }
           });
         }

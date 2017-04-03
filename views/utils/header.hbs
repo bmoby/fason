@@ -1,18 +1,6 @@
 
 <link rel="stylesheet" href="/css/header.css">
 
-<div class="login-append">
-  {{> login}}
-</div>
-
-<div class="register-append">
-  {{> register}}
-</div>
-
-<div class="xs-search-append hidden full-page">
-  {{> searchxs}}
-</div>
-
 <nav class="navbar hidden-xs navbar-default" id="navbarhome">
     <div class="container-fluid">
         <div class="navbar-header"><a class="navbar-brand navbar-link" href="/"><strong>FASON</strong></a>
@@ -20,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navcol-1">
             <ul class="nav navbar-nav navbar-right hidden-xs">
               <li role="presentation"><a href="/apropos">A propos</a></li>
-              <li role="presentation" class="connection"><a>Connexion </a></li>
+              <li role="presentation"><a href="/login">Connexion </a></li>
               <li role="presentation"><a class="register">Inscription </a></li>
           </ul>
       </div>
@@ -60,7 +48,7 @@
               <i class="fa fa-user-o header-icons menuitem"></i>
             </div>
               <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
-                <p class="link-p menuitem connection">Connection</p>
+                <p class="link-p menuitem "> <a href="/login">Connection</a></p>
               </div>
               <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
               </div>
@@ -72,7 +60,7 @@
                 <i class="fa fa-plus-square-o header-icons menuitem"></i>
               </div>
               <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
-                <p class="link-p menuitem register">Inscription</p>
+                <p class="link-p menuitem"> <a href="/register">Inscription</a></p>
               </div>
               <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
               </div>

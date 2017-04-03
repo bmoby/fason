@@ -1,14 +1,14 @@
 <link rel="stylesheet" href="../css/homenav.css">
-<link rel="stylesheet" href="../css/homeseachxs.css">
 <link rel="stylesheet" href="../js/slider/jquery.bxslider.css">
 <script type="text/javascript" src="../js/slider/jquery.bxslider.js"></script>
 <script src="../js/homepage.js"></script>
-{{#if user}}
-  {{> userheader}}
-{{else}}
-  {{> header}}
-{{/if}}
+
 <div class="allindex">
+  {{#if user}}
+    {{> userheader}}
+  {{else}}
+    {{> header}}
+  {{/if}}
   <ul class="bxslider">
     <li><div id="home-header-div" class="hidden-xs" style="background-image: url(https://s3.amazonaws.com/styleboxphotosbianor/4af92b43fcfa900695a93951ed04adad.jpeg)">
         <div class="jumbotron home-header-info1">

@@ -1710,4 +1710,16 @@ router.get('/conditions', function(req, res){
 
   res.send(true);
 })
+
+router.get('/login', function(req, res){
+  res.render('login');
+})
+
+router.get('/register', function(req, res){
+  res.render('register');
+})
+
+router.get('/searchxs', function(req, res){
+  res.render('searchxs');
+})
 module.exports = router;
