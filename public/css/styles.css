@@ -2608,5 +2608,9 @@ div.errmsgdiv {
   outline: none;
 }
 
+.overflowsettings{
+  overflow: hidden;
+}
+
 /*#00aa9c vert
 00d3c5 hover vert*/

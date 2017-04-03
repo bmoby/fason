@@ -127,26 +127,26 @@ $(document).ready(function(){
   $('.connection').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.login-append').removeClass('hidden');
-    $('.allindex').addClass('hidden');
+    $('.allindex').addClass('overflowsettings');
   });
 
 
   $('.register').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.register-append').removeClass('hidden');
-    $('.allindex').addClass('hidden');
+    $('.allindex').addClass('overflowsettings');
   });
 
   $('.home-xs-search-redirect-btn').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.xs-search-append').removeClass('hidden');
-    $('.allindex').addClass('hidden');
+    $('.allindex').addClass('overflowsettings');
   });
 
   $('.close-icon').on('click', function(){
     $('.full-page').addClass('hidden');
     $('.errorsBlock').addClass('hiddenclass');
-    $('.allindex').removeClass('hidden');
+    $('.allindex').removeClass('overflowsettings');
   });
 
   $('.select-avatar').on('click', function(){
