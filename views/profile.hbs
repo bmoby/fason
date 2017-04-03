@@ -13,9 +13,8 @@
     <div class="row errorsBlock hiddenclass">
     </div>
     <div class="row login-container-row text-center">
-      <img class="stylebox-display-avatar select-avatar" {{#if user.avatar}} src="{{userAvatar}}" {{else}} src="/images/noavatar.png"{{/if}}>
+      <img class="stylebox-display-avatar select-avatar" {{#if user.avatar}} src="{{userAvatar}}" {{else}} src="https://fason.herokuapp.com/images/noavatar.png"{{/if}}>
       </img>
-
 
       <form  method="post" action="/users/updateavatar", enctype="multipart/form-data">
         <input type="text" name="userId" class="hidden useridtoserver">

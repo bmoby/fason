@@ -237,23 +237,22 @@ router.post('/updateprofil', function(req, res){
 
 router.post('/updateavatar', uploadMulter.single('displayImage'), function(req, res){
   if(req.file){
+    console.log(req.file)
     var actualava = req.user.avatar;
     var n = actualava.lastIndexOf('/');
     var avakey = actualava.substring(n + 1);
-    if(avakey != "1fd5ea496ca11a97198aa3cdd3d7f8cb.png"){
-      s3.deleteObject({
-        Bucket: 'styleboxphotosfason',
-        Key: avakey
+    s3.deleteObject({
+      Bucket: 'styleboxphotosbianor',
+      Key: avakey
 
-      },function (err,data){if(err){console.log(err)}})
-    }
+    },function (err,data){if(err){console.log(err)}})
     var fileName = {};
     var file = req.file;
     var stream = fs.createReadStream(file.path)
     var imageType = file.mimetype.split('/').pop()
     fileName = file.filename+'.'+imageType;
     params = {
-      Bucket: 'styleboxphotosfason',
+      Bucket: 'styleboxphotosbianor',
       ACL: 'public-read',
       Key: fileName,
       Body: stream
