@@ -408,9 +408,4 @@ $(document).ready(function(){
       }
     });
   });
-
-  $('.select-minTime-proper').niceSelect();
-  $('.select-gender-proper').niceSelect();
-  $('.select-minTime-proper').niceSelect();
-
 })
