@@ -127,12 +127,14 @@ $(document).ready(function(){
 
   $('.hidejs').hide();
   $('.connection').on('click', function(){
+    $('.login-append').removeClass('hidden');
     $('.login-append').show();
     $('.allindex').hide();
   });
 
 
   $('.register').on('click', function(){
+    $('.register-append').removeClass('hidden');
     $('.register-append').show();
     $('.allindex').hide();
   });
