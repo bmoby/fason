@@ -84,7 +84,7 @@ router.post('/setavatar', uploadMulter.single('displayImage'), function(req, res
       if(err){
         console.log(err)
       }else{
-        user.avatar = "https://s3.amazonaws.com/styleboxphotosbianor/"+fileName
+        user.avatar = "https://s3.amazonaws.com/styleboxphotosfason/"+fileName
         user.save();
         if(req.body.userType == "user"){
           setTimeout(function () {
@@ -185,7 +185,7 @@ router.post('/updateprofil', function(req, res){
             from: '"Fason service client" <fason.contact@gmail.com>', // sender address
             to: userEmail, // list of receivers
             subject : "Veuillez confirmer votre email",
-            html : "Bonjour,<br> Veuillez confirmer votre email afin de valider votre compte sur BIANOR.<br><a href="+link+">Appuyez ici pour confirmer</a>"
+            html : "Bonjour,<br> Veuillez confirmer votre email afin de valider votre compte sur FASON.<br><a href="+link+">Appuyez ici pour confirmer</a>"
         };
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
@@ -205,7 +205,7 @@ router.post('/updateprofil', function(req, res){
         client.sms.messages.create({
           to: userPhone,
           from:'+33644607659',
-          body:'Bianor code: '+phoneCode,
+          body:'Fason code: '+phoneCode,
         }, function(error, message) {
             // The HTTP request to Twilio will run asynchronously. This callback
             // function will be called when a response is received from Twilio
@@ -242,7 +242,7 @@ router.post('/updateavatar', uploadMulter.single('displayImage'), function(req, 
     var n = actualava.lastIndexOf('/');
     var avakey = actualava.substring(n + 1);
     s3.deleteObject({
-      Bucket: 'styleboxphotosbianor',
+      Bucket: 'styleboxphotosfason',
       Key: avakey
 
     },function (err,data){if(err){console.log(err)}})
@@ -252,7 +252,7 @@ router.post('/updateavatar', uploadMulter.single('displayImage'), function(req, 
     var imageType = file.mimetype.split('/').pop()
     fileName = file.filename+'.'+imageType;
     params = {
-      Bucket: 'styleboxphotosbianor',
+      Bucket: 'styleboxphotosfason',
       ACL: 'public-read',
       Key: fileName,
       Body: stream
@@ -272,7 +272,7 @@ router.post('/updateavatar', uploadMulter.single('displayImage'), function(req, 
       if(err){
         console.log(err)
       }else{
-        user.avatar = "https://s3.amazonaws.com/styleboxphotosbianor/"+fileName
+        user.avatar = "https://s3.amazonaws.com/styleboxphotosfason/"+fileName
         user.save();
         setTimeout(function () {
           res.redirect("https://fason.herokuapp.com/")
@@ -377,7 +377,7 @@ router.post('/register', function(req, res){
       client.sms.messages.create({
         to: phone,
         from:'+33644607659',
-        body:'Bianor code: '+phoneCode,
+        body:'Fason code: '+phoneCode,
       }, function(error, message) {
           // The HTTP request to Twilio will run asynchronously. This callback
           // function will be called when a response is received from Twilio

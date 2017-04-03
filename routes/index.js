@@ -46,25 +46,14 @@ router.get('/', function(req, res) {
 
 
 // SEARCH PAGES
-router.get('/search', function(req, res){
-  Stylebox.find({}, function(err, styleboxes) {
-    var styleboxesandstylist = [];
-    styleboxes.forEach(function(stylebox, index, object){
-      User.getUserById(stylebox.creator, function(err, user){
-        stylebox.stylistname = user.lastName;
-        stylebox.stylistavatar = user.avatar;
-        styleboxesandstylist.push(stylebox);
-      });
-      if(index + 1 == object.length){
 
-        if(req.user){
-          res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-        } else {
-          res.render('search', {"user": req.user});
-        }
-      }
-    })
-  });
+
+router.get('/search', function(req, res){
+  if(req.user){
+    res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Veuillez entrer vos criteres de recherche, ou appuyez sur Recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+  } else {
+    res.render('search', {"user": req.user, "errmsg": "Veuillez entrer vos criteres de recherche ou appuyez sur Recherche."});
+  }
 })
 
 router.post('/search', function(req, res){
@@ -505,7 +494,7 @@ router.post('/demand', function(req, res){
               client.sms.messages.create({
                 to:user.phone,
                 from:'+33644607659',
-                body:'BIANOR: Vous avez recu une nouvelle demade de relooking',
+                body:'FASON: Vous avez reçu une nouvelle demande de relooking.',
               }, function(err, message) {
                 if(err){
                   console.log(err);
@@ -609,7 +598,7 @@ router.post('/demand', function(req, res){
                         client.sms.messages.create({
                           to:user.phone,
                           from:'+33644607659',
-                          body:'BIANOR: Vous avez recu une nouvelle demade de relooking',
+                          body:'FASON: Vous avez reçu une nouvelle demande de relooking.',
                         }, function(err, message) {
                           if(err){
                             console.log(err);
@@ -638,7 +627,7 @@ router.get('/sendPhoneCode', function(req, res){
   client.sms.messages.create({
     to:req.user.phone,
     from:'+33644607659',
-    body:'Votre code BIANOR:'+ code,
+    body:'Votre code FASON:'+ code,
   }, function(error, message) {
     if (!error) {
         res.send({"smsSent": true})
@@ -1360,7 +1349,7 @@ router.post('/declinedemand', function(req, res){
       client.sms.messages.create({
         to:user.phone,
         from:'+33644607659',
-        body:'BIANOR: Votre dérniere demande sur BIANOR à été déclinée. Vous pouvez désormée refaire une nouvelle demande.',
+        body:'FASON: Votre dernière demande sur Fason a été déclinée. Vous pouvez désormais en refaire une autre.',
       }, function(err, message) {
         if(err){
           console.log(err);
@@ -1703,12 +1692,10 @@ router.post('/contacter', function(req, res){
 
 router.get('/conditions', function(req, res){
   if(req.user){
-    // res.render('conditions', {"user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+    res.render('conditions', {"user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
   } else {
-    // res.render('conditions');
+    res.render('conditions');
   }
-
-  res.send(true);
 })
 
 router.get('/login', function(req, res){
