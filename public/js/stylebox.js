@@ -289,7 +289,7 @@ $(document).ready(function(){
     if (description == ""){
       $('.errorsBlock').removeClass('hiddenclass');
       $('.errorsBlock').append(
-        '<div class="row oneError text-center"><p class="errorMessage">Veuillez replire votre déscription</p></div>'
+        '<div class="row oneError text-center"><p class="errorMessage">Veuillez résumez votre expérience (minimum 200 caractères).</p></div>'
       )
     }
 
@@ -305,6 +305,11 @@ $(document).ready(function(){
   var errorCounter = 0;
 
   $('.stylebox-description').textcounter({
+    stopInputAtMaximum: false,
+    displayErrorText: false
+  });
+
+  $('.about-me').textcounter({
     stopInputAtMaximum: false,
     displayErrorText: false
   });
