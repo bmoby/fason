@@ -2610,6 +2610,7 @@ div.errmsgdiv {
 
 .overflowsettings{
   overflow: hidden;
+  height: 50vh !important;
 }
 
 /*#00aa9c vert
