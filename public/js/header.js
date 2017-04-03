@@ -171,6 +171,7 @@ $(document).ready(function(){
   // REGISTER JQUERY ERROR HANDLING PROCESS
   $('.register-btn').on('click', function(){
     // getting the data from the fields
+    $("html, body").animate({ scrollTop: 0 }, "slow");
     var first = $('#firstName').val();
     var last = $('#lastName').val();
     var emai = $('#userEmail').val();

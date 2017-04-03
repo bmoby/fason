@@ -170,9 +170,9 @@ router.post('/search', function(req, res){
           })
         } else {
           if(req.user){
-            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun style ne correspond a votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun style ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
           } else {
-            res.render('search', {"user": req.user, "errmsg": "Aucun style ne correspond a votre recherche"});
+            res.render('search', {"user": req.user, "errmsg": "Aucun style ne correspond à votre recherche"});
           }
         }
       }

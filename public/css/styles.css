@@ -14,7 +14,7 @@ a:hover{
 }
 
 .cgu-maine-container{
-  background: #f2f2f2;
+  background: white;
   padding:50px;
 }
 
@@ -1613,7 +1613,7 @@ div.row.image-load-container {
 }
 
 .errorMessage{
-  color: #d9534f !important;
+  color: #ff6063 !important;
 }
 
 .bottom-menu-container {
@@ -2274,11 +2274,15 @@ div.notationdiv {
   cursor: pointer;
 }
 
+.home-xs-search-container{
+  position: relative;
+  bottom: 55px;
+}
 
 .masonryContainer1, .masonryContainer2, .masonryContainer3, .masonryContainer4{
   overflow: hidden;
   height: auto;
-  margin-bottom: 2px;
+  margin-bottom: 12px;
 }
 
 #gallery{
