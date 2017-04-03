@@ -63,7 +63,7 @@ $(document).on('ready', function() {
         data: JSON.stringify({"city": city, "styleboxId": styleboxId, "budget": budget, "title": title, "price": price, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "photos": filesLoaded}),
         success:function(response){
           if (response){
-            alert('Votre look à été modifié');
+            alert('Look a été modifié.');
             window.location.replace('https://fason.herokuapp.com/mystyleboxes');
           }
         }

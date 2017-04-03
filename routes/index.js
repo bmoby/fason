@@ -50,9 +50,9 @@ router.get('/', function(req, res) {
 
 router.get('/search', function(req, res){
   if(req.user){
-    res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Veuillez entrer vos criteres de recherche, ou appuyez sur Recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+    res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Veuillez appuyer sur Recherche.", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
   } else {
-    res.render('search', {"user": req.user, "errmsg": "Veuillez entrer vos criteres de recherche ou appuyez sur Recherche."});
+    res.render('search', {"user": req.user, "errmsg": "Veuillez appuyer sur Recherche."});
   }
 })
 

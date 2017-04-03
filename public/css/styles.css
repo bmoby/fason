@@ -1762,6 +1762,13 @@ div.messages-container-div-title {
   padding-bottom: 20px;
 }
 
+div.messages-container-div-title-2{
+  position: relative;
+  bottom: 100px;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
 @media (max-width:767px) {
   div.messages-container-div-title {
     margin-left:5%;
@@ -2277,6 +2284,11 @@ div.notationdiv {
 .home-xs-search-container{
   position: relative;
   bottom: 55px;
+}
+
+.intercaler{
+  display: inline-block;
+  height: 60px;
 }
 
 .masonryContainer1, .masonryContainer2, .masonryContainer3, .masonryContainer4{

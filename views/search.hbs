@@ -11,11 +11,17 @@
   {{> header}}
 {{/if}}
 
+<div class="intercaler">
+
+</div>
+
 {{> searchbar}}
 
 <div class="styleboxes-search-container">
-  <div class="messages-container-div-title">
-    <h1 class="errmsg">{{errmsg}}.</h1>
+  <div class="messages-container-div-title-2">
+    {{#if errmsg}}
+    <h1 class="errmsg">{{errmsg}}</h1>
+    {{/if}}
   </div>
 
   <ul class="listitems">

@@ -13,7 +13,7 @@ var StyleboxSchema = mongoose.Schema({
 	beaute: Boolean,
 	style: String,
 	gender: String,
-	minTime: Number,
+	minTime: String,
 	minBudget: Number,
 	description: String,
 	city: String,

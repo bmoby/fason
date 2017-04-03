@@ -41,7 +41,7 @@ $(document).ready(function(){
       if(password != repeat){
         $('.errorsBlock').removeClass('hiddenclass');
         $('.errorsBlock').append(
-          '<div class="row oneError text-center"><p class="errorMessage">Les deux mot de passes ne sont pas identiques!</p></div>'
+          '<div class="row oneError text-center"><p class="errorMessage">Les deux mots de passe ne sont pas identiques.</p></div>'
         )
       } else {
         $.ajax({
@@ -65,7 +65,7 @@ $(document).ready(function(){
     } else {
       $('.errorsBlock').removeClass('hiddenclass');
       $('.errorsBlock').append(
-        '<div class="row oneError text-center"><p class="errorMessage">Veuillez remplire les deux champs.</p></div>'
+        '<div class="row oneError text-center"><p class="errorMessage">Veuillez remplir les deux champs.</p></div>'
       )
     }
   });

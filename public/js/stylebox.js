@@ -124,7 +124,7 @@ $(document).ready(function(){
       data: JSON.stringify({"message": message, "styleboxId": styleboxId}),
       success: function(response){
         if (response){
-          alert("Votre message a bien été envoyé, Vous seriez notifiées lorsque le stylist vous répondra");
+          alert("Votre message a bien été envoyé. Vous serez notifié lorsque le relooker vous répondra.");
           $('.full-page').addClass('hidden');
         }
       }
@@ -147,7 +147,7 @@ $(document).ready(function(){
 
   // Send verification email route ajax request
   $('.resend-email-btn').on('click', function(){
-    alert("Un email vient d'être envoyé avec un lien pour confirmer votre email. N'oubliez pas de verifier les spams de votre boite email!");
+    alert("Un e-mail vient d'être envoyé avec un lien pour confirmer votre e-mail. N'oubliez pas de verifier les courriers indésirbales (spams) de votre boîte e-mail.");
     $.ajax({
       url: '/sendEmailVerify',
       method: 'GET'
@@ -161,7 +161,7 @@ $(document).ready(function(){
       method: 'GET',
       success: function(response){
         if(response.smsSent){
-          alert('Un sms vient de vous être envoyé avec le code de vérification');
+          alert("Un sms vient d'être envoyé avec le code de vérification.");
         }
       }
     })
@@ -194,7 +194,7 @@ $(document).ready(function(){
     var date = $('.form_datetime').val();
     if(date == ""){
       $('.error-after').after().append(
-        '<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Veuillez séléctioner une date</p></div></div>'
+        '<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Veuillez choisir une date.</p></div></div>'
       );
     }else{
       var forstyle = $('.forstyleTitle').text();
@@ -205,7 +205,7 @@ $(document).ready(function(){
         data: JSON.stringify({"date": date, "styleboxId": styleboxId, "forstyle": forstyle}),
         success: function(response){
           if (response.ok){
-            alert("Votre demande a été envoyée, vous n'avez qu'a attendre une réponse de la part de votre stylist");
+            alert("Votre demande de relooking a bien été envoyée. Relooker a 24 heures pour l'accepter. Dans le cas contraire, vous pouvez en faire une autre.");
             location.reload();
           } else {
             alert(response.err);
@@ -292,14 +292,14 @@ $(document).ready(function(){
     if (description == ""){
       $('.errorsBlock').removeClass('hiddenclass');
       $('.errorsBlock').append(
-        '<div class="row oneError text-center"><p class="errorMessage">Veuillez résumez votre expérience (minimum 200 caractères).</p></div>'
+        '<div class="row oneError text-center"><p class="errorMessage">Veuillez résumer votre expérience (minimum 200 caractères).</p></div>'
       )
     }
 
     if (counter < 200){
       $('.errorsBlock').removeClass('hiddenclass');
       $('.errorsBlock').append(
-        '<div class="row oneError text-center"><p class="errorMessage">Votre déscription dois être composé de 200 characters minimum</p></div>'
+        '<div class="row oneError text-center"><p class="errorMessage">Votre déscription doit être composé de 200 caractères minimum.</p></div>'
       )
     }
 
@@ -312,10 +312,6 @@ $(document).ready(function(){
     displayErrorText: false
   });
 
-  $('.about-me').textcounter({
-    stopInputAtMaximum: false,
-    displayErrorText: false
-  });
 
   $('.stylebox-create-continue-btn').on('click', function(){
     errorCounter = 0;
@@ -339,7 +335,7 @@ $(document).ready(function(){
     }
 
     if(budget != "" && $.isNumeric(budget) == false){
-      $('.style-minbudget-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Budget minimum sans symbole (€)</p></div></div>')
+      $('.style-minbudget-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Budget minimum sans symbole (€) et espace</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
@@ -369,7 +365,7 @@ $(document).ready(function(){
     }
 
     if(price == "" || $.isNumeric(price) == false) {
-      $('.style-price-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Prix horaire de ce look sans symbole (€)</p></div></div>')
+      $('.style-price-input-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Prix horaire de ce look sans symbole (€) et espace</p></div></div>')
       errorCounter = errorCounter+1;
     }
 
