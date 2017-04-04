@@ -26,6 +26,8 @@
     "handlebars-helper-eachitems": "^0.1.2",
     "handlebars-helper-paginate": "^0.2.0",
     "handlebars-paginate": "^0.1.0",
+    "http": "0.0.0",
+    "https": "^1.0.0",
     "image-size": "^0.5.0",
     "imagesloaded": "^4.1.1",
     "jquery": "^3.1.1",
