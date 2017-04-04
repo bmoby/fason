@@ -1152,7 +1152,7 @@ div.row.princing-options.general-row {
 }
 
 .full-page{
-  position: absolute;
+  position: fixed;
   top:0;
   left: 0;
   background-color: white;
@@ -1197,7 +1197,7 @@ input:focus{
 }
 
 .register-link{
-  padding-top: 15px;
+  padding: 10px 10px;
   color: #6193b5;
   cursor: pointer;
 }
@@ -1646,21 +1646,63 @@ div.row.image-load-container {
   border-bottom:1px solid #dbdbdb;
 }
 
-.conversation-row {
-  border-bottom:1px solid #f9f9f9;
-  padding:15px;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+
+
+@media (min-width:1200px) {
+  .conversation-row {
+    border-bottom:1px solid #f9f9f9;
+    padding:15px;
+    width: 65%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width:1199px) {
+  .conversation-row {
+    border-bottom:1px solid #f9f9f9;
+    padding:15px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width:991px) {
+  .conversation-row {
+    border-bottom:1px solid #f9f9f9;
+    padding:15px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .childOne{
+    position: relative;
+    left: 20px;
+  }
 }
 
 @media (max-width:767px) {
   .conversation-row {
     border-bottom:1px solid #f9f9f9;
-    padding:10px;
+    padding-bottom: 15px !important;
     width: 100%;
   }
+
+  .delete-conversation-icon{
+    position: relative;
+    bottom: 11px !important;
+  }
+
+  .stylebox-display-avatar-inbox{
+    position: relative;
+    right: 5px;
+  }
 }
+
+
+
 
 .stylebox-display-avatar-inbox {
   width:70px;
@@ -1685,6 +1727,10 @@ div.row.image-load-container {
 
 .inbox-icons {
   font-size:2em !important;
+}
+
+.inbox-icons-enveloppe{
+  font-size: 1.5em !important;
 }
 
 .inbox-menu-icons {
@@ -1748,6 +1794,8 @@ div.messages-container-div {
 
 @media (max-width:767px) {
   div.messages-container-div {
+    position: relative;
+    top: 15px;
     margin-left:5%;
     min-height:50vh;
     max-height:70vh;
@@ -1889,8 +1937,10 @@ div.eval-avatar{
 
 @media (max-width:767px) {
   div.messages-avatar {
-    width:20px;
-    height:20px;
+    position: relative;
+    top: 4px;
+    width:30px;
+    height:30px;
     background-position: center;
     background-size: cover;
     border-radius:50%;
@@ -1924,7 +1974,7 @@ div.eval-avatar{
 }
 
 .read{
-  color: green !important;
+  color: #00aa9c !important;
 }
 
 .notRead{

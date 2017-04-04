@@ -202,24 +202,10 @@ router.post('/updateprofil', function(req, res){
         }
 
         var phoneCode = randomIntFromInterval(10000, 100000);
-        client.sms.messages.create({
-          to: userPhone,
-          from:'+33644607659',
-          body:'Fason code: '+phoneCode,
-        }, function(error, message) {
-            // The HTTP request to Twilio will run asynchronously. This callback
-            // function will be called when a response is received from Twilio
-            // The "error" variable will contain error information, if any.
-            // If the request was successful, this value will be "falsy"
-            if (!error) {
-              user.phone = userPhone;
-              user.phoneVerification = phoneCode;
-              user.phoneIsVerified = false;
-              user.save();
-            } else {
-                console.log('Une erreur inconu');
-            }
-        });
+        user.phone = userPhone;
+        user.phoneVerification = phoneCode;
+        user.phoneIsVerified = false;
+        user.save();
       }
 
 
@@ -374,23 +360,6 @@ router.post('/register', function(req, res){
       res.send({errors: result});
   	} else {
       var phoneCode = randomIntFromInterval(10000, 100000)
-      client.sms.messages.create({
-        to: phone,
-        from:'+33644607659',
-        body:'Fason code: '+phoneCode,
-      }, function(error, message) {
-          // The HTTP request to Twilio will run asynchronously. This callback
-          // function will be called when a response is received from Twilio
-          // The "error" variable will contain error information, if any.
-          // If the request was successful, this value will be "falsy"
-          if (!error) {
-              // The second argument to the callback will contain the information
-              // sent back by Twilio for the request. In this case, it is the
-              // information about the text messsage you just sent:
-          } else {
-              console.log('Une erreur inconnu.');
-          }
-      });
   	   // if no error create a user prototype that will be sent to user model to be saved
   		var newUser = new User({
   			firstName: firstName,

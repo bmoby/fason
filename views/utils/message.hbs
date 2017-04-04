@@ -1,6 +1,6 @@
 
 <div class="row text-left close-row">
-    <div class="col-md-12"><i class="icon ion-android-close close-icon"></i></div>
+    <div class="col-md-12"><i class="fa fa-times close-icon"></i></div>
 </div>
 <div class="container" id="login-container">
   <h2 class="login-register-title text-center">Poser une question</h2>
@@ -10,8 +10,8 @@
           <h4 class="availability-contact-demand-firstName">{{stylist.lastName}}</h4>
       </div>
   </div>
-    <p class="logn-register-paragraph">Envoyez un premier message a votre stylist et commencez une conversation. Une fois la conversation crée vous pourriez comunquer directement dans le messenger de Bianor.</p>
     {{#if user}}
+    <p class="logn-register-paragraph">Envoyez un premier message à votre relooker et commencez la conversation. Une fois le message est envoyé, vous pourrez communiquer directement dans le messenger de Fason.</p>
     <div class="row envoyer-un-message-btn login-register-btn-row">
         <div>
             <textarea class="messageText mainLoginInput" placeholder="Tapez votre message ici."></textarea>
@@ -24,10 +24,11 @@
     </div>
     {{else}}
     <div class="row login-register-btn-row">
-        <div>
-            <button class="btn btn-default login-register-btn connection-btn" type="button">Enovyer un message</button>
-            <p class="register-link">Je n'ai pas de compte sur Bianor</p>
-        </div>
+      <p class="logn-register-paragraph">Pour contacter le Relooker conectez-vous ou inscrivez-vous sur Fason.</p>
+        <!-- <div> -->
+            <!-- <button class="btn btn-default login-register-btn connection-btn" type="button">Envoyer</button> -->
+            <p class="register-link">Je n'ai pas de compte sur Fason</p>
+        <!-- </div> -->
     </div>
     {{/if}}
 </div>

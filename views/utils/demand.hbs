@@ -1,6 +1,6 @@
 
 <div class="row text-left close-row">
-    <div class="col-md-12"><i class="icon ion-android-close close-icon"></i></div>
+    <div class="col-md-12"><i class="fa fa-times close-icon"></i></div>
 </div>
 <div class="container" id="login-container">
   <h2 class="login-register-title text-center">Prendre rendez-vous</h2>
@@ -16,14 +16,14 @@
       <h4>Disponibilités:</h4>
       <p class="logn-register-paragraph">{{stylist.availability}}</p>
       {{/if}}
-      <p class="logn-register-paragraph error-after">Sélectionnez la date et heure puis appuyez sur le boutton "Prendre rendez-vous".</p>
+      <p class="logn-register-paragraph error-after">Choisissez la date et heure puis appuyez sur le boutton "Prendre rendez-vous".</p>
       <div class="row login-container-row demand-row">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-calendar-check-o password-icon"></i></div>
           <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
               <input class="input-sm mainLoginInput login-register-text-field form_datetime" type="text" placeholder="Choisissez une date" readonly>
           </div>
       </div>
-      <div class="row login-register-btn-row">
+      <div class="row login-register-btn-row text-right">
           <div>
               <button class="btn btn-default login-register-btn submit-demand" type="button">Prendre rendez-vous</button>
           </div>
@@ -36,7 +36,7 @@
           {{#unless user.varified}}
             <div class="row envoyer-un-message-btn login-register-btn-row email-verify-row">
                 <div>
-                    <button class="btn btn-default login-register-btn resend-email-btn" type="button">Je n'ai pas recu le mail de vérification</button>
+                    <button class="btn btn-default login-register-btn resend-email-btn" type="button">Je n'ai pas reçu le mail de vérification.</button>
                 </div>
             </div>
             {{else}}
@@ -62,6 +62,7 @@
                 </div>
             </div>
           </div>
+
           {{else}}
           <div class="row envoyer-un-message-btn login-register-btn-row">
               <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
@@ -75,7 +76,7 @@
             <h4>Disponibilités:</h4>
             <p class="logn-register-paragraph">{{stylist.availability}}</p>
             {{/if}}
-            <p class="logn-register-paragraph error-after">Sélectionnez la date et heure puis appuyez sur le bouton "Prendre rendez-vous".</p>
+            <p class="logn-register-paragraph error-after">Choisissez la date et heure puis appuyez sur le bouton "Prendre rendez-vous".</p>
             <div class="row login-container-row demand-row">
                 <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-calendar-check-o password-icon"></i></div>
                 <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
@@ -91,10 +92,11 @@
         {{/if}}
         {{else}}
         <div class="row login-register-btn-row">
-            <div>
-                <button class="btn btn-default login-register-btn connection-btn" type="button">Prendre rendez-vous</button>
-                <p class="register-link">Je n'ai pas de compte sur Bianor</p>
-            </div>
+          <p class="logn-register-paragraph">Pour prendre rendez-vous avec le Relooker conectez-vous ou inscrivez-vous sur Fason.</p>
+            <!-- <div> -->
+                <!-- <button class="btn btn-default login-register-btn connection-btn" type="button">Prendre rendez-vous</button> -->
+                <p class="register-link">Je n'ai pas de compte sur Fason</p>
+            <!-- </div> -->
         </div>
       {{/if}}
     </div>

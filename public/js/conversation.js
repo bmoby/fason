@@ -50,6 +50,7 @@ $(".limit-large").each(function(i){
     $('.'+conversationId+'icon').addClass('read');
     $('.'+conversationId+'new').text("");
     convId = this.getAttribute("data-conv-id");
+
     function scrollAfterAll(callback){
       $('.messages-container-div').empty();
       $.ajax({
@@ -184,6 +185,8 @@ $(".limit-large").each(function(i){
           $('.message-text-body').val("");
         }
       });
+    } else {
+      alert("empty field")
     }
   })
 

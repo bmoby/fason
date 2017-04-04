@@ -15,7 +15,6 @@ var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
-var client = new twilio.RestClient('AC0f6433c5d0713b85184d77e30383fd4f', 'cbac6157842210b60de45dab4f90f9fa');
 
 
 // Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
@@ -620,6 +619,7 @@ router.post('/demand', function(req, res){
 });
 
 router.get('/sendPhoneCode', function(req, res){
+  var client = new twilio.RestClient('AC0f6433c5d0713b85184d77e30383fd4f', 'cbac6157842210b60de45dab4f90f9fa');
   var code = req.user.phoneVerification;
   client.sms.messages.create({
     to:req.user.phone,
@@ -628,8 +628,9 @@ router.get('/sendPhoneCode', function(req, res){
   }, function(error, message) {
     if (!error) {
         res.send({"smsSent": true})
+        console.log("le sms est partie")
     } else {
-        console.log(error);
+        console.log(error, "c'est une erreur par la les gaches");
     }
   });
 });

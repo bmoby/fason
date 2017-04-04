@@ -165,6 +165,7 @@ $(document).ready(function(){
         }
       }
     })
+
   })
 
   $('.confirm-code').on('click', function(){

@@ -16,7 +16,7 @@ $(document).ready(function(){
     var img2 = $('#1-4');
     var height1 = img1.height()+img2.height();
     $('.masonryContainer1').css({"height": height1});
-    $('.masonryContainer1').before('<div class="text-center styledescription"><p>Style Business formel</p></div>')
+    $('.masonryContainer1').before('<div class="text-center styledescription"><p>Business formal style</p></div>')
       $('#gallery').masonry({
       itemSelector: '.item-masonry',
       columnWidth: '.sizer4',
@@ -28,7 +28,7 @@ $(document).ready(function(){
     var img23 = $('#2-3');
     var height2 = img23.height() + img21.height();
     $('.masonryContainer2').css({"height": height2});
-    $('.masonryContainer2').before('<div class="text-center styledescription"><p>Style Business casual</p></div>')
+    $('.masonryContainer2').before('<div class="text-center styledescription"><p>Business casual style</p></div>')
     $('#gallery1').masonry({
       itemSelector: '.item-masonry',
       columnWidth: '.sizer4',
@@ -41,7 +41,7 @@ $(document).ready(function(){
     var img35 = $('#3-5');
     var height3 = img32.height()+img35.height();
     $('.masonryContainer3').css({"height": height3});
-    $('.masonryContainer3').before('<div class="text-center styledescription"><p>Style Business casual</p></div>')
+    $('.masonryContainer3').before('<div class="text-center styledescription"><p>Business casual style</p></div>')
     $('#gallery2').masonry({
       itemSelector: '.item-masonry',
       columnWidth: '.sizer4',
@@ -54,7 +54,7 @@ $(document).ready(function(){
     var img45 = $('#4-5');
     var height4 = img42.height() + img45.height();
     $('.masonryContainer4').css({"height": height4});
-    $('.masonryContainer4').before('<div class="text-center styledescription"><p>Style Bohemia</p></div>')
+    $('.masonryContainer4').before('<div class="text-center styledescription"><p>Bohemian style</p></div>')
     $('#gallery3').masonry({
       itemSelector: '.item-masonry',
       columnWidth: '.sizer4',
