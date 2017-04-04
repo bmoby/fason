@@ -1,8 +1,8 @@
 {
-  "name": "bianorcompany",
+  "name": "Fason",
   "version": "1.0.0",
-  "description": "COmpany that makes people stylish",
-  "private": true,
+  "description": "Company that makes people stylish",
+  "private": false,
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
