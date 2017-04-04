@@ -63,9 +63,6 @@ $(document).ready(function(){
   });
 
     // Setting the nice select for gender and style select in search bar on home
-    $('.select-style').niceSelect();
-    $('.select-gender').niceSelect();
-
     // $(".city-search").geocomplete({
     //   dropdownWidth: '100%',
     //   dropdownStyle: {},

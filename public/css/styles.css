@@ -1155,10 +1155,10 @@ div.row.princing-options.general-row {
   position: fixed;
   top:0;
   left: 0;
+  overflow: auto;
   background-color: white;
   width: 100%;
-  min-height: 100vh;
-  overflow: auto;
+  height: 100vh;
   z-index: 999999999999 !important;
 }
 
@@ -1810,12 +1810,6 @@ div.messages-container-div-title {
   padding-bottom: 20px;
 }
 
-div.messages-container-div-title-2{
-  position: relative;
-  bottom: 100px;
-  padding-left: 20px !important;
-  padding-right: 20px !important;
-}
 
 @media (max-width:767px) {
   div.messages-container-div-title {
@@ -2658,8 +2652,21 @@ a:link{
 }
 
 .errmsg{
-  padding-top: 20vh;
   font-size: 1.4em !important;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.errmsgc{
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+@media (max-width:767px) {
+  .errmsgc{
+    width: 100%;
+  }
 }
 
 div.errmsgdiv {
@@ -2707,6 +2714,9 @@ div.errmsgdiv {
   top: 0;
   left: 0;
   height: 50vh !important;
+}
+
+.demand-scroller{
 }
 
 /*#00aa9c vert

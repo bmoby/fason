@@ -150,6 +150,10 @@ $(document).ready(function(){
     }
   });
 
+  $('.close-icon-hider').on('click', function(){
+    $('.full-page').addClass('hidden');
+  })
+
   $('.select-avatar').on('click', function(){
     $('.avatarUpload').click();
   })
