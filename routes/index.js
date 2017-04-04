@@ -25,6 +25,8 @@ var pusher = new Pusher({
   encrypted: true
 });
 
+var client = new twilio.RestClient('AC0f6433c5d0713b85184d77e30383fd4f', 'cbac6157842210b60de45dab4f90f9fa');
+
 // Params setting nodemailer transporter
 var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
@@ -619,7 +621,6 @@ router.post('/demand', function(req, res){
 });
 
 router.get('/sendPhoneCode', function(req, res){
-  var client = new twilio.RestClient('AC0f6433c5d0713b85184d77e30383fd4f', 'cbac6157842210b60de45dab4f90f9fa');
   var code = req.user.phoneVerification;
   client.sms.messages.create({
     to:req.user.phone,
