@@ -39,7 +39,25 @@ var transporter = nodemailer.createTransport("SMTP",{
 /* GET home page. */
 router.get('/', function(req, res) {
   if(req.user){
-    res.render('index', {"user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+    var notifcount = 0;
+    var newdemands = 0;
+    var allnotifs = 0;
+
+    if(req.user.notifications.length){
+      notifcount = req.user.notifications.length;
+    }
+
+    if(req.user.demandNotifications.length){
+      newdemands = req.user.demandNotifications.length;
+    }
+
+    if(req.user.demandNotifications.length || req.user.notifications.length){
+      allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
+    } else if (req.user.demandNotifications.length && req.user.notifications.length){
+      allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
+    }
+
+    res.render('index', {"user": req.user, "newmessages": notifcount, "newdemands": newdemands, "allNotifications": allnotifs});
   } else {
     res.render('index');
   }
