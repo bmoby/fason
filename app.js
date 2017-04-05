@@ -21,6 +21,7 @@ var db = mongoose.connection;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var notifications = require('./routes/notif');
 
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -77,6 +78,7 @@ app.use(expressValidator({
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/notifs', notif);
 
 // Set Port
 app.set('port', (process.env.PORT || 3000));

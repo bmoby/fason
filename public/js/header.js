@@ -1,7 +1,7 @@
 $(document).ready(function(){
   setTimeout(function(){
     $.ajax({
-      url: '/checkevals',
+      url: '/notifs/checkevals',
       method: 'GET',
       success: function(response){
         if(response.evals){
@@ -19,7 +19,7 @@ $(document).ready(function(){
         }
       }
     })
-  }, 5000)
+  }, 2000)
 
   setTimeout(function(){
     $.ajax({

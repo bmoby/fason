@@ -36,6 +36,7 @@ var transporter = nodemailer.createTransport("SMTP",{
     }
 });
 
+
 /* GET home page. */
 router.get('/', function(req, res) {
   if(req.user){
@@ -653,30 +654,6 @@ router.get('/sendPhoneCode', function(req, res){
     }
   });
 });
-
-router.get('/checkevals', function(req, res){
-  if(req.user){
-    var connectedUser = req.user;
-    if(connectedUser.evals){
-      var validevals = [];
-      connectedUser.evals.forEach(function(eval, index, object){
-        if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
-          var participated = false;
-          validevals.push(eval);
-        }
-
-        if(index+1  == object.length){
-          res.send({"evals": validevals.length})
-        }
-      })
-    } else {
-      res.send(false);
-    }
-  } else {
-    res.send(false);
-  }
-});
-
 
 router.get('/sendEmailVerify', function(req, res){
   var link = "https://fason.herokuapp.com/users/verify?id="+req.user.verifyEmailString;
