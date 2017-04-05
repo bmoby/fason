@@ -4,7 +4,7 @@
       <div class="row general-row text-right">
         <a href="/stylebox/edit/{{this.id}}"><p class="edit">Modifier</p></a> <p class="delete" data-stylebox-id-remove="{{this.id}}">Supprimer</p>
       </div>
-      
+
       <a href="/stylebox/{{this.id}}">
         <div class="general-row">
           <div class="row stylebox-images-row">
@@ -63,14 +63,11 @@
                   </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center stylebox-stylist-personal pricebackground">
-                  <div class="row minbudget-row">
-
-                      <p class="timepricep timepricep2">{{this.price}}€ / h</p> <p class="timepricep">{{#if this.minTime}} {{this.minTime}} minimum{{/if}}</p>
-
-                  </div>
+                <div class="row minbudget-row">
+                  <p class="timepricep timepricep2">{{this.price}}€ / h</p> <p class="timepricep">{{#if this.minTime}} {{this.minTime}} minimum{{/if}}</p>
+                </div>
               </div>
           </div>
         </div>
       </a>
-
     </div>

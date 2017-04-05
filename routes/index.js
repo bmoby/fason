@@ -778,15 +778,37 @@ router.post('/createstylebox', function(req, res){
     description: description,
     photos: dbPic,
   });
-
-  Stylebox.createNewStylebox(newStyle, function(err, stylebox){
-    if(err) {
-      console.log(err)
-    } else {
-      dbPic=[];
-      res.send(true);
-    }
-  });
+  var createme = true;
+  if(req.user.styleboxes){
+    req.user.styleboxes.forEach(function(styleb, indexstyleb, objectstyleb){
+      Stylebox.getStyleboxById(styleb, function(err, stylebx)){
+        if stylebx.title == title {
+          createme = false;
+        }
+        if(indexstyleb+1 == objectstyleb.length){
+          if(createme){
+            Stylebox.createNewStylebox(newStyle, function(err, stylebox){
+              if(err) {
+                console.log(err)
+              } else {
+                dbPic=[];
+                res.send(true);
+              }
+            });
+          }
+        }
+      }
+    })
+  } else {
+    Stylebox.createNewStylebox(newStyle, function(err, stylebox){
+      if(err) {
+        console.log(err)
+      } else {
+        dbPic=[];
+        res.send(true);
+      }
+    });
+  }
 });
 
 // Get the conversations and display them when log into inbox page
