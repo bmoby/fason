@@ -737,6 +737,7 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
   s3.putObject(params, function(err, data){
     if (err){
       console.log(err)
+      res.sned(false);
     }else{
       fs.unlink(req.file.path, function(err){
         if (err) console.error(err)
@@ -776,39 +777,18 @@ router.post('/createstylebox', function(req, res){
     city: checkcity(city),
     minBudget: budget,
     description: description,
-    photos: dbPic,
+    photos: dbPic
   });
-  var createme = true;
-  if(req.user.styleboxes){
-    req.user.styleboxes.forEach(function(styleb, indexstyleb, objectstyleb){
-      Stylebox.getStyleboxById(styleb, function(err, stylebx){
-        if (stylebx.title == title) {
-          createme = false;
-        }
-        if(indexstyleb+1 == objectstyleb.length){
-          if(createme){
-            Stylebox.createNewStylebox(newStyle, function(err, stylebox){
-              if(err) {
-                console.log(err)
-              } else {
-                dbPic=[];
-                res.send(true);
-              }
-            });
-          }
-        }
-      });
-    })
-  } else {
-    Stylebox.createNewStylebox(newStyle, function(err, stylebox){
-      if(err) {
-        console.log(err)
-      } else {
-        dbPic=[];
-        res.send(true);
-      }
-    });
-  }
+
+  Stylebox.createNewStylebox(newStyle, function(err, stylebox){
+    if(err) {
+      console.log(err)
+    } else {
+      dbPic=[];
+      res.send(true);
+    }
+  });
+
 });
 
 // Get the conversations and display them when log into inbox page

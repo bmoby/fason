@@ -1,4 +1,8 @@
 $(document).ready(function(){
+  var pusher = new Pusher('095ff3028ab7bceb6073', {
+    encrypted: true
+  });
+
   $('.select-style').niceSelect();
   $('.select-gender').niceSelect();
 
@@ -12,15 +16,6 @@ $(document).ready(function(){
       readonly: true
     });
   })
-
-  // $('#search-city').geocomplete({
-  //   dropdownWidth: '100%',
-  //   dropdownStyle: {},
-  //   itemStyle: {},
-  //   hintStyle: false,
-  //   style: false,
-  //   minLength: 3
-  // });
 
   //loading images before masonry executed
   $('.masoneryContainer').imagesLoaded(function(){
@@ -124,19 +119,12 @@ $(document).ready(function(){
       data: JSON.stringify({"message": message, "styleboxId": styleboxId}),
       success: function(response){
         if (response){
-          alert("Votre message a bien été envoyé. Vous serez notifié lorsque le relooker vous répondra.");
+          alert("Votre message a bien été envoyé. Une notification vous avertira en cas de réponse.");
           $('.full-page').addClass('hidden');
         }
       }
     });
   });
-
-  // Enable pusher logging - don't include this in production
-     // Declaring bianors pusher
-     var pusher = new Pusher('095ff3028ab7bceb6073', {
-       encrypted: true
-     });
-
 
    $(".form_datetime").datetimepicker({
     format: "dd mm yyyy - hh:ii",

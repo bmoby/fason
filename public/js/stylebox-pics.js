@@ -1,4 +1,4 @@
-$(document).on('ready', function() {
+$(document).ready(function() {
 
   $("#input-44").fileinput({
     showBrowse: false,
@@ -14,7 +14,7 @@ $(document).on('ready', function() {
     maxFileSize:5120, //5120kb=5mb
     msgSizeTooLarge: 'Taille de la photo ne peut pas excéder 5 MB',
     allowedFileExtensions: ["png", "jpeg", "jpg"],
-    dropZoneTitle: 'Faites glisser et déposez les images ici ou cliquez pour sélectionner.',
+    dropZoneTitle: 'Glissez les images ici ou cliquez pour sélectionner.',
     dropZoneClickTitle: '',
   });
 
@@ -24,6 +24,7 @@ $(document).on('ready', function() {
 
   // Create stylebox event
   $('.createSP').on('click', function(){
+    alert("create clicked")
     $('.fileinput-upload-button').click();
   });
 
@@ -59,7 +60,7 @@ $(document).on('ready', function() {
         data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description}),
         success:function(response){
           if (response){
-            alert('Look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
+            alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
             window.location.replace('https://fason.herokuapp.com/');
           }
         }
