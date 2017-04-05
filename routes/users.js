@@ -19,12 +19,12 @@ var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
-var client = new twilio.RestClient('AC0f6433c5d0713b85184d77e30383fd4f', 'cbac6157842210b60de45dab4f90f9fa');
+var client = new twilio.RestClient(TWILLIO_SECRET, TWILLIO_KEY);
 // Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
 var pusher = new Pusher({
-  appId: '283453',
-  key: '095ff3028ab7bceb6073',
-  secret: '25077850beef8ae1d148',
+  appId: PUSHER_ID,
+  key: PUSHER_KEY,
+  secret: PUSHER_SECRET,
   encrypted: true
 });
 
@@ -39,7 +39,7 @@ var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: "bianor19871989"
+        pass: MAIL_PASS
     }
 });
 // Setting the body parser for json
