@@ -23,8 +23,8 @@ var app = express();
 
 app.use(sassMiddleware({
     /* Options */
-    src: path.join(__dirname, 'sass'),
-    dest: path.join(__dirname, 'public'),
+    src: __dirname + '/sass',
+    dest: __dirname + '/public',
     debug: true,
     outputStyle: 'compressed'
 }));
