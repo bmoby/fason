@@ -1546,7 +1546,7 @@ router.post('/editstylebox', function(req, res){
       },function (err,data){
         if(err){
           console.log(err)
-        }
+        } console.log(data);
       })
 
       if(index+1 == stylebox.photos.length){
@@ -1561,6 +1561,7 @@ router.post('/editstylebox', function(req, res){
         stylebox.minBudget = budget;
         stylebox.minTime = minTime;
         stylebox.city = checkcity(city);
+        stylebox.photos = [];
         stylebox.save();
         res.send({"edited": true});
       }
