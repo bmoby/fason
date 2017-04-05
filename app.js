@@ -15,7 +15,6 @@ var fs = require('fs');
 var device = require('express-device');
 // Init App
 var app = express();
-process.env.PWD = process.cwd();
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:3001/bianor');
 var db = mongoose.connection;
@@ -24,10 +23,10 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 // View Engine
-app.set('views', path.join(process.env.PWD + 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
   defaultLayout:'layout',
-  partialsDir: process.env.PWD + '/views/utils/',
+  partialsDir: __dirname + '/views/utils/',
   extname: '.hbs',
     helpers: {
       last: function(array){return array[array.length -1].msg;},
@@ -45,7 +44,7 @@ app.use(cookieParser());
 app.use(device.capture());
 
 // Set Static Folder
-app.use(express.static(process.env.PWD + '/public'));
+app.use(express.static(path.join(__dirname, '/public')));
 
 // Express Session
 app.use(session({
