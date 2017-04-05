@@ -34,16 +34,14 @@ $(document).on('ready', function() {
     var styleboxId = $('.stylebox-id-input').val();
     var styleObject = {};
     styleObject.style = $('.select-style-proper').val();
-    s3Count.push(data.response);
 
-
-      if(style == "casual" || style == "businesscasual" || style == "businessformal" || style == "business" || style == "streetwear"){
-        styleObject.vestimentaire = true;
-        styleObject.beaute = false;
-      }else{
-        styleObject.vestimentaire = false;
-        styleObject.beaute = true;
-      }
+    if(style == "casual" || style == "businesscasual" || style == "businessformal" || style == "business" || style == "streetwear"){
+      styleObject.vestimentaire = true;
+      styleObject.beaute = false;
+    }else{
+      styleObject.vestimentaire = false;
+      styleObject.beaute = true;
+    }
 
       $.ajax({
         url: '/editstylebox',
