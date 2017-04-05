@@ -44,6 +44,14 @@ app.use(cookieParser());
 app.use(device.capture());
 
 // Set Static Folder
+app.use(
+     sass.middleware({
+         src: __dirname + '/sass',
+         dest: __dirname + '/public/stylesheets',
+         prefix:  '/stylesheets',
+         debug: true,
+     })
+  );  
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Express Session
