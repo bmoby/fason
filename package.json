@@ -55,5 +55,8 @@
   "devDependencies": {
     "handlebars-helper-paginate": "^0.2.0"
   },
-  "engine": "node 6.9.1"
+  "engines": {
+        "node": "6.9.1",
+        "npm": "3.10.8"
+    }
 }
