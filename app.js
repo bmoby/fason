@@ -15,6 +15,7 @@ var fs = require('fs');
 var device = require('express-device');
 // Init App
 var app = express();
+process.env.PWD = process.cwd();
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:3001/bianor');
 var db = mongoose.connection;
@@ -44,7 +45,7 @@ app.use(cookieParser());
 app.use(device.capture());
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(process.env.PWD + '/public'));
 
 // Express Session
 app.use(session({
