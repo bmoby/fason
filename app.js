@@ -16,7 +16,7 @@ var device = require('express-device');
 // Init App
 var app = express();
 
-mongoose.connect(MONGO_URI);
+mongoose.connect(process.env.MONGO_URI);
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
