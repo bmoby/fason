@@ -1476,6 +1476,29 @@ router.post('/stylebox/delete', function(req, res){
   });
 });
 
+router.get('/checkevals', function(req, res){
+  if(req.user){
+    var connectedUser = req.user;
+    if(connectedUser.evals){
+      var validevals = [];
+      connectedUser.evals.forEach(function(eval, index, object){
+        if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
+          var participated = false;
+          validevals.push(eval);
+        }
+
+        if(index+1  == object.length){
+          res.send({"evals": validevals.length})
+        }
+      })
+    } else {
+      res.end();
+    }
+  } else {
+    res.end();
+  }
+});
+
 router.post('/editstylebox', function(req, res){
   var styleboxId = req.body.styleboxId;
 
