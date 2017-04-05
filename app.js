@@ -49,8 +49,8 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.configure(
   app.use(
        sass.middleware({
-           src: path.join(__dirname, '/sass'), //where the sass files are
-           dest: path.join(__dirname, '/public'), //where css should go
+           src: __dirname + '/sass', //where the sass files are 
+           dest: __dirname + '/public', //where css should go
            debug: true // obvious
        })
    );
