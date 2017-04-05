@@ -40,7 +40,7 @@
     "mongoose-relationship": "^0.1.5",
     "multer": "^1.2.0",
     "multer-storage-s3": "^1.1.1",
-    "node-sass": "^4.5.2",
+    "node-sass-middleware": "^0.11.0",
     "node-uuid": "^1.4.7",
     "nodemailer": "~0.7.1",
     "passport": "*",
@@ -53,4 +53,8 @@
     "socket.io": "^1.7.2",
     "twilio": "^2.11.1"
   },
+  "devDependencies": {
+    "handlebars-helper-paginate": "^0.2.0"
+  },
+  "engine": "node 6.9.1"
 }

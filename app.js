@@ -1,6 +1,5 @@
 var express = require('express');
 var path = require('path');
-var sass = require('node-sass');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
@@ -14,8 +13,22 @@ var mongorelation = require('mongo-relation');
 var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
+
+
+var sassMiddleware = require('node-sass-middleware');
+
 // Init App
 var app = express();
+
+
+app.use(sassMiddleware({
+    /* Options */
+    src: __dirname,
+    dest: path.join(__dirname, 'public'),
+    debug: true,
+    outputStyle: 'compressed',
+    prefix:  '/css'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+}));
 
 mongoose.connect(process.env.MONGO_URI);
 var db = mongoose.connection;
@@ -46,18 +59,7 @@ app.use(device.capture());
 
 // Set Static Folder
 app.use(express.static(path.join(__dirname, '/public')));
-app.configure(
-  app.use(
-       sass.middleware({
-           src: __dirname + '/sass', //where the sass files are
-           dest: __dirname + '/public', //where css should go
-           debug: true // obvious
-       })
-   )
-)
 
-
-app.configure()
 // Express Session
 app.use(session({
     secret: 'secret',
