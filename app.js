@@ -14,7 +14,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
 
-
+var sass = require('node-sass');
 var sassMiddleware = require('node-sass-middleware');
 
 // Init App
