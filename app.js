@@ -13,21 +13,8 @@ var mongorelation = require('mongo-relation');
 var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
-
-var sass = require('node-sass');
-var sassMiddleware = require('node-sass-middleware');
-
 // Init App
 var app = express();
-
-
-app.use(sassMiddleware({
-    /* Options */
-    src: __dirname + '/sass',
-    dest: __dirname + '/public',
-    debug: true,
-    outputStyle: 'compressed'
-}));
 
 mongoose.connect(process.env.MONGO_URI);
 var db = mongoose.connection;
