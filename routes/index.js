@@ -1495,10 +1495,10 @@ router.get('/checkevals', function(req, res){
         }
       })
     } else {
-      res.end();
+      res.send(true);
     }
   } else {
-    res.end();
+    res.send(true);
   }
 });
 
