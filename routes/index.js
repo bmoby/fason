@@ -719,6 +719,7 @@ var uploadMulter = multer({dest: 'public/img'})
 var emptyStylebox = "";
 
 router.post('/load', uploadMulter.single('input44[]') , function(req, res, next){
+  console.log(emptyStylebox, "EMPTU STYLEBOX WAS WRITTEN")
   var fileName = {};
   var file = req.file;
   var stream = fs.createReadStream(file.path)
@@ -744,8 +745,9 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
     }
   });
 
-  Stylebox.getStryleboxById(emptyStylebox, function(err, stylebox){
-    stylebox.photos.push(fileName)
+  Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
+    stylebox.photos.push(fileName);
+    stylebox.save();
   })
 });
 

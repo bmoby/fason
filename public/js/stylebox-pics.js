@@ -23,7 +23,6 @@ $(document).ready(function() {
 //---------------------------------------------- UPLOADING TO S3 --------------------------------------------
 
   // Create stylebox event
-  var emptyStrylebox = "";
   $('.createSP').on('click', function(){
     var budget = $('.style-minbudget-input').val();
     var title = $('.style-title-input').val();
@@ -50,7 +49,6 @@ $(document).ready(function() {
         if (response){
           // alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
           // window.location.replace('https://fason.herokuapp.com/');
-          emptyStrylebox = response.styleboxId;
           $('.fileinput-upload-button').click();
         }
       }
