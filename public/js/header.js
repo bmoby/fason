@@ -1,5 +1,7 @@
 $(document).ready(function(){
-  setTimeout(function(){
+
+  var oneTime = 0;
+  function runonetime(counter){
     $.ajax({
       url: '/checkevals',
       method: 'GET',
@@ -19,7 +21,12 @@ $(document).ready(function(){
         }
       }
     })
-  }, 2000)
+    oneTime++;
+  }
+
+  if(oneTime == 0){
+    runonetime(oneTime)
+  }
 
   setTimeout(function(){
     $.ajax({
