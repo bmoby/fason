@@ -782,7 +782,7 @@ router.post('/createstylebox', function(req, res){
   if(req.user.styleboxes){
     req.user.styleboxes.forEach(function(styleb, indexstyleb, objectstyleb){
       Stylebox.getStyleboxById(styleb, function(err, stylebx){
-        if stylebx.title == title {
+        if (stylebx.title == title) {
           createme = false;
         }
         if(indexstyleb+1 == objectstyleb.length){
