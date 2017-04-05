@@ -23,17 +23,8 @@ $(document).ready(function() {
 //---------------------------------------------- UPLOADING TO S3 --------------------------------------------
 
   // Create stylebox event
+  var emptyStrylebox = "";
   $('.createSP').on('click', function(){
-    alert("create clicked")
-    $('.fileinput-upload-button').click();
-  });
-
-  // creating stylebox after all photos are loaded to S3
-  var breakCreate='';
-  $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
-    var counter = $('.file-caption-name').attr("title");
-    counter.replace(' files selected','');
-    var counterInt = parseInt(counter);
     var budget = $('.style-minbudget-input').val();
     var title = $('.style-title-input').val();
     var price = $('.style-price-input').val();
@@ -43,29 +34,33 @@ $(document).ready(function() {
     var minTime = $('.select-minTime-proper').val();
     var description = $('.stylebox-description').val();
     var styleObject = {};
-    styleObject.style = $('.select-style-proper').val();
-    if (counterInt == data.filescount){
-      if(style == "Coiffure" || style == "Barbe" || style == "CoiffureColoration" || style == "CoiffureBarbe" || style == "CoiffureColorationBarbe" || style == "Maquillage" || style == "Manucure" || style == "Pedicure" || style == "ManucurePedicure" || style == "Sourcils" || style == "SoinVisage" || style == "SoinCorp" || style == "SoinVisageCorp"){
-        styleObject.vestimentaire = false;
-        styleObject.beaute = true;
-      }else{
-        styleObject.vestimentaire = true;
-        styleObject.beaute = false;
-      }
-
-      $.ajax({
-        url: '/createstylebox',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description}),
-        success:function(response){
-          if (response){
-            alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
-            window.location.replace('https://fason.herokuapp.com/');
-          }
-        }
-      });
+    if(style == "Coiffure" || style == "Barbe" || style == "CoiffureColoration" || style == "CoiffureBarbe" || style == "CoiffureColorationBarbe" || style == "Maquillage" || style == "Manucure" || style == "Pedicure" || style == "ManucurePedicure" || style == "Sourcils" || style == "SoinVisage" || style == "SoinCorp" || style == "SoinVisageCorp"){
+      styleObject.vestimentaire = false;
+      styleObject.beaute = true;
+    }else{
+      styleObject.vestimentaire = true;
+      styleObject.beaute = false;
     }
+    $.ajax({
+      url: '/createstylebox',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description}),
+      success:function(response){
+        if (response){
+          // alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
+          // window.location.replace('https://fason.herokuapp.com/');
+          emptyStrylebox = response.styleboxId;
+          $('.fileinput-upload-button').click();
+        }
+      }
+    });
+  });
+
+  // creating stylebox after all photos are loaded to S3
+  var breakCreate='';
+  $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
+
   });
 
   $('.backToInfo').on('click', function(){

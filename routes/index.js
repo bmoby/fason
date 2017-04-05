@@ -716,7 +716,7 @@ router.get('/createstylebox', function(req, res){
 
 
 var uploadMulter = multer({dest: 'public/img'})
-var dbPic = [];
+var emptyStylebox = "";
 
 router.post('/load', uploadMulter.single('input44[]') , function(req, res, next){
   var fileName = {};
@@ -724,8 +724,6 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
   var stream = fs.createReadStream(file.path)
   var imageType = file.mimetype.split('/').pop()
   fileName = file.filename+'.'+imageType;
-  // Global array of pics
-  dbPic.push(fileName);
 
   params = {
     Bucket: 'styleboxphotosfason',
@@ -745,6 +743,10 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
       res.send(true);
     }
   });
+
+  Stylebox.getStryleboxById(emptyStylebox, function(err, stylebox){
+    stylebox.photos.push(fileName)
+  })
 });
 
 router.post('/createstylebox', function(req, res){
@@ -776,15 +778,14 @@ router.post('/createstylebox', function(req, res){
     minTime: minTime,
     city: checkcity(city),
     minBudget: budget,
-    description: description,
-    photos: dbPic
+    description: description
   });
 
   Stylebox.createNewStylebox(newStyle, function(err, stylebox){
     if(err) {
       console.log(err)
     } else {
-      dbPic=[];
+      emptyStylebox = stylebox.id;
       res.send(true);
     }
   });
