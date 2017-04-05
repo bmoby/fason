@@ -56,9 +56,8 @@ $(document).ready(function() {
   });
 
   // creating stylebox after all photos are loaded to S3
-  var breakCreate='';
   $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
-
+    console.log(data)
   });
 
   $('.backToInfo').on('click', function(){
