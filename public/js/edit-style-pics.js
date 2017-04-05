@@ -47,7 +47,7 @@ $(document).on('ready', function() {
         url: '/editstylebox',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({"city": city, "styleboxId": styleboxId, "budget": budget, "title": title, "price": price, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "photos": filesLoaded}),
+        data: JSON.stringify({"city": city, "styleboxId": styleboxId, "budget": budget, "title": title, "price": price, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description}),
         success:function(response){
           if (response){
             if(response.edited){
