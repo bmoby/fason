@@ -781,7 +781,7 @@ router.post('/createstylebox', function(req, res){
   var createme = true;
   if(req.user.styleboxes){
     req.user.styleboxes.forEach(function(styleb, indexstyleb, objectstyleb){
-      Stylebox.getStyleboxById(styleb, function(err, stylebx)){
+      Stylebox.getStyleboxById(styleb, function(err, stylebx){
         if stylebx.title == title {
           createme = false;
         }
@@ -797,7 +797,7 @@ router.post('/createstylebox', function(req, res){
             });
           }
         }
-      }
+      });
     })
   } else {
     Stylebox.createNewStylebox(newStyle, function(err, stylebox){
