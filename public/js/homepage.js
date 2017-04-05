@@ -10,6 +10,8 @@ $(document).ready(function(){
   //   //or however you get a handle to the IMG
   //   var height3 = img2.clientHeight + img21.clientHeight;
 
+  $('.select-style').niceSelect();
+  $('.select-gender').niceSelect();
 
   $('.masonryContainer1').imagesLoaded(function(){
     var img1 = $('#1-2');
