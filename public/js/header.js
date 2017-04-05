@@ -56,8 +56,6 @@ $(document).ready(function(){
         }
 
         if(response.userId){
-          // Enable pusher logging - don't include this in production
-          // Declaring bianors pusher
          var pusher = new Pusher('095ff3028ab7bceb6073', {
            encrypted: true
          });
