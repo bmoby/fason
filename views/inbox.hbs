@@ -1,15 +1,12 @@
-<div class="full-page hidden messages-page">
-  {{> messages}}
-</div>
-
+<script type="text/javascript" src="../js/conversation.js"></script>
 {{#if user}}
   {{> userheader}}
 {{else}}
   {{> header}}
 {{/if}}
-
-
-<script type="text/javascript" src="../js/conversation.js"></script>
+<div class="full-page hidden messages-page">
+  {{> messages}}
+</div>
 <div class="container">
   {{#if empty}}
     <div class="messages-container-div-title">
@@ -34,7 +31,7 @@
                   </div>
                   <div class="col-lg-8 col-md-8 col-sm-7 col-xs-6 text-right">
                     <i class="fa fa-trash-o inbox-menu-icons delete-conversation-icon visible-xs"></i>
-                    
+
                       <p class="conversation-date hidden-xs">{{this.convCreatedTime}}</p>
                   </div>
               </div>

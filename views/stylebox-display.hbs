@@ -58,39 +58,6 @@
               <option value="5">5</option>
             </select>
             <p class="miniinfo inlinep">Sur ({{rating.number}}) evaluations.</p>
-            <script type="text/javascript">
-               $(function() {
-                  $('.general-rating').barrating({
-                    theme: 'fontawesome-stars-o',
-                    initialRating: {{rating.general}},
-                    readonly: true
-                  });
-
-                  $('.precision-rating').barrating({
-                    theme: 'fontawesome-stars-o',
-                    initialRating: {{rating.precision}},
-                    readonly: true
-                  });
-
-                  $('.ponctuality-rating').barrating({
-                    theme: 'fontawesome-stars-o',
-                    initialRating: {{rating.ponctuality}},
-                    readonly: true
-                  });
-
-                  $('.quality-rating').barrating({
-                    theme: 'fontawesome-stars-o',
-                    initialRating: {{rating.quality}},
-                    readonly: true
-                  });
-
-                  $('.communication-rating').barrating({
-                    theme: 'fontawesome-stars-o',
-                    initialRating: {{rating.communication}},
-                    readonly: true
-                  });
-               });
-            </script>
           </div>
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-right">
               <div class="row general-row">
@@ -257,3 +224,37 @@
 <div class="hidden-xs">
   {{> footer}}
 </div>
+
+<script type="text/javascript">
+   $(function() {
+      $('.general-rating').barrating({
+        theme: 'fontawesome-stars-o',
+        initialRating: {{rating.general}},
+        readonly: true
+      });
+
+      $('.precision-rating').barrating({
+        theme: 'fontawesome-stars-o',
+        initialRating: {{rating.precision}},
+        readonly: true
+      });
+
+      $('.ponctuality-rating').barrating({
+        theme: 'fontawesome-stars-o',
+        initialRating: {{rating.ponctuality}},
+        readonly: true
+      });
+
+      $('.quality-rating').barrating({
+        theme: 'fontawesome-stars-o',
+        initialRating: {{rating.quality}},
+        readonly: true
+      });
+
+      $('.communication-rating').barrating({
+        theme: 'fontawesome-stars-o',
+        initialRating: {{rating.communication}},
+        readonly: true
+      });
+   });
+</script>
