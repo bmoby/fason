@@ -24,28 +24,35 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 // View Engine
-app.set('views', path.join(__dirname, 'views'));
-app.engine('.hbs', exphbs({
-  defaultLayout:'layout',
-  partialsDir: __dirname + '/views/utils/',
-  extname: '.hbs',
-    helpers: {
-      last: function(array){return array[array.length -1].msg;},
-      subject: function(str){if (str.length > 50) return str.substring(0,50) + '...'; return str; }
-    }
-  })
-);
+
+
 
 app.set('view engine', '.hbs');
 
 // BodyParser Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(device.capture());
+
 
 // Set Static Folder
-app.use(
+
+
+
+app.configure(function(){
+  app.set('views', path.join(__dirname, 'views'));
+  app.engine('.hbs', exphbs({
+    defaultLayout:'layout',
+    partialsDir: __dirname + '/views/utils/',
+    extname: '.hbs',
+      helpers: {
+        last: function(array){return array[array.length -1].msg;},
+        subject: function(str){if (str.length > 50) return str.substring(0,50) + '...'; return str; }
+      }
+    })
+  );
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(cookieParser());
+
+  app.use(
      sass.middleware({
          src: __dirname + '/sass',
          dest: __dirname + '/public/stylesheets',
@@ -53,7 +60,8 @@ app.use(
          debug: true,
      })
   );
-app.use(express.static(path.join(__dirname, '/public')));
+  app.use(express.static(path.join(__dirname, '/public')));
+});
 
 // Express Session
 app.use(session({
