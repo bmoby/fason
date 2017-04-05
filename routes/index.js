@@ -19,20 +19,26 @@ var AWS = require('aws-sdk');
 
 // Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
 var pusher = new Pusher({
-  appId: PUSHER_ID,
-  key: PUSHER_KEY,
-  secret: PUSHER_SECRET,
+  appId: process.env.PUSHER_ID,
+  key: process.env.PUSHER_KEY,
+  secret: process.env.PUSHER_SECRET,
   encrypted: true
 });
 
-var client = new twilio.RestClient(TWILLIO_SECRET, TWILLIO_KEY);
+var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY);
+
+AWS.config = {
+  accessKeyId: process.env.AWS_KEY,
+  secretAccessKey: process.env.AWS_SECRET
+}
+var s3 = new AWS.S3();
 
 // Params setting nodemailer transporter
 var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: MAIL_PASS
+        pass: process.env.MAIL_PASS
     }
 });
 
@@ -708,12 +714,6 @@ router.get('/createstylebox', function(req, res){
   }
 })
 
-
-AWS.config = {
-  accessKeyId: 'AKIAJ5ZF3LOCVCPMJ5LQ',
-  secretAccessKey: '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'
-}
-var s3 = new AWS.S3();
 
 var uploadMulter = multer({dest: 'public/img'})
 var dbPic = [];
