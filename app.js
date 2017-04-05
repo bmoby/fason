@@ -13,6 +13,7 @@ var mongorelation = require('mongo-relation');
 var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
+var sass = require('node-sass');
 // Init App
 var app = express();
 
@@ -51,7 +52,7 @@ app.use(
          prefix:  '/stylesheets',
          debug: true,
      })
-  );  
+  );
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Express Session
