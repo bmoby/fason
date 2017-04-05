@@ -137,22 +137,28 @@ $(".limit-large").each(function(i){
         url: '/getMyInfo',
         method: 'GET',
         success: function(response){
-          $('.messages-container-div').append(
-            '<div class="from-me">'+
-                '<div class="row general-row">'+
-                    '<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-9 col-xs-10">'+
-                        '<p class="message-body my-text">'+message+'</p>'+
-                        '<div class="row general-row hidden-xs">'+
-                          '<p class="message-time-p">'+response.time+'</p>'+
-                        '</div>'+
-                    '</div>'+
-                    '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 text-center">'+
-                        '<div class="messages-avatar" style="background-image: url('+response.avatar+')"></div>'+
-                    '</div>'+
-                '</div>'+
-            '</div>'
-          )
-          $('.messages-container-div').animate({scrollTop: $('.messages-container-div').prop("scrollHeight")}, 500);
+          if(response.found){
+            $('.messages-container-div').append(
+              '<div class="from-me">'+
+                  '<div class="row general-row">'+
+                      '<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-9 col-xs-10">'+
+                          '<p class="message-body my-text">'+message+'</p>'+
+                          '<div class="row general-row hidden-xs">'+
+                            '<p class="message-time-p">'+response.time+'</p>'+
+                          '</div>'+
+                      '</div>'+
+                      '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 text-center">'+
+                          '<div class="messages-avatar" style="background-image: url('+response.avatar+')"></div>'+
+                      '</div>'+
+                  '</div>'+
+              '</div>'
+            )
+            $('.messages-container-div').animate({scrollTop: $('.messages-container-div').prop("scrollHeight")}, 500);
+          }
+
+          if(response.err){
+            console.log(response.err)
+          }
         }
       })
       function saveAndNotify(callback){

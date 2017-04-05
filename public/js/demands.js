@@ -21,10 +21,11 @@ $(document).ready(function(){
                   $('.demande-menu-bottom-row-'+demandId).append(
                     '<div class="row text-center"><p>Demande acceptée</p></div>'
                   )
-                }
-                if(response.expired){
+                } else if(response.expired){
                   $('.demande-menu-bottom-row-'+demandId).empty();
                   $('.demande-menu-bottom-row-'+demandId).append('<div class="row text-center"><h4>Vous avez accépté cette demand après le rendez-vous fixé.</h4></div>')
+                } else {
+                  console.log("an error occured")
                 }
               }
             })

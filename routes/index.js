@@ -17,6 +17,7 @@ var multer = require('multer');
 var AWS = require('aws-sdk');
 
 
+
 // Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
 var pusher = new Pusher({
   appId: process.env.PUSHER_ID,
@@ -919,11 +920,15 @@ router.post('/getmessages', function(req, res){
 
 
 router.get('/getMyInfo', function(req, res){
-  var avatar = req.user.avatar;
-  var firstName = req.user.firstName;
-  var now = Date.now();
-  var msgTime = moment(now).format('DD-MM-YYYY, hh:mm:ss');
-  res.send({"avatar": avatar, "firstname": firstName, "time":msgTime});
+  if(req.user){
+    var avatar = req.user.avatar;
+    var firstName = req.user.firstName;
+    var now = Date.now();
+    var msgTime = moment(now).format('DD-MM-YYYY, hh:mm:ss');
+    res.send({"found": true, "avatar": avatar, "firstname": firstName, "time":msgTime});
+  } else {
+    res.send({"err": "userNotFound"});
+  }
 });
 
 router.post('/checkIfConvParticipantsActiv', function(req, res){
@@ -953,10 +958,10 @@ router.post('/checkIfConvParticipantsActiv', function(req, res){
         User.getUserById(participant, function(err, user){
           user.conversations.push(convId);
           user.save();
-          res.end();
         });
+        res.send(true);
       } else {
-        res.end();
+        res.send(true);
       }
     }).catch(function(err){
       console.log(err);
@@ -967,49 +972,54 @@ router.post('/checkIfConvParticipantsActiv', function(req, res){
 router.post('/saveMsg', function(req, res){
 	var conversationId = req.body.conversationId;
 	var messageToSave = req.body.message;
-	Conversation.getConversationById(conversationId, function(err, conversation){
-		if (err){
-			console.log(err);
-		} else {
-      var time = moment()
-      var promise = new Promise(function(resolve, reject){
-        conversation.messages.push({
-          msg: messageToSave,
-          msgOwner: req.user.id,
-          msgOwnerName: req.user.firstName
-        });
-        conversation.activeTime = moment();
-        var notifiedUser;
-          conversation.save(function(err){
-    				if(err){
-    					console.log(err);
-    				}
-    			});
-          if (conversation.participants[0] == req.user.id){
-            notifiedUser = conversation.participants[1]
-          } else {
-            notifiedUser = conversation.participants[0]
-          }
-          resolve({"userToNotify": notifiedUser, "messageId": conversation.messages[conversation.messages.length - 1].id});
-      }).then(function(object){
-        User.getUserById(object.userToNotify, function(err, user){
-          if(err){
-            console.log(err)
-          } else {
-            user.notifications.push({"notifMsg": messageToSave, "notifType": "newMsg", "msgId": object.messageId});
-            user.save(function(err){
-              if(err){
-                console.log(err);
-              }
-              res.send(true)
-            });
-          }
+	if(messageToSave){
+    Conversation.getConversationById(conversationId, function(err, conversation){
+  		if (err){
+  			console.log(err);
+        res.send(true);
+  		} else {
+        var time = moment()
+        var promise = new Promise(function(resolve, reject){
+          conversation.messages.push({
+            msg: messageToSave,
+            msgOwner: req.user.id,
+            msgOwnerName: req.user.firstName
+          });
+          conversation.activeTime = moment();
+          var notifiedUser;
+            conversation.save(function(err){
+      				if(err){
+      					console.log(err);
+      				}
+      			});
+            if (conversation.participants[0] == req.user.id){
+              notifiedUser = conversation.participants[1]
+            } else {
+              notifiedUser = conversation.participants[0]
+            }
+            resolve({"userToNotify": notifiedUser, "messageId": conversation.messages[conversation.messages.length - 1].id});
+        }).then(function(object){
+          User.getUserById(object.userToNotify, function(err, user){
+            if(err){
+              console.log(err)
+            } else {
+              user.notifications.push({"notifMsg": messageToSave, "notifType": "newMsg", "msgId": object.messageId});
+              user.save(function(err){
+                if(err){
+                  console.log(err);
+                }
+                res.send(true)
+              });
+            }
+          })
+        }).catch(function(err){
+          console.log(err)
         })
-      }).catch(function(err){
-        console.log(err)
-      })
-		}
-	});
+  		}
+  	});
+  } else {
+    res.send(true)
+  }
 });
 
 // Send the message notification to append new messages ONLY
@@ -1019,19 +1029,23 @@ router.post('/msgNotif', function(req, res){
 		var paricipants = req.body.participants;
 		var msgOwnerName = req.user.firstName;
     var dataId = req.body.convId;
-		var time = new Date();
-		var msgTime = moment(time).format('DD-MM-YYYY, hh:mm:ss');
+		var msgTime = moment().format('DD-MM-YYYY, hh:mm:ss');
 		var obj = {"msg": msg, "msgOwnerName": msgOwnerName, "participants": paricipants, "avatar": req.user.avatar, "msgTime": msgTime, "dataId": dataId};
 		resolve(obj);
 	}).then(function(object){
     if (object.participants[0] == req.user.id){
-      var userToNotify = object.participants[1];
-      pusher.trigger(userToNotify, 'new-message', object);
+      if(object.participants[1]){
+        var userToNotify = object.participants[1];
+        pusher.trigger(userToNotify, 'new-message', object);
+      }
+      res.send(true)
     } else {
-      var userToNotify2 = object.participants[0];
-      pusher.trigger(userToNotify2, 'new-message', object);
+      if(object.participants[0]){
+        var userToNotify2 = object.participants[0];
+        pusher.trigger(userToNotify2, 'new-message', object);
+      }
+      res.send(true)
     }
-		res.end();
 	}).catch(function(err){
 		console.log(err);
 	});
@@ -1049,11 +1063,13 @@ router.post('/clearNotif', function(req, res){
             object.splice(index, 1);
             user.save();
           }
+          if(index+1 == object.length){
+            resolve();
+          }
         });
       });
     });
-    resolve();
-  }).then(function(user){
+  }).then(function(){
     res.send(true);
   }).catch(function(err){
     console.log(err);
@@ -1246,7 +1262,7 @@ router.post('/acceptdemand', function(req, res){
       res.send({"status": true, "appoinementTime": appoinementTime});
     } else {
       var userst = req.user;
-      var client = demand.creator;
+      var clientId = demand.creator;
       demand.declined = true;
       demand.valid = false;
       demand.save();
@@ -1278,33 +1294,33 @@ router.post('/acceptdemand', function(req, res){
         })
       }
 
-      User.getUserById(client, function(err, client){
+      User.getUserById(clientId, function(err, clientS){
         if(err){
           console.log(err)
         } else {
-          if(client.demands.length){
-            client.demands.forEach(function(demcl, indexcl, objectcl){
+          if(clientS.demands.length){
+            clientS.demands.forEach(function(demcl, indexcl, objectcl){
               if(demcl.toString() == demand.id.toString()){
-                client.demands.splice(indexcl, 1);
-                client.save();
+                clientS.demands.splice(indexcl, 1);
+                clientS.save();
               }
             })
           }
 
-          if(client.demandNotifications.length){
-            client.demandNotifications.forEach(function(demclN, indexclN, objectclN){
+          if(clientS.demandNotifications.length){
+            clientS.demandNotifications.forEach(function(demclN, indexclN, objectclN){
               if(demclN.demandid.toString() == demand.id.toString()){
-                client.demandNotifications.splice(indexclN, 1);
-                client.save();
+                clientS.demandNotifications.splice(indexclN, 1);
+                clientS.save();
               }
             })
           }
 
-          if(client.evals.length){
-            client.evals.forEach(function(evalcl, indexcle, objectcle){
+          if(clientS.evals.length){
+            clientS.evals.forEach(function(evalcl, indexcle, objectcle){
               if(demand.id.toString() == evalcl.fordemand.toString()){
-                client.evals.splice(indexcle, 1);
-                client.save();
+                clientS.evals.splice(indexcle, 1);
+                clientS.save();
               }
             })
           }
@@ -1504,7 +1520,6 @@ router.get('/checkevals', function(req, res){
 
 router.post('/editstylebox', function(req, res){
   var styleboxId = req.body.styleboxId;
-
   var budget = req.body.budget;
   var title = req.body.title;
   var price = req.body.price;
@@ -1535,6 +1550,7 @@ router.post('/editstylebox', function(req, res){
       })
 
       if(index+1 == stylebox.photos.length){
+        emptyStylebox = stylebox.id;
         stylebox.title = title;
         stylebox.price = price;
         stylebox.gender = gender;
@@ -1544,11 +1560,9 @@ router.post('/editstylebox', function(req, res){
         stylebox.beaute = styleObject.beaute;
         stylebox.minBudget = budget;
         stylebox.minTime = minTime;
-        stylebox.photos = dbPic;
         stylebox.city = checkcity(city);
         stylebox.save();
-        dbPic = [];
-        res.send(true);
+        res.send({"edited": true});
       }
     })
   });

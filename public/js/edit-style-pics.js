@@ -23,19 +23,6 @@ $(document).on('ready', function() {
 
   // Create stylebox event
   $('.createSP2').on('click', function(){
-    $('.fileinput-upload-button').click();
-  });
-
-  // loaded files in the preview
-  var filesLoaded=[];
-  $('#input-44').on('fileloaded', function(event, file, previewId, index, reader) {
-    filesLoaded.push(index)
-  });
-
-  // creating stylebox after all photos are loaded to S3
-  var breakCreate='';
-  var s3Count=[]
-  $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
     var budget = $('.style-minbudget-input').val();
     var title = $('.style-title-input').val();
     var price = $('.style-price-input').val();
@@ -48,7 +35,7 @@ $(document).on('ready', function() {
     var styleObject = {};
     styleObject.style = $('.select-style-proper').val();
     s3Count.push(data.response);
-    if (s3Count.length==filesLoaded.length){
+
       if(style == "casual" || style == "businesscasual" || style == "businessformal" || style == "business" || style == "streetwear"){
         styleObject.vestimentaire = true;
         styleObject.beaute = false;
@@ -56,6 +43,7 @@ $(document).on('ready', function() {
         styleObject.vestimentaire = false;
         styleObject.beaute = true;
       }
+
       $.ajax({
         url: '/editstylebox',
         method: 'POST',
@@ -63,11 +51,21 @@ $(document).on('ready', function() {
         data: JSON.stringify({"city": city, "styleboxId": styleboxId, "budget": budget, "title": title, "price": price, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "photos": filesLoaded}),
         success:function(response){
           if (response){
-            alert('Look a été modifié.');
-            window.location.replace('https://fason.herokuapp.com/mystyleboxes');
+            if(response.edited){
+              $('.fileinput-upload-button').click();
+            } else {
+              console.log("error please try later")
+            }
           }
         }
       });
+  });
+
+  // creating stylebox after all photos are loaded to S3
+  $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
+    if(index+1 == data.files.length){
+      alert('Votre look a été modifié.');
+      window.location.replace('https://fason.herokuapp.com/mystyleboxes');
     }
   });
 
