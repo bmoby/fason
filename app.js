@@ -27,7 +27,7 @@ app.use(sassMiddleware({
     dest: path.join(__dirname, 'public'),
     debug: true,
     outputStyle: 'compressed',
-    prefix:  '/css'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+    prefix:  '/sass'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
 }));
 
 mongoose.connect(process.env.MONGO_URI);
