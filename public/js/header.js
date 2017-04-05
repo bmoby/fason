@@ -17,7 +17,9 @@ $(document).ready(function(){
            newnotifcount = response.evals;
          }
           $('.notifCount').removeClass('hidden');
-          $('.notifCountIcon').text(newnotifcount)
+          $('.notifCountIcon').text(newnotifcount);
+        } else {
+          console.log("check evals completed")
         }
       }
     })
