@@ -47,8 +47,6 @@ $(document).ready(function() {
       data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description}),
       success:function(response){
         if (response){
-          // alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
-          // window.location.replace('https://fason.herokuapp.com/');
           $('.fileinput-upload-button').click();
         }
       }
@@ -57,7 +55,10 @@ $(document).ready(function() {
 
   // creating stylebox after all photos are loaded to S3
   $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
-    console.log(data)
+    if(index+1 == data.files.length){
+      alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
+      window.location.replace('https://fason.herokuapp.com/');
+    }
   });
 
   $('.backToInfo').on('click', function(){
