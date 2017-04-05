@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var sass = require('node-sass');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
@@ -13,7 +14,6 @@ var mongorelation = require('mongo-relation');
 var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
-var sass = require('node-sass');
 // Init App
 var app = express();
 
@@ -24,45 +24,40 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 // View Engine
-
-
+app.set('views', path.join(__dirname, 'views'));
+app.engine('.hbs', exphbs({
+  defaultLayout:'layout',
+  partialsDir: __dirname + '/views/utils/',
+  extname: '.hbs',
+    helpers: {
+      last: function(array){return array[array.length -1].msg;},
+      subject: function(str){if (str.length > 50) return str.substring(0,50) + '...'; return str; }
+    }
+  })
+);
 
 app.set('view engine', '.hbs');
 
 // BodyParser Middleware
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(device.capture());
 
 // Set Static Folder
-
-
-
-app.configure(function(){
-  app.set('views', path.join(__dirname, 'views'));
-  app.engine('.hbs', exphbs({
-    defaultLayout:'layout',
-    partialsDir: __dirname + '/views/utils/',
-    extname: '.hbs',
-      helpers: {
-        last: function(array){return array[array.length -1].msg;},
-        subject: function(str){if (str.length > 50) return str.substring(0,50) + '...'; return str; }
-      }
-    })
-  );
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(cookieParser());
-
+app.use(express.static(path.join(__dirname, '/public')));
+app.configure(
   app.use(
-     sass.middleware({
-         src: __dirname + '/sass',
-         dest: __dirname + '/public/stylesheets',
-         prefix:  '/stylesheets',
-         debug: true,
-     })
-  );
-  app.use(express.static(path.join(__dirname, '/public')));
-});
+       sass.middleware({
+           src: path.join(__dirname, '/sass'), //where the sass files are
+           dest: path.join(__dirname, '/public'), //where css should go
+           debug: true // obvious
+       })
+   );
+)
 
+
+app.configure()
 // Express Session
 app.use(session({
     secret: 'secret',
