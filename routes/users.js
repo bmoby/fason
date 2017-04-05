@@ -19,12 +19,12 @@ var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
-var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY);
+var client = new twilio.RestClient((process.env.TWILLIO_SECRET ||  'AC0f6433c5d0713b85184d77e30383fd4f'),( process.env.TWILLIO_KEY || 'cbac6157842210b60de45dab4f90f9fa'));
 // Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
 var pusher = new Pusher({
-  appId: process.env.PUSHER_ID,
-  key: process.env.PUSHER_KEY,
-  secret: process.env.PUSHER_SECRET,
+  appId: (process.env.PUSHER_ID || '283453'),
+  key: (process.env.PUSHER_KEY || '095ff3028ab7bceb6073'),
+  secret: (process.env.PUSHER_SECRET || '25077850beef8ae1d148'),
   encrypted: true
 });
 
@@ -39,7 +39,7 @@ var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: process.env.MAIL_PASS
+        pass: (process.env.MAIL_PASS || "Mokoloko123")
     }
 });
 // Setting the body parser for json
@@ -49,8 +49,8 @@ var rand, link, host;
 // REGISTRATION
 // REGISTRATION POST -> With variables for email verification process
 AWS.config = {
-  accessKeyId: process.env.AWS_KEY,
-  secretAccessKey: process.env.AWS_SECRET
+  accessKeyId: (process.env.AWS_KEY || 'AKIAJ5ZF3LOCVCPMJ5LQ'),
+  secretAccessKey: (process.env.AWS_SECRET || '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')
 }
 var s3 = new AWS.S3();
 
