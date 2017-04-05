@@ -1434,7 +1434,7 @@ router.get('/mystyleboxes', function(req, res){
   }
 });
 
-router.get('/stylebox/edit/:id', function(req, res){
+router.get('/styleboxedit/:id', function(req, res){
   var styleboxId = req.params.id;
   Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
     if(err){
@@ -1476,7 +1476,7 @@ router.get('/stylebox/edit/:id', function(req, res){
   })
 })
 
-router.post('/stylebox/delete', function(req, res){
+router.post('/styleboxdelete', function(req, res){
   var styleboxId = req.body.styleboxId;
   Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
     if(stylebox.creator == req.user.id){

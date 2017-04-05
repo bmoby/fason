@@ -36,6 +36,7 @@ $(document).on('ready', function() {
     styleObject.style = $('.select-style-proper').val();
     s3Count.push(data.response);
 
+
       if(style == "casual" || style == "businesscasual" || style == "businessformal" || style == "business" || style == "streetwear"){
         styleObject.vestimentaire = true;
         styleObject.beaute = false;

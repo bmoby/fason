@@ -378,7 +378,7 @@ $(document).ready(function(){
       buttons: {
           oui: function () {
             $.ajax({
-              url: '/stylebox/delete',
+              url: '/styleboxdelete',
               method: 'POST',
               contentType: 'application/json',
               data: JSON.stringify({"styleboxId": styleboxId}),
