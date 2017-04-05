@@ -4,9 +4,6 @@
   "description": "Company that makes people stylish",
   "private": false,
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Oulachyov & Souleymanov",
   "license": "ISC",
   "dependencies": {
@@ -51,9 +48,6 @@
     "s3fs": "^2.5.0",
     "socket.io": "^1.7.2",
     "twilio": "^2.11.1"
-  },
-  "devDependencies": {
-    "handlebars-helper-paginate": "^0.2.0"
   },
   "engines": {
         "node": "6.9.1",

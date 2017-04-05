@@ -24,10 +24,10 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 // View Engine
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(process.env.PWD + 'views'));
 app.engine('.hbs', exphbs({
   defaultLayout:'layout',
-  partialsDir: __dirname + '/views/utils/',
+  partialsDir: process.env.PWD + '/views/utils/',
   extname: '.hbs',
     helpers: {
       last: function(array){return array[array.length -1].msg;},
