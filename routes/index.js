@@ -189,9 +189,9 @@ router.post('/search', function(req, res){
           })
         } else {
           if(req.user){
-            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun style ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun look ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
           } else {
-            res.render('search', {"user": req.user, "errmsg": "Aucun style ne correspond à votre recherche"});
+            res.render('search', {"user": req.user, "errmsg": "Aucun look ne correspond à votre recherche"});
           }
         }
       }
@@ -1429,7 +1429,7 @@ router.get('/mystyleboxes', function(req, res){
         })
       })
     } else {
-      res.render('mystyles', {"user": req.user, "err": "Vous n'avez aucun stylebox en ligne, créez votre stylebox en cliquand sur le lien suivant:", "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+      res.render('mystyles', {"user": req.user, "err": "Vous n'avez aucun look en ligne, créez en un en cliquand sur le lien suivant:", "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
     }
   } else {
     res.redirect('https://fason.herokuapp.com/')

@@ -13,27 +13,24 @@
 
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
                 <div class="midleinfo">
-                    <div class="row">
-                        <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-1">
-                            <p class="">Stylebox: {{this.forstyle}} </p>
-                        </div>
-                        <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-1">
-                            <p class="">Date: {{this.formatedtime}} </p>
-                        </div>
-                        <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-1">
-                            <p class="">Heure: {{this.formatedtimeHours}} </p>
-                        </div>
-                    </div>
+                  <div class="row">
+                      <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-1">
+                          <p class="">{{this.forstyle}} </p>
+                      </div>
+                      <div class="col-lg-offset-3 col-md-offset-3 col-sm-offset-3 col-xs-offset-1">
+                          <p class="">Vous avez envoyé une demande de relooking pour le {{this.formatedtime}} à {{this.formatedtimeHours}} heures.</p>
+                      </div>
+                  </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 lastinfo">
                 <div>
                     <div class="row">
                         <div class="col-xs-offset-1">
-                            <p>Cette demande expire dans:</p>
+                            <p>Cette demande expire dans :</p>
                         </div>
                         <div class="col-md-12 text-center">
-                            {{#if this.diff}}<h3 class="">{{this.diff}} heures</h3>{{else}} <h3 class="">Mois d'une heure</h3> {{/if}}
+                            {{#if this.diff}}<h3 class="">{{this.diff}} heures</h3>{{else}} <h3 class="">Moins d'une heure</h3> {{/if}}
                         </div>
                     </div>
                 </div>

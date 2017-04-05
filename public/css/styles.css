@@ -617,6 +617,7 @@ div.row.text-left.close-row {
   padding-top: 15px;
   margin:0;
   padding-bottom: 0;
+  cursor: pointer;
 }
 
 .footer-icon {
