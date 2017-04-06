@@ -1508,15 +1508,15 @@ router.get('/checkevals', function(req, res){
           if(validevals){
             res.send({"evals": validevals.length})
           } else {
-            res.send(true);
+            res.send({"noevals": true});
           }
         }
       })
     } else {
-      res.send(true);
+      res.send({"noevals": true});
     }
   } else {
-    res.send(true);
+    res.send({"noevals": true});
   }
 });
 

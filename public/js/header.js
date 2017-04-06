@@ -17,12 +17,14 @@ $(document).ready(function(){
          }
           $('.notifCount').removeClass('hidden');
           $('.notifCountIcon').text(newnotifcount);
-        } else {
-          console.log("check evals completed")
+        }
+
+        if(response.noevals){
+          console.log("no evals")
         }
       }
     })
-    
+
     $.ajax({
       url: '/currentUser',
       method: 'GET',
