@@ -1506,10 +1506,10 @@ router.get('/checkevals', function(req, res){
           validevals.push(eval);
 
           if(index+1  == object.length){
-            res.send({"evals": validevals.length})
+            res.send({"evals": 7})
           }
 
-        
+
         } else {
           console.log("on mets pas")
         }
