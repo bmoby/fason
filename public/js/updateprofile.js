@@ -1,4 +1,11 @@
 $(document).ready(function(){
+
+  $('.stylebox-description').textcounter({
+    stopInputAtMaximum: false,
+    displayErrorText: false
+  });
+
+
   $('.update-btn').on('click', function(){
     $('.errorsBlock').empty();
     var userFirstName = $('#userFirstNameUpdate').val();
@@ -9,12 +16,13 @@ $(document).ready(function(){
     var userEmail = $('#userEmailUpdate').val();
     var userAvailability = $('.availability-input').val();
     var userDescription = $('.about-me').val();
+    var descriptionCount = parseInt($('.text-count').text());
 
     $.ajax({
       url: '/users/updateprofil',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({"userAvailability": userAvailability, "userDescription":userDescription, "userFirstName": userFirstName, "userLastName":userLastName, "userEmail":userEmail, "userPhone":userPhone, "userPassword":userPassword, "userCity":userCity}),
+      data: JSON.stringify({"userAvailability": userAvailability, "userDescription":userDescription, "userFirstName": userFirstName, "userLastName":userLastName, "userEmail":userEmail, "userPhone":userPhone, "userPassword":userPassword, "userCity":userCity, "descriptionCount":descriptionCount}),
       success: function(response){
         if (response.errors){
           response.errors.forEach(function(error){

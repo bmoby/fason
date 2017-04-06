@@ -132,6 +132,7 @@ router.post('/updateprofil', function(req, res){
     var userAvailability = req.body.userAvailability;
     var userPassword = req.body.userPassword;
     var user = req.user;
+    var descriptionCount = req.body.descriptionCount;
 
     req.checkBody('userFirstName', 'Veuillez saisir votre nom.').notEmpty();
   	req.checkBody('userLastName', 'Veuillez saisir votre prénom.').notEmpty();
@@ -146,7 +147,12 @@ router.post('/updateprofil', function(req, res){
 
     var errors = req.validationErrors() || [];
 
+    if(descriptionCount < 200){
+      errors.push({"msg":"Votre déscription doit être supérieur à 200 characters"});
+    }
+
     if(errors.length){
+      console.log(errors);
       res.send({"errors":errors})
     } else {
       if(userFirstName !== user.firstName){
