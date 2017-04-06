@@ -1504,13 +1504,14 @@ router.get('/checkevals', function(req, res){
       connectedUser.evals.forEach(function(eval, index, object){
         if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
           validevals.push(eval);
-        }
-        if(index+1  == object.length){
-          res.send({"evals": validevals.length})
-        }
 
-        if(object.length == 1){
-          res.send({"evals": validevals.length})
+          if(index+1  == object.length){
+            res.send({"evals": validevals.length})
+          }
+
+        
+        } else {
+          console.log("on mets pas")
         }
       })
     } else {
