@@ -1063,11 +1063,9 @@ router.post('/clearNotif', function(req, res){
             object.splice(index, 1);
             user.save();
           }
-          if(index+1 == object.length){
-            resolve();
-          }
         });
       });
+      resolve();
     });
   }).then(function(){
     res.send(true);
