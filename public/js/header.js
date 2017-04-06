@@ -1,6 +1,6 @@
 $(document).ready(function(){
-  var oneTime = 0;
-  function runonetime(counter){
+
+  setTimeout(function(){
     $.ajax({
       url: '/checkevals',
       method: 'GET',
@@ -22,14 +22,7 @@ $(document).ready(function(){
         }
       }
     })
-    oneTime++;
-  }
-
-  if(oneTime == 0){
-    runonetime(oneTime)
-  }
-
-  setTimeout(function(){
+    
     $.ajax({
       url: '/currentUser',
       method: 'GET',
