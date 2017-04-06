@@ -12,13 +12,13 @@ $(document).ready(function(){
         if(response.sent) {
           alert(response.sent);
         }
-        if(response.err && response.errors.length == 0){
+        if(response.err && !response.errors){
             $('.errorsBlock').append(
               '<div class="row oneError text-center"><p class="errorMessage">'+response.err+'</p></div>'
             )
         }
 
-        if(response.errors.length != 0){
+        if(response.errors){
           response.errors.forEach(function(error){
             $('.errorsBlock').removeClass('hiddenclass');
             $('.errorsBlock').append(
