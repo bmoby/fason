@@ -545,7 +545,7 @@ router.post('/requestpasswordreset', function(req, res){
       user.resetPwdString = removeSpecials(uniqueId);
       user.save();
       // SEND THE EMAIL PROCESS BEGIN ******************************************************
-      var passwordResetLink = "http://"+req.get('host')+"/users/resetPassword/"+removeSpecials(uniqueId);
+      var passwordResetLink = "http://"+req.get('host')+"/resetPassword/"+removeSpecials(uniqueId);
       var mailOptionsReset = {
           from: '"Fason service client" <fason.contact@gmail.com>', // sender address
           to: email, // list of receivers
@@ -567,10 +567,6 @@ router.post('/requestpasswordreset', function(req, res){
 
 // THIS ROUTE IS THAT ONE THAT THE USER CLICKS IN THE RECEIVED EMAIL WITH THE RESET PASSWORD INSTRUCTIONS
 // Just rendering the needed hbs html file reset.hbs
-router.get('/resetPassword/:id', function(req, res){
-  var id = req.params.id;
-  res.render('reset', {"token":id});
-});
 
 
 // THIS ROUTE HELPS TO SEND THE NEW PASSWORD BACK TO THE SERVER AND CHANGE THE INFO IN THE DB ALSO HASHING THE NEW PASSWORD

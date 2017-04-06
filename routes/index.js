@@ -1742,4 +1742,9 @@ router.get('/register', function(req, res){
 router.get('/searchxs', function(req, res){
   res.render('searchxs');
 })
+
+router.get('/resetPassword/:id', function(req, res){
+  var id = req.params.id;
+  res.render('reset', {"token":id});
+});
 module.exports = router;
