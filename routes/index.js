@@ -720,7 +720,7 @@ var uploadMulter = multer({dest: 'public/img'})
 var emptyStylebox = "";
 
 router.post('/load', uploadMulter.single('input44[]') , function(req, res, next){
-  console.log(emptyStylebox, "EMPTU STYLEBOX WAS WRITTEN")
+  console.log("load images route")
   var fileName = {};
   var file = req.file;
   var stream = fs.createReadStream(file.path)
@@ -753,6 +753,7 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
 });
 
 router.post('/createstylebox', function(req, res){
+  console.log("stylebox create route")
   var budget = req.body.budget;
   var title = req.body.title;
   var price = req.body.price;
@@ -789,10 +790,9 @@ router.post('/createstylebox', function(req, res){
       console.log(err)
     } else {
       emptyStylebox = stylebox.id;
-      res.send(true);
     }
   });
-
+  res.send({"stylebox": true});
 });
 
 // Get the conversations and display them when log into inbox page
@@ -1507,6 +1507,14 @@ router.get('/checkevals', function(req, res){
           if(index+1  == object.length){
             if(validevals){
               res.send({"evals": validevals.length})
+            } else {
+              res.send(true);
+            }
+          }
+        } else {
+          if(index+1  == object.length){
+            if(validevals){
+              res.send(res.send({"evals": validevals.length}));
             } else {
               res.send(true);
             }

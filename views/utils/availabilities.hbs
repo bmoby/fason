@@ -6,14 +6,14 @@
   <h2 class="login-register-title text-center">Disponibilité</h2>
   <div class="row general-row">
       <div class="text-center">
-          <div class="stylebox-display-avatar" style="background-image: url({{stylist.avatar}})"></div>
+        <div class="stylebox-display-avatar" {{#if stylist.avatar}} style="background-image: url({{stylist.avatar}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
           <h4 class="availability-contact-demand-firstName">{{stylist.lastName}}</h4>
       </div>
   </div>
     {{#if stylist.availability}}
-      <p class="logn-register-paragraph">{{stylist.availability}}</p>
+      <p class="logn-register-paragraph paragrapg-border">{{stylist.availability}}</p>
     {{else}}
-    <p class="logn-register-paragraph">Le relooker n'as pas spécifié ses jours de disponibilité. Cela signifie qu'il est disponible durant toute la semaine. Néanmoins, nous vous recommandons de contacter ce dernier afin de vous assurer de sa disponibilité le jour de votre choix.</p>
+    <p class="logn-register-paragraph paragrapg-border">Le relooker n'as pas spécifié ses jours de disponibilité. Cela signifie qu'il est disponible durant toute la semaine. Néanmoins, nous vous recommandons de contacter ce dernier afin de vous assurer de sa disponibilité le jour de votre choix.</p>
     {{/if}}
     <div class="col-md-6 envoyer-un-message-btn send-message-btn login-register-btn-row">
         <div>

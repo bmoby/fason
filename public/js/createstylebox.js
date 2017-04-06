@@ -88,11 +88,6 @@ $(document).ready(function(){
       errorCounter = errorCounter+1;
     }
 
-    // if(description == ""){
-    //   $('.stylebox-description-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Décrivez votre style</p></div></div>')
-    //   errorCounter = errorCounter+1;
-    // }
-
     if(descriptionCount < 200){
       $('.stylebox-description-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Décrivez ce look (minimum 200 caractères)</p></div></div>')
       errorCounter = errorCounter+1;

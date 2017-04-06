@@ -33,10 +33,6 @@
   cursor: pointer;
 }
 
-.errorMessage{
-  color: #d9534f !important;
-}
-
 .header-ava{
   background-size: cover;
   background-position: center;

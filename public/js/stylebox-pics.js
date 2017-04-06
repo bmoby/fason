@@ -25,6 +25,7 @@ $(document).ready(function() {
 //********************************************** STYLEBOX PICS **********************************************
 //---------------------------------------------- UPLOADING TO S3 --------------------------------------------
 
+
   // Create stylebox event
   $('.createSP').on('click', function(){
     var budget = $('.style-minbudget-input').val();
@@ -49,8 +50,10 @@ $(document).ready(function() {
       contentType: 'application/json',
       data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description}),
       success:function(response){
-        if (response){
+        if (response.stylebox){
           $('.fileinput-upload-button').click();
+        } else {
+          alert("Une erreur empéche la création de votre look. Veuillez réessayer plus tard.")
         }
       }
     });
