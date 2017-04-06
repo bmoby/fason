@@ -10,6 +10,7 @@ $(document).ready(function(){
     var gender = $('.select-gender-proper').val();
     var minTime = $('.select-minTime-proper').val();
     var description = $('.stylebox-description').val();
+    var descriptionCount = parseInt($('.text-count').text());
 
 
 
