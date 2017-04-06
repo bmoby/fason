@@ -1,4 +1,7 @@
 <link rel="stylesheet" href="../css/fontawesomestarso.css">
+<link rel="stylesheet" href="../css/niceselect.css">
+<link rel="stylesheet" href="../css/restylenavbar.css">
+<link rel="stylesheet" href="../css/headerpadding.css">
 <!-- Included pages -->
 <div class="demand-page hidden full-page">
   {{> demand}}
@@ -32,8 +35,6 @@
   </div>
 </div>
 
-<link rel="stylesheet" href="../css/restylenavbar.css">
-<link rel="stylesheet" href="../css/headerpadding.css">
 <div class="row general-row stylebox-display-stylist">
   <div class="col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-12 text-center">
       <div class="stylebox-display-avatar" {{#if stylist.avatar}} style="background-image: url({{stylist.avatar}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
@@ -223,6 +224,8 @@
 <div class="hidden-xs">
   {{> footer}}
 </div>
+<script type="text/javascript" src='../js/bootstrap-datetimepicker.min.js'></script>
+<script type="text/javascript" src='../js/datefr.js'></script>
 <script type="text/javascript" src="../js/jquery.barrating.js"></script>
 <script type="text/javascript">
    $(function() {
@@ -257,3 +260,11 @@
       });
    });
 </script>
+<script src="//js.pusher.com/4.0/pusher.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+<script type="text/javascript" src="../js/textcounter.min.js"></script>
+<script type="text/javascript" src="../js/jquery.nice-select.min.js"></script>
+<script type="text/javascript" src="../js/masonry.pkgd.min.js"></script>
+<script type="text/javascript" src="../js/imagesloaded.pkgd.min.js"></script>
+<script type="text/javascript" src="../js/readmore.min.js"></script>
+<script type="text/javascript" src="../js/stylebox.js"></script>

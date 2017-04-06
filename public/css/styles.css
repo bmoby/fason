@@ -860,7 +860,6 @@ div.row.rating-row {
   padding-bottom:0;
   font-size:1.3em;
   color:#30383a;
-  font-family:serif;
   padding-top:0;
   font-weight:100;
 }
@@ -869,7 +868,6 @@ div.row.rating-row {
   .stylebox-icon-textes {
     font-size:1.3em;
     color:#ededed;
-    font-family:serif;
     font-weight:100;
   }
 }
@@ -1990,7 +1988,6 @@ h3.timer {
   padding-bottom:15px;
   padding-left:60px;
   margin:0;
-  font-family:sans-serif;
   color:#b0afaf;
 }
 
@@ -2064,7 +2061,6 @@ p.demande-header-info {
   font-size:1em;
   color:#cccccc;
   margin-bottom:0;
-  font-family:inherit;
 }
 
 p.demand-accept-time-info {
@@ -2399,7 +2395,6 @@ div.notationdiv {
 }
 
 .dressCodeTitle p{
-  font-family: CircularBold;
   color: #ffffff;
   font-size: 30px;
 }
