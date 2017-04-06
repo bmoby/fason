@@ -11,6 +11,7 @@ $(document).ready(function(){
       success: function(response){
         if(response.sent) {
           alert(response.sent);
+          window.location.replace('https://fason.herokuapp.com/');
         }
         if(response.err && !response.errors){
             $('.errorsBlock').append(
