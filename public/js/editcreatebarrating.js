@@ -1,4 +1,4 @@
-$(document).ready(function{
+$(document).ready(function(){
   $('.rating').each(function(){
     var styleboxId = this.getAttribute("data-stylebox-id");
     var ratingValue = this.getAttribute("data-rating-value");
