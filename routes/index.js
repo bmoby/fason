@@ -1499,25 +1499,16 @@ router.get('/checkevals', function(req, res){
   if(req.user){
     var connectedUser = req.user;
     if(connectedUser.evals){
-      console.log(connectedUser.evals, connectedUser.evals.length)
       var validevals = [];
       connectedUser.evals.forEach(function(eval, index, object){
         if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
           validevals.push(eval);
-          if(index+1  == object.length){
-            if(validevals){
-              res.send({"evals": validevals.length})
-            } else {
-              res.send(true);
-            }
-          }
-        } else {
-          if(index+1  == object.length){
-            if(validevals){
-              res.send(res.send({"evals": validevals.length}));
-            } else {
-              res.send(true);
-            }
+        }
+        if(index+1  == object.length){
+          if(validevals){
+            res.send({"evals": validevals.length})
+          } else {
+            res.send(true);
           }
         }
       })
