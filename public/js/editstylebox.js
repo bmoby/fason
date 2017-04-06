@@ -53,4 +53,54 @@ $(document).ready(function(){
       $('.stylebox-pics-page').removeClass('hidden');
     }
   });
+
+
+
+
+
+
+
+
+
+
+
+  var errorCounter = 0;
+
+  $('.stylebox-description').textcounter({
+    stopInputAtMaximum: false,
+    displayErrorText: false
+  });
+
+  $('.back-btn').on('click', function(){
+    $('.stylebox-info-page').removeClass('hidden');
+    $('.stylebox-pics-page').addClass('hidden');
+  })
+
+
+  $('.delete').on('click', function(){
+    var styleboxId = this.getAttribute('data-stylebox-id-remove');
+    $.confirm({
+      title: 'Supprimer',
+      content: 'Etes vous sure de vouloir supprimer ce stylebox? Toutes les photos ainsi que les informations seront définitivement perdu.',
+      buttons: {
+          oui: function () {
+            $.ajax({
+              url: '/styleboxdelete',
+              method: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({"styleboxId": styleboxId}),
+              success: function(response){
+                if(response.list == 0){
+                  window.location.replace('https://fason.herokuapp.com/');
+                } else {
+                  window.location.replace('https://fason.herokuapp.com/mystyleboxes');
+                }
+              }
+            })
+          },
+          non: function () {
+          }
+      }
+    });
+  });
 })
