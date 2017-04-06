@@ -9,6 +9,7 @@ $(document).ready(function(){
     var ponctuality = $('.ponctuality-rating').val();
     var comment = $('.eval-comment-text').val();
 
+
     $.ajax({
       url: '/evaluate',
       method: 'POST',
@@ -30,7 +31,7 @@ $(document).ready(function(){
       url: '/evaluate',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({"stylistId": stylistId, "styleboxId": styleboxId, "evalId": evalId, "precision": precision, "ponctuality": ponctuality, "quality": quality, "communication": communication, "comment": comment}),
+      data: JSON.stringify({"userId": userId, "styleboxId": styleboxId, "evalId": evalId, "comment": comment}),
       success: function(response){
         window.location.replace('https://fason.herokuapp.com/');
       }
