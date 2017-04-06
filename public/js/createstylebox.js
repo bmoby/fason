@@ -1,11 +1,60 @@
 $(document).ready(function(){
+  $('.become-stylist-btn').on('click', function(){
+    $('.oneError').remove();
+    var description = $('.about-me').val();
+    var availability = $('.availability-input').val();
+    var counter = parseInt($('.text-count').text());
+    if(description != "" && counter >= 200){
+      $.ajax({
+        url: '/users/becomestylist',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({"description": description, "availability": availability}),
+        success: function(response){
+          if(response.stylist){
+            window.location.replace('https://fason.herokuapp.com/createStylebox');
+          } else {
+            $('.errorsBlock').removeClass('hiddenclass');
+            $('.errorsBlock').append(
+              '<div class="row oneError text-center"><p class="errorMessage">'+response.err+'</p></div>'
+            )
+          }
+        }
+      })
+    }
+
+    if (description == ""){
+      $('.errorsBlock').removeClass('hiddenclass');
+      $('.errorsBlock').append(
+        '<div class="row oneError text-center"><p class="errorMessage">Veuillez résumer votre expérience (minimum 200 caractères).</p></div>'
+      )
+    }
+
+    if (counter < 200){
+      $('.errorsBlock').removeClass('hiddenclass');
+      $('.errorsBlock').append(
+        '<div class="row oneError text-center"><p class="errorMessage">Votre déscription doit être composé de 200 caractères minimum.</p></div>'
+      )
+    }
+
+  });
+
+  var errorCounter = 0;
+
+  $('.stylebox-description').textcounter({
+    stopInputAtMaximum: false,
+    displayErrorText: false
+  });
+
 
   $('.stylebox-create-continue-btn').on('click', function(){
     errorCounter = 0;
     $('.errorsBlock').remove();
+
     var budget = $('.style-minbudget-input').val();
     var title = $('.style-title-input').val();
     var price = $('.style-price-input').val();
+    var city = $('.style-city-input').val();
     var style = $('.select-style-proper').val();
     var gender = $('.select-gender-proper').val();
     var minTime = $('.select-minTime-proper').val();
@@ -39,6 +88,11 @@ $(document).ready(function(){
       errorCounter = errorCounter+1;
     }
 
+    // if(description == ""){
+    //   $('.stylebox-description-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Décrivez votre style</p></div></div>')
+    //   errorCounter = errorCounter+1;
+    // }
+
     if(descriptionCount < 200){
       $('.stylebox-description-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Décrivez ce look (minimum 200 caractères)</p></div></div>')
       errorCounter = errorCounter+1;
@@ -55,74 +109,8 @@ $(document).ready(function(){
     }
   });
 
-
-
-
-
-
-
-
-
-
-
-  var errorCounter = 0;
-
-  $('.stylebox-description').textcounter({
-    stopInputAtMaximum: false,
-    displayErrorText: false
-  });
-
   $('.back-btn').on('click', function(){
     $('.stylebox-info-page').removeClass('hidden');
     $('.stylebox-pics-page').addClass('hidden');
   })
-
-  $('.style-title-input').focus(function () {
-     $('.stylebox-create-input-title-span').removeClass('hidden');
-  });
-
-  $('.style-title-input').focusout(function () {
-     $('.stylebox-create-input-title-span').addClass('hidden');
-  });
-
-  $('.style-price-input').focus(function () {
-     $('.stylebox-create-input-price-span').removeClass('hidden');
-  });
-
-  $('.style-city-input').focus(function () {
-     $('.stylebox-create-input-city-span').removeClass('hidden');
-  });
-
-  $('.style-price-input').focusout(function () {
-     $('.stylebox-create-input-price-span').addClass('hidden');
-  });
-
-  $('.style-city-input').focusout(function () {
-     $('.stylebox-create-input-city-span').addClass('hidden');
-  });
-
-  $('.style-minbudget-input').focus(function () {
-     $('.stylebox-create-input-budget-span').removeClass('hidden');
-  });
-
-  $('.style-minbudget-input').focusout(function () {
-     $('.stylebox-create-input-budget-span').addClass('hidden');
-  });
-
-  //Become stylist styling
-  $('.about-me').focus(function () {
-     $('.stylist-description-span').removeClass('hidden');
-  });
-
-  $('.about-me').focusout(function () {
-     $('.stylist-description-span').addClass('hidden');
-  });
-
-  $('.availability-input').focus(function () {
-     $('.stylist-availability-span').removeClass('hidden');
-  });
-
-  $('.availability-input').focusout(function () {
-     $('.stylist-availability-span').addClass('hidden');
-  });
 })
