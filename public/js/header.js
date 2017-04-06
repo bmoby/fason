@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
   var oneTime = 0;
   function runonetime(counter){
     $.ajax({

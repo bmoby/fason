@@ -148,7 +148,7 @@ router.post('/updateprofil', function(req, res){
     var errors = req.validationErrors() || [];
 
     if(descriptionCount < 200){
-      errors.push({"msg":"Votre déscription doit être supérieur à 200 characters"});
+      errors.push({"msg":"Votre déscription doit être composé de 200 caractères minimum."});
     }
 
     if(errors.length){

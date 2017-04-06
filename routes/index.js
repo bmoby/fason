@@ -1498,7 +1498,7 @@ router.post('/styleboxdelete', function(req, res){
 router.get('/checkevals', function(req, res){
   if(req.user){
     var connectedUser = req.user;
-    if(connectedUser.evals.length != 0){
+    if(connectedUser.evals){
       var validevals = [];
       connectedUser.evals.forEach(function(eval, index, object){
         if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
