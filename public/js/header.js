@@ -6,7 +6,6 @@ $(document).ready(function(){
       method: 'GET',
       success: function(response){
         if(response.evals){
-          alert(response.evals);
           $('.evalsheaderlink').removeClass('hidden');
           $('.newevalsnotifs').text(response.evals);
           var newnotif = parseInt($('.notifCountIcon').text());

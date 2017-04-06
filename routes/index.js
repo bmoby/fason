@@ -1505,8 +1505,9 @@ router.get('/checkevals', function(req, res){
         if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
           validevals.push(eval);
 
+
           if(index+1  == object.length){
-            res.send({"evals": 7})
+            res.send({"evals": validevals.length})
           }
 
 

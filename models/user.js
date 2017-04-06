@@ -36,7 +36,7 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	evals: [{participated: Boolean, fordemand: String, forstylebox:String, startDate: Date, endDate: Date, stylistId: String, userId: String, createdTime: {type: Date, default: Date.now}}],
+	evals: [{participated: {type: Boolean, default: false}, fordemand: String, forstylebox:String, startDate: Date, endDate: Date, stylistId: String, userId: String, createdTime: {type: Date, default: Date.now}}],
 	styleboxes:[{ type:Schema.ObjectId, ref:"Stylebox" }],
 	demands:[{ type:Schema.ObjectId, ref:"Demand" }],
 	conversations: [{type : Schema.ObjectId, ref : 'Conversation'}],
