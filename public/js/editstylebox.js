@@ -12,9 +12,6 @@ $(document).ready(function(){
     var description = $('.stylebox-description').val();
 
 
-    $('.select-style').niceSelect();
-    $('.select-gender').niceSelect();
-    
 
     if(style == "nothing"){
       $('.select-style-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Choisissez un look</p></div></div>')
