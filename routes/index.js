@@ -1506,7 +1506,14 @@ router.get('/checkevals', function(req, res){
         }
         if(index+1  == object.length){
           if(validevals){
-            res.send({"evals": validevals.length})
+            res.send({"evals": validevals.length, "send": true});
+          } else {
+            res.send({"noevals": true});
+          }
+        }
+        if(object.length == 1){
+          if(validevals){
+            res.send({"evals": validevals.length, "send": true});
           } else {
             res.send({"noevals": true});
           }
