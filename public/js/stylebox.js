@@ -186,6 +186,7 @@ $(document).ready(function(){
         '<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Veuillez choisir une date.</p></div></div>'
       );
     }else{
+
       var forstyle = $('.forstyleTitle').text();
       $.confirm({
         title: 'Confirmation',
