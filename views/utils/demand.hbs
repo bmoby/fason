@@ -47,19 +47,13 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
                 </div>
             {{/unless}}
-            {{#if user.phoneIsVerified}}
-            <div class="row envoyer-un-message-btn login-register-btn-row">
-                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                    <h4 class="success-msg">Votre numéro a été confirmé</h4>
-                </div>
-            </div>
-            {{else}}
-            <div class="row envoyer-un-message-btn login-register-btn-row email-verify-row text-right">
-                <div>
-                    <button  class="acceptbtn resendSms" type="button">Envoyez moi le code de confirmation mobile par sms.</button>
-                </div>
-            </div>
+            {{#unless user.phoneIsVerified}}
             <div class="phone-verify-row">
+              <div class="row login-register-btn-row  text-right">
+                  <div>
+                      <button  class="acceptbtn resendSms" type="button">Envoyez moi le code de confirmation mobile par sms.</button>
+                  </div>
+              </div>
               <div class="row login-container-row">
                   <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-barcode password-icon"></i></div>
                   <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
@@ -72,7 +66,14 @@
                   </div>
               </div>
             </div>
-            {{/if}}
+
+            {{else}}
+            <div class="row envoyer-un-message-btn login-register-btn-row">
+                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                    <h4 class="success-msg">Votre numéro a été confirmé</h4>
+                </div>
+            </div>
+            {{/unless}}
           {{else}}
             <div class="dem-page">
               {{#if stylist.availability}}
