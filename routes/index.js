@@ -91,7 +91,7 @@ router.post('/search', function(req, res){
   var promise = new Promise(function(resolve, reject){
     var options = {};
 
-    option.creator = { "creator": { $ne: null } };
+    option.creator = {"creator":{$exists:true}};
     if(city){
       options.city = { "$regex": city, "$options": "i" };
     }
