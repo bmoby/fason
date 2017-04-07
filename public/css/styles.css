@@ -2525,19 +2525,21 @@ div.avatardemand {
 }
 
 .declinebtn{
-  padding: 7px;
+  padding: 10px;
+  border-radius: 5px;
   margin: 7px;
   background-color: #ff6063;
   color: white;
-  border: 1px solid #ededed !important;
+  outline: none;
 }
 
 .acceptbtn{
-  padding: 7px;
+  padding: 10px;
+  border-radius: 5px;
   margin: 7px;
   background-color: #4ebf8a;
   color:white;
-  border: 1px solid #ededed !important;
+  outline: none;
 }
 
 
