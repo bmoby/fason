@@ -777,10 +777,12 @@ router.post('/createstylebox', function(req, res){
   var title = req.body.title;
   var price = req.body.price;
   var styleObject = req.body.styleObject;
+  var style = req.body.style;
   var gender = req.body.gender;
   var minTime = req.body.minTime;
   var city  = req.body.city;
   var description = req.body.description;
+
 
   function checkcity(citytest){
     if(citytest != ""){
@@ -795,7 +797,7 @@ router.post('/createstylebox', function(req, res){
     price:price,
     vestimentaire: styleObject.vestimentaire,
     beaute: styleObject.beaute,
-    style:styleObject.style,
+    style: style,
     gender: gender,
     minTime: minTime,
     city: checkcity(city),
@@ -1552,6 +1554,7 @@ router.post('/editstylebox', function(req, res){
   var title = req.body.title;
   var price = req.body.price;
   var styleObject = req.body.styleObject;
+  var style = req.body.style;
   var gender = req.body.gender;
   var minTime = req.body.minTime;
   var city  = req.body.city;
@@ -1583,7 +1586,7 @@ router.post('/editstylebox', function(req, res){
         stylebox.price = price;
         stylebox.gender = gender;
         stylebox.description = description;
-        stylebox.style = styleObject.style;
+        stylebox.style = style;
         stylebox.vestimentaire = styleObject.vestimentaire;
         stylebox.beaute = styleObject.beaute;
         stylebox.minBudget = budget;

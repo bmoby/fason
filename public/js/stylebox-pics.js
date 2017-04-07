@@ -48,7 +48,7 @@ $(document).ready(function() {
       url: '/createstylebox',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description}),
+      data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "style": style}),
       success:function(response){
         if (response.stylebox){
           $('.fileinput-upload-button').click();
