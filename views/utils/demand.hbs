@@ -37,7 +37,7 @@
             {{#unless user.varified}}
               <div class="row envoyer-un-message-btn login-register-btn-row email-verify-row text-right">
                   <div>
-                      <button  class="acceptbtn resend-email-btn" data-demand-id="{{this.id}}" type="button">Envoyez moi le lien de confirmation de email.</button>
+                      <button  class="acceptbtn resend-email-btn" type="button">Envoyez moi le lien de confirmation de email.</button>
                   </div>
               </div>
               {{else}}
@@ -47,7 +47,7 @@
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>
                 </div>
             {{/unless}}
-            {{#if unless user.phoneIsVerified}}
+            {{#if user.phoneIsVerified}}
             <div class="row envoyer-un-message-btn login-register-btn-row">
                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                     <h4 class="success-msg">Votre numéro a été confirmé</h4>
