@@ -2705,15 +2705,6 @@ div.errmsgdiv {
   font-size: 0.8em;
 }
 
-.resendSms{
-  color: #ff6063 !important;
-
-}
-.resendSms:hover{
-  color: #ff8284 !important;
-  cursor: pointer;
-}
-
 .success-msg {
   padding:10px;
   color:#ff6063;
