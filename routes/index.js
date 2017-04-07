@@ -739,17 +739,31 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
       console.log(err)
       res.sned(false);
     }else{
+      Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
+        stylebox.photos.push(fileName);
+        stylebox.save();
+        res.send(true);
+      })
       fs.unlink(req.file.path, function(err){
         if (err) console.error(err)
       });
-      res.send(true);
     }
   });
+});
 
-  Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
-    stylebox.photos.push(fileName);
-    stylebox.save();
-  })
+router.get('/setcreatortostylebox', function(req, res){
+  if(req.user){
+    var user = req.user;
+    Strylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
+      stylebox.creator = user;
+      stylebox.save();
+      user.styleboxes.push(stylebox.id)
+      user.save();
+      res.send({"ok": true})
+    })
+  } else {
+    res.send({"ok": false})
+  }
 });
 
 router.post('/createstylebox', function(req, res){
@@ -772,7 +786,7 @@ router.post('/createstylebox', function(req, res){
   }
 
   var newStyle = new Stylebox({
-    creator: req.user,
+    creator: "nocreatorforthemoment",
     title: title,
     price:price,
     vestimentaire: styleObject.vestimentaire,

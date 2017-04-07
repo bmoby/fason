@@ -62,8 +62,21 @@ $(document).ready(function() {
   // creating stylebox after all photos are loaded to S3
   $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
     if(index+1 == data.files.length){
-      alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
-      window.location.replace('https://fason.herokuapp.com/');
+      setTimeout(function(){
+        $.ajax({
+          url: '/setcreatortostylebox',
+          method: 'GET',
+          success: function(response){
+            if(response.ok){
+              alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
+              window.location.replace('https://fason.herokuapp.com/');
+            } else {
+              alert('Nous avont rencontré des problemes lors de création de votre look, veuillez nous exuser et réessayer quelque minutes plus tard..');
+              window.location.replace('https://fason.herokuapp.com/');
+            }
+          }
+        })
+      }, 2000);
     }
   });
 
