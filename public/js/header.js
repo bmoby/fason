@@ -64,7 +64,7 @@ $(document).ready(function(){
                    '<div class="row envoyer-un-message-btn login-register-btn-row">'+
                    '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">'+
                        '<h4 class="success-msg">Votre email est confirmé</h4></div>'+
-                   '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><i class="glyphicon glyphicon-ok success-icon"></i></div>'+
+                   '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>'+
                    '</div>'
                  );
                } else {
@@ -78,11 +78,12 @@ $(document).ready(function(){
              if(data.phoneverified){
                if(data.emailV == false){
                  $('.phone-verify-row').empty();
+                 $('.phone-verify-row-2').empty();
                  $('.phone-verify-row').append(
                    '<div class="row envoyer-un-message-btn login-register-btn-row">'+
                    '<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">'+
                        '<h4 class="success-msg">Votre numéro est confirmé</h4></div>'+
-                   '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><i class="glyphicon glyphicon-ok success-icon"></i></div>'+
+                   '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"></div>'+
                    '</div>'
                  )
                } else {
