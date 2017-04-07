@@ -753,25 +753,14 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
 
 router.get('/setcreatortostylebox', function(req, res){
   if(req.user){
-    var user = req.user;
     Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
+      stylebox.creator = req.user.id;
+      stylebox.save();
 
-      User.getUserById('58e7831dc5586c0004b7c32c', function(err, removeStylUser){
-        removeStylUser.styleboxes.forEach(function(style, index, object){
-          if(style.toString() == stylebox.id.toString()){
-            object.splice(index, 1);
-            removeStylUser.save();
-          }
-
-          if(index+1 == object.length){
-            stylebox.creator = user;
-            stylebox.save();
-            user.styleboxes.push(stylebox.id)
-            user.save();
-            res.send({"ok": true})
-          }
-        })
-      })
+      var user = req.user;
+      user.styleboxes.push(stylebox.id);
+      user.save();
+      res.send({"ok": true})
     })
   } else {
     res.send({"ok": false})
@@ -779,6 +768,7 @@ router.get('/setcreatortostylebox', function(req, res){
 });
 
 router.post('/createstylebox', function(req, res){
+
   console.log("stylebox create route")
   var budget = req.body.budget;
   var title = req.body.title;
@@ -798,7 +788,6 @@ router.post('/createstylebox', function(req, res){
   }
 
   var newStyle = new Stylebox({
-    creator: "58e7831dc5586c0004b7c32c",
     title: title,
     price:price,
     vestimentaire: styleObject.vestimentaire,
@@ -820,6 +809,7 @@ router.post('/createstylebox', function(req, res){
   });
   res.send({"stylebox": true});
 });
+
 
 // Get the conversations and display them when log into inbox page
 var conversationsArray = [];

@@ -19,12 +19,11 @@ var StyleboxSchema = mongoose.Schema({
 	city: String,
 	photos: [String],
 	comments:[{ type:Schema.ObjectId, ref:"Comment"}],
-	creator:{type:Schema.ObjectId,ref:"User",childPath:"styleboxes" },
+	creator:{type:Schema.ObjectId, ref:"User"},
 	createdTime:{type:Date, default:Date.now}
 });
 
 
-StyleboxSchema.plugin(relationship, { relationshipPathName:'creator'});
 StyleboxSchema.plugin(mongooseAggregatePaginate);
 
 var Stylebox =  mongoose.model('Stylebox', StyleboxSchema);
