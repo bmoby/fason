@@ -195,6 +195,8 @@ router.post('/search', function(req, res){
                   }
                 }
               });
+            } else {
+              console.log("no creator")
             }
           })
         } else {

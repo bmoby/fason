@@ -147,8 +147,10 @@ router.post('/updateprofil', function(req, res){
 
     var errors = req.validationErrors() || [];
 
-    if(descriptionCount < 200){
-      errors.push({"msg":"Résumez votre expérience dans la mode/beuté (minimum 200 caractères)."});
+    if(req.user.stylist.status){
+      if(descriptionCount < 200){
+        errors.push({"msg":"Résumez votre expérience dans la mode/beuté (minimum 200 caractères)."});
+      }
     }
 
     if(errors.length){
