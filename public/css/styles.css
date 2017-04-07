@@ -30,6 +30,7 @@ a:hover{
   padding:50px;
 }
 
+
 .cgu-container{
   background-color:#fff;
   padding:80px;
@@ -37,6 +38,18 @@ a:hover{
 }
 .cgu-container p{
   text-align: justify;
+}
+
+@media (max-width:767px) {
+  .cgu-maine-container{
+    background: white;
+    padding:30px !important;
+  }
+  .cgu-container{
+    background-color:#fff;
+    padding:0px !important;
+    border-radius: 2px;
+  }
 }
 
 /*memed*/
