@@ -26,14 +26,14 @@ $(document).ready(function(){
     if (description == ""){
       $('.errorsBlock').removeClass('hiddenclass');
       $('.errorsBlock').append(
-        '<div class="row oneError text-center"><p class="errorMessage">Veuillez résumer votre expérience (minimum 200 caractères).</p></div>'
+        '<div class="row oneError text-center"><p class="errorMessage">Résumez votre expérience dans la mode/beuté (minimum 200 caractères)</p></div>'
       )
     }
 
     if (counter < 200){
       $('.errorsBlock').removeClass('hiddenclass');
       $('.errorsBlock').append(
-        '<div class="row oneError text-center"><p class="errorMessage">Votre déscription doit être composé de 200 caractères minimum.</p></div>'
+        '<div class="row oneError text-center"><p class="errorMessage">Résumez votre expérience dans la mode/beuté (minimum 200 caractères)</p></div>'
       )
     }
 
@@ -74,7 +74,7 @@ $(document).ready(function(){
     }
 
     if(gender == "nothing"){
-      $('.select-gender-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Choisissez homme ou femme</p></div></div>')
+      $('.select-gender-proper-append').append('<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Choisissez femme ou homme</p></div></div>')
       errorCounter = errorCounter+1;
     }
 

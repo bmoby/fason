@@ -266,7 +266,7 @@ $('.delete-conversation-icon').on('click', function(e){
                   data: JSON.stringify({"conversationId":converId})
                 });
               } else {
-                alert("Une erreur s'est produite, veuillez reessayer plus tard.")
+                alert("Une erreur s'est produite, veuillez réessayer plus tard.")
               }
             }
           });

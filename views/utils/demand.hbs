@@ -31,13 +31,13 @@
       </div>
       {{/if}}
       <div class="all-demand-container">
-        <p class="logn-register-paragraph">Pour la sécurité de notre plateforme, vous devez confirmer que vous etes le propriétaire du numéro de téléphone et de l'adresse email que vous avez fourni lors de votre inscription.</p>
+        <p class="logn-register-paragraph">Pour la sécurité de notre plateforme, vous devez confirmer que vous êtes le propriétaire du numéro de téléphone et de l'adresse e-mail que vous avez fourni lors de votre inscription.</p>
         {{#if user}}
           {{#if haveToVerify}}
             {{#unless user.varified}}
               <div class="row envoyer-un-message-btn login-register-btn-row email-verify-row text-right">
                   <div>
-                      <button class="btn btn-default login-register-btn resend-email-btn" type="button">Je n'ai pas reçu le mail de vérification.</button>
+                      <button class="btn btn-default login-register-btn resend-email-btn" type="button">Je n'ai pas reçu le mail de vérification</button>
                   </div>
               </div>
               {{else}}
