@@ -754,12 +754,12 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
 router.get('/setcreatortostylebox', function(req, res){
   if(req.user){
     var user = req.user;
-    Strylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
+    Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
 
       User.getUser('58e7831dc5586c0004b7c32c', function(err, removeStylUser){
         removeStylUser.styleboxes.forEach(function(style, index, object){
           if(style.toString() == stylebox.id.toString()){
-            object.splice(index, 1)
+            object.splice(index, 1);
             removeStylUser.save();
           }
 
