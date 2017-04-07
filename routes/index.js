@@ -90,6 +90,8 @@ router.post('/search', function(req, res){
 
   var promise = new Promise(function(resolve, reject){
     var options = {};
+
+    option.creator = { "creator": { $ne: null } };
     if(city){
       options.city = { "$regex": city, "$options": "i" };
     }
@@ -144,7 +146,6 @@ router.post('/search', function(req, res){
         var styleboxesandstylist = [];
         if(styleboxes.length != 0){
           styleboxes.forEach(function(stylebox, index, object){
-            if(stylebox.creator){
               User.getUserById(stylebox.creator, function(err, user){
                 var rating = {};
                 var general = 0;
@@ -195,9 +196,6 @@ router.post('/search', function(req, res){
                   }
                 }
               });
-            } else {
-              console.log("no creator")
-            }
           })
         } else {
           if(req.user){
