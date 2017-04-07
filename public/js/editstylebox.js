@@ -55,16 +55,6 @@ $(document).ready(function(){
     }
   });
 
-
-
-
-
-
-
-
-
-
-
   var errorCounter = 0;
 
   $('.stylebox-description').textcounter({
