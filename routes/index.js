@@ -91,7 +91,7 @@ router.post('/search', function(req, res){
   var promise = new Promise(function(resolve, reject){
     var options = {};
 
-    option.creator = {"creator":{$exists:true}};
+    options.creator = {"$exists" : true};
     if(city){
       options.city = { "$regex": city, "$options": "i" };
     }
@@ -111,6 +111,7 @@ router.post('/search', function(req, res){
   }).then(function(obje){
     Stylebox.find(obje, function(err, styleboxes){
       if (err){
+        console.log(err)
         res.send("Une erreur s'est produite, veuillez essayer plus tard.")
       } else {
         // Send gender info to autocomplete fields after the search
