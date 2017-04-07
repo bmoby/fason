@@ -138,7 +138,7 @@ router.post('/updateprofil', function(req, res){
   	req.checkBody('userLastName', 'Veuillez saisir votre prénom.').notEmpty();
   	req.checkBody('userEmail', 'Veuillez saisir votre e-mail.').notEmpty();
     req.checkBody('userPhone', 'Veuillez saisir votre numéro de potable.').notEmpty();
-    req.checkBody('userCity', "Veuillez saisir votre ville.").notEmpty();
+    req.checkBody('userCity', "Veuillez saisir votre ville de résidence.").notEmpty();
     req.checkBody('userEmail', 'Veuillez saisir votre e-mail.').isEmail();
 
     if(userPassword){
@@ -148,7 +148,7 @@ router.post('/updateprofil', function(req, res){
     var errors = req.validationErrors() || [];
 
     if(descriptionCount < 200){
-      errors.push({"msg":"Résumé doit être composé de 200 caractères minimum."});
+      errors.push({"msg":"Résumez votre expérience dans la mode/beuté (minimum 200 caractères)."});
     }
 
     if(errors.length){
@@ -190,8 +190,8 @@ router.post('/updateprofil', function(req, res){
         var mailOptions = {
             from: '"Fason service client" <fason.contact@gmail.com>', // sender address
             to: userEmail, // list of receivers
-            subject : "Veuillez confirmer votre email",
-            html : "Bonjour,<br> Veuillez confirmer votre email afin de valider votre compte sur FASON.<br><a href="+link+">Appuyez ici pour confirmer</a>"
+            subject : "Confirmation de votre e-mail sur Fason",
+            html : "Bonjour,<br> Veuillez confirmer votre e-mail afin de valider votre compte sur FASON.<br><a href="+link+">Appuyez ici pour confirmer</a>"
         };
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
@@ -299,7 +299,7 @@ router.post('/register', function(req, res){
 	// Body-Validations with express validators
   req.checkBody('firstName', 'Veuillez saisir votre nom.').notEmpty();
 	req.checkBody('lastName', 'Veuillez saisir votre prénom.').notEmpty();
-  // req.checkBody("city", "Veuillez saisir votre ville de résidence.").notEmpty();
+  req.checkBody("city", "Veuillez saisir votre ville de résidence.").notEmpty();
 	req.checkBody('email', 'Veuillez saisir votre e-mail.').notEmpty();
   req.checkBody('phone', 'Veuillez saisir votre numéro de potable.').notEmpty();
   req.checkBody("userType", "Précisez quel type d'utilisateur êtes-vous.").notEmpty();
@@ -409,7 +409,7 @@ router.get('/verify', function(req, res){
       // verifiying that the protocol is the same as expected
     		if(req.query.id == user.verifyEmailString){
           // if so then we change the verified variable to true in the DB
-    		  res.send("<h1>Félicitation vous avez vérifié votre email!</h1>");
+    		  res.send("<h1>Félicitations, vous avez vérifié votre e-mail.</h1>");
     			user.varified = true;
     			user.save(function(err){
     				if (err){
@@ -532,7 +532,7 @@ router.post('/requestpasswordreset', function(req, res){
 
    User.getUserByEmail(req.body.email, function(err, user){
     if (!user){
-      res.send({"err": "Aucun utilisateur n'est inscrit avec cette adresse email", "errors": errors});
+      res.send({"err": "Aucun membre avec cette adresse e-mail.", "errors": errors});
     } else {
       var uniqueId = bcrypt.hashSync(uuid.v1());
       uniqueId.replace(/[^a-zA-Z0-9]/g, '');
@@ -555,8 +555,8 @@ router.post('/requestpasswordreset', function(req, res){
       var mailOptionsReset = {
           from: '"Fason service client" <fason.contact@gmail.com>', // sender address
           to: email, // list of receivers
-          subject : "Fason, changer mon mot de passe",
-          html : "Bonjour,<br> Vous allez procéder au changement de votre mot de passe. <br><a href="+passwordResetLink+">Cliquez ici pour commencer</a></br><p>Ce lien expire dans quelques heures, si vous ne l'avez pas utilisé dans les temps redemandez un autre sur fason.co</p>"
+          subject : "Changer mon mot de passe de Fason",
+          html : "Bonjour,<br> Vous allez procéder au changement de votre mot de passe. <br><a href="+passwordResetLink+">Cliquez ici pour commencer.</a></br><p>Ce lien expire dans quelques heures. Si vous ne l'avez pas utilisé dans le temps, redemandez un autre sur fason.co</p>"
       };
 
       transporter.sendMail(mailOptionsReset, function(error, info){
@@ -564,7 +564,7 @@ router.post('/requestpasswordreset', function(req, res){
               return console.log(error);
           } else {
             // SEND THE EMAIL PROCESS FINISHED ******************************************************
-            res.send({"sent": "Nous venons de vous envoyer un email avec les instructions pour changer votre mot de passe. N'oubliez pas de vérifier dans la rubrique spam de votre boite email!"});
+            res.send({"sent": "Nous venons de vous envoyer un e-mail avec les instructions afin de changer votre mot de passe. N'oubliez pas de vérifier dans la rubrique Spam de votre boîte e-mail."});
           }
       });
     }
@@ -661,17 +661,6 @@ router.post('/becomestylist', function(req, res){
     });
   }
 });
-
-
-
-
-
-
-
-
-
-
-
 
 // Exporting the router
 module.exports = router;

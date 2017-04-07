@@ -52,12 +52,12 @@ $(document).ready(function(){
           data: JSON.stringify({"password": password}),
           success: function(response){
             if(response.changed){
-              alert("Votre mot de passe à été modifié, vous pouvez vous connecter en utilisant votre nouveau mot de passe.")
+              alert("Votre mot de passe a été modifié. Connectez-vous avec le nouveau mot de passe.")
               window.location.replace('https://fason.herokuapp.com/');
             }
 
             if(response.erreur){
-              alert("Une erreur empéche le changement de votre mot de passe. Veuillez réessayer.")
+              alert("Une erreur empêche le changement de votre mot de passe. Veuillez réessayer.")
               window.location.replace('https://fason.herokuapp.com/');
             }
           }

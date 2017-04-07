@@ -7,7 +7,7 @@ $(document).ready(function(){
     var demandId = this.getAttribute("data-demand-id");
     $.confirm({
       title: 'Accepter',
-      content: 'Etes vous sure de vouloir accépter cette demande? En acceptant cette demande, vous vous engagez de rendre le service décrit dans le stylebox en question. Vous ne pourriez plus annuler le rendez-vous.',
+      content: 'Voulez-vous vraiment faire la demande de relooking pour ce look ? En appuyant sur le bouton "Oui", vous vous engagez à rencontrer le Relooker.',
       buttons: {
           oui: function () {
             $.ajax({
@@ -23,7 +23,7 @@ $(document).ready(function(){
                   )
                 } else if(response.expired){
                   $('.demande-menu-bottom-row-'+demandId).empty();
-                  $('.demande-menu-bottom-row-'+demandId).append('<div class="row text-center"><h4>Vous avez accépté cette demand après le rendez-vous fixé.</h4></div>')
+                  $('.demande-menu-bottom-row-'+demandId).append("<div class='row text-center'><h4>L'heure de rendez-vous de relooking est expirée.</h4></div>")
                 } else {
                   console.log("an error occured")
                 }
@@ -40,7 +40,7 @@ $(document).ready(function(){
     var demandId = this.getAttribute("data-demand-id");
     $.confirm({
       title: 'Accepter',
-      content: 'Etes vous sure de vouloir décliner cette demande?',
+      content: 'Voulez-vous vraiment décliner cette demande de relooking ?',
       buttons: {
           oui: function () {
             $.ajax({

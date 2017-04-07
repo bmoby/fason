@@ -13,7 +13,7 @@ $(document).ready(function(){
     var styleboxId = this.getAttribute('data-stylebox-id-remove');
     $.confirm({
       title: 'Supprimer',
-      content: 'Etes vous sure de vouloir supprimer ce stylebox? Toutes les photos ainsi que les informations seront définitivement perdu.',
+      content: 'Etes-vous sûr de vouloir supprimer ce look ? Toutes les photos ainsi que les informations seront définitivement supprimées.',
       buttons: {
           oui: function () {
             $.ajax({

@@ -109,7 +109,7 @@ router.post('/search', function(req, res){
   }).then(function(obje){
     Stylebox.find(obje, function(err, styleboxes){
       if (err){
-        res.send("Une erreur s'est produite, veuillez essayer plus tard")
+        res.send("Une erreur s'est produite, veuillez essayer plus tard.")
       } else {
         // Send gender info to autocomplete fields after the search
         var mens = false;
@@ -594,7 +594,7 @@ router.post('/demand', function(req, res){
             }
             if(index + 1 == req.user.demands.length){
               if (validDemand){
-                res.send({"err":"Vous avez une demande en cours..."})
+                res.send({"err":"Vous avez une demande en cours."})
               } else {
                 // Creating a prototype of the demand
                 var newDemand = {
@@ -670,8 +670,8 @@ router.get('/sendEmailVerify', function(req, res){
   var mailOptions = {
       from: '"Fason service client" <fason.contact@gmail.com>', // sender address
       to: req.user.email, // list of receivers
-      subject : "Veuillez confirmer votre email",
-      html : "Bonjour,<br> Cliquez sur ce lien afin de confirmer votre email.<br><a href="+link+">lien de confirmation</a>"
+      subject : "Veuillez confirmer votre e-mail",
+      html : "Bonjour,<br> Cliquez sur ce lien afin de confirmer votre e-mail.<br><a href="+link+">Lien de confirmation</a>"
   };
   transporter.sendMail(mailOptions, function(error, info){
       if(error){
@@ -1237,7 +1237,7 @@ router.get('/demandes', function(req, res){
                       if(demands.length || reservations.length || mydemands.length || myreservations.length){
                         res.render('demandes', {"user": connectedUser, "demands": demands, "reservations": reservations, "mydemands": mydemands, "myreservations": myreservations, "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
                       } else {
-                        res.render('demandes', {"user": req.user, "err":"Vous n'avez aucune demande pour le moment", "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
+                        res.render('demandes', {"user": req.user, "err":"Vous n'avez aucune demande de relooking pour le moment.", "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
                       }
                     }, 1000)
                   }
@@ -1247,7 +1247,7 @@ router.get('/demandes', function(req, res){
           })
         })
       } else {
-          res.render('demandes', {"user": req.user, "err":"Vous n'avez aucune demande pour le moment", "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
+          res.render('demandes', {"user": req.user, "err":"Vous n'avez aucune demande de relooking pour le moment.", "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
       }
     })
 })
@@ -1383,7 +1383,7 @@ router.post('/declinedemand', function(req, res){
       client.sms.messages.create({
         to:user.phone,
         from:'+33644607659',
-        body:'FASON: Votre dernière demande sur Fason a été déclinée. Vous pouvez désormais en refaire une autre.',
+        body:'FASON : Votre dernière demande de relooking a été déclinée. Vous pouvez désormais en refaire une autre.',
       }, function(err, message) {
         if(err){
           console.log(err);
@@ -1446,7 +1446,7 @@ router.get('/mystyleboxes', function(req, res){
         })
       })
     } else {
-      res.render('mystyles', {"user": req.user, "err": "Vous n'avez aucun look en ligne, créez en un en cliquand sur le lien suivant:", "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+      res.render('mystyles', {"user": req.user, "err": "Vous n'avez aucun look en ligne. Créez en un en cliquant sur le lien suivant :", "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
     }
   } else {
     res.redirect('https://fason.herokuapp.com/')
@@ -1743,7 +1743,7 @@ router.post('/contacter', function(req, res){
   var mailOptions = {
       from: '"Fason service client" <fason.contact@gmail.com>', // sender address
       to: "fason.contact@gmail.com", //
-      subject : "Nouveau message d'un client!!!!!",
+      subject : "Nouveau message d'un membre !",
       html : message
   };
   transporter.sendMail(mailOptions, function(error, info){

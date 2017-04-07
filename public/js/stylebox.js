@@ -119,7 +119,7 @@ $(document).ready(function(){
       data: JSON.stringify({"message": message, "styleboxId": styleboxId}),
       success: function(response){
         if (response){
-          alert("Votre message a bien été envoyé. Une notification vous avertira en cas de réponse.");
+          alert("VVotre message a bien été envoyé. Vous recevrez une notification en cas de réponse.");
           $('.full-page').addClass('hidden');
         }
       }
@@ -135,7 +135,7 @@ $(document).ready(function(){
 
   // Send verification email route ajax request
   $('.resend-email-btn').on('click', function(){
-    alert("Un e-mail vient d'être envoyé avec un lien pour confirmer votre e-mail. N'oubliez pas de verifier les courriers indésirbales (spams) de votre boîte e-mail.");
+    alert("Un e-mail vient d'être envoyé avec un lien pour confirmer votre e-mail. N'oubliez pas de vérifier les Courriers Indésirbales (Spams) de votre boîte e-mail.");
     $.ajax({
       url: '/sendEmailVerify',
       method: 'GET'
