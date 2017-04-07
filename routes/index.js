@@ -756,7 +756,7 @@ router.get('/setcreatortostylebox', function(req, res){
     var user = req.user;
     Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
 
-      User.getUser('58e7831dc5586c0004b7c32c', function(err, removeStylUser){
+      User.getUserById('58e7831dc5586c0004b7c32c', function(err, removeStylUser){
         removeStylUser.styleboxes.forEach(function(style, index, object){
           if(style.toString() == stylebox.id.toString()){
             object.splice(index, 1);
