@@ -755,11 +755,23 @@ router.get('/setcreatortostylebox', function(req, res){
   if(req.user){
     var user = req.user;
     Strylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
-      stylebox.creator = user;
-      stylebox.save();
-      user.styleboxes.push(stylebox.id)
-      user.save();
-      res.send({"ok": true})
+
+      User.getUser('58e7831dc5586c0004b7c32c', function(err, removeStylUser)({
+        removeStylUser.styleboxes.forEach(function(style, index, object){
+          if(style.toString() == stylebox.id.toString()){
+            object.splice(index, 1)
+            removeStylUser.save();
+          }
+
+          if(index+1 == object.length){
+            stylebox.creator = user;
+            stylebox.save();
+            user.styleboxes.push(stylebox.id)
+            user.save();
+            res.send({"ok": true})
+          }
+        })
+      })
     })
   } else {
     res.send({"ok": false})
@@ -786,7 +798,7 @@ router.post('/createstylebox', function(req, res){
   }
 
   var newStyle = new Stylebox({
-    creator: "nocreatorforthemoment",
+    creator: "58e7831dc5586c0004b7c32c",
     title: title,
     price:price,
     vestimentaire: styleObject.vestimentaire,
