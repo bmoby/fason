@@ -349,6 +349,7 @@ router.get('/stylebox/:id', function(req, res){
             style = "Soin visage et corps";
           break;
           default:
+            style = "not found";
                break;
         }
 

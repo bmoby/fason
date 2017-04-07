@@ -2286,7 +2286,7 @@ div.notationdiv {
   padding-bottom: 40px;
 }
 
-.listitems{
+#listitems{
   list-style-type: none;
   list-style: none;
   padding-left: 20px !important;
