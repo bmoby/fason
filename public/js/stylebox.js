@@ -187,19 +187,29 @@ $(document).ready(function(){
       );
     }else{
       var forstyle = $('.forstyleTitle').text();
-      $.ajax({
-        url: '/demand',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({"date": date, "styleboxId": styleboxId, "forstyle": forstyle}),
-        success: function(response){
-          if (response.ok){
-            alert("Votre demande de relooking a bien été envoyée. Relooker a 24 heures pour l'accepter. Dans le cas contraire, vous pouvez en faire une autre.");
-            location.reload();
-          } else {
-            alert(response.err);
-            location.reload();
-          }
+      $.confirm({
+        title: 'Confirmation',
+        content: 'Voulez-vous vraiment faire la demande de relooking pour ce look ? En appuyant sur le bouton "Oui", vous vous engagez à rencontrer le Relooker.',
+        buttons: {
+            oui: function () {
+              $.ajax({
+                url: '/demand',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({"date": date, "styleboxId": styleboxId, "forstyle": forstyle}),
+                success: function(response){
+                  if (response.ok){
+                    alert("Votre demande de relooking a bien été envoyée. Relooker a 24 heures pour l'accepter. Dans le cas contraire, vous pouvez en faire une autre.");
+                    location.reload();
+                  } else {
+                    alert(response.err);
+                    location.reload();
+                  }
+                }
+              });
+            },
+            non: function () {
+            }
         }
       });
     }

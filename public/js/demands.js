@@ -7,7 +7,8 @@ $(document).ready(function(){
     var demandId = this.getAttribute("data-demand-id");
     $.confirm({
       title: 'Accepter',
-      content: 'Voulez-vous vraiment faire la demande de relooking pour ce look ? En appuyant sur le bouton "Oui", vous vous engagez à rencontrer le Relooker.',
+      content: 'Voulez-vous vraiment accepter la demande de relooking ? En appuyant sur le bouton "Oui", vous vous engagez à rendre ce service de relooker à ce client.',
+      // content: 'Voulez-vous vraiment faire la demande de relooking pour ce look ? En appuyant sur le bouton "Oui", vous vous engagez à rencontrer le Relooker.',
       buttons: {
           oui: function () {
             $.ajax({
@@ -39,7 +40,7 @@ $(document).ready(function(){
   $('.decline-demand').on('click', function(){
     var demandId = this.getAttribute("data-demand-id");
     $.confirm({
-      title: 'Accepter',
+      title: 'Décliner',
       content: 'Voulez-vous vraiment décliner cette demande de relooking ?',
       buttons: {
           oui: function () {
