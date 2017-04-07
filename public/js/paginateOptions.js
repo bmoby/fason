@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('#listitems').paginate({itemsPerPage: 3});
+  $('.listitems').paginate({itemsPerPage: 5});
   $('.next').on('click', function(){
     window.scrollTo(0, 0);
   });

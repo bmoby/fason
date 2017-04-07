@@ -737,7 +737,7 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
   s3.putObject(params, function(err, data){
     if (err){
       console.log(err)
-      res.sned(false);
+      res.send(false);
     }else{
       Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
         stylebox.photos.push(fileName);
