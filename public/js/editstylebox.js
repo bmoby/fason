@@ -85,20 +85,20 @@ $(document).ready(function(){
      $('.stylebox-create-input-title-span').addClass('hidden');
   });
 
-  $('.style-price-input').focus(function () {
-     $('.stylebox-create-input-price-span').removeClass('hidden');
+  $('.select-minTime-proper').focus(function () {
+     $('.stylebox-create-input-title-span-2').removeClass('hidden');
   });
 
-  $('.style-city-input').focus(function () {
-     $('.stylebox-create-input-city-span').removeClass('hidden');
+  $('.select-minTime-proper').focusout(function () {
+     $('.stylebox-create-input-title-span-2').addClass('hidden');
   });
 
-  $('.style-price-input').focusout(function () {
-     $('.stylebox-create-input-price-span').addClass('hidden');
+  $('.stylebox-description').on("click", function () {
+     $('.stylebox-create-input-description-span-2').removeClass('hidden');
   });
 
-  $('.style-city-input').focusout(function () {
-     $('.stylebox-create-input-city-span').addClass('hidden');
+  $('.stylebox-description').focusout(function () {
+     $('.stylebox-create-input-description-span-2').addClass('hidden');
   });
 
   $('.style-minbudget-input').focus(function () {

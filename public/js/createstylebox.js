@@ -108,4 +108,54 @@ $(document).ready(function(){
     $('.stylebox-info-page').removeClass('hidden');
     $('.stylebox-pics-page').addClass('hidden');
   })
+
+
+    $('.style-title-input').focus(function () {
+       $('.stylebox-create-input-title-span').removeClass('hidden');
+    });
+
+    $('.style-title-input').focusout(function () {
+       $('.stylebox-create-input-title-span').addClass('hidden');
+    });
+
+    $('.select-minTime-proper').focus(function () {
+       $('.stylebox-create-input-title-span-2').removeClass('hidden');
+    });
+
+    $('.select-minTime-proper').focusout(function () {
+       $('.stylebox-create-input-title-span-2').addClass('hidden');
+    });
+
+    $('.stylebox-description').on("click", function () {
+       $('.stylebox-create-input-description-span-2').removeClass('hidden');
+    });
+
+    $('.stylebox-description').focusout(function () {
+       $('.stylebox-create-input-description-span-2').addClass('hidden');
+    });
+
+    $('.style-minbudget-input').focus(function () {
+       $('.stylebox-create-input-budget-span').removeClass('hidden');
+    });
+
+    $('.style-minbudget-input').focusout(function () {
+       $('.stylebox-create-input-budget-span').addClass('hidden');
+    });
+
+    //Become stylist styling
+    $('.about-me').focus(function () {
+       $('.stylist-description-span').removeClass('hidden');
+    });
+
+    $('.about-me').focusout(function () {
+       $('.stylist-description-span').addClass('hidden');
+    });
+
+    $('.availability-input').focus(function () {
+       $('.stylist-availability-span').removeClass('hidden');
+    });
+
+    $('.availability-input').focusout(function () {
+       $('.stylist-availability-span').addClass('hidden');
+    });
 })
