@@ -125,12 +125,14 @@ router.post('/updateprofil', function(req, res){
     function updateprofil(callback){
       var userFirstName = req.body.userFirstName;
       var userLastName = req.body.userLastName;
-      var userEmail = req.body.userEmail.toLowerCase();
+      var uEmail = req.body.userEmail;
+      var userEmail = uEmail.toLowerCase();
       var userPhone = req.body.userPhone;
       var userCity = req.body.userCity;
       var userDescription = req.body.userDescription;
       var userAvailability = req.body.userAvailability;
-      var userPassword = req.body.userPassword.toLowerCase();
+      var uPassword = req.body.userPassword;
+      var userPassword = uPassword.toLowerCase();
       var user = req.user;
       var descriptionCount = req.body.descriptionCount;
 
@@ -468,9 +470,10 @@ passport.deserializeUser(function(id, done) {
 
 // This method is for our ajax request to handle the errors if there is no more errors the next route will be called
 router.post('/login', function(req, res) {
-    var lemail = req.body.lemail.toLowerCase();
-    var lpassword = req.body.lpassword.toLowerCase();
+    var lemail = req.body.lemail;
+    var lpassword = req.body.lpassword;
 
+    console.log(lemail, lpassword);
     req.checkBody('lemail', 'Veuillez saisir votre e-mail.').notEmpty();
     if (lemail){
       req.checkBody('lemail', "E-mail n'est pas valide.").isEmail();
@@ -509,6 +512,7 @@ router.post('/login', function(req, res) {
       })
 });
 
+
 // This one is called when the /login route verify that there is no more errors so we can now sign in with the correct parameters
 router.post('/loginValid', passport.authenticate('local'), function(req, res){
   res.send(true);
@@ -523,7 +527,8 @@ router.get('/logout', function(req, res){
 
 // REQUEST A NEW PASSWORD
 router.post('/requestpasswordreset', function(req, res){
-  var email = req.body.email.toLowerCase();
+  var lemail = req.body.email;
+  var email = lemail.toLowerCase();
   req.checkBody('email', "Veuillez entrer votre e-mail").notEmpty();
   req.checkBody('email', 'Adresse e-mail invalid').isEmail();
   var errors = req.validationErrors() || [];

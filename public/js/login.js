@@ -1,8 +1,10 @@
 $(document).ready(function(){
   // REGISTER JQUERY ERROR HANDLING PROCESS
   $('.login-btn').on('click', function(){
-    var email = $('.login-email-field').val();
-    var pass = $('.login-password-field').val();
+    var lemail = $('.login-email-field').val();
+    var lpass = $('.login-password-field').val();
+    var email = lemail.toLowerCase();
+    var pass = lpass.toLowerCase();
     $('.oneError').remove();
     $.ajax({
       url: '/users/login',
