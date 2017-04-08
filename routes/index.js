@@ -822,7 +822,7 @@ var conversationsArray = [];
 router.get('/inbox', function(req, res){
   if (req.user && req.user.conversations.length == 0) {
     res.render('inbox', {empty: true, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-  } else {
+  } else if (req.user){
     var promise = new Promise(function (resolve, reject) {
       req.user.conversations.forEach(function(id){
         Conversation.getConversationById(id, function(err, conv){
@@ -881,6 +881,8 @@ router.get('/inbox', function(req, res){
     }).catch(function(err){
       console.log(err);
     });
+  } else {
+    res.render('index')
   }
 });
 
