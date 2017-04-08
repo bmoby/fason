@@ -73,8 +73,6 @@ router.get('/', function(req, res) {
 
 
 // SEARCH PAGES
-
-
 router.get('/search', function(req, res){
   if(req.user){
     res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Veuillez appuyer sur Recherche.", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
@@ -123,7 +121,6 @@ router.post('/search', function(req, res){
         if (obje.gender == "ladies"){
           womans = true;
         }
-
 
         var cityResend = req.body.city;
 

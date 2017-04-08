@@ -190,8 +190,8 @@ router.post('/updateprofil', function(req, res){
         link = "http://"+req.get('host')+"/users/verify?id="+rand;
         host = "http://"+req.get('host');
         var mailOptions = {
-            from: '"Fason service client" <fason.contact@gmail.com>', // sender address
-            to: userEmail, // list of receivers
+            from: '"Fason service client" <fason.contact@gmail.com>',
+            to: userEmail,
             subject : "Confirmation de votre e-mail sur Fason",
             html : "Bonjour,<br> Veuillez confirmer votre e-mail afin de valider votre compte sur FASON.<br><a href="+link+">Appuyez ici pour confirmer</a>"
         };
@@ -528,8 +528,8 @@ router.get('/logout', function(req, res){
 // REQUEST A NEW PASSWORD
 router.post('/requestpasswordreset', function(req, res){
   var email = req.body.email;
-  req.checkBody('email', "Veuillez entrer votre email").notEmpty();
-  req.checkBody('email', 'Adresse email invalid').isEmail();
+  req.checkBody('email', "Veuillez entrer votre e-mail").notEmpty();
+  req.checkBody('email', 'Adresse e-mail invalid').isEmail();
   var errors = req.validationErrors() || [];
 
    User.getUserByEmail(req.body.email, function(err, user){
