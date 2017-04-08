@@ -52,6 +52,10 @@ $(document).ready(function(){
     if(errorCounter == 0) {
       $('.stylebox-info-page').addClass('hidden');
       $('.stylebox-pics-page').removeClass('hidden');
+    } else {
+      $('html, body').animate({
+          scrollTop: $(".errorMessage").first().offset().top
+      }, "slow");
     }
   });
 

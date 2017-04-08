@@ -81,6 +81,7 @@ router.get('/search', function(req, res){
   }
 })
 
+
 router.post('/search', function(req, res){
   var city = req.body.city;
   var gender = req.body.gender;
@@ -379,9 +380,20 @@ router.get('/stylebox/:id', function(req, res){
               rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
               rating.number = user.rating.length;
               if(req.user){
-                res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox,"rating": rating, "stylist": stylistNeededInfo,  "gender": gender, "style": style, user: req.user, "newmessages": req.user.notifications.length, "haveToVerify": haveToVerify, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                res.render('stylebox-display',
+                  {"styleboxcomments": commentList,
+                    "stylebox": stylebox,
+                    "rating": rating,
+                    "stylist": stylistNeededInfo,
+                    "gender": gender,
+                    "style": style,
+                    "user": req.user,
+                    "newmessages": req.user.notifications.length,
+                    "haveToVerify": haveToVerify,
+                    "newdemands": req.user.demandNotifications.length,
+                    "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
               } else {
-                res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, user: req.user, "haveToVerify": haveToVerify});
+                res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "user": req.user, "haveToVerify": haveToVerify});
               }
             }
           });
@@ -393,9 +405,20 @@ router.get('/stylebox/:id', function(req, res){
           rating.general = -1;
           rating.number = 0;
           if(req.user){
-            res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox,"rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, user: req.user, "newmessages": req.user.notifications.length, "haveToVerify": haveToVerify, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+            res.render('stylebox-display',
+            {"styleboxcomments": commentList,
+            "stylebox": stylebox,
+            "rating": rating,
+            "stylist": stylistNeededInfo,
+            "style": style,
+            "gender": gender,
+            "user": req.user,
+            "newmessages": req.user.notifications.length,
+            "haveToVerify": haveToVerify,
+            "newdemands": req.user.demandNotifications.length,
+            "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
           } else {
-            res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, user: req.user, "haveToVerify": haveToVerify});
+            res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "user": req.user, "haveToVerify": haveToVerify});
           }
         }
       }
@@ -487,7 +510,6 @@ router.post('/demand', function(req, res){
           time: demandTime,
           creatorName: req.user.firstName +" "+req.user.lastName,
           forstyle: req.body.forstyle
-
         }
 
         Demand.createNewDemand(newDemand, function(err, savedDemand){
@@ -664,7 +686,7 @@ router.get('/sendPhoneCode', function(req, res){
 });
 
 router.get('/sendEmailVerify', function(req, res){
-  var link = "https://fason.herokuapp.com/users/verify?id="+req.user.verifyEmailString;
+  var link = "http://fason.co/users/verify?id="+req.user.verifyEmailString;
   var mailOptions = {
       from: '"Fason service client" <fason.contact@gmail.com>', // sender address
       to: req.user.email, // list of receivers
@@ -712,7 +734,7 @@ router.get('/createstylebox', function(req, res){
       res.render('become-stylist', {user: req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
     }
   } else {
-    res.redirect('https://fason.herokuapp.com/');
+    res.redirect('http://fason.co/');
   }
 })
 
@@ -721,35 +743,38 @@ var uploadMulter = multer({dest: 'public/img'})
 var emptyStylebox = "";
 
 router.post('/load', uploadMulter.single('input44[]') , function(req, res, next){
-  console.log("load images route")
-  var fileName = {};
-  var file = req.file;
-  var stream = fs.createReadStream(file.path)
-  var imageType = file.mimetype.split('/').pop()
-  fileName = file.filename+'.'+imageType;
+  if(req.user){
+    var fileName = {};
+    var file = req.file;
+    var stream = fs.createReadStream(file.path)
+    var imageType = file.mimetype.split('/').pop()
+    fileName = file.filename+'.'+imageType;
 
-  params = {
-    Bucket: 'styleboxphotosfason',
-    ACL: 'public-read',
-    Key: fileName,
-    Body: stream
-  };
+    params = {
+      Bucket: 'styleboxphotosfason',
+      ACL: 'public-read',
+      Key: fileName,
+      Body: stream
+    };
 
-  s3.putObject(params, function(err, data){
-    if (err){
-      console.log(err)
-      res.send(false);
-    }else{
-      Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
-        stylebox.photos.push(fileName);
-        stylebox.save();
-        res.send(true);
-      })
-      fs.unlink(req.file.path, function(err){
-        if (err) console.error(err)
-      });
-    }
-  });
+    s3.putObject(params, function(err, data){
+      if (err){
+        console.log(err)
+        res.send(false);
+      }else{
+        Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
+          stylebox.photos.push(fileName);
+          stylebox.save();
+          res.send(true);
+        })
+        fs.unlink(req.file.path, function(err){
+          if (err) console.error(err)
+        });
+      }
+    });
+  } else {
+    res.redirect('http://fason.co/');
+  }
 });
 
 router.get('/setcreatortostylebox', function(req, res){
@@ -770,49 +795,50 @@ router.get('/setcreatortostylebox', function(req, res){
 
 router.post('/createstylebox', function(req, res){
 
-  console.log("stylebox create route")
-  var budget = req.body.budget;
-  var title = req.body.title;
-  var price = req.body.price;
-  var styleObject = req.body.styleObject;
-  var style = req.body.style;
-  var gender = req.body.gender;
-  var minTime = req.body.minTime;
-  var city  = req.body.city;
-  var description = req.body.description;
+  if(req.user){
+    var budget = req.body.budget;
+    var title = req.body.title;
+    var price = req.body.price;
+    var styleObject = req.body.styleObject;
+    var style = req.body.style;
+    var gender = req.body.gender;
+    var minTime = req.body.minTime;
+    var city  = req.body.city;
+    var description = req.body.description;
 
-
-  function checkcity(citytest){
-    if(citytest != ""){
-      return citytest
-    } else {
-      return req.user.city;
+    function checkcity(citytest){
+      if(citytest != ""){
+        return citytest
+      } else {
+        return req.user.city;
+      }
     }
+
+    var newStyle = new Stylebox({
+      title: title,
+      price:price,
+      vestimentaire: styleObject.vestimentaire,
+      beaute: styleObject.beaute,
+      style: style,
+      gender: gender,
+      minTime: minTime,
+      city: checkcity(city),
+      minBudget: budget,
+      description: description
+    });
+
+    Stylebox.createNewStylebox(newStyle, function(err, stylebox){
+      if(err) {
+        console.log(err)
+      } else {
+        emptyStylebox = stylebox.id;
+      }
+    });
+    res.send({"stylebox": true});
+  } else {
+    res.redirect('http://fason.co/');
   }
-
-  var newStyle = new Stylebox({
-    title: title,
-    price:price,
-    vestimentaire: styleObject.vestimentaire,
-    beaute: styleObject.beaute,
-    style: style,
-    gender: gender,
-    minTime: minTime,
-    city: checkcity(city),
-    minBudget: budget,
-    description: description
-  });
-
-  Stylebox.createNewStylebox(newStyle, function(err, stylebox){
-    if(err) {
-      console.log(err)
-    } else {
-      emptyStylebox = stylebox.id;
-    }
-  });
-  res.send({"stylebox": true});
 });
-
 
 // Get the conversations and display them when log into inbox page
 var conversationsArray = [];
@@ -873,72 +899,74 @@ router.get('/inbox', function(req, res){
         return moment(b.activeTime) - moment(a.activeTime);
       });
 
-      res.render('inbox', {"convers": object, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length });
+      res.render('inbox', {"convers": object, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
       conversationsArray = [];
     }).catch(function(err){
       console.log(err);
     });
   } else {
-    res.render('index')
+    res.redirect('http://fason.co/');
   }
 });
 
 router.post('/getmessages', function(req, res){
-
-  var conversationId = req.body.conversationId;
-  Conversation.getConversationById(conversationId, function(err, conv){
-    if(conv.participants[0] == req.user.id){
-      User.getUserById(conv.participants[1], function(err, user){
-        if(user){
-          var convproto = {};
-          convproto.messages = [{}];
-          convproto.participants = conv.participants;
-          convproto.from = conv.from
-          convproto.activeTime = conv.activeTime
-          convproto.conversationCreatedTime = conv.conversationCreatedTime
-          convproto.id = conv.id;
-          conv.messages.forEach(function(msg, index, object){
-            var newmsg = {};
-            newmsg.msg = msg.msg;
-            newmsg.msgOwner = msg.msgOwner;
-            newmsg.msgOwnerName = msg.msgOwnerName;
-            newmsg.messageCreatedTime = msg.messageCreatedTime;
-            newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, hh:mm:ss');
-            convproto.messages.push(newmsg);
-            if(index+1  == object.length){
-              res.send({"conv": convproto, "avatar": user.avatar, "myAva": req.user.avatar, "userId": req.user.id})
-            }
-          })
-        }
-      })
-    } else {
-      User.getUserById(conv.participants[0], function(err, user){
-        if(user){
-          var convproto = {};
-          convproto.messages = [{}];
-          convproto.participants = conv.participants;
-          convproto.from = conv.from
-          convproto.activeTime = conv.activeTime
-          convproto.conversationCreatedTime = conv.conversationCreatedTime
-          convproto.id = conv.id;
-          conv.messages.forEach(function(msg, index, object){
-            var newmsg = {};
-            newmsg.msg = msg.msg;
-            newmsg.msgOwner = msg.msgOwner;
-            newmsg.msgOwnerName = msg.msgOwnerName;
-            newmsg.messageCreatedTime = msg.messageCreatedTime;
-            newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, hh:mm:ss');
-            convproto.messages.push(newmsg);
-            if(index+1  == object.length){
-              res.send({"conv": convproto, "avatar": user.avatar, "myAva": req.user.avatar, "userId": req.user.id})
-            }
-          })
-        }
-      })
-    }
-  });
+  if(req.user){
+    var conversationId = req.body.conversationId;
+    Conversation.getConversationById(conversationId, function(err, conv){
+      if(conv.participants[0] == req.user.id){
+        User.getUserById(conv.participants[1], function(err, user){
+          if(user){
+            var convproto = {};
+            convproto.messages = [{}];
+            convproto.participants = conv.participants;
+            convproto.from = conv.from
+            convproto.activeTime = conv.activeTime
+            convproto.conversationCreatedTime = conv.conversationCreatedTime
+            convproto.id = conv.id;
+            conv.messages.forEach(function(msg, index, object){
+              var newmsg = {};
+              newmsg.msg = msg.msg;
+              newmsg.msgOwner = msg.msgOwner;
+              newmsg.msgOwnerName = msg.msgOwnerName;
+              newmsg.messageCreatedTime = msg.messageCreatedTime;
+              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, hh:mm:ss');
+              convproto.messages.push(newmsg);
+              if(index+1  == object.length){
+                res.send({"conv": convproto, "avatar": user.avatar, "myAva": req.user.avatar, "userId": req.user.id})
+              }
+            })
+          }
+        })
+      } else {
+        User.getUserById(conv.participants[0], function(err, user){
+          if(user){
+            var convproto = {};
+            convproto.messages = [{}];
+            convproto.participants = conv.participants;
+            convproto.from = conv.from
+            convproto.activeTime = conv.activeTime
+            convproto.conversationCreatedTime = conv.conversationCreatedTime
+            convproto.id = conv.id;
+            conv.messages.forEach(function(msg, index, object){
+              var newmsg = {};
+              newmsg.msg = msg.msg;
+              newmsg.msgOwner = msg.msgOwner;
+              newmsg.msgOwnerName = msg.msgOwnerName;
+              newmsg.messageCreatedTime = msg.messageCreatedTime;
+              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, hh:mm:ss');
+              convproto.messages.push(newmsg);
+              if(index+1  == object.length){
+                res.send({"conv": convproto, "avatar": user.avatar, "myAva": req.user.avatar, "userId": req.user.id})
+              }
+            })
+          }
+        })
+      }
+    });
+  } else {
+    res.redirect('http://fason.co/');
+  }
 });
-
 
 router.get('/getMyInfo', function(req, res){
   if(req.user){
@@ -991,55 +1019,59 @@ router.post('/checkIfConvParticipantsActiv', function(req, res){
 });
 
 router.post('/saveMsg', function(req, res){
-	var conversationId = req.body.conversationId;
-	var messageToSave = req.body.message;
-	if(messageToSave){
-    Conversation.getConversationById(conversationId, function(err, conversation){
-  		if (err){
-  			console.log(err);
-        res.send(true);
-  		} else {
-        var time = moment()
-        var promise = new Promise(function(resolve, reject){
-          conversation.messages.push({
-            msg: messageToSave,
-            msgOwner: req.user.id,
-            msgOwnerName: req.user.firstName
-          });
-          conversation.activeTime = moment();
-          var notifiedUser;
-            conversation.save(function(err){
-      				if(err){
-      					console.log(err);
-      				}
-      			});
-            if (conversation.participants[0] == req.user.id){
-              notifiedUser = conversation.participants[1]
-            } else {
-              notifiedUser = conversation.participants[0]
-            }
-            resolve({"userToNotify": notifiedUser, "messageId": conversation.messages[conversation.messages.length - 1].id});
-        }).then(function(object){
-          User.getUserById(object.userToNotify, function(err, user){
-            if(err){
-              console.log(err)
-            } else {
-              user.notifications.push({"notifMsg": messageToSave, "notifType": "newMsg", "msgId": object.messageId});
-              user.save(function(err){
-                if(err){
-                  console.log(err);
-                }
-                res.send(true)
-              });
-            }
+  if(req.user){
+    var conversationId = req.body.conversationId;
+  	var messageToSave = req.body.message;
+  	if(messageToSave){
+      Conversation.getConversationById(conversationId, function(err, conversation){
+    		if (err){
+    			console.log(err);
+          res.send(true);
+    		} else {
+          var time = moment()
+          var promise = new Promise(function(resolve, reject){
+            conversation.messages.push({
+              msg: messageToSave,
+              msgOwner: req.user.id,
+              msgOwnerName: req.user.firstName
+            });
+            conversation.activeTime = moment();
+            var notifiedUser;
+              conversation.save(function(err){
+        				if(err){
+        					console.log(err);
+        				}
+        			});
+              if (conversation.participants[0] == req.user.id){
+                notifiedUser = conversation.participants[1]
+              } else {
+                notifiedUser = conversation.participants[0]
+              }
+              resolve({"userToNotify": notifiedUser, "messageId": conversation.messages[conversation.messages.length - 1].id});
+          }).then(function(object){
+            User.getUserById(object.userToNotify, function(err, user){
+              if(err){
+                console.log(err)
+              } else {
+                user.notifications.push({"notifMsg": messageToSave, "notifType": "newMsg", "msgId": object.messageId});
+                user.save(function(err){
+                  if(err){
+                    console.log(err);
+                  }
+                  res.send(true)
+                });
+              }
+            })
+          }).catch(function(err){
+            console.log(err)
           })
-        }).catch(function(err){
-          console.log(err)
-        })
-  		}
-  	});
+    		}
+    	});
+    } else {
+      res.send(true)
+    }
   } else {
-    res.send(true)
+    res.redirect('http://fason.co/');
   }
 });
 
@@ -1096,302 +1128,331 @@ router.post('/clearNotif', function(req, res){
 });
 
 router.post('/deleteconversation', function(req, res){
-  var convId = req.body.convId;
-  var user = req.user;
-  user.conversations.forEach(function(conversation, index, object){
-    if(conversation == convId){
-      object.splice(index, 1);
-      user.save();
-    }
-  });
-  res.send({ok: true});
+  if(req.user){
+    var convId = req.body.convId;
+    var user = req.user;
+    user.conversations.forEach(function(conversation, index, object){
+      if(conversation == convId){
+        object.splice(index, 1);
+        user.save();
+      }
+    });
+    res.send({ok: true});
+  }else {
+    res.redirect('http://fason.co/');
+  }
 });
 
 router.get('/demandes', function(req, res){
-  var demands = [];
-  var reservations = [];
-  var mydemands = [];
-  var myreservations = [];
-  var connectedUser = req.user;
 
-  function updateDemands(callback){
-    connectedUser.demandNotifications = [];
-    connectedUser.save();
-    // Updating demands if expired
-    if(connectedUser.demands.length){
-      connectedUser.demands.forEach(function(demand, index, object){
-        Demand.getDemandById(demand, function(err, dem){
-          var newDate = moment(dem.createdTime);
-          var now = moment();
-          var diff = now.diff(newDate, 'hours');
-          if(diff >= 24){
-            if(dem.approuved == false && dem.declined == false){
-              dem.participants.forEach(function(participant, indexparticipant, objectparticipant){
-                User.getUserById(participant, function(err, user){
-                  if(user.demands.length){
-                    user.demands.forEach(function(deman, indexdem, objectdem){
-                      if(deman == dem.id){
-                        user.demands.splice(indexdem, 1);
-                        user.save();
-                        if(req.user.id == user.id){
-                          connectedUser = user;
-                        };
-                      }
-                    })
-                  }
-                  if(user.evals.length){
-                    user.evals.forEach(function(eval, indexeval, objecteval){
-                      if(eval.fordemand == dem.id){
-                        user.evals.splice(indexeval, 1);
-                        user.save();
-                      }
-                    })
-                  }
-                  if(user.demandNotifications.length){
-                    user.demandNotifications.forEach(function(notif, indexnotif, objectnotif){
-                      if(notif.demandid == dem.id){
-                        user.demandNotifications.splice(indexnotif, 1);
-                        user.save();
-                      }
-                    })
-                  }
-                })
-                if(index+1 == object.length){
-                  dem.valid = false;
-                  dem.save();
-                }
-              })
-            }
-          }
-        })
-      })
-      setTimeout(function(){
-        callback(connectedUser)
-      }, 2000)
-    } else {
-      callback(connectedUser);
-    }
-  }
+  if(req.user){
+    var demands = [];
+    var reservations = [];
+    var mydemands = [];
+    var myreservations = [];
+    var connectedUser = req.user;
 
-    updateDemands(function(connectedUser){
+    function updateDemands(callback){
+      connectedUser.demandNotifications = [];
+      connectedUser.save();
+      // Updating demands if expired
       if(connectedUser.demands.length){
-        connectedUser.demands.forEach(function(demand, index3, object3){
+        connectedUser.demands.forEach(function(demand, index, object){
           Demand.getDemandById(demand, function(err, dem){
-            if(err){
-              console.log(err)
-            }
-
-            if(dem){
-              User.getUserById(dem.creator, function(err, user){
-                if(err){
-                  console.log(err)
-                } else {
-                  var time = dem.time;
-                  var now = moment();
-                  var newDate = moment(dem.createdTime);
-                  var diff = now.diff(newDate, 'hours');
-                  var expiretime = 24 - diff;
-                  dem.formatedtime = moment(time).format("DD/MM/YYYY");
-                  dem.formatedtimeHours = moment(time).format("hh:mm");
-                  if(expiretime != 0){
-                    dem.diff = expiretime;
-                  }
-                  var created = dem.createdTime;
-                  dem.formatedcreatedTime = moment(created).format("DD/MM/YYYY, hh:mm");
-                  dem.participants.forEach(function(userava, indexuserava, objectuserava){
-                    User.getUserById(userava, function(err, userav){
-                      if(dem.creator.toString() != req.user.id.toString()){
-                        if(dem.creator.toString() == userava.toString()){
-                          dem.demava = userav.avatar;
-                          dem.creatorName = userav.lastName;
+            var newDate = moment(dem.createdTime);
+            var now = moment();
+            var diff = now.diff(newDate, 'hours');
+            if(diff >= 24){
+              if(dem.approuved == false && dem.declined == false){
+                dem.participants.forEach(function(participant, indexparticipant, objectparticipant){
+                  User.getUserById(participant, function(err, user){
+                    if(user.demands.length){
+                      user.demands.forEach(function(deman, indexdem, objectdem){
+                        if(deman == dem.id){
+                          user.demands.splice(indexdem, 1);
+                          user.save();
+                          if(req.user.id == user.id){
+                            connectedUser = user;
+                          };
                         }
-                      } else {
-                        if(dem.creator.toString() != userava.toString()){
-                          dem.demava = userav.avatar;
-                          dem.creatorName = userav.lastName;
+                      })
+                    }
+                    if(user.evals.length){
+                      user.evals.forEach(function(eval, indexeval, objecteval){
+                        if(eval.fordemand == dem.id){
+                          user.evals.splice(indexeval, 1);
+                          user.save();
                         }
-                      }
-                    })
-                    if(indexuserava+1 == objectuserava.length){
-                      if(dem.creator.toString() != req.user.id.toString()){
-                        if(dem.declined == false && dem.approuved == false){
-                          demands.push(dem);
+                      })
+                    }
+                    if(user.demandNotifications.length){
+                      user.demandNotifications.forEach(function(notif, indexnotif, objectnotif){
+                        if(notif.demandid == dem.id){
+                          user.demandNotifications.splice(indexnotif, 1);
+                          user.save();
                         }
-
-                        if(dem.approuved == true && moment(dem.time) > moment()){
-                          reservations.push(dem);
-                        }
-                      } else {
-                        if(dem.declined == false && dem.approuved == false){
-                          mydemands.push(dem);
-                        }
-                        if(dem.approuved == true && moment(dem.time) > moment()){
-                          myreservations.push(dem);
-                        }
-                      }
+                      })
                     }
                   })
-
-                  if((index3+1).toString() == (connectedUser.demands.length).toString()){
-                    setTimeout(function(){
-                      if(demands.length || reservations.length || mydemands.length || myreservations.length){
-                        res.render('demandes', {"user": connectedUser, "demands": demands, "reservations": reservations, "mydemands": mydemands, "myreservations": myreservations, "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
-                      } else {
-                        res.render('demandes', {"user": req.user, "err":"Vous n'avez aucune demande de relooking pour le moment.", "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
-                      }
-                    }, 1000)
+                  if(index+1 == object.length){
+                    dem.valid = false;
+                    dem.save();
                   }
-                }
-              })
+                })
+              }
             }
           })
         })
+        setTimeout(function(){
+          callback(connectedUser)
+        }, 2000)
       } else {
-          res.render('demandes', {"user": req.user, "err":"Vous n'avez aucune demande de relooking pour le moment.", "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
+        callback(connectedUser);
       }
-    })
+    }
+
+      updateDemands(function(connectedUser){
+        if(connectedUser.demands.length){
+          connectedUser.demands.forEach(function(demand, index3, object3){
+            Demand.getDemandById(demand, function(err, dem){
+              if(err){
+                console.log(err)
+              }
+
+              if(dem){
+                User.getUserById(dem.creator, function(err, user){
+                  if(err){
+                    console.log(err)
+                  } else {
+                    var time = dem.time;
+                    var now = moment();
+                    var newDate = moment(dem.createdTime);
+                    var diff = now.diff(newDate, 'hours');
+                    var expiretime = 24 - diff;
+                    dem.formatedtime = moment(time).format("DD/MM/YYYY");
+                    dem.formatedtimeHours = moment(time).format("hh:mm");
+                    if(expiretime != 0){
+                      dem.diff = expiretime;
+                    }
+                    var created = dem.createdTime;
+                    dem.formatedcreatedTime = moment(created).format("DD/MM/YYYY, hh:mm");
+                    dem.participants.forEach(function(userava, indexuserava, objectuserava){
+                      User.getUserById(userava, function(err, userav){
+                        if(dem.creator.toString() != req.user.id.toString()){
+                          if(dem.creator.toString() == userava.toString()){
+                            dem.demava = userav.avatar;
+                            dem.creatorName = userav.lastName;
+                          }
+                        } else {
+                          if(dem.creator.toString() != userava.toString()){
+                            dem.demava = userav.avatar;
+                            dem.creatorName = userav.lastName;
+                          }
+                        }
+                      })
+                      if(indexuserava+1 == objectuserava.length){
+                        if(dem.creator.toString() != req.user.id.toString()){
+                          if(dem.declined == false && dem.approuved == false){
+                            demands.push(dem);
+                          }
+
+                          if(dem.approuved == true && moment(dem.time) > moment()){
+                            reservations.push(dem);
+                          }
+                        } else {
+                          if(dem.declined == false && dem.approuved == false){
+                            mydemands.push(dem);
+                          }
+                          if(dem.approuved == true && moment(dem.time) > moment()){
+                            myreservations.push(dem);
+                          }
+                        }
+                      }
+                    })
+
+                    if((index3+1).toString() == (connectedUser.demands.length).toString()){
+                      setTimeout(function(){
+                        if(demands.length || reservations.length || mydemands.length || myreservations.length){
+                          res.render('demandes',
+                          {"user": connectedUser,
+                          "demands": demands,
+                          "reservations": reservations,
+                          "mydemands": mydemands,
+                          "myreservations": myreservations,
+                          "newmessages": connectedUser.notifications.length,
+                          "newdemands": connectedUser.demandNotifications.length,
+                          "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
+                        } else {
+                          res.render('demandes',
+                          {"user": req.user,
+                          "err":"Vous n'avez aucune demande de relooking pour le moment.",
+                          "newmessages": connectedUser.notifications.length,
+                          "newdemands": connectedUser.demandNotifications.length,
+                          "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
+                        }
+                      }, 1000)
+                    }
+                  }
+                })
+              }
+            })
+          })
+        } else {
+          res.render('demandes', {"user": req.user, "err":"Vous n'avez aucune demande de relooking pour le moment.", "newmessages": connectedUser.notifications.length, "newdemands": connectedUser.demandNotifications.length, "allNotifications": connectedUser.demandNotifications.length + connectedUser.notifications.length});
+        }
+      })
+  } else {
+    res.redirect('http://fason.co/');
+  }
 })
 
 router.post('/acceptdemand', function(req, res){
-  var demandId = req.body.demandId;
-  Demand.getDemandById(demandId, function(err, demand){
-    var time = demand.time;
-    var appoinementTime = moment(time).format("DD/MM/YYYY, hh:mm");
-    if(moment(time) > moment()){
-      demand.approuved = true;
-      demand.valid = false;
-      demand.save();
-      var demandId = demand.creator.toString();
-      pusher.trigger(demandId, 'demands', {"demandAccepter": true});
-      User.getUserById(demand.creator, function(err, user){
-        if(err){
-          console.log(err)
-        } else {
-          user.demandNotifications.push({"demandid": demand.id});
-          user.save();
-          var user2 = req.user;
-          user2.demandNotifications.forEach(function(notif, index, object){
-            if(notif.demandid == demand.id){
-              object.splice(index, 1);
-              user2.save();
+  if(req.user){
+    var demandId = req.body.demandId;
+    Demand.getDemandById(demandId, function(err, demand){
+      var time = demand.time;
+      var appoinementTime = moment(time).format("DD/MM/YYYY, hh:mm");
+      if(moment(time) > moment()){
+        demand.approuved = true;
+        demand.valid = false;
+        demand.save();
+        var demandId = demand.creator.toString();
+        pusher.trigger(demandId, 'demands', {"demandAccepter": true});
+        User.getUserById(demand.creator, function(err, user){
+          if(err){
+            console.log(err)
+          } else {
+            user.demandNotifications.push({"demandid": demand.id});
+            user.save();
+            var user2 = req.user;
+            user2.demandNotifications.forEach(function(notif, index, object){
+              if(notif.demandid == demand.id){
+                object.splice(index, 1);
+                user2.save();
+              }
+            })
+          }
+        });
+        res.send({"status": true, "appoinementTime": appoinementTime});
+      } else {
+        var userst = req.user;
+        var clientId = demand.creator;
+        demand.declined = true;
+        demand.valid = false;
+        demand.save();
+
+        if(userst.demands.length){
+          userst.demands.forEach(function(deman, indexdeman, objectdeman){
+            if(deman.toString() == demand.id.toString()){
+              userst.demands.splice(indexdeman, 1);
+              userst.save();
             }
           })
         }
-      });
-      res.send({"status": true, "appoinementTime": appoinementTime});
-    } else {
-      var userst = req.user;
-      var clientId = demand.creator;
-      demand.declined = true;
-      demand.valid = false;
-      demand.save();
 
-      if(userst.demands.length){
-        userst.demands.forEach(function(deman, indexdeman, objectdeman){
-          if(deman.toString() == demand.id.toString()){
-            userst.demands.splice(indexdeman, 1);
-            userst.save();
-          }
-        })
-      }
-
-      if(userst.demandNotifications.length){
-        userst.demandNotifications.forEach(function(demanN, indexdemanN, objectdemanN){
-          if(demanN.demandid.toString() == demand.id.toString()){
-            userst.demandNotifications.splice(indexdemanN, 1);
-            userst.save();
-          }
-        })
-      }
-
-      if(userst.evals.length){
-        userst.evals.forEach(function(evalst, indexste, objectste){
-          if(demand.id.toString() == evalst.fordemand.toString()){
-            userst.evals.splice(indexste, 1);
-            userst.save();
-          }
-        })
-      }
-
-      User.getUserById(clientId, function(err, clientS){
-        if(err){
-          console.log(err)
-        } else {
-          if(clientS.demands.length){
-            clientS.demands.forEach(function(demcl, indexcl, objectcl){
-              if(demcl.toString() == demand.id.toString()){
-                clientS.demands.splice(indexcl, 1);
-                clientS.save();
-              }
-            })
-          }
-
-          if(clientS.demandNotifications.length){
-            clientS.demandNotifications.forEach(function(demclN, indexclN, objectclN){
-              if(demclN.demandid.toString() == demand.id.toString()){
-                clientS.demandNotifications.splice(indexclN, 1);
-                clientS.save();
-              }
-            })
-          }
-
-          if(clientS.evals.length){
-            clientS.evals.forEach(function(evalcl, indexcle, objectcle){
-              if(demand.id.toString() == evalcl.fordemand.toString()){
-                clientS.evals.splice(indexcle, 1);
-                clientS.save();
-              }
-            })
-          }
-
+        if(userst.demandNotifications.length){
+          userst.demandNotifications.forEach(function(demanN, indexdemanN, objectdemanN){
+            if(demanN.demandid.toString() == demand.id.toString()){
+              userst.demandNotifications.splice(indexdemanN, 1);
+              userst.save();
+            }
+          })
         }
-      })
-      res.send({"expired":true})
-    }
-  })
+
+        if(userst.evals.length){
+          userst.evals.forEach(function(evalst, indexste, objectste){
+            if(demand.id.toString() == evalst.fordemand.toString()){
+              userst.evals.splice(indexste, 1);
+              userst.save();
+            }
+          })
+        }
+
+        User.getUserById(clientId, function(err, clientS){
+          if(err){
+            console.log(err)
+          } else {
+            if(clientS.demands.length){
+              clientS.demands.forEach(function(demcl, indexcl, objectcl){
+                if(demcl.toString() == demand.id.toString()){
+                  clientS.demands.splice(indexcl, 1);
+                  clientS.save();
+                }
+              })
+            }
+
+            if(clientS.demandNotifications.length){
+              clientS.demandNotifications.forEach(function(demclN, indexclN, objectclN){
+                if(demclN.demandid.toString() == demand.id.toString()){
+                  clientS.demandNotifications.splice(indexclN, 1);
+                  clientS.save();
+                }
+              })
+            }
+
+            if(clientS.evals.length){
+              clientS.evals.forEach(function(evalcl, indexcle, objectcle){
+                if(demand.id.toString() == evalcl.fordemand.toString()){
+                  clientS.evals.splice(indexcle, 1);
+                  clientS.save();
+                }
+              })
+            }
+          }
+        })
+        res.send({"expired":true})
+      }
+    })
+  } else {
+    res.redirect('http://fason.co/');
+  }
 });
 
 router.post('/declinedemand', function(req, res){
-  var demandId = req.body.demandId;
-  Demand.getDemandById(demandId, function(err, dem){
-    dem.valid = false;
-    dem.save();
-    dem.participants.forEach(function(userid){
-      User.getUserById(userid, function(err, user){
-        user.evals.forEach(function(eval, index2, object2){
-          if(eval.fordemand == dem.id){
-            object2.splice(index2, 1);
-            user.save();
+  if(req.user){
+    var demandId = req.body.demandId;
+    Demand.getDemandById(demandId, function(err, dem){
+      dem.valid = false;
+      dem.save();
+      dem.participants.forEach(function(userid){
+        User.getUserById(userid, function(err, user){
+          user.evals.forEach(function(eval, index2, object2){
+            if(eval.fordemand == dem.id){
+              object2.splice(index2, 1);
+              user.save();
+            }
+          })
+          user.demandNotifications.forEach(function(notif, index, object){
+            if(notif.demandid == dem.id){
+              object.splice(index, 1);
+              user.save();
+            }
+          });
+          user.demands.forEach(function(demand, index2, object2){
+            if(demand == dem.id){
+              object2.splice(index2, 1);
+              user.save();
+            }
+          });
+        })
+      });
+
+      User.getUserById(dem.creator, function(err, user){
+        client.sms.messages.create({
+          to:user.phone,
+          from:'+33644607659',
+          body:'FASON : Votre dernière demande de relooking a été déclinée. Vous pouvez désormais en refaire une autre.',
+        }, function(err, message) {
+          if(err){
+            console.log(err);
           }
         })
-        user.demandNotifications.forEach(function(notif, index, object){
-          if(notif.demandid == dem.id){
-            object.splice(index, 1);
-            user.save();
-          }
-        });
-        user.demands.forEach(function(demand, index2, object2){
-          if(demand == dem.id){
-            object2.splice(index2, 1);
-            user.save();
-          }
-        });
-      })
-    });
-
-    User.getUserById(dem.creator, function(err, user){
-      client.sms.messages.create({
-        to:user.phone,
-        from:'+33644607659',
-        body:'FASON : Votre dernière demande de relooking a été déclinée. Vous pouvez désormais en refaire une autre.',
-      }, function(err, message) {
-        if(err){
-          console.log(err);
-        }
       })
     })
-  })
-  res.send(true);
+    res.send(true);
+  } else {
+    res.redirect('http://fason.co/');
+  }
 });
 
 router.get('/mystyleboxes', function(req, res){
@@ -1449,71 +1510,86 @@ router.get('/mystyleboxes', function(req, res){
       res.render('mystyles', {"user": req.user, "err": "Vous n'avez aucun look en ligne. Créez en un en cliquant sur le lien suivant :", "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
     }
   } else {
-    res.redirect('https://fason.herokuapp.com/')
+    res.redirect('http://fason.co/')
   }
 });
 
 router.get('/styleboxedit/:id', function(req, res){
-  var styleboxId = req.params.id;
-  Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-    if(err){
-      console.log(err)
-      res.redirect('https://fason.herokuapp.com/');
-    } else {
-      if (stylebox.creator == req.user.id) {
-        var stylistNeededInfo = {"firstName": req.user.firstName, "lastName": req.user.lastName, "avatar": req.user.avatar, "description": req.user.stylist.description, "availability": req.user.stylist.availability};
-        var rating = {};
-        var general = 0;
-        var communication = 0;
-        var quality = 0;
-        var ponctuality = 0;
-        var precision = 0;
-        if(req.user.rating.length){
-          req.user.rating.forEach(function(rat, index, object){
-            communication = communication + rat.communication;
-            quality = quality + rat.qualityprice;
-            ponctuality = ponctuality + rat.ponctuality;
-            precision = precision + rat.precision;
-
-            if(index+1 == req.user.rating.length){
-              rating.quality = quality/req.user.rating.length;
-              rating.communication = communication/req.user.rating.length;
-              rating.ponctuality = ponctuality/req.user.rating.length;
-              rating.precision = precision/req.user.rating.length;
-              rating.general = (quality+communication+ponctuality+precision)/(req.user.rating.length * 4);
-              rating.number = req.user.rating.length;
-              res.render('editstylebox', {"stylebox": stylebox,"rating": rating, "stylist": stylistNeededInfo, user: req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-            }
-          });
-        } else {
-          res.render('editstylebox', {"stylebox": stylebox,"rating": rating, "stylist": stylistNeededInfo, user: req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-        }
+  if(req.user){
+    var styleboxId = req.params.id;
+    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
+      if(err){
+        console.log(err)
+        res.redirect('http://fason.co/');
       } else {
-        res.redirect('https://fason.herokuapp.com/');
+        if (stylebox.creator == req.user.id) {
+          var stylistNeededInfo = {"firstName": req.user.firstName, "lastName": req.user.lastName, "avatar": req.user.avatar, "description": req.user.stylist.description, "availability": req.user.stylist.availability};
+          var rating = {};
+          var general = 0;
+          var communication = 0;
+          var quality = 0;
+          var ponctuality = 0;
+          var precision = 0;
+          if(req.user.rating.length){
+            req.user.rating.forEach(function(rat, index, object){
+              communication = communication + rat.communication;
+              quality = quality + rat.qualityprice;
+              ponctuality = ponctuality + rat.ponctuality;
+              precision = precision + rat.precision;
+
+              if(index+1 == req.user.rating.length){
+                rating.quality = quality/req.user.rating.length;
+                rating.communication = communication/req.user.rating.length;
+                rating.ponctuality = ponctuality/req.user.rating.length;
+                rating.precision = precision/req.user.rating.length;
+                rating.general = (quality+communication+ponctuality+precision)/(req.user.rating.length * 4);
+                rating.number = req.user.rating.length;
+                res.render('editstylebox',
+                {"stylebox": stylebox,
+                "rating": rating,
+                "stylist": stylistNeededInfo,
+                "user": req.user,
+                "newmessages": req.user.notifications.length,
+                "newdemands": req.user.demandNotifications.length,
+                "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+              }
+            });
+          } else {
+            res.render('editstylebox', {"stylebox": stylebox,"rating": rating, "stylist": stylistNeededInfo, user: req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+          }
+        } else {
+          res.redirect('http://fason.co/');
+        }
       }
-    }
-  })
+    })
+  } else {
+    res.redirect('http://fason.co/');
+  }
 })
 
 router.post('/styleboxdelete', function(req, res){
-  var styleboxId = req.body.styleboxId;
-  Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-    if(stylebox.creator == req.user.id){
-      req.user.styleboxes.forEach(function(style, index, object){
-        if(style == stylebox.id){
-          object.splice(index, 1);
-          req.user.save();
-          stylebox.remove(function (err) {
-              // if no error, your model is removed
-              if(err){
-                console.log(err)
-              }
-          });
-          res.send({list:req.user.styleboxes.length});
-        }
-      })
-    }
-  });
+  if(req.user){
+    var styleboxId = req.body.styleboxId;
+    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
+      if(stylebox.creator == req.user.id){
+        req.user.styleboxes.forEach(function(style, index, object){
+          if(style == stylebox.id){
+            object.splice(index, 1);
+            req.user.save();
+            stylebox.remove(function (err) {
+                // if no error, your model is removed
+                if(err){
+                  console.log(err)
+                }
+            });
+            res.send({list:req.user.styleboxes.length});
+          }
+        })
+      }
+    });
+  } else {
+    res.redirect('http://fason.co/');
+  }
 });
 
 router.get('/checkevals', function(req, res){
@@ -1549,55 +1625,57 @@ router.get('/checkevals', function(req, res){
 });
 
 router.post('/editstylebox', function(req, res){
-  var styleboxId = req.body.styleboxId;
-  var budget = req.body.budget;
-  var title = req.body.title;
-  var price = req.body.price;
-  var styleObject = req.body.styleObject;
-  var style = req.body.style;
-  var gender = req.body.gender;
-  var minTime = req.body.minTime;
-  var city  = req.body.city;
-  var description = req.body.description;
-
-  function checkcity(citytest){
-    if(citytest != ""){
-      return citytest
-    } else {
-      return req.user.city;
-    }
-  }
-
-
-  Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-    stylebox.photos.forEach(function(photo, index, object){
-      s3.deleteObject({
-        Bucket: 'styleboxphotosfason',
-        Key: photo
-      },function (err,data){
-        if(err){
-          console.log(err)
-        } console.log(data);
-      })
-
-      if(index+1 == stylebox.photos.length){
-        emptyStylebox = stylebox.id;
-        stylebox.title = title;
-        stylebox.price = price;
-        stylebox.gender = gender;
-        stylebox.description = description;
-        stylebox.style = style;
-        stylebox.vestimentaire = styleObject.vestimentaire;
-        stylebox.beaute = styleObject.beaute;
-        stylebox.minBudget = budget;
-        stylebox.minTime = minTime;
-        stylebox.city = checkcity(city);
-        stylebox.photos = [];
-        stylebox.save();
-        res.send({"edited": true});
+  if(req.user){
+    var styleboxId = req.body.styleboxId;
+    var budget = req.body.budget;
+    var title = req.body.title;
+    var price = req.body.price;
+    var styleObject = req.body.styleObject;
+    var style = req.body.style;
+    var gender = req.body.gender;
+    var minTime = req.body.minTime;
+    var city  = req.body.city;
+    var description = req.body.description;
+    function checkcity(citytest){
+      if(citytest != ""){
+        return citytest
+      } else {
+        return req.user.city;
       }
-    })
-  });
+    }
+
+    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
+      stylebox.photos.forEach(function(photo, index, object){
+        s3.deleteObject({
+          Bucket: 'styleboxphotosfason',
+          Key: photo
+        },function (err,data){
+          if(err){
+            console.log(err)
+          } console.log(data);
+        })
+
+        if(index+1 == stylebox.photos.length){
+          emptyStylebox = stylebox.id;
+          stylebox.title = title;
+          stylebox.price = price;
+          stylebox.gender = gender;
+          stylebox.description = description;
+          stylebox.style = style;
+          stylebox.vestimentaire = styleObject.vestimentaire;
+          stylebox.beaute = styleObject.beaute;
+          stylebox.minBudget = budget;
+          stylebox.minTime = minTime;
+          stylebox.city = checkcity(city);
+          stylebox.photos = [];
+          stylebox.save();
+          res.send({"edited": true});
+        }
+      })
+    });
+  } else {
+    res.redirect('http://fason.co/');
+  }
 })
 
 router.get('/evaluate', function(req, res){
@@ -1638,79 +1716,84 @@ router.get('/evaluate', function(req, res){
       res.render('evaluate', {"evalsArray": evalsArray, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
     }, 1000);
   } else {
-    res.render('evaluate', {"evaluations": evaluations, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+    res.redirect('http://fason.co/');
   }
 })
 
+
 router.post('/evaluate', function(req, res){
-  var stylistId = req.body.stylistId;
-  var styleboxId = req.body.styleboxId;
-  var evalId = req.body.evalId;
-  var userId = req.body.userId;
-  var connectedUser = req.user;
-  var communication = req.body.communication;
-  var precision = req.body.precision;
-  var quality = req.body.quality;
-  var ponctuality = req.body.ponctuality;
-  var comment = req.body.comment;
-  if(stylistId){
-    var commentObject = {};
-    User.getUserById(stylistId, function(err, stylist){
-      commentObject.creator = connectedUser.id;
-      commentObject.foruser = stylistId;
-      commentObject.commentBody = comment.toString();
-      commentObject.stylebox = styleboxId;
-      commentObject.creatorAva = connectedUser.avatar;
-      commentObject.creatorName = connectedUser.lastName;
-      connectedUser.evals.forEach(function(eval, indexe, objecte){
-        if(eval.id == evalId){
-          commentObject.showDate = eval.endDate;
-          Comments.createNewComment(commentObject, function(err, savedComment){
-            if(err){
-              console.log(err)
-            } else {
-              stylist.comments.push(savedComment);
-              stylist.save();
-            }
-          })
-          eval.participated = true;
-          connectedUser.save();
-        }
+  if(req.user){
+    var stylistId = req.body.stylistId;
+    var styleboxId = req.body.styleboxId;
+    var evalId = req.body.evalId;
+    var userId = req.body.userId;
+    var connectedUser = req.user;
+    var communication = req.body.communication;
+    var precision = req.body.precision;
+    var quality = req.body.quality;
+    var ponctuality = req.body.ponctuality;
+    var comment = req.body.comment;
+    if(stylistId){
+      var commentObject = {};
+      User.getUserById(stylistId, function(err, stylist){
+        commentObject.creator = connectedUser.id;
+        commentObject.foruser = stylistId;
+        commentObject.commentBody = comment.toString();
+        commentObject.stylebox = styleboxId;
+        commentObject.creatorAva = connectedUser.avatar;
+        commentObject.creatorName = connectedUser.lastName;
+        connectedUser.evals.forEach(function(eval, indexe, objecte){
+          if(eval.id == evalId){
+            commentObject.showDate = eval.endDate;
+            Comments.createNewComment(commentObject, function(err, savedComment){
+              if(err){
+                console.log(err)
+              } else {
+                stylist.comments.push(savedComment);
+                stylist.save();
+              }
+            })
+            eval.participated = true;
+            connectedUser.save();
+          }
+        })
+
+        var ratingObj = {"precision": precision, "qualityprice": quality, "communication": communication, "ponctuality": ponctuality};
+        stylist.rating.push(ratingObj);
+        stylist.save();
+
       })
+    }
 
-      var ratingObj = {"precision": precision, "qualityprice": quality, "communication": communication, "ponctuality": ponctuality};
-      stylist.rating.push(ratingObj);
-      stylist.save();
-
-    })
-  }
-
-  if(userId){
-    var commentObject = {};
-    User.getUserById(userId, function(err, userc){
-      commentObject.creator = connectedUser.id;
-      commentObject.foruser = userId;
-      commentObject.commentBody = comment.toString();
-      commentObject.stylebox = styleboxId;
-      commentObject.creatorAva = connectedUser.avatar;
-      connectedUser.evals.forEach(function(eval, indexe, objecte){
-        if(eval.id == evalId){
-          commentObject.showDate = eval.endDate;
-          Comments.createNewComment(commentObject, function(err, savedComment){
-            if(err){
-              console.log(err)
-            } else {
-              userc.comments.push(savedComment);
-              userc.save();
-            }
-          })
-          eval.participated = true;
-          connectedUser.save();
-        }
+    if(userId){
+      var commentObject = {};
+      User.getUserById(userId, function(err, userc){
+        commentObject.creator = connectedUser.id;
+        commentObject.foruser = userId;
+        commentObject.commentBody = comment.toString();
+        commentObject.stylebox = styleboxId;
+        commentObject.creatorAva = connectedUser.avatar;
+        connectedUser.evals.forEach(function(eval, indexe, objecte){
+          if(eval.id == evalId){
+            commentObject.showDate = eval.endDate;
+            Comments.createNewComment(commentObject, function(err, savedComment){
+              if(err){
+                console.log(err)
+              } else {
+                userc.comments.push(savedComment);
+                userc.save();
+              }
+            })
+            eval.participated = true;
+            connectedUser.save();
+          }
+        })
       })
-    })
+    }
+    res.send(true);
+  } else {
+    res.redirect('http://fason.co/');
   }
-  res.send(true);
 })
 
 router.get('/team', function(req, res){
@@ -1739,20 +1822,39 @@ router.get('/contacter', function(req, res){
 
 
 router.post('/contacter', function(req, res){
-  var message = req.body.messagemail;
-  var mailOptions = {
-      from: '"Fason service client" <fason.contact@gmail.com>', // sender address
-      to: "fason.contact@gmail.com", //
-      subject : "Nouveau message d'un membre !",
-      html : message
-  };
-  transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-          return console.log(error);
-      } else {
-        res.redirect("https://fason.herokuapp.com/");
-      }
-  });
+  if(req.user){
+    var message = req.body.messagemail;
+    var mailOptions = {
+        from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+        to: "fason.contact@gmail.com", //
+        subject : "Nouveau message d'un membre !",
+        html : "message from: "+ req.user.email + "</br>"+ " message: "+ message
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            return console.log(error);
+        } else {
+          res.redirect("http://fason.co/");
+        }
+    });
+  } else {
+    var message = req.body.messagemail;
+    var fromemail = req.body.messageemailadress;
+    var objet = req.body.objet;
+    var mailOptions = {
+        from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+        to: "fason.contact@gmail.com", //
+        subject : "Nouveau message d'un membre !",
+        html : "message from: "+ fromemail + "</br>"+ "objet: "+objet +"</br>"+" message: "+ message
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            return console.log(error);
+        } else {
+          res.redirect("http://fason.co/");
+        }
+    });
+  }
 })
 
 
@@ -1780,4 +1882,5 @@ router.get('/resetPassword/:id', function(req, res){
   var id = req.params.id;
   res.render('reset', {"token":id});
 });
+
 module.exports = router;

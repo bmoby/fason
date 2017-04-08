@@ -13,6 +13,10 @@
             <h2 class="text-center">Nous contacter</h2>
                 <p class="help-block">Nous allons vous répondre le plus vite possible.</p>
             <div class="form-group">
+              {{#unless user}}
+                <input type="text" name="messageemailadress" class="mainLoginInput form-control" placeholder="Votre e-mail">
+              {{/unless}}
+              <input type="text" name="objet" class="mainLoginInput form-control" placeholder="Object">
                 <textarea class="mainLoginInput form-control" rows="14" name="messagemail" placeholder="Message"></textarea>
             </div>
             <div class="form-group text-right">

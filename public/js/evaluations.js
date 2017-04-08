@@ -16,7 +16,7 @@ $(document).ready(function(){
       contentType: 'application/json',
       data: JSON.stringify({"stylistId": stylistId, "styleboxId": styleboxId, "evalId": evalId, "precision": precision, "ponctuality": ponctuality, "quality": quality, "communication": communication, "comment": comment}),
       success: function(response){
-        window.location.replace('https://fason.herokuapp.com/');
+        window.location.replace('http://fason.co/');
       }
     })
   });
@@ -33,7 +33,7 @@ $(document).ready(function(){
       contentType: 'application/json',
       data: JSON.stringify({"userId": userId, "styleboxId": styleboxId, "evalId": evalId, "comment": comment}),
       success: function(response){
-        window.location.replace('https://fason.herokuapp.com/');
+        window.location.replace('http://fason.co/');
       }
     })
   });

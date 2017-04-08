@@ -23,9 +23,9 @@ $(document).ready(function(){
               data: JSON.stringify({"styleboxId": styleboxId}),
               success: function(response){
                 if(response.list == 0){
-                  window.location.replace('https://fason.herokuapp.com/');
+                  window.location.replace('http://fason.co/');
                 } else {
-                  window.location.replace('https://fason.herokuapp.com/mystyleboxes');
+                  window.location.replace('http://fason.co/mystyleboxes');
                 }
               }
             })

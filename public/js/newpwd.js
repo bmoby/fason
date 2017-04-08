@@ -11,7 +11,7 @@ $(document).ready(function(){
       success: function(response){
         if(response.sent) {
           alert(response.sent);
-          window.location.replace('https://fason.herokuapp.com/');
+          window.location.replace('http://fason.co/');
         }
         if(response.err && !response.errors){
             $('.errorsBlock').append(
@@ -53,12 +53,12 @@ $(document).ready(function(){
           success: function(response){
             if(response.changed){
               alert("Votre mot de passe a été modifié. Connectez-vous avec le nouveau mot de passe.")
-              window.location.replace('https://fason.herokuapp.com/');
+              window.location.replace('http://fason.co/');
             }
 
             if(response.erreur){
               alert("Une erreur empêche le changement de votre mot de passe. Veuillez réessayer.")
-              window.location.replace('https://fason.herokuapp.com/');
+              window.location.replace('http://fason.co/');
             }
           }
         })

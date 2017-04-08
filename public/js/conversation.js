@@ -67,7 +67,7 @@ $(".limit-large").each(function(i){
               if(msg.msgOwner == response.userId){
                 var myava = response.myAva;
                 if(response.myAva == ""){
-                  myava = "https://fason.herokuapp.com/images/noavatar.png";
+                  myava = "http://fason.co/images/noavatar.png";
                 }
                 $('.messages-container-div').append(
                   '<div class="from-me">'+
@@ -89,7 +89,7 @@ $(".limit-large").each(function(i){
               if(msg.msgOwner != response.userId){
                 var theavatar = response.avatar;
                 if(response.avatar == ""){
-                  theavatar = "https://fason.herokuapp.com/images/noavatar.png"
+                  theavatar = "http://fason.co/images/noavatar.png"
                 }
                 $('.messages-container-div').append(
                   '<div class="not-from-me">'+

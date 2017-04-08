@@ -69,10 +69,10 @@ $(document).ready(function() {
           success: function(response){
             if(response.ok){
               alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
-              window.location.replace('https://fason.herokuapp.com/');
+              window.location.replace('http://fason.co/');
             } else {
               alert('Nous avont rencontré des problemes lors de création de votre look, veuillez nous exuser et réessayer quelque minutes plus tard..');
-              window.location.replace('https://fason.herokuapp.com/');
+              window.location.replace('http://fason.co/');
             }
           }
         })

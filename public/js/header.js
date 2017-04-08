@@ -134,7 +134,7 @@ $(document).ready(function(){
     if(document.referrer){
       window.location.replace(document.referrer);
     } else {
-      window.location.replace("https://fason.herokuapp.com/");
+      window.location.replace("http://fason.co/");
     }
   });
 

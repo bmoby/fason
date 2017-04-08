@@ -12,7 +12,7 @@ $(document).ready(function(){
         data: JSON.stringify({"description": description, "availability": availability}),
         success: function(response){
           if(response.stylist){
-            window.location.replace('https://fason.herokuapp.com/createStylebox');
+            window.location.replace('http://fason.co/createStylebox');
           } else {
             $('.errorsBlock').removeClass('hiddenclass');
             $('.errorsBlock').append(
@@ -101,6 +101,10 @@ $(document).ready(function(){
     if(errorCounter == 0) {
       $('.stylebox-info-page').addClass('hidden');
       $('.stylebox-pics-page').removeClass('hidden');
+    } else {
+      $('html, body').animate({
+          scrollTop: $(".errorMessage").first().offset().top
+      }, "slow");
     }
   });
 

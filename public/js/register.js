@@ -2,7 +2,6 @@ $(document).ready(function(){
   // REGISTER JQUERY ERROR HANDLING PROCESS
   $('.register-btn').on('click', function(){
     // getting the data from the fields
-    $("html, body").animate({ scrollTop: 0 }, "slow");
     var first = $('#firstName').val();
     var last = $('#lastName').val();
     var emai = $('#userEmail').val();
@@ -26,7 +25,6 @@ $(document).ready(function(){
             $('.errorsBlock').append(
               '<div class="row oneError text-center"><p class="errorMessage">'+error.msg+'</p></div>'
             )
-
           });
         } else {
           if(response.ok){
@@ -42,6 +40,9 @@ $(document).ready(function(){
         }
       }
     });
+    if($('.errorMessage')){
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+    }
   });
 
   $('.user-type input').iCheck({

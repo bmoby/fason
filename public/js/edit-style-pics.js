@@ -67,7 +67,7 @@ $(document).on('ready', function() {
   $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
     if(index+1 == data.files.length){
       alert('Votre look a été modifié.');
-      window.location.replace('https://fason.herokuapp.com/mystyleboxes');
+      window.location.replace('http://fason.co/mystyleboxes');
     }
   });
 
