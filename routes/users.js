@@ -125,12 +125,12 @@ router.post('/updateprofil', function(req, res){
     function updateprofil(callback){
       var userFirstName = req.body.userFirstName;
       var userLastName = req.body.userLastName;
-      var userEmail = req.body.userEmail;
+      var userEmail = req.body.userEmail.toLowerCase();
       var userPhone = req.body.userPhone;
       var userCity = req.body.userCity;
       var userDescription = req.body.userDescription;
       var userAvailability = req.body.userAvailability;
-      var userPassword = req.body.userPassword;
+      var userPassword = req.body.userPassword.toLowerCase();
       var user = req.user;
       var descriptionCount = req.body.descriptionCount;
 
@@ -468,8 +468,8 @@ passport.deserializeUser(function(id, done) {
 
 // This method is for our ajax request to handle the errors if there is no more errors the next route will be called
 router.post('/login', function(req, res) {
-    var lemail = req.body.lemail;
-    var lpassword = req.body.lpassword;
+    var lemail = req.body.lemail.toLowerCase();
+    var lpassword = req.body.lpassword.toLowerCase();
 
     req.checkBody('lemail', 'Veuillez saisir votre e-mail.').notEmpty();
     if (lemail){
@@ -523,7 +523,7 @@ router.get('/logout', function(req, res){
 
 // REQUEST A NEW PASSWORD
 router.post('/requestpasswordreset', function(req, res){
-  var email = req.body.email;
+  var email = req.body.email.toLowerCase();
   req.checkBody('email', "Veuillez entrer votre e-mail").notEmpty();
   req.checkBody('email', 'Adresse e-mail invalid').isEmail();
   var errors = req.validationErrors() || [];
@@ -572,7 +572,7 @@ router.post('/requestpasswordreset', function(req, res){
 // THIS ROUTE HELPS TO SEND THE NEW PASSWORD BACK TO THE SERVER AND CHANGE THE INFO IN THE DB ALSO HASHING THE NEW PASSWORD
 router.post('/resetPassword/:id', function(req, res){
   var id = req.params.id;
-  var password = req.body.password;
+  var password = req.body.password.toLowerCase();
   // New method created in the user model file to find a user with the resetToken that is in the db
   User.getUserByResetToken(id, function(err, user){
     if (err){
