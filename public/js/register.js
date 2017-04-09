@@ -5,10 +5,11 @@ $(document).ready(function(){
     var first = $('#firstName').val();
     var last = $('#lastName').val();
     var lemai = $('#userEmail').val();
-    var email = lemail.toLowerCase();
+    var emai = lemai.toLowerCase();
     var city = $('#userCity').val();
     var lpass = $('#userPassword').val();
     var pass = lpass.toLowerCase();
+
     var phone = $('#userPhone').val();
     var userType = $(".user-type input[type='radio']:checked").val();
     var conditions =  $(".conditions input").is(":checked");

@@ -125,14 +125,12 @@ router.post('/updateprofil', function(req, res){
     function updateprofil(callback){
       var userFirstName = req.body.userFirstName;
       var userLastName = req.body.userLastName;
-      var uEmail = req.body.userEmail;
-      var userEmail = uEmail.toLowerCase();
+      var userEmail = req.body.userEmail;
       var userPhone = req.body.userPhone;
       var userCity = req.body.userCity;
       var userDescription = req.body.userDescription;
       var userAvailability = req.body.userAvailability;
-      var uPassword = req.body.userPassword;
-      var userPassword = uPassword.toLowerCase();
+      var userPassword = req.body.userPassword;
       var user = req.user;
       var descriptionCount = req.body.descriptionCount;
 
