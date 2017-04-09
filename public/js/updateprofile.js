@@ -12,8 +12,10 @@ $(document).ready(function(){
     var userLastName = $('#userLastNameUpdate').val();
     var userCity = $('#userCityUpdate').val();
     var userPhone = $('#userPhoneUpdate').val();
-    var userPassword = $('#userPasswordUpdate').val();
-    var userEmail = $('#userEmailUpdate').val();
+    var uPassword = $('#userPasswordUpdate').val();
+    var userPassword = uPassword.toLowerCase();
+    var uEmail = $('#userEmailUpdate').val();
+    var userEmail = uEmail.toLowerCase();
     var userAvailability = $('.availability-input').val();
     var userDescription = $('.about-me').val();
     var descriptionCount = parseInt($('.text-count').text());
