@@ -4,9 +4,11 @@ $(document).ready(function(){
     // getting the data from the fields
     var first = $('#firstName').val();
     var last = $('#lastName').val();
-    var emai = $('#userEmail').val();
+    var lemai = $('#userEmail').val();
+    var email = lemail.toLowerCase();
     var city = $('#userCity').val();
-    var pass = $('#userPassword').val();
+    var lpass = $('#userPassword').val();
+    var pass = lpass.toLowerCase();
     var phone = $('#userPhone').val();
     var userType = $(".user-type input[type='radio']:checked").val();
     var conditions =  $(".conditions input").is(":checked");
