@@ -18,7 +18,7 @@
       <form  method="post" action="/users/updateavatar", enctype="multipart/form-data">
         <input type="text" name="userId" class="hidden useridtoserver">
         <input type="text" name="userType" class="hidden userType">
-        <input type="file" class="avatarUpload hidden" name="displayImage">
+        <input type="file" accept=".jpg, .jpeg, .png" class="avatarUpload hidden" name="displayImage">
         <input type="submit" value="Submit" class="hidden updateavatar">
       </form>
       <p>Modifier mon avatar</p>

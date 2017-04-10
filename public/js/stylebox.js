@@ -119,6 +119,7 @@ $(document).ready(function(){
       data: JSON.stringify({"message": message, "styleboxId": styleboxId}),
       success: function(response){
         if (response){
+          $('.messageText').val("");
           alert("Votre message a bien été envoyé. Vous recevrez une notification en cas de réponse.");
           $('.full-page').addClass('hidden');
         }
