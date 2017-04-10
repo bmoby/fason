@@ -122,13 +122,17 @@ $(document).ready(function(){
         success: function(response){
           if (response.sent){
             document.getElementById("clearit").value = "";
-            alert("Votre message a bien été envoyé. Vous recevrez une notification en cas de réponse.");
+            setTimeout(function(){
+              alert("Votre message a bien été envoyé. Vous recevrez une notification en cas de réponse.");
+            }, 200);
             $('.full-page').addClass('hidden');
           }
 
           if (response.creator){
             document.getElementById("clearit").value = "";
-            alert("Vous ne pouvez pas envoyer des messages a vous meme.");
+            setTimeout(function(){
+              alert("Vous ne pouvez pas envoyer des messages a vous meme.");
+            }, 200);
             $('.full-page').addClass('hidden');
           }
         }
@@ -217,7 +221,14 @@ $(document).ready(function(){
                   if (response.ok){
                     alert("Votre demande de relooking a bien été envoyée. Relooker a 24 heures pour l'accepter. Dans le cas contraire, vous pouvez en faire une autre.");
                     location.reload();
-                  } else {
+                  }
+
+                  if(response.creator){
+                    alert("Vous ne pouvez pas envoyer des demandes a vous meme");
+                    location.reload();
+                  }
+
+                  if(response.err){
                     alert(response.err);
                     location.reload();
                   }

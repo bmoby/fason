@@ -504,169 +504,173 @@ router.post('/demand', function(req, res){
     }
   }).then(function(){
     Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-      var validDemand = false;
-      if(req.user.demands.length == 0){
-        // Creating a prototype of the demand
-        var newDemand = {
-          creator: creator,
-          participants:[creator, stylebox.creator],
-          time: demandTime,
-          creatorName: req.user.firstName +" "+req.user.lastName,
-          forstyle: req.body.forstyle
-        }
-
-        Demand.createNewDemand(newDemand, function(err, savedDemand){
-          if(err){
-            console.log(err)
-          } else {
-            var comDate = moment(savedDemand.time, "DD-MM-YYYY").add(14, 'days');
-            var demand = {
-              type: "recu",
-              client: req.user.firstName,
-              clientAva: req.user.avatar,
-              date: jsonDate,
-              commentTime: comDate,
-              createdTime: savedDemand.createdTime,
-              clientPhone: req.user.phone
-            }
-            User.getUserById(stylebox.creator, function(err, user){
-              if (err){
-                console.log(err)
-              } else {
-                user.demandNotifications.push({"demandid": savedDemand.id});
-                user.demands.push(savedDemand);
-                user.save();
-                pusher.trigger(user.id, 'demands', demand);
-                res.send({"ok": true})
-              }
-            });
-            User.getUserById(stylebox.creator, function(err, user){
-              client.sms.messages.create({
-                to:user.phone,
-                from:'+33644607659',
-                body:'FASON : Vous avez reçu une nouvelle demande de relooking.',
-              }, function(err, message) {
-                if(err){
-                  console.log(err);
-                }
-              })
-            })
+      if(req.user.id == stylebox.creator){
+        res.send({"creator": true});
+      } else {
+        var validDemand = false;
+        if(req.user.demands.length == 0){
+          // Creating a prototype of the demand
+          var newDemand = {
+            creator: creator,
+            participants:[creator, stylebox.creator],
+            time: demandTime,
+            creatorName: req.user.firstName +" "+req.user.lastName,
+            forstyle: req.body.forstyle
           }
 
-          savedDemand.participants.forEach(function(participant, indexx, objectt){
-            function addDays(date, days) {
-                var result = new Date(date);
-                result.setDate(result.getDate() + days);
-                return result;
-            };
-            var startDate = savedDemand.time;
-            if(participant.toString() == savedDemand.creator.toString()){
-              if(indexx == 0){
-                User.getUserById(participant, function(err, user){
-                  if(err){
-                    console.log(err)
-                  } else {
-                    var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "stylistId":savedDemand.participants[1] };
-                    user.evals.push(eval);
-                    user.save();
-                  }
-                })
-              } else {
-                User.getUserById(participant, function(err, user){
-                  if(err){
-                    console.log(err)
-                  } else {
-                    var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "stylistId":savedDemand.participants[0] };
-                    user.evals.push(eval);
-                    user.save();
-                  }
-                })
+          Demand.createNewDemand(newDemand, function(err, savedDemand){
+            if(err){
+              console.log(err)
+            } else {
+              var comDate = moment(savedDemand.time, "DD-MM-YYYY").add(14, 'days');
+              var demand = {
+                type: "recu",
+                client: req.user.firstName,
+                clientAva: req.user.avatar,
+                date: jsonDate,
+                commentTime: comDate,
+                createdTime: savedDemand.createdTime,
+                clientPhone: req.user.phone
               }
-            }
-
-            if(participant.toString() != savedDemand.creator.toString()){
-              if(indexx == 0){
-                User.getUserById(participant, function(err, user){
-                  if(err){
-                    console.log(err)
-                  } else {
-                    var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "userId": savedDemand.participants[1] };
-                    user.evals.push(eval);
-                    user.save();
-                  }
-                })
-              } else {
-                User.getUserById(participant, function(err, user){
-                  if(err){
-                    console.log(err)
-                  } else {
-                    var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "userId": savedDemand.participants[0] };
-                    user.evals.push(eval);
-                    user.save();
-                  }
-                })
-              }
-            }
-          });
-        })
-      } else {
-        req.user.demands.forEach(function(demId, index){
-          Demand.getDemandById(demId, function(err, dem){
-            if(dem.valid == true){
-              validDemand = true;
-            }
-            if(index + 1 == req.user.demands.length){
-              if (validDemand){
-                res.send({"err":"Vous avez une demande en cours."})
-              } else {
-                // Creating a prototype of the demand
-                var newDemand = {
-                  creator: creator,
-                  participants:[creator, stylebox.creator],
-                  time: demandTime
+              User.getUserById(stylebox.creator, function(err, user){
+                if (err){
+                  console.log(err)
+                } else {
+                  user.demandNotifications.push({"demandid": savedDemand.id});
+                  user.demands.push(savedDemand);
+                  user.save();
+                  pusher.trigger(user.id, 'demands', demand);
+                  res.send({"ok": true})
                 }
-
-                Demand.createNewDemand(newDemand, function(err, savedDemand){
+              });
+              User.getUserById(stylebox.creator, function(err, user){
+                client.sms.messages.create({
+                  to:user.phone,
+                  from:'+33644607659',
+                  body:'FASON : Vous avez reçu une nouvelle demande de relooking.',
+                }, function(err, message) {
                   if(err){
-                    console.log(err)
-                  } else {
-                    var comDate = moment(savedDemand.time, "DD-MM-YYYY").add(14, 'days');
-                    var demand = {
-                      type: "recu",
-                      client: req.user.firstName,
-                      clientAva: req.user.avatar,
-                      date: jsonDate,
-                      commentTime: comDate,
-                      createdTime: savedDemand.createdTime,
-                      clientPhone: req.user.phone
-                    }
-
-                    User.getUserById(stylebox.creator, function(err, user){
-                      if (err){
-                        console.log(err)
-                      } else {
-                        client.sms.messages.create({
-                          to:user.phone,
-                          from:'+33644607659',
-                          body:'FASON : Vous avez reçu une nouvelle demande de relooking.',
-                        }, function(err, message) {
-                          if(err){
-                            console.log(err);
-                          }
-                        })
-                        user.demandNotifications.push({"demandid": savedDemand.id});
-                        user.demands.push(savedDemand);
-                        user.save();
-                        pusher.trigger(user.id, 'demands', demand);
-                        res.send({"ok": true})
-                      }
-                    });
+                    console.log(err);
                   }
                 })
-              }
+              })
             }
+
+            savedDemand.participants.forEach(function(participant, indexx, objectt){
+              function addDays(date, days) {
+                  var result = new Date(date);
+                  result.setDate(result.getDate() + days);
+                  return result;
+              };
+              var startDate = savedDemand.time;
+              if(participant.toString() == savedDemand.creator.toString()){
+                if(indexx == 0){
+                  User.getUserById(participant, function(err, user){
+                    if(err){
+                      console.log(err)
+                    } else {
+                      var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "stylistId":savedDemand.participants[1] };
+                      user.evals.push(eval);
+                      user.save();
+                    }
+                  })
+                } else {
+                  User.getUserById(participant, function(err, user){
+                    if(err){
+                      console.log(err)
+                    } else {
+                      var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "stylistId":savedDemand.participants[0] };
+                      user.evals.push(eval);
+                      user.save();
+                    }
+                  })
+                }
+              }
+
+              if(participant.toString() != savedDemand.creator.toString()){
+                if(indexx == 0){
+                  User.getUserById(participant, function(err, user){
+                    if(err){
+                      console.log(err)
+                    } else {
+                      var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "userId": savedDemand.participants[1] };
+                      user.evals.push(eval);
+                      user.save();
+                    }
+                  })
+                } else {
+                  User.getUserById(participant, function(err, user){
+                    if(err){
+                      console.log(err)
+                    } else {
+                      var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "userId": savedDemand.participants[0] };
+                      user.evals.push(eval);
+                      user.save();
+                    }
+                  })
+                }
+              }
+            });
           })
-        })
+        } else {
+          req.user.demands.forEach(function(demId, index){
+            Demand.getDemandById(demId, function(err, dem){
+              if(dem.valid == true){
+                validDemand = true;
+              }
+              if(index + 1 == req.user.demands.length){
+                if (validDemand){
+                  res.send({"err":"Vous avez une demande en cours."})
+                } else {
+                  // Creating a prototype of the demand
+                  var newDemand = {
+                    creator: creator,
+                    participants:[creator, stylebox.creator],
+                    time: demandTime
+                  }
+
+                  Demand.createNewDemand(newDemand, function(err, savedDemand){
+                    if(err){
+                      console.log(err)
+                    } else {
+                      var comDate = moment(savedDemand.time, "DD-MM-YYYY").add(14, 'days');
+                      var demand = {
+                        type: "recu",
+                        client: req.user.firstName,
+                        clientAva: req.user.avatar,
+                        date: jsonDate,
+                        commentTime: comDate,
+                        createdTime: savedDemand.createdTime,
+                        clientPhone: req.user.phone
+                      }
+
+                      User.getUserById(stylebox.creator, function(err, user){
+                        if (err){
+                          console.log(err)
+                        } else {
+                          client.sms.messages.create({
+                            to:user.phone,
+                            from:'+33644607659',
+                            body:'FASON : Vous avez reçu une nouvelle demande de relooking.',
+                          }, function(err, message) {
+                            if(err){
+                              console.log(err);
+                            }
+                          })
+                          user.demandNotifications.push({"demandid": savedDemand.id});
+                          user.demands.push(savedDemand);
+                          user.save();
+                          pusher.trigger(user.id, 'demands', demand);
+                          res.send({"ok": true})
+                        }
+                      });
+                    }
+                  })
+                }
+              }
+            })
+          })
+        }
       }
     })
   })
