@@ -1227,6 +1227,128 @@ router.get('/demandes', function(req, res){
               }
 
               if(dem){
+                var style = "";
+                var title = "";
+                Stylebox.getStyleboxById(demand.forstyle, function(err, stylebx){
+                  if(err){
+                    console.log(err)
+                  } else {
+                    title = stylebx.title;
+                    switch(stylebx.style) {
+                      case "casual":
+                        style = "Casual";
+                      break;
+                      case "businesscasual":
+                        style = "Business casual";
+                      break;
+                      case "businessformal":
+                        style = "Business formal";
+                      break;
+                      case "streetwear":
+                        style = "Streetwear";
+                      break;
+                      case "CocktailChic":
+                        style = "Cocktail chic";
+                      break;
+                      case "SemiFormal":
+                        style = "Semi-formal";
+                      break;
+                      case "BlackTie":
+                        style = "Black tie";
+                      break;
+                      case "WhiteTie":
+                        style = "White tie";
+                      break;
+                      case "Bohemian":
+                        style = "Bohemian";
+                      break;
+                      case "Arty":
+                        style = "Arty";
+                      break;
+                      case "Chic":
+                        style = "Chic";
+                      break;
+                      case "Classic":
+                        style = "Classic";
+                      break;
+                      case "Exotic":
+                        style = "Exotic";
+                      break;
+                      case "Flamboyant":
+                        style = "Flamboyant";
+                      break;
+                      case "Sophisticated":
+                        style = "Sophisticated";
+                      break;
+                      case "Sexy":
+                        style = "Sexy";
+                      break;
+                      case "Western":
+                        style = "Western";
+                      break;
+                      case "Traditional":
+                        style = "Traditional";
+                      break;
+                      case "Preppy":
+                        style = "Preppy";
+                      break;
+                      case "Punk":
+                        style = "Punk";
+                      break;
+                      case "Tomboy":
+                        style = "Tomboy";
+                      break;
+                      case "Rocker":
+                        style = "Rocker";
+                      break;
+                      case "Goth":
+                        style = "Goth";
+                      break;
+                      case "Coiffure":
+                        style = "Coiffure";
+                      break;
+                      case "Barbe":
+                        style = "Tailler la barbe";
+                      break;
+                      case "CoiffureColoration":
+                        style = "Coiffure et coloration";
+                      break;
+                      case "CoiffureBarbe":
+                        style = "Coiffure et tailler la barbe";
+                      break;
+                      case "CoiffureColorationBarbe":
+                        style = "Coiffure, coloration et tailler la barbe";
+                      break;
+                      case "Maquillage":
+                        style = "Maquillage";
+                      break;
+                      case "Manucure":
+                        style = "Manucure";
+                      break;
+                      case "Pedicure":
+                        style = "Pédicure";
+                      break;
+                      case "ManucurePedicure":
+                        style = "Manucure et pédicure";
+                      break;
+                      case "Sourcils":
+                        style = "Sourcils";
+                      break;
+                      case "SoinVisage":
+                        style = "Soin visage";
+                      break;
+                      case "SoinCorp":
+                        style = "Soin corps";
+                      break;
+                      case "SoinVisageCorp":
+                        style = "Soin visage et corps";
+                      break;
+                      default:
+                        style = "not found";
+                           break;
+                    }
+                  }
+                });
                 User.getUserById(dem.creator, function(err, user){
                   if(err){
                     console.log(err)
@@ -1260,18 +1382,30 @@ router.get('/demandes', function(req, res){
                       if(indexuserava+1 == objectuserava.length){
                         if(dem.creator.toString() != req.user.id.toString()){
                           if(dem.declined == false && dem.approuved == false){
-                            demands.push(dem);
+                            var demproto = dem;
+                            demproto.style = style;
+                            demproto.title = title;
+                            demands.push(demproto);
                           }
 
                           if(dem.approuved == true && moment(dem.time) > moment()){
-                            reservations.push(dem);
+                            var demproto = dem;
+                            demproto.style = style;
+                            demproto.title = title;
+                            reservations.push(demproto);
                           }
                         } else {
                           if(dem.declined == false && dem.approuved == false){
-                            mydemands.push(dem);
+                            var demproto = dem;
+                            demproto.style = style;
+                            demproto.title = title;
+                            mydemands.push(demproto);
                           }
                           if(dem.approuved == true && moment(dem.time) > moment()){
-                            myreservations.push(dem);
+                            var demproto = dem;
+                            demproto.style = style;
+                            demproto.title = title;
+                            myreservations.push(demproto);
                           }
                         }
                       }

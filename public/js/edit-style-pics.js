@@ -66,7 +66,7 @@ $(document).on('ready', function() {
   // creating stylebox after all photos are loaded to S3
   $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
     if(index+1 == data.files.length){
-      alert('Votre look a été modifié.');
+      alert('Look a été modifié. Vous pouvez le modifier ou supprimer dans "looks".');
       window.location.replace('http://fason.co/mystyleboxes');
     }
   });

@@ -68,10 +68,10 @@ $(document).ready(function() {
           method: 'GET',
           success: function(response){
             if(response.ok){
-              alert('Votre look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
+              alert('Look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
               window.location.replace('http://fason.co/');
             } else {
-              alert('Nous avont rencontré des problemes lors de création de votre look, veuillez nous exuser et réessayer quelque minutes plus tard..');
+              alert('Nous avons rencontré des problèmes lors de création de votre look, veuillez nous excuser et réessayer quelques minutes plus tard.');
               window.location.replace('http://fason.co/');
             }
           }
