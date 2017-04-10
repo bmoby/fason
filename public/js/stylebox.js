@@ -207,6 +207,7 @@ $(document).ready(function(){
     }else{
 
       var forstyle = $('.forstyleTitle').text();
+      alert(forstyle);
       $.confirm({
         title: 'Confirmation',
         content: 'Voulez-vous vraiment faire la demande de relooking pour ce look ? En appuyant sur le bouton "Oui", vous vous engagez à rencontrer le Relooker.',
