@@ -26,19 +26,19 @@
     <div class="row login-container-row">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-user-o firstname-icon"></i></div>
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userFirstNameUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" placeholder="Nom" value="{{userFirstName}}">
+            <input id="userFirstNameUpdate" class="input-sm mainLoginInput login-register-text-field" maxlength="27" type="text" placeholder="Nom" value="{{userFirstName}}">
         </div>
     </div>
     <div class="row login-container-row">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-user-o lastname-icon"></i></div>
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userLastNameUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" placeholder="Prénom" value="{{userLastName}}">
+            <input id="userLastNameUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="27" placeholder="Prénom" value="{{userLastName}}">
         </div>
     </div>
     <div class="row login-container-row">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-envelope-o email-icon"></i></div>
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userEmailUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" inputmode="email" placeholder="E-mail" value="{{userEmail}}">
+            <input id="userEmailUpdate" class="input-sm mainLoginInput login-register-text-field" type="text"  inputmode="email" placeholder="E-mail" value="{{userEmail}}">
         </div>
     </div>
     <div class="row login-container-row">
@@ -50,7 +50,7 @@
     <div class="row login-container-row">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-mobile-phone phone-icon"></i></div>
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userPhoneUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" inputmode="tel" placeholder="Numéro de portable" value="{{userPhone}}">
+            <input id="userPhoneUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="13" inputmode="tel" placeholder="Numéro de portable" value="{{userPhone}}">
         </div>
     </div>
 
@@ -72,7 +72,7 @@
     <div class="row login-container-row">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-ellipsis-h password-icon"></i></div>
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userPasswordUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" minlength="6" placeholder="Mot de passe">
+            <input id="userPasswordUpdate" class="input-sm mainLoginInput login-register-text-field" type="password" minlength="6" placeholder="Mot de passe">
         </div>
     </div>
     <div class="row login-register-btn-row text-right">
