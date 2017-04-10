@@ -131,7 +131,10 @@ $(document).ready(function(){
 
 
   $('.close-icon').on('click', function(){
-    if(document.referrer){
+    console.log(document.referrer);
+    console.log(document.referrer.toString());
+    console.log("http://fason.co/login");
+    if(document.referrer && document.referrer.toString() != "http://fason.co/login"){
       window.location.replace(document.referrer);
     } else {
       window.location.replace("http://fason.co/");

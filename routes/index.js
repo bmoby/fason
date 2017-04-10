@@ -631,7 +631,6 @@ router.post('/demand', function(req, res){
                     creatorName: req.user.lastName,
                     forstyle: forstyle
                   }
-
                   Demand.createNewDemand(newDemand, function(err, savedDemand){
                     if(err){
                       console.log(err)
@@ -688,9 +687,6 @@ router.get('/sendPhoneCode', function(req, res){
   }, function(error, message) {
     if (!error) {
         res.send({"smsSent": true})
-        console.log("le sms est partie")
-    } else {
-        console.log(error, "c'est une erreur par la les gaches");
     }
   });
 });
@@ -1264,21 +1260,17 @@ router.get('/demandes', function(req, res){
                         if(dem.creator.toString() != req.user.id.toString()){
                           if(dem.declined == false && dem.approuved == false){
                             demands.push(dem);
-                            console.log(dem)
                           }
 
                           if(dem.approuved == true && moment(dem.time) > moment()){
                             reservations.push(dem);
-                            console.log(dem)
                           }
                         } else {
                           if(dem.declined == false && dem.approuved == false){
                             mydemands.push(dem);
-                            console.log(dem)
                           }
                           if(dem.approuved == true && moment(dem.time) > moment()){
                             myreservations.push(dem);
-                            console.log(dem)
                           }
                         }
                       }
@@ -1666,7 +1658,7 @@ router.post('/editstylebox', function(req, res){
         },function (err,data){
           if(err){
             console.log(err)
-          } console.log(data);
+          }
         })
 
         if(index+1 == stylebox.photos.length){

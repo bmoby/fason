@@ -205,9 +205,7 @@ $(document).ready(function(){
         '<div class="errorsBlock"><div class="row oneError text-center"><p class="errorMessage">Veuillez choisir une date.</p></div></div>'
       );
     }else{
-
       var forstyle = $('.forstyleTitle').text();
-      alert(forstyle);
       $.confirm({
         title: 'Confirmation',
         content: 'Voulez-vous vraiment faire la demande de relooking pour ce look ? En appuyant sur le bouton "Oui", vous vous engagez à rencontrer le Relooker.',
