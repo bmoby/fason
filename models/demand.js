@@ -1,12 +1,13 @@
 var mongoose = require('mongoose');
 require('mongo-relation');
 var User = require('./user');
+var Stylebox = require('./stylebox');
 var relationship = require("mongoose-relationship");
 var Schema = mongoose.Schema;
 // Demand Schema
 
 var DemandSchema = mongoose.Schema({
-  creator:{type:Schema.ObjectId,ref:"User",childPath:"demands" },
+  creator:{type:Schema.ObjectId, ref:"User", childPath:"demands" },
   participants: [ {type : Schema.ObjectId, ref : 'User'} ],
   time: {
     type: Date
@@ -30,8 +31,8 @@ var DemandSchema = mongoose.Schema({
     type: Boolean,
     default: false
   },
-  forstyle: String,
-  creatorName: String,
+  forstyle: {type: String, default: "Style inconnu"},
+  creatorName: {type: String, default: "Relooker"},
   commented: [{type : Schema.ObjectId, ref : 'User'}],
   createdTime:{type:Date, default:Date.now}
 });
@@ -44,10 +45,10 @@ module.exports = Demand;
 module.exports.createNewDemand = function(newDemand, callback){
   var demand = new Demand();
   demand.creator = newDemand.creator;
+  demand.forstyle = newDemand.forstyle;
   demand.participants = newDemand.participants;
   demand.time = newDemand.time;
   demand.creatorName = newDemand.creatorName;
-  demand.forstyle = newDemand.forstyle;
   demand.save(callback);
 }
 

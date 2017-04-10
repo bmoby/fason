@@ -515,7 +515,7 @@ router.post('/demand', function(req, res){
             creator: creator,
             participants:[creator, stylebox.creator],
             time: demandTime,
-            creatorName: req.user.firstName +" "+req.user.lastName,
+            creatorName: req.user.lastName,
             forstyle: forstyle
           }
 
@@ -524,7 +524,7 @@ router.post('/demand', function(req, res){
               console.log(err)
             } else {
               var comDate = moment(savedDemand.time, "DD-MM-YYYY").add(14, 'days');
-              var demand = {
+              var demandee = {
                 type: "recu",
                 client: req.user.firstName,
                 clientAva: req.user.avatar,
@@ -540,7 +540,7 @@ router.post('/demand', function(req, res){
                   user.demandNotifications.push({"demandid": savedDemand.id});
                   user.demands.push(savedDemand);
                   user.save();
-                  pusher.trigger(user.id, 'demands', demand);
+                  pusher.trigger(user.id, 'demands', demandee);
                   res.send({"ok": true})
                 }
               });
@@ -627,7 +627,9 @@ router.post('/demand', function(req, res){
                   var newDemand = {
                     creator: creator,
                     participants:[creator, stylebox.creator],
-                    time: demandTime
+                    time: demandTime,
+                    creatorName: req.user.lastName,
+                    forstyle: forstyle
                   }
 
                   Demand.createNewDemand(newDemand, function(err, savedDemand){
