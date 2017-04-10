@@ -109,6 +109,10 @@ $(document).ready(function(){
     $('.login-append').removeClass('hidden');
   });
   // Send message route ajax request
+  function eraseText() {
+    document.getElementById("output").value = "";
+}
+
   $('.message-submit-btn').on('click', function(e){
     $(".errorsBlock").empty();
     var message = $('.messageText').val();
@@ -121,13 +125,13 @@ $(document).ready(function(){
         data: JSON.stringify({"message": message, "styleboxId": styleboxId}),
         success: function(response){
           if (response.sent){
-            $('.messageText').html('');
+            eraseText("clearit");
             alert("Votre message a bien été envoyé. Vous recevrez une notification en cas de réponse.");
             $('.full-page').addClass('hidden');
           }
 
           if (response.creator){
-            $('.messageText').html('');
+            eraseText("clearit");
             alert("Vous ne pouvez pas envoyer des messages a vous meme.");
             $('.full-page').addClass('hidden');
           }
