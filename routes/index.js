@@ -433,6 +433,7 @@ router.get('/stylebox/:id', function(req, res){
 router.post('/demand', function(req, res){
   var date = req.body.date;
   var styleboxId = req.body.styleboxId;
+  var forstyle = req.body.forstyle.toString();
   var creator = req.user.id;
   // Setting the date
   var dateDay = date.substr(0, 2);
@@ -515,7 +516,7 @@ router.post('/demand', function(req, res){
             participants:[creator, stylebox.creator],
             time: demandTime,
             creatorName: req.user.firstName +" "+req.user.lastName,
-            forstyle: req.body.forstyle
+            forstyle: forstyle
           }
 
           Demand.createNewDemand(newDemand, function(err, savedDemand){
@@ -1212,7 +1213,7 @@ router.get('/demandes', function(req, res){
         })
         setTimeout(function(){
           callback(connectedUser)
-        }, 2000)
+        }, 1000)
       } else {
         callback(connectedUser);
       }
@@ -1261,17 +1262,21 @@ router.get('/demandes', function(req, res){
                         if(dem.creator.toString() != req.user.id.toString()){
                           if(dem.declined == false && dem.approuved == false){
                             demands.push(dem);
+                            console.log(dem)
                           }
 
                           if(dem.approuved == true && moment(dem.time) > moment()){
                             reservations.push(dem);
+                            console.log(dem)
                           }
                         } else {
                           if(dem.declined == false && dem.approuved == false){
                             mydemands.push(dem);
+                            console.log(dem)
                           }
                           if(dem.approuved == true && moment(dem.time) > moment()){
                             myreservations.push(dem);
+                            console.log(dem)
                           }
                         }
                       }
