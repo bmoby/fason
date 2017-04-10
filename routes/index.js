@@ -251,6 +251,9 @@ router.get('/stylebox/:id', function(req, res){
           case "businessformal":
             style = "Business formal";
           break;
+          case "streetwear":
+            style = "Streetwear";
+          break;
           case "CocktailChic":
             style = "Cocktail chic";
           break;

@@ -609,33 +609,38 @@ router.post('/sendMsg', function(req, res){
     var styleboxId = req.body.styleboxId;
     var userId = req.user.id;
 
-    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-      var conversation = new Conversation({
-        messages: [{
-            msg: message,
-            msgOwner: userId,
-            msgOwnerName: from
-          }],
-        participants: [userId, stylebox.creator]
-      });
 
-      Conversation.createNewConversation(conversation, function(err, createdConversation){
-        if (err){
-          res.send('there is an error: %s', err);
-        } else {
-          req.user.conversations.push(conversation);
-          req.user.save();
-          User.getUserById(stylebox.creator, function(err, user){
-            if (user){
-              user.conversations.push(conversation);
-              user.save();
-              var obj = {"msg": conversation.msg, "msgOwnerName": conversation.msgOwnerName, "participants": conversation.paricipants, "avatar": req.user.avatar, "msgTime": conversation.msgTime};
-              pusher.trigger(user.id, 'new-message', obj);
-              res.send(true);
-            }
-          });
-        }
-      })
+    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
+      if(req.user.id == stylebox.creator){
+        res.send({"creator": true})
+      } else {
+        var conversation = new Conversation({
+          messages: [{
+              msg: message,
+              msgOwner: userId,
+              msgOwnerName: from
+            }],
+          participants: [userId, stylebox.creator]
+        });
+
+        Conversation.createNewConversation(conversation, function(err, createdConversation){
+          if (err){
+            res.send('there is an error: %s', err);
+          } else {
+            req.user.conversations.push(conversation);
+            req.user.save();
+            User.getUserById(stylebox.creator, function(err, user){
+              if (user){
+                user.conversations.push(conversation);
+                user.save();
+                var obj = {"msg": conversation.msg, "msgOwnerName": conversation.msgOwnerName, "participants": conversation.paricipants, "avatar": req.user.avatar, "msgTime": conversation.msgTime};
+                pusher.trigger(user.id, 'new-message', obj);
+                res.send({"sent":true});
+              }
+            });
+          }
+        })
+      }
     })
   } else {
     res.redirect("http://fason.co/")

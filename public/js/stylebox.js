@@ -110,21 +110,35 @@ $(document).ready(function(){
   });
   // Send message route ajax request
   $('.message-submit-btn').on('click', function(e){
+    $(".errorsBlock").empty();
     var message = $('.messageText').val();
     var styleboxId = location.href.substr(location.href.lastIndexOf('/') + 1);
-    $.ajax({
-      url: '/users/sendMsg',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({"message": message, "styleboxId": styleboxId}),
-      success: function(response){
-        if (response){
-          $('.messageText').val("");
-          alert("Votre message a bien été envoyé. Vous recevrez une notification en cas de réponse.");
-          $('.full-page').addClass('hidden');
+    if(message){
+      $.ajax({
+        url: '/users/sendMsg',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({"message": message, "styleboxId": styleboxId}),
+        success: function(response){
+          if (response.sent){
+            $('.messageText').html('');
+            alert("Votre message a bien été envoyé. Vous recevrez une notification en cas de réponse.");
+            $('.full-page').addClass('hidden');
+          }
+
+          if (response.creator){
+            $('.messageText').html('');
+            alert("Vous ne pouvez pas envoyer des messages a vous meme.");
+            $('.full-page').addClass('hidden');
+          }
         }
-      }
-    });
+      });
+    } else {
+      $(".errorsBlock").removeClass("hidden");
+      $(".errorsBlock").append(
+        '<div class="row oneError text-center"><p class="errorMessage">Entrez votre message</p></div>'
+      )
+    }
   });
 
    $(".form_datetime").datetimepicker({
