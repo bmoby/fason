@@ -397,7 +397,7 @@ router.get('/stylebox/:id', function(req, res){
                     "newdemands": req.user.demandNotifications.length,
                     "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
               } else {
-                res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "user": req.user, "haveToVerify": haveToVerify});
+                res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
               }
             }
           });
@@ -422,7 +422,7 @@ router.get('/stylebox/:id', function(req, res){
             "newdemands": req.user.demandNotifications.length,
             "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
           } else {
-            res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "user": req.user, "haveToVerify": haveToVerify});
+            res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
           }
         }
       }
@@ -624,7 +624,6 @@ router.post('/demand', function(req, res){
                 if (validDemand){
                   res.send({"err":"Vous avez une demande en cours."})
                 } else {
-                  // Creating a prototype of the demand
                   var newDemand = {
                     creator: creator,
                     participants:[creator, stylebox.creator],
@@ -680,46 +679,58 @@ router.post('/demand', function(req, res){
 });
 
 router.get('/sendPhoneCode', function(req, res){
-  var code = req.user.phoneVerification;
-  client.sms.messages.create({
-    to:req.user.phone,
-    from:'+33644607659',
-    body:'Votre code FASON :'+ code,
-  }, function(error, message) {
-    if (!error) {
-        res.send({"smsSent": true})
-    }
-  });
+  if(req.user){
+    var code = req.user.phoneVerification;
+    client.sms.messages.create({
+      to:req.user.phone,
+      from:'+33644607659',
+      body:'Votre code FASON :'+ code,
+    }, function(error, message) {
+      if (!error) {
+          res.send({"smsSent": true})
+      }
+    });
+  } else {
+    res.redirect("http://fason.co")
+  }
 });
 
 router.get('/sendEmailVerify', function(req, res){
-  var link = "http://fason.co/users/verify?id="+req.user.verifyEmailString;
-  var mailOptions = {
-      from: '"Fason service client" <fason.contact@gmail.com>', // sender address
-      to: req.user.email, // list of receivers
-      subject : "Veuillez confirmer votre e-mail",
-      html : "Bonjour,<br> Cliquez sur ce lien afin de confirmer votre e-mail.<br><a href="+link+">Lien de confirmation</a>"
-  };
-  transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-          return console.log(error);
-      } else {
-        res.send({"userId": req.user.id});
-      }
-  });
+  if(req.user){
+    var link = "http://fason.co/users/verify?id="+req.user.verifyEmailString;
+    var mailOptions = {
+        from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+        to: req.user.email, // list of receivers
+        subject : "Veuillez confirmer votre e-mail",
+        html : "Bonjour,<br> Cliquez sur ce lien afin de confirmer votre e-mail.<br><a href="+link+">Lien de confirmation</a>"
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            return console.log(error);
+        } else {
+          res.send({"userId": req.user.id});
+        }
+    });
+  } else {
+    res.redirect("http://fason.co/");
+  }
 });
 
 router.post('/verifyMyPhone', function(req, res){
-  var code = req.body.code;
-  if (req.user.phoneVerification == code){
-    var user = req.user;
-    user.phoneIsVerified = true;
-    var emailV = user.varified;
-    user.save();
-    res.send({"phoneVerify": true, "emailV": emailV, "userId": req.user.id});
-    pusher.trigger(req.user.id, 'phoneVerify', {"phoneverified": true, "emailV": emailV});
+  if(req.user){
+    var code = req.body.code;
+    if (req.user.phoneVerification == code){
+      var user = req.user;
+      user.phoneIsVerified = true;
+      var emailV = user.varified;
+      user.save();
+      res.send({"phoneVerify": true, "emailV": emailV, "userId": req.user.id});
+      pusher.trigger(req.user.id, 'phoneVerify', {"phoneverified": true, "emailV": emailV});
+    } else {
+      res.send({"err":"Le code est incorrect"})
+    }
   } else {
-    res.send({"err":"Le code est incorrect"})
+    res.redirect("http://fason.co")
   }
 });
 
@@ -801,7 +812,6 @@ router.get('/setcreatortostylebox', function(req, res){
 });
 
 router.post('/createstylebox', function(req, res){
-
   if(req.user){
     var budget = req.body.budget;
     var title = req.body.title;
@@ -850,13 +860,14 @@ router.post('/createstylebox', function(req, res){
 // Get the conversations and display them when log into inbox page
 var conversationsArray = [];
 router.get('/inbox', function(req, res){
-  if (req.user && req.user.conversations.length == 0) {
+if(req.user){
+  if (req.user.conversations.length == 0) {
     res.render('inbox', {empty: true, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-  } else if (req.user){
+  } else (req.user.conversations.length){
     var promise = new Promise(function (resolve, reject) {
       req.user.conversations.forEach(function(id){
         Conversation.getConversationById(id, function(err, conv){
-          if (conv){
+          if(conv){
             var hasNoReadMessages = false;
             var secondName = "";
             var secondAva = "";
@@ -874,7 +885,7 @@ router.get('/inbox', function(req, res){
                   });
                   resolve({"hasNoRead": hasNoReadMessages, "convName": secondName, "convAva": secondAva});
                 });
-       				 } else {
+               } else {
                   User.getUserById(conv.participants[0], function(err, user){
                     secondName = user.firstName;
                     secondAva = user.avatar;
@@ -887,7 +898,7 @@ router.get('/inbox', function(req, res){
                     });
                     resolve({"hasNoRead": hasNoReadMessages, "convName": secondName, "convAva": secondAva});
                   });
-       				 };
+               };
             }).then(function(object){
               conversationsArray.push({"activeTime":new Date( moment(conv.activeTime)), "conv": conv, "convCreatedTime": moment(conv.conversationCreatedTime).format('DD-MM-YYYY, hh:mm:ss'), "hasNoRead": object.hasNoRead, "convName": object.convName, "convAva": object.convAva});
               if(conversationsArray.length == req.user.conversations.length){
@@ -911,9 +922,10 @@ router.get('/inbox', function(req, res){
     }).catch(function(err){
       console.log(err);
     });
-  } else {
-    res.redirect('http://fason.co/');
   }
+} else {
+  res.redirect("http://fason.co/");
+}
 });
 
 router.post('/getmessages', function(req, res){
@@ -988,41 +1000,45 @@ router.get('/getMyInfo', function(req, res){
 });
 
 router.post('/checkIfConvParticipantsActiv', function(req, res){
-  var convId = req.body.conversationId;
-  var participants = req.body.participants;
-  var counter = true;
-  participants.forEach(function(participant){
-    var promise = new Promise(function(resolve, reject){
-      User.getUserById(participant, function(err, user){
-        if(err){
-          console.log(err)
-        } else {
-          if (user.conversations.length == 0){
-            counter = false;
+  if(req.user){
+    var convId = req.body.conversationId;
+    var participants = req.body.participants;
+    var counter = true;
+    participants.forEach(function(participant){
+      var promise = new Promise(function(resolve, reject){
+        User.getUserById(participant, function(err, user){
+          if(err){
+            console.log(err)
           } else {
-            if (user.conversations.indexOf(convId) > -1) {
-              counter = true;
-            } else {
+            if (user.conversations.length == 0){
               counter = false;
+            } else {
+              if (user.conversations.indexOf(convId) > -1) {
+                counter = true;
+              } else {
+                counter = false;
+              }
             }
           }
-        }
-        resolve(counter);
-      });
-    }).then(function(object){
-      if(object == false){
-        User.getUserById(participant, function(err, user){
-          user.conversations.push(convId);
-          user.save();
+          resolve(counter);
         });
-        res.send(true);
-      } else {
-        res.send(true);
-      }
-    }).catch(function(err){
-      console.log(err);
+      }).then(function(object){
+        if(object == false){
+          User.getUserById(participant, function(err, user){
+            user.conversations.push(convId);
+            user.save();
+          });
+          res.send(true);
+        } else {
+          res.send(true);
+        }
+      }).catch(function(err){
+        console.log(err);
+      });
     });
-  });
+  } else {
+    res.redirect("http://fason.co/")
+  }
 });
 
 router.post('/saveMsg', function(req, res){
@@ -1084,54 +1100,62 @@ router.post('/saveMsg', function(req, res){
 
 // Send the message notification to append new messages ONLY
 router.post('/msgNotif', function(req, res){
-	var promise = new Promise(function(resolve, reject){
-		var msg = req.body.msg;
-		var paricipants = req.body.participants;
-		var msgOwnerName = req.user.firstName;
-    var dataId = req.body.convId;
-		var msgTime = moment().format('DD-MM-YYYY, hh:mm:ss');
-		var obj = {"msg": msg, "msgOwnerName": msgOwnerName, "participants": paricipants, "avatar": req.user.avatar, "msgTime": msgTime, "dataId": dataId};
-		resolve(obj);
-	}).then(function(object){
-    if (object.participants[0] == req.user.id){
-      if(object.participants[1]){
-        var userToNotify = object.participants[1];
-        pusher.trigger(userToNotify, 'new-message', object);
+	if(req.user){
+    var promise = new Promise(function(resolve, reject){
+  		var msg = req.body.msg;
+  		var paricipants = req.body.participants;
+  		var msgOwnerName = req.user.firstName;
+      var dataId = req.body.convId;
+  		var msgTime = moment().format('DD-MM-YYYY, hh:mm:ss');
+  		var obj = {"msg": msg, "msgOwnerName": msgOwnerName, "participants": paricipants, "avatar": req.user.avatar, "msgTime": msgTime, "dataId": dataId};
+  		resolve(obj);
+  	}).then(function(object){
+      if (object.participants[0] == req.user.id){
+        if(object.participants[1]){
+          var userToNotify = object.participants[1];
+          pusher.trigger(userToNotify, 'new-message', object);
+        }
+        res.send(true)
+      } else {
+        if(object.participants[0]){
+          var userToNotify2 = object.participants[0];
+          pusher.trigger(userToNotify2, 'new-message', object);
+        }
+        res.send(true)
       }
-      res.send(true)
-    } else {
-      if(object.participants[0]){
-        var userToNotify2 = object.participants[0];
-        pusher.trigger(userToNotify2, 'new-message', object);
-      }
-      res.send(true)
-    }
-	}).catch(function(err){
-		console.log(err);
-	});
+  	}).catch(function(err){
+  		console.log(err);
+  	});
+  } else {
+    res.redirect("http://fason.co/")
+  }
 });
 
 
 router.post('/clearNotif', function(req, res){
-  var convId = req.body.conversationId;
-  var user = req.user;
-  var promise = new Promise(function(resolve, reject){
-    Conversation.getConversationById(convId, function(err, conv){
-      conv.messages.forEach(function(message){
-        user.notifications.forEach(function(item, index, object){
-          if (item.msgId == message.id){
-            object.splice(index, 1);
-            user.save();
-          }
+  if(req.user){
+    var convId = req.body.conversationId;
+    var user = req.user;
+    var promise = new Promise(function(resolve, reject){
+      Conversation.getConversationById(convId, function(err, conv){
+        conv.messages.forEach(function(message){
+          user.notifications.forEach(function(item, index, object){
+            if (item.msgId == message.id){
+              object.splice(index, 1);
+              user.save();
+            }
+          });
         });
+        resolve();
       });
-      resolve();
+    }).then(function(){
+      res.send(true);
+    }).catch(function(err){
+      console.log(err);
     });
-  }).then(function(){
-    res.send(true);
-  }).catch(function(err){
-    console.log(err);
-  });
+  } else {
+    res.redirect("http://fason.co/")
+  }
 });
 
 router.post('/deleteconversation', function(req, res){
@@ -1151,7 +1175,6 @@ router.post('/deleteconversation', function(req, res){
 });
 
 router.get('/demandes', function(req, res){
-
   if(req.user){
     var demands = [];
     var reservations = [];
