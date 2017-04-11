@@ -65,7 +65,10 @@ router.get('/', function(req, res) {
       allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
     }
 
-    res.render('index', {"user": req.user, "newmessages": notifcount, "newdemands": newdemands, "allNotifications": allnotifs});
+    res.render('index', {"user": req.user,
+                          "newmessages": notifcount,
+                          "newdemands": newdemands,
+                          "allNotifications": allnotifs});
   } else {
     res.render('index');
   }
@@ -77,7 +80,7 @@ router.get('/search', function(req, res){
   if(req.user){
     res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Veuillez appuyer sur Recherche.", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
   } else {
-    res.render('search', {"user": req.user, "errmsg": "Veuillez appuyer sur Recherche."});
+    res.render('search', {"errmsg": "Veuillez appuyer sur Recherche."});
   }
 })
 
@@ -111,12 +114,10 @@ router.post('/search', function(req, res){
     Stylebox.find(obje, function(err, styleboxes){
       if (err){
         console.log(err)
-        res.send("Une erreur s'est produite, veuillez essayer plus tard.")
       } else {
-        // Send gender info to autocomplete fields after the search
         var mens = false;
         var womans = false;
-        if (obje.gender == "men"){
+        if(obje.gender == "men"){
           mens = true;
         }
         if (obje.gender == "ladies"){
@@ -124,8 +125,6 @@ router.post('/search', function(req, res){
         }
 
         var cityResend = req.body.city;
-
-        // Send style info to autocomplete fields after the search
         var styleObj = {
           vestimentaire: false,
           beaute: false,
@@ -146,61 +145,74 @@ router.post('/search', function(req, res){
         if(styleboxes.length != 0){
           styleboxes.forEach(function(stylebox, index, object){
               User.getUserById(stylebox.creator, function(err, user){
-                var rating = {};
-                var general = 0;
-                var communication = 0;
-                var quality = 0;
-                var ponctuality = 0;
-                var precision = 0;
-                if(user.rating.length){
-                  user.rating.forEach(function(rat, index2, object2){
-                    communication = communication + rat.communication;
-                    quality = quality + rat.qualityprice;
-                    ponctuality = ponctuality + rat.ponctuality;
-                    precision = precision + rat.precision;
+                if(err){
+                  console.log(err)
+                }
+                if(user){
+                  var rating = {};
+                  var general = 0;
+                  var communication = 0;
+                  var quality = 0;
+                  var ponctuality = 0;
+                  var precision = 0;
+                  if(user.rating.length){
+                    user.rating.forEach(function(rat, index2, object2){
+                      communication = communication + rat.communication;
+                      quality = quality + rat.qualityprice;
+                      ponctuality = ponctuality + rat.ponctuality;
+                      precision = precision + rat.precision;
 
-                    if(index2+1 == user.rating.length){
-                      var styleboxproto = stylebox;
-                      rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
-                      rating.number = user.rating.length;
-                      styleboxproto.rating = rating;
-                      //separator
-                      styleboxproto.stylistname = user.lastName;
-                      styleboxproto.stylistavatar = user.avatar;
-                      styleboxesandstylist.push(styleboxproto);
-                      if(index + 1 == object.length){
-                        if(req.user){
-                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-                        } else {
-                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj});
-                        }
+                      if(index2+1 == user.rating.length){
+                        var styleboxproto = stylebox;
+                        rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
+                        rating.number = user.rating.length;
+                        styleboxproto.rating = rating;
+                        //separator
+                        styleboxproto.stylistname = user.lastName;
+                        styleboxproto.stylistavatar = user.avatar;
+                        styleboxesandstylist.push(styleboxproto);
+                        // if(index + 1 == object.length){
+                        //   if(req.user){
+                        //     res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                        //   } else {
+                        //     res.render('search', {"styleboxes": styleboxesandstylist, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj});
+                        //   }
+                        // }
                       }
-                    }
-                  });
-                } else {
-                  var styleboxproto = stylebox;
-                  rating.general = -1;
-                  rating.number = 0;
-                  styleboxproto.rating = rating;
-                  //separator
-                  styleboxproto.stylistname = user.lastName;
-                  styleboxproto.stylistavatar = user.avatar;
-                  styleboxesandstylist.push(styleboxproto);
-                  if(index + 1 == object.length){
-                    if(req.user){
-                      res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-                    } else {
-                      res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj});
-                    }
+                    });
+                  } else {
+                    var styleboxproto = stylebox;
+                    rating.general = -1;
+                    rating.number = 0;
+                    styleboxproto.rating = rating;
+                    //separator
+                    styleboxproto.stylistname = user.lastName;
+                    styleboxproto.stylistavatar = user.avatar;
+                    styleboxesandstylist.push(styleboxproto);
+                    // if(index + 1 == object.length){
+                    //   if(req.user){
+                    //     res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                    //   } else {
+                    //     res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj});
+                    //   }
+                    // }
                   }
                 }
               });
+
+              if(index + 1 == object.length){
+                if(req.user){
+                  res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                } else {
+                  res.render('search', {"styleboxes": styleboxesandstylist, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj});
+                }
+              }
           })
         } else {
           if(req.user){
             res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun look ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
           } else {
-            res.render('search', {"user": req.user, "errmsg": "Aucun look ne correspond à votre recherche"});
+            res.render('search', {"errmsg": "Aucun look ne correspond à votre recherche"});
           }
         }
       }
