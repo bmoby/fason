@@ -202,15 +202,55 @@ router.post('/search', function(req, res){
 
               if(index + 1 == object.length){
                 if(req.user){
-                  res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                  if(styleboxesandstylist.length){
+                    res.render('search', {"styleboxes": styleboxesandstylist,
+                                          "user": req.user,
+                                          "newmessages": req.user.notifications.length,
+                                          "options": obje,
+                                          "cityResend": cityResend,
+                                          "men": mens,
+                                          "ladies": womans,
+                                          "styleObj": styleObj,
+                                          "newdemands": req.user.demandNotifications.length,
+                                          "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                  } else {
+                    res.render('search', {"errmsg": "Aucun look ne correspond à votre recherche",
+                                          "user": req.user,
+                                          "newmessages": req.user.notifications.length,
+                                          "options": obje,
+                                          "cityResend": cityResend,
+                                          "men": mens,
+                                          "ladies": womans,
+                                          "styleObj": styleObj,
+                                          "newdemands": req.user.demandNotifications.length,
+                                          "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                  }
                 } else {
-                  res.render('search', {"styleboxes": styleboxesandstylist, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj});
+                  if(styleboxesandstylist.length){
+                    res.render('search', {"styleboxes": styleboxesandstylist,
+                                          "options": obje,
+                                          "cityResend": cityResend,
+                                          "men": mens,
+                                          "ladies": womans,
+                                          "styleObj": styleObj});
+                  } else {
+                    res.render('search', {"errmsg": "Aucun look ne correspond à votre recherche",
+                                          "options": obje,
+                                          "cityResend": cityResend,
+                                          "men": mens,
+                                          "ladies": womans,
+                                          "styleObj": styleObj});
+                  }
                 }
               }
           })
         } else {
           if(req.user){
-            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun look ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+            res.render('search', {"user": req.user,
+                                  "newmessages": req.user.notifications.length,
+                                  "errmsg": "Aucun look ne correspond à votre recherche",
+                                  "newdemands": req.user.demandNotifications.length,
+                                  "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
           } else {
             res.render('search', {"errmsg": "Aucun look ne correspond à votre recherche"});
           }
