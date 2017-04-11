@@ -1030,7 +1030,7 @@ router.post('/checkIfConvParticipantsActiv', function(req, res){
           });
           res.send(true);
         } else {
-          res.send(true);
+          res.end();
         }
       }).catch(function(err){
         console.log(err);
@@ -1123,7 +1123,7 @@ router.post('/msgNotif', function(req, res){
   	}).catch(function(err){
   		console.log(err);
   	});
-  } 
+  }
 });
 
 
