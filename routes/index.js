@@ -1042,14 +1042,13 @@ router.post('/checkIfConvParticipantsActiv', function(req, res){
 });
 
 router.post('/saveMsg', function(req, res){
-  if(req.user){
+  // if(req.user){
     var conversationId = req.body.conversationId;
   	var messageToSave = req.body.message;
   	if(messageToSave){
       Conversation.getConversationById(conversationId, function(err, conversation){
     		if (err){
     			console.log(err);
-          res.send(true);
     		} else {
           var time = moment()
           var promise = new Promise(function(resolve, reject){
@@ -1093,9 +1092,9 @@ router.post('/saveMsg', function(req, res){
     } else {
       res.send(true)
     }
-  } else {
-    res.redirect('http://fason.co/');
-  }
+  // } else {
+  //   res.redirect('http://fason.co/');
+  // }
 });
 
 // Send the message notification to append new messages ONLY
