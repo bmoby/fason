@@ -1825,7 +1825,7 @@ div.messages-container-div {
   margin-left:20%;
   margin-right:20%;
   min-height:50vh;
-  max-height:80vh;
+  max-height:73vh;
 }
 
 @media (max-width:767px) {
@@ -1884,6 +1884,10 @@ div.row.message-input-row {
   position:fixed;
   bottom:0;
   width:100%;
+  height: auto;
+  overflow: hidden;
+  background-color: white;
+  z-index: 99999999;
 }
 
 .message-text {
