@@ -187,9 +187,8 @@ $(".limit-large").each(function(i){
                       '</div>'+
                   '</div>'+
               '</div>')
-            $('.messages-container-div').animate({
-                scrollTop: 1E10
-            }, "slow");
+            $(".messages-container-div").animate({
+              scrollTop: $(".messages-container-div")[0].scrollHeight}, -500);
           }
 
           if(response.err){
@@ -272,9 +271,8 @@ $(".limit-large").each(function(i){
               '</div>'+
           '</div>'
         )
-        $('.messages-container-div').animate({
-            scrollTop: 1E10
-        }, "slow");
+        $(".messages-container-div").animate({
+          scrollTop: $(".messages-container-div")[0].scrollHeight}, -500);
       }
     });
   });
