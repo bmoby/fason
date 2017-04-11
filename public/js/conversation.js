@@ -192,7 +192,7 @@ $(".limit-large").each(function(i){
         }
       });
     } else {
-      alert("empty field")
+      alert("Vous ne pouvez pas envoyer un message vierge")
     }
   })
 

@@ -1089,9 +1089,7 @@ router.post('/saveMsg', function(req, res){
           })
     		}
     	});
-    } else {
-      res.send(true)
-    }
+    } 
   // } else {
   //   res.redirect('http://fason.co/');
   // }
