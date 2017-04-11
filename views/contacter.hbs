@@ -11,12 +11,12 @@
     <div class="contacter-container">
         <form method="post" action="/contacter">
             <h2 class="text-center">Nous contacter</h2>
-                <p class="help-block">Nous allons vous répondre le plus vite possible.</p>
+                <p class="help-block">Nous allons vous répondre dans les plus brefs délais.</p>
             <div class="form-group">
               {{#unless user}}
-                <input type="text" name="messageemailadress" class="mainLoginInput form-control" placeholder="Votre e-mail">
+                <input type="text" name="messageemailadress" class="mainLoginInput form-control" placeholder="E-mail">
               {{/unless}}
-              <input type="text" name="objet" class="mainLoginInput form-control" placeholder="Object">
+              <input type="text" name="objet" class="mainLoginInput form-control" placeholder="Objet">
                 <textarea class="mainLoginInput form-control" rows="14" name="messagemail" placeholder="Message"></textarea>
             </div>
             <div class="form-group text-right">

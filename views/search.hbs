@@ -22,20 +22,17 @@
     </div>
     {{/if}}
 
-  <ul id="listitems">
-    {{#each styleboxes}}
-    <li>{{> stylebox}}</li>
-    {{/each}}
-  </ul>
-
-  <div class="row general-row text-center paginationdiv">
-    <div id="listitems-pagination" style="display:none">
-      <a id="listitems-previous" class="previous pagenavlinks" class="disabled"> < </a>
-      <a id="listitems-next" class="next pagenavlinks" href="#"> > </a>
-    </div>
-  </div>
+    {{#if styleboxes}}
+      <div class="pagination-looks text-center">
+        <ul id="listitems">
+          {{#each styleboxes}}
+          <li>{{> stylebox}}</li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/if}}
 </div>
-<script type="text/javascript" src="../js/jquery.paginate.js"></script>
+<script type="text/javascript" src="../js/paginathing.js"></script>
 <script type="text/javascript" src="../js/paginateOptions.js"></script>
 <script type="text/javascript" src="../js/jquery.nice-select.min.js"></script>
 <script type="text/javascript" src="../js/jquery.barrating.js"></script>

@@ -3,6 +3,23 @@ h1, h2, h3, h4, h5, p, li, span, textarea, button, input[type="text"]{
   font-family: 'Nunito' !important;
 }
 
+.pagination-container{
+  text-align: center;
+}
+
+.pagination{
+  text-align: center;
+}
+
+.active a, .page a:hover, .next a:hover, .last a:hover, .prev a:hover, .first a:hover{
+  background-color: #00aa9c !important;
+  border-color: #00aa9c !important;
+}
+
+.next{
+  padding: 0 !important
+}
+
 .jconfirm{
   z-index: 999999999999999999999999999999999999999 !important;
   font-family: 'Nunito' !important;
