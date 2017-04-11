@@ -140,7 +140,7 @@ $(".limit-large").each(function(i){
         data: JSON.stringify({"conversationId":conversationIdd}),
         success: function(response){
           if(response){
-            window.location.replace("http://localhost:3000/inbox");
+            window.location.replace("http://fason.co/inbox");
           }
         }
       });
