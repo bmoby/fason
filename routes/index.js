@@ -1940,11 +1940,19 @@ router.get('/conditions', function(req, res){
 })
 
 router.get('/login', function(req, res){
-  res.render('login');
+  if(req.user){
+    res.redirect("http://fason.co")
+  } else {
+    res.render('login');
+  }
 })
 
 router.get('/register', function(req, res){
-  res.render('register');
+  if(req.user){
+    res.redirect("http://fason.co")
+  } else {
+    res.render('register');
+  }
 })
 
 router.get('/searchxs', function(req, res){
@@ -1952,8 +1960,13 @@ router.get('/searchxs', function(req, res){
 })
 
 router.get('/resetPassword/:id', function(req, res){
-  var id = req.params.id;
-  res.render('reset', {"token":id});
+  if(req.user){
+    res.redirect("http://fason.co")
+  } else {
+    var id = req.params.id;
+    res.render('reset', {"token":id});
+  }
+
 });
 
 module.exports = router;
