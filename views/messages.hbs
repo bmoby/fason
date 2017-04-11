@@ -1,0 +1,63 @@
+
+    <div class="container messenger-container">
+      <div class="participants hidden">
+        {{#each participants}}
+          <p class="participant">{{this}}</p>
+        {{/each}}
+      </div>
+        <div class="row text-right close-row close-conversation close-conv-2" data-conv-id-data2="{{convId}}">
+            <div class="col-md-12"><i class="fa fa-times close-conversation"></i></div>
+        </div>
+        <div class="messages-container-div">
+          {{#if messages}}
+            {{#each messages}}
+              {{#if this.myMsg}}
+              <div class="from-me">
+               <div class="row general-row">
+                   <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-9 col-xs-10">
+                     <p class="message-body my-text">{{this.msg}}</p>
+                     <div class="row general-row hidden-xs">
+                       <p class="message-time-p">{{this.msgTime}}</p>
+                     </div>
+                   </div>
+                   <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 text-center">
+                    <div class="messages-avatar" {{#if this.msgOwnerAva}} style="background-image: url({{this.msgOwnerAva}}) !important;" {{else}} style="background-image: url('/images/noavatar.png') !important;" {{/if}}></div>
+                  </div>
+                </div>
+              </div>
+              {{else}}
+                <div class="not-from-me">
+                 <div class="row general-row">
+                     <div class="col-lg-2 col-md-2 col-sm-3 col-xs-2 text-center">
+                        <div class="messages-avatar" {{#if this.msgOwnerAva}} style="background-image: url({{this.msgOwnerAva}}) !important;" {{else}} style="background-image: url('/images/noavatar.png') !important;" {{/if}}></div>
+                     </div>
+                     <div class="col-lg-8 col-md-8 col-sm-9 col-xs-10">
+                       <p class="message-body not-my-text">{{this.msg}}</p>
+                       <div class="row general-row text-right hidden-xs">
+                         <p class="message-time-p">{{this.msgTime}}</p>
+                       </div>
+                     </div>
+                 </div>
+                </div>
+              {{/if}}
+            {{/each}}
+          {{else}}
+            <h4 class="errMsg">Cette conversation est vierge</h4>
+          {{/if}}
+        </div>
+        <div class="row message-input-row">
+            <div class="col-lg-7 col-lg-offset-2 col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 col-xs-9">
+                <input type="text" class="message-text mainLoginInput message-text-body" placeholder="Entrez votre message ici">
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-2 col-xs-3 general-column">
+                <button class="send-message-btn-proper" data-conv-id-data="{{convId}}" data-user-id="{{user.id}}">Envoyer</button>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript" src="../js/conversation.js"></script>
+
+<script type="text/javascript">
+$('.messages-container-div').animate({
+    scrollTop: 1E10
+}, "slow");
+</script>

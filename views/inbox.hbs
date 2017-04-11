@@ -5,7 +5,7 @@
   {{> header}}
 {{/if}}
 <div class="full-page hidden messages-page">
-  {{> messages}}
+
 </div>
 
 <div class="container">
@@ -20,6 +20,7 @@
       </div>
     </div>
     {{#each convers}}
+    <a href="/conv/{{this.conv.id}}">
       <div class="row conversation-row" data-conv-id='{{this.conv.id}}'>
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 text-center">
               <div class="stylebox-display-avatar-inbox" {{#if this.convAva}} style="background-image: url({{this.convAva}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
@@ -46,6 +47,7 @@
               </div>
           </div>
       </div>
+      </a>
     {{/each}}
   {{/if}}
 </div>

@@ -10,6 +10,7 @@ var ConversationsSchema = mongoose.Schema({
       msg: String,
       msgOwner: String,
       msgOwnerName: String,
+      msgOwnerAva: String,
       messageCreatedTime: { type : Date, default: Date.now }
   }],
   from: String,

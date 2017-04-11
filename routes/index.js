@@ -1056,7 +1056,8 @@ router.post('/saveMsg', function(req, res){
             conversation.messages.push({
               msg: messageToSave,
               msgOwner: req.user.id,
-              msgOwnerName: req.user.firstName
+              msgOwnerName: req.user.firstName,
+              msgOwnerAva: req.user.avatar
             });
             conversation.activeTime = moment();
             var notifiedUser;
@@ -1110,7 +1111,7 @@ router.post('/msgNotif', function(req, res){
   		var obj = {"msg": msg, "msgOwnerName": msgOwnerName, "participants": paricipants, "avatar": req.user.avatar, "msgTime": msgTime, "dataId": dataId};
   		resolve(obj);
   	}).then(function(object){
-      if (object.participants[0] == req.user.id){
+      if (object.participants[0].toString() == req.user.id.toString()){
         if(object.participants[1]){
           var userToNotify = object.participants[1];
           pusher.trigger(userToNotify, 'new-message', object);
@@ -1156,6 +1157,54 @@ router.post('/clearNotif', function(req, res){
   } else {
     res.redirect("http://fason.co/")
   }
+});
+
+
+router.get('/conv/:id', function(req,res){
+if(req.user){
+  var user = req.user;
+  var convId = req.params.id;
+  var found = false;
+  req.user.conversations.forEach(function(conver, index, object){
+    if (conver == convId){
+      found = true
+    }
+    if(index+1 == object.length){
+      if(found){
+        Conversation.getConversationById(convId, function(err, conversation){
+          var convProto = [{}];
+          conversation.messages.forEach(function(msg, indexmsg, objectmsg){
+            if(msg.msgOwner == req.user.id.toString()){
+              var msgproto = {}
+              msgproto.myMsg = true;
+              msgproto.msg = msg.msg;
+              msgproto.msgOwnerAva = msg.msgOwnerAva;
+              msgproto.msgTime = moment(msg.messageCreatedTime).format("DD/MM/YYYY, hh:mm");
+              convProto.push(msgproto);
+              console.log(msgproto)
+            }
+            if(msg.msgOwner != req.user.id.toString()) {
+              var msgproto = {};
+              msgproto.myMsg = false;
+              msgproto.msg = msg.msg;
+              msgproto.msgOwnerAva = msg.msgOwnerAva;
+              msgproto.msgTime = moment(msg.messageCreatedTime).format("DD/MM/YYYY, hh:mm");
+              convProto.push(msgproto);
+              console.log(msgproto)
+            }
+
+            if(indexmsg+1 == objectmsg.length){
+              res.render('messages', {"user": req.user, "messages": convProto, "convId": convId, "participants": conversation.participants})
+            }
+          });
+        });
+      }
+    }
+  })
+} else {
+  res.redirect("http://fason.co/")
+}
+
 });
 
 router.post('/deleteconversation', function(req, res){
