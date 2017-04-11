@@ -1089,7 +1089,7 @@ router.post('/saveMsg', function(req, res){
           })
     		}
     	});
-    } 
+    }
   // } else {
   //   res.redirect('http://fason.co/');
   // }
@@ -1123,9 +1123,7 @@ router.post('/msgNotif', function(req, res){
   	}).catch(function(err){
   		console.log(err);
   	});
-  } else {
-    res.redirect("http://fason.co/")
-  }
+  } 
 });
 
 
