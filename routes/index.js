@@ -863,7 +863,7 @@ router.get('/inbox', function(req, res){
 if(req.user){
   if (req.user.conversations.length == 0) {
     res.render('inbox', {empty: true, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-  } else (req.user.conversations.length){
+  } else if (req.user.conversations.length){
     var promise = new Promise(function (resolve, reject) {
       req.user.conversations.forEach(function(id){
         Conversation.getConversationById(id, function(err, conv){
