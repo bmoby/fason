@@ -116,8 +116,11 @@ $(".limit-large").each(function(i){
         }
       })
     }
+
     scrollAfterAll(function(){
-      $('.messages-container-div').animate({scrollTop: $('.messages-container-div').prop("scrollHeight")}, 500);
+      $('.messages-container-div').animate({
+          scrollTop: $(".message-time-p").last().offset().top
+      }, "slow");
       $.ajax({
         url: '/clearNotif',
         method: 'POST',
@@ -153,7 +156,9 @@ $(".limit-large").each(function(i){
                   '</div>'+
               '</div>'
             )
-            $('.messages-container-div').animate({scrollTop: $('.messages-container-div').prop("scrollHeight")}, 500);
+            $('.messages-container-div').animate({
+                scrollTop: $(".message-time-p").last().offset().top
+            }, "slow");
           }
 
           if(response.err){
@@ -235,7 +240,9 @@ $(".limit-large").each(function(i){
               '</div>'+
           '</div>'
         )
-        $('.messages-container-div').animate({scrollTop: $('.messages-container-div').prop("scrollHeight")}, 500);
+        $('.messages-container-div').animate({
+            scrollTop: $(".message-time-p").last().offset().top
+        }, "slow");
       }
     });
   });
