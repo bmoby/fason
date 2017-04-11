@@ -1901,6 +1901,10 @@ div.row.message-input-row {
   border-top:1px solid #eeeeee;
 }
 
+.topline{
+  border-top:1px solid #eeeeee;
+}
+
 .message-text:focus {
   outline:none;
 }
