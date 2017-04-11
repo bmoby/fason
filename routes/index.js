@@ -222,7 +222,7 @@ router.get('/stylebox/:id', function(req, res){
             console.log(err)
           } else {
             if(moment(com.showDate) < moment()){
-              var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, hh:mm:ss');
+              var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, HH:mm:ss');
               com.createdDate = formatedCreated;
               commentList.push(com);
             }
@@ -549,7 +549,7 @@ router.post('/demand', function(req, res){
                 client.sms.messages.create({
                   to:user.phone,
                   from:'+33644607659',
-                  body:'FASON : Vous avez reçu une nouvelle demande de relooking.',
+                  body:'FASON : Vous avez reçu une nouvelle demande de relooking.'+' Vous pouvez contacter votre client par téléphone au '+req.user.phone,
                 }, function(err, message) {
                   if(err){
                     console.log(err);
@@ -900,7 +900,7 @@ if(req.user){
                   });
                };
             }).then(function(object){
-              conversationsArray.push({"activeTime":new Date( moment(conv.activeTime)), "conv": conv, "convCreatedTime": moment(conv.conversationCreatedTime).format('DD-MM-YYYY, hh:mm:ss'), "hasNoRead": object.hasNoRead, "convName": object.convName, "convAva": object.convAva});
+              conversationsArray.push({"activeTime":new Date( moment(conv.activeTime)), "conv": conv, "convCreatedTime": moment(conv.conversationCreatedTime).format('DD-MM-YYYY, HH:mm:ss'), "hasNoRead": object.hasNoRead, "convName": object.convName, "convAva": object.convAva});
               if(conversationsArray.length == req.user.conversations.length){
                 resolve(conversationsArray);
               }
@@ -948,7 +948,7 @@ router.post('/getmessages', function(req, res){
               newmsg.msgOwner = msg.msgOwner;
               newmsg.msgOwnerName = msg.msgOwnerName;
               newmsg.messageCreatedTime = msg.messageCreatedTime;
-              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, hh:mm:ss');
+              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, HH:mm:ss');
               convproto.messages.push(newmsg);
               if(index+1  == object.length){
                 res.send({"conv": convproto, "avatar": user.avatar, "myAva": req.user.avatar, "userId": req.user.id})
@@ -972,7 +972,7 @@ router.post('/getmessages', function(req, res){
               newmsg.msgOwner = msg.msgOwner;
               newmsg.msgOwnerName = msg.msgOwnerName;
               newmsg.messageCreatedTime = msg.messageCreatedTime;
-              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, hh:mm:ss');
+              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, HH:mm:ss');
               convproto.messages.push(newmsg);
               if(index+1  == object.length){
                 res.send({"conv": convproto, "avatar": user.avatar, "myAva": req.user.avatar, "userId": req.user.id})
@@ -992,7 +992,7 @@ router.get('/getMyInfo', function(req, res){
     var avatar = req.user.avatar;
     var firstName = req.user.firstName;
     var now = Date.now();
-    var msgTime = moment(now).format('DD-MM-YYYY, hh:mm:ss');
+    var msgTime = moment(now).format('DD-MM-YYYY, HH:mm:ss');
     res.send({"found": true, "avatar": avatar, "firstname": firstName, "time":msgTime});
   } else {
     res.send({"err": "userNotFound"});
@@ -1107,7 +1107,7 @@ router.post('/msgNotif', function(req, res){
   		var paricipants = req.body.participants;
   		var msgOwnerName = req.user.firstName;
       var dataId = req.body.convId;
-  		var msgTime = moment().format('DD-MM-YYYY, hh:mm:ss');
+  		var msgTime = moment().format('DD-MM-YYYY, HH:mm:ss');
   		var obj = {"msg": msg, "msgOwnerName": msgOwnerName, "participants": paricipants, "avatar": req.user.avatar, "msgTime": msgTime, "dataId": dataId};
   		resolve(obj);
   	}).then(function(object){
@@ -1179,18 +1179,16 @@ if(req.user){
               msgproto.myMsg = true;
               msgproto.msg = msg.msg;
               msgproto.msgOwnerAva = msg.msgOwnerAva;
-              msgproto.msgTime = moment(msg.messageCreatedTime).format("DD/MM/YYYY, hh:mm");
+              msgproto.msgTime = moment(msg.messageCreatedTime).format("DD/MM/YYYY, HH:mm");
               convProto.push(msgproto);
-              console.log(msgproto)
             }
             if(msg.msgOwner != req.user.id.toString()) {
               var msgproto = {};
               msgproto.myMsg = false;
               msgproto.msg = msg.msg;
               msgproto.msgOwnerAva = msg.msgOwnerAva;
-              msgproto.msgTime = moment(msg.messageCreatedTime).format("DD/MM/YYYY, hh:mm");
+              msgproto.msgTime = moment(msg.messageCreatedTime).format("DD/MM/YYYY, HH:mm");
               convProto.push(msgproto);
-              console.log(msgproto)
             }
 
             if(indexmsg+1 == objectmsg.length){
@@ -1309,12 +1307,12 @@ router.get('/demandes', function(req, res){
                     var diff = now.diff(newDate, 'hours');
                     var expiretime = 24 - diff;
                     dem.formatedtime = moment(time).format("DD/MM/YYYY");
-                    dem.formatedtimeHours = moment(time).format("hh:mm");
+                    dem.formatedtimeHours = moment(time).format("HH:mm");
                     if(expiretime != 0){
                       dem.diff = expiretime;
                     }
                     var created = dem.createdTime;
-                    dem.formatedcreatedTime = moment(created).format("DD/MM/YYYY, hh:mm");
+                    dem.formatedcreatedTime = moment(created).format("DD/MM/YYYY, HH:mm");
                     dem.participants.forEach(function(userava, indexuserava, objectuserava){
                       User.getUserById(userava, function(err, userav){
                         if(dem.creator.toString() != req.user.id.toString()){
@@ -1390,7 +1388,7 @@ router.post('/acceptdemand', function(req, res){
     var demandId = req.body.demandId;
     Demand.getDemandById(demandId, function(err, demand){
       var time = demand.time;
-      var appoinementTime = moment(time).format("DD/MM/YYYY, hh:mm");
+      var appoinementTime = moment(time).format("DD/MM/YYYY, HH:mm");
       if(moment(time) > moment()){
         demand.approuved = true;
         demand.valid = false;
@@ -1785,7 +1783,7 @@ router.get('/evaluate', function(req, res){
         });
 
         Demand.getDemandById(eval.fordemand, function(err, demand){
-          evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, hh:mm:ss');
+          evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm:ss');
         })
       }
       evalsArray.push(evalProto);
@@ -1798,7 +1796,6 @@ router.get('/evaluate', function(req, res){
     res.redirect('http://fason.co/');
   }
 })
-
 
 router.post('/evaluate', function(req, res){
   if(req.user){
@@ -1840,7 +1837,6 @@ router.post('/evaluate', function(req, res){
         var ratingObj = {"precision": precision, "qualityprice": quality, "communication": communication, "ponctuality": ponctuality};
         stylist.rating.push(ratingObj);
         stylist.save();
-
       })
     }
 
@@ -1899,7 +1895,6 @@ router.get('/contacter', function(req, res){
   }
 })
 
-
 router.post('/contacter', function(req, res){
   if(req.user){
     var message = req.body.messagemail;
@@ -1935,7 +1930,6 @@ router.post('/contacter', function(req, res){
     });
   }
 })
-
 
 router.get('/conditions', function(req, res){
   if(req.user){
