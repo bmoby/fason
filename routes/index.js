@@ -570,7 +570,7 @@ router.post('/demand', function(req, res){
                 client.sms.messages.create({
                   to:user.phone,
                   from:'+33644607659',
-                  body:'FASON : Vous avez reçu une demande de relooking.'+' Vous pouvez contacter '+req.user.lastName+' par téléphone au '+req.user.phone,
+                  body:'FASON : Nouvelle demande.'+' Contactez '+req.user.lastName+' au '+req.user.phone,
                 }, function(err, message) {
                   if(err){
                     console.log(err);
@@ -674,7 +674,7 @@ router.post('/demand', function(req, res){
                           client.sms.messages.create({
                             to:user.phone,
                             from:'+33644607659',
-                            body:'FASON : Vous avez reçu une demande de relooking.'+' Vous pouvez contacter '+req.user.lastName+' par téléphone au '+req.user.phone,
+                            body:'FASON : Nouvelle demande.'+' Contactez '+req.user.lastName+' au '+req.user.phone,
                           }, function(err, message) {
                             if(err){
                               console.log(err);

@@ -18,6 +18,9 @@ $(document).ready(function(){
       return nombre;
     }
   }
+  $('.pagination').on('click', function(){
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  });
   // alert(showmaxpage(sizestyleboxes(looksCount)))
   $('#listitems').paginathing({
     perPage:5,
