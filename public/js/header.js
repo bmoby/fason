@@ -14,8 +14,7 @@ $(document).ready(function(){
             newnotifcount = 0;
             if(newnotif > 0){
              newnotifcount = newnotif + response.evals;
-           }
-           if(newnotif < 0){
+           } else {
              newnotifcount = response.evals;
            }
             $('.notifCount').removeClass('hidden');

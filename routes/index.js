@@ -1852,7 +1852,8 @@ router.get('/evaluate', function(req, res){
       if(!evalProto.problem){
         evalsArray.push(evalProto);
       } else {
-        console.log("error with eval");
+        object.splice(index, 1);
+        connectedUser.save();
       }
     });
 
