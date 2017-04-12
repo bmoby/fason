@@ -85,7 +85,6 @@ router.post('/connu', function(req, res){
         console.log(err)
         res.send({"err": "Essayez plus tard"})
       } else {
-        console.log(savedConnu);
         user.connu = false;
         user.save();
         res.send({"saveok": true})
@@ -1134,14 +1133,12 @@ router.post('/msgNotif', function(req, res){
   		resolve(obj);
   	}).then(function(object){
       if (object.participants[0] == req.user.id){
-        console.log("ca correspond")
         if(object.participants[1]){
           var userToNotify = object.participants[1];
           pusher.trigger(userToNotify, 'new-message', object);
         }
         res.send(true)
       } else {
-          console.log("ca ne correspond pas")
         if(object.participants[0]){
           var userToNotify2 = object.participants[0];
           pusher.trigger(userToNotify2, 'new-message', object);
@@ -1851,11 +1848,9 @@ router.get('/evaluate', function(req, res){
 
         setTimeout(function(){
           if(evalProto.problem){
-            console.log("eval supprimé")
             object.splice(index, 1);
             connectedUser.save();
           } else {
-            console.log("eval bon")
             evalsArray.push(evalProto);
           }
         }, 500);
