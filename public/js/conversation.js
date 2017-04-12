@@ -51,6 +51,18 @@ $(document).ready(function(){
       });
   })
 
+  $('.message-text-body').keypress(function (e) {
+   var key = e.which;
+   if(key == 13)  // the enter key code
+    {
+      $('.send-message-btn-proper').click();
+      return false;
+    }
+    if(key == 27){
+      $(".close-conv-2").click();
+      return false;
+    }
+  });
 
   $('.send-message-btn-proper').on('click', function(){
     var message = $('.message-text-body').val();

@@ -413,8 +413,19 @@ button.btn.btn-default.home-xs-search-redirect-btn:hover {
 }
 
 .close-icon {
+  margin-right: 40px;
+  margin-top: 40px;
   font-size:3em;
   z-index: 999999999999999;
+}
+
+@media (max-width:767px) {
+  .close-icon {
+    margin-right: 15px;
+    margin-top: 15px;
+    font-size:3em;
+    z-index: 999999999999999;
+  }
 }
 
 input.search-xs-city-field {
