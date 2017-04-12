@@ -1848,12 +1848,17 @@ router.get('/evaluate', function(req, res){
             evalProto.problem = true;
           }
         })
-      }
-      if(!evalProto.problem){
-        evalsArray.push(evalProto);
-      } else {
-        object.splice(index, 1);
-        connectedUser.save();
+
+        setTimeout(function(){
+          if(evalProto.problem){
+            console.log("eval supprimé")
+            object.splice(index, 1);
+            connectedUser.save();
+          } else {
+            console.log("eval bon")
+            evalsArray.push(evalProto);
+          }
+        }, 500);
       }
     });
 
