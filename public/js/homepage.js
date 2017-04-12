@@ -13,18 +13,6 @@ $(document).ready(function(){
   $('.select-style').niceSelect();
   $('.select-gender').niceSelect();
 
-  $('.masonryContainer1').imagesLoaded(function(){
-    var img1 = $('#1-2');
-    var img2 = $('#1-4');
-    var height1 = img1.height()+img2.height();
-    $('.masonryContainer1').css({"height": height1});
-    $('.masonryContainer1').before('<div class="text-center styledescription"><p>Business formal style</p></div>')
-      $('#gallery').masonry({
-      itemSelector: '.item-masonry',
-      columnWidth: '.sizer4',
-      percentPosition: true
-    });
-  });
   $('.masonryContainer2').imagesLoaded(function(){
     var img21 = $('#2-1');
     var img23 = $('#2-3');
@@ -64,32 +52,4 @@ $(document).ready(function(){
     });
   });
 
-    // Setting the nice select for gender and style select in search bar on home
-    // $(".city-search").geocomplete({
-    //   dropdownWidth: '100%',
-    //   dropdownStyle: {},
-    //   itemStyle: {},
-    //   hintStyle: false,
-    //   style: false,
-    //   minLength: 3
-    // });
-    //
-    // $(".search-xs-city-field").geocomplete({
-    //   dropdownWidth: '100%',
-    //   dropdownStyle: {},
-    //   itemStyle: {},
-    //   hintStyle: false,
-    //   style: false,
-    //   minLength: 3
-    // });
-
-    $('.bxslider').bxSlider({
-      auto: true,
-      autoControls: true,
-      speed: 1800,
-      preloadImages: "visible",
-      useCSS: true,
-      pause: 10000,
-      touchEnabled: false
-    });
 })
