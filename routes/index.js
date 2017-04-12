@@ -1732,11 +1732,11 @@ router.get('/checkevals', function(req, res){
         if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
           count++
           if(index+1 == object.length){
-            res.send({"evals": count});
+            res.send({"evals": count, "send":true});
           }
         } else {
           if(index+1 == object.length){
-            res.send({"evals": count});
+            res.send({"evals": count, "send":true});
           }
         }
       })
@@ -1812,28 +1812,48 @@ router.get('/evaluate', function(req, res){
         evalProto.evalId = eval.id;
         if(eval.stylistId){
           User.getUserById(eval.stylistId, function(err, user){
-            evalProto.stylistId = eval.stylistId;
-            evalProto.stylistAvatar = user.avatar;
-            evalProto.stylistName = user.lastName;
+            if(user){
+              evalProto.stylistId = eval.stylistId;
+              evalProto.stylistAvatar = user.avatar;
+              evalProto.stylistName = user.lastName;
+            } else {
+              evalProto.problem = true;
+            }
           });
         } else {
           User.getUserById(eval.userId, function(err, user){
-            evalProto.userId = eval.userId;
-            evalProto.userAvatar = user.avatar;
-            evalProto.userName = user.lastName;
+            if(user){
+              evalProto.userId = eval.userId;
+              evalProto.userAvatar = user.avatar;
+              evalProto.userName = user.lastName;
+            } else {
+              evalProto.problem = true;
+            }
           });
         }
 
         Stylebox.getStyleboxById(eval.forstylebox, function(err, stylebox){
-          evalProto.styleboxTitle = stylebox.title;
-          evalProto.styleboxId = stylebox.id;
+          if(stylebox){
+            evalProto.styleboxTitle = stylebox.title;
+            evalProto.styleboxId = stylebox.id;
+          } else {
+            evalProto.problem = true;
+          }
         });
 
         Demand.getDemandById(eval.fordemand, function(err, demand){
-          evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm');
+          if(demand){
+            evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm');
+          } else {
+            evalProto.problem = true;
+          }
         })
       }
-      evalsArray.push(evalProto);
+      if(!evalProto.problem){
+        evalsArray.push(evalProto);
+      } else {
+        console.log("error with eval");
+      }
     });
 
     setTimeout(function(){

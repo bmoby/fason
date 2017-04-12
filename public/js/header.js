@@ -5,19 +5,22 @@ $(document).ready(function(){
       url: '/checkevals',
       method: 'GET',
       success: function(response){
-        if(response.evals){
-          $('.evalsheaderlink').removeClass('hidden');
-          $('.newevalsnotifs').text(response.evals);
-          var newnotif = parseInt($('.notifCountIcon').text());
-          newnotifcount = 0;
-          if(newnotif > 0){
-           newnotifcount = newnotif + response.evals;
-         }
-         if(newnotif < 0){
-           newnotifcount = response.evals;
-         }
-          $('.notifCount').removeClass('hidden');
-          $('.notifCountIcon').text(newnotifcount);
+        if(response.send){
+          var notifs = response.evals;
+          if(notifs > 0){
+            $('.evalsheaderlink').removeClass('hidden');
+            $('.newevalsnotifs').text(response.evals);
+            var newnotif = parseInt($('.notifCountIcon').text());
+            newnotifcount = 0;
+            if(newnotif > 0){
+             newnotifcount = newnotif + response.evals;
+           }
+           if(newnotif < 0){
+             newnotifcount = response.evals;
+           }
+            $('.notifCount').removeClass('hidden');
+            $('.notifCountIcon').text(newnotifcount);
+          }
         }
 
         if(response.noeffect){
