@@ -12,6 +12,10 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
+	connu: {
+		type: Boolean,
+		default: true,
+	},
 	avatar: {
 		type: String,
 		default: ""

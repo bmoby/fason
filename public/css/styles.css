@@ -7,6 +7,21 @@ h1, h2, h3, h4, h5, p, li, span, textarea, button, input[type="text"]{
   text-align: center;
 }
 
+.commentconnu{
+  margin-top: 20vh;
+  padding: 20px;
+
+}
+
+.selectconnu{
+  margin-top: 20px;
+}
+
+.commentconnubtn{
+  position: relative;
+  right: 15px;
+  top: 30px;
+}
 .pagination{
   text-align: center;
 }

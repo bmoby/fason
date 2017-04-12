@@ -152,13 +152,7 @@ $(document).ready(function(){
   getUserChannel(function(response){
     var channel = pusher.subscribe(response);
     channel.bind('new-message', function(data) {
-      if(convId != data.dataId){
-        $('.'+data.dataId+'icon').removeClass('read');
-        $('.'+data.dataId+'icon').addClass('notRead');
-        $('.'+data.dataId+'last').text(data.msg);
-        $('.'+data.dataId+'new').remove();
-        $('.'+data.dataId+'icon').append('<p class="newMessage inlinep '+data.dataId+'new">Nouveau</p>');
-      }
+      
       if(data.msg){
         $('.messages-container-div').append(
           '<div class="not-from-me">'+

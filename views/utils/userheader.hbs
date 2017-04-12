@@ -67,19 +67,6 @@
             </div>
           </a>
           {{/if}}
-          <a href="/users/updateprofil">
-            <div class="row header-row menuitem">
-              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
-                <i class="fa fa-cogs header-icons menuitem"></i>
-              </div>
-              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
-                <p class="link-p menuitem">Modifier mon profil</p>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
-                <p class="link-p menuitem"></p>
-              </div>
-            </div>
-          </a>
           {{#unless user.stylist.status}}
           <a class="header-link menuitem" href="/createstylebox">
             <div class="row header-row menuitem">
@@ -109,6 +96,19 @@
             </div>
           </a>
           {{/unless}}
+          <a href="/users/updateprofil">
+            <div class="row header-row menuitem">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">
+                <i class="fa fa-cogs header-icons menuitem"></i>
+              </div>
+              <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left header-column general-column menuitem">
+                <p class="link-p menuitem">Modifier mon profil</p>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-left header-column menuitem">
+                <p class="link-p menuitem"></p>
+              </div>
+            </div>
+          </a>
           <a class="header-link menuitem" href="/users/logout">
             <div class="row header-row menuitem">
               <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center header-column menuitem">

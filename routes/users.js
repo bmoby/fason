@@ -1,4 +1,3 @@
-// IMPORTING ALL NEEDED PACKAGES
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
@@ -564,7 +563,6 @@ router.post('/requestpasswordreset', function(req, res){
           if(error){
               return console.log(error);
           } else {
-            // SEND THE EMAIL PROCESS FINISHED ******************************************************
             res.send({"sent": "Nous venons de vous envoyer un e-mail avec les instructions afin de changer votre mot de passe. N'oubliez pas de vérifier dans la rubrique Spam de votre boîte e-mail."});
           }
       });
@@ -607,8 +605,7 @@ router.post('/sendMsg', function(req, res){
     var from = req.user.firstName;
     var message = req.body.message;
     var styleboxId = req.body.styleboxId;
-    var userId = req.user.id;
-
+    var userId = req.user.id
 
     Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
       if(req.user.id == stylebox.creator){

@@ -1,29 +1,30 @@
 $(document).ready(function(){
 
   setTimeout(function(){
-    // $.ajax({
-    //   url: '/checkevals',
-    //   method: 'GET',
-    //   success: function(response){
-    //     if(response.evals){
-    //       $('.evalsheaderlink').removeClass('hidden');
-    //       $('.newevalsnotifs').text(response.evals);
-    //       var newnotif = parseInt($('.notifCountIcon').text());
-    //       newnotifcount = 0;
-    //       if(newnotif > 0){
-    //        newnotifcount = newnotif + response.evals;
-    //      } else {
-    //        newnotifcount = response.evals;
-    //      }
-    //       $('.notifCount').removeClass('hidden');
-    //       $('.notifCountIcon').text(newnotifcount);
-    //     }
-    //
-    //     if(response.noevals){
-    //       console.log("no evals")
-    //     }
-    //   }
-    // })
+    $.ajax({
+      url: '/checkevals',
+      method: 'GET',
+      success: function(response){
+        if(response.evals){
+          $('.evalsheaderlink').removeClass('hidden');
+          $('.newevalsnotifs').text(response.evals);
+          var newnotif = parseInt($('.notifCountIcon').text());
+          newnotifcount = 0;
+          if(newnotif > 0){
+           newnotifcount = newnotif + response.evals;
+         }
+         if(newnotif < 0){
+           newnotifcount = response.evals;
+         }
+          $('.notifCount').removeClass('hidden');
+          $('.notifCountIcon').text(newnotifcount);
+        }
+
+        if(response.noeffect){
+          console.log("no evals")
+        }
+      }
+    })
 
     $.ajax({
       url: '/currentUser',

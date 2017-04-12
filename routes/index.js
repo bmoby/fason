@@ -6,6 +6,7 @@ var Pusher = require('pusher');
 var User = require('../models/user');
 var moment = require('moment');
 var Stylebox = require('../models/stylebox');
+var Connu = require('../models/connu');
 var Comments = require('../models/comment');
 var aggregate = Stylebox.aggregate();
 var Demand = require('../models/demand');
@@ -74,6 +75,27 @@ router.get('/', function(req, res) {
   }
 });
 
+router.post('/connu', function(req, res){
+  if(req.user){
+    var user = req.user;
+    var moyen  = req.body.moyen;
+    var newconnu = {"moyen": moyen, "creator": user.id};
+    Connu.createNewConnu(newconnu, function(err, savedConnu){
+      if(err){
+        console.log(err)
+        res.send({"err": "Essayez plus tard"})
+      } else {
+        console.log(savedConnu);
+        user.connu = false;
+        user.save();
+        res.send({"saveok": true})
+      }
+    })
+
+  } else {
+    res.redirect("http://fason.co/")
+  }
+})
 
 // SEARCH PAGES
 router.get('/search', function(req, res){
@@ -222,7 +244,7 @@ router.get('/stylebox/:id', function(req, res){
             console.log(err)
           } else {
             if(moment(com.showDate) < moment()){
-              var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, HH:mm:ss');
+              var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, HH:mm');
               com.createdDate = formatedCreated;
               commentList.push(com);
             }
@@ -549,7 +571,7 @@ router.post('/demand', function(req, res){
                 client.sms.messages.create({
                   to:user.phone,
                   from:'+33644607659',
-                  body:'FASON : Vous avez reçu une nouvelle demande de relooking.'+' Vous pouvez contacter votre client par téléphone au '+req.user.phone,
+                  body:'FASON : Vous avez reçu une demande de relooking.'+' Vous pouvez contacter '+req.user.lastName+' par téléphone au '+req.user.phone,
                 }, function(err, message) {
                   if(err){
                     console.log(err);
@@ -900,7 +922,7 @@ if(req.user){
                   });
                };
             }).then(function(object){
-              conversationsArray.push({"activeTime":new Date( moment(conv.activeTime)), "conv": conv, "convCreatedTime": moment(conv.conversationCreatedTime).format('DD-MM-YYYY, HH:mm:ss'), "hasNoRead": object.hasNoRead, "convName": object.convName, "convAva": object.convAva});
+              conversationsArray.push({"activeTime":new Date( moment(conv.activeTime)), "conv": conv, "convCreatedTime": moment(conv.conversationCreatedTime).format('DD-MM-YYYY, HH:mm'), "hasNoRead": object.hasNoRead, "convName": object.convName, "convAva": object.convAva});
               if(conversationsArray.length == req.user.conversations.length){
                 resolve(conversationsArray);
               }
@@ -948,7 +970,7 @@ router.post('/getmessages', function(req, res){
               newmsg.msgOwner = msg.msgOwner;
               newmsg.msgOwnerName = msg.msgOwnerName;
               newmsg.messageCreatedTime = msg.messageCreatedTime;
-              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, HH:mm:ss');
+              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, HH:mm');
               convproto.messages.push(newmsg);
               if(index+1  == object.length){
                 res.send({"conv": convproto, "avatar": user.avatar, "myAva": req.user.avatar, "userId": req.user.id})
@@ -972,7 +994,7 @@ router.post('/getmessages', function(req, res){
               newmsg.msgOwner = msg.msgOwner;
               newmsg.msgOwnerName = msg.msgOwnerName;
               newmsg.messageCreatedTime = msg.messageCreatedTime;
-              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, HH:mm:ss');
+              newmsg.msgTime = moment(msg.messageCreatedTime).format('DD-MM-YYYY, HH:mm');
               convproto.messages.push(newmsg);
               if(index+1  == object.length){
                 res.send({"conv": convproto, "avatar": user.avatar, "myAva": req.user.avatar, "userId": req.user.id})
@@ -992,7 +1014,7 @@ router.get('/getMyInfo', function(req, res){
     var avatar = req.user.avatar;
     var firstName = req.user.firstName;
     var now = Date.now();
-    var msgTime = moment(now).format('DD-MM-YYYY, HH:mm:ss');
+    var msgTime = moment(now).format('DD-MM-YYYY, HH:mm');
     res.send({"found": true, "avatar": avatar, "firstname": firstName, "time":msgTime});
   } else {
     res.send({"err": "userNotFound"});
@@ -1104,20 +1126,22 @@ router.post('/msgNotif', function(req, res){
 	if(req.user){
     var promise = new Promise(function(resolve, reject){
   		var msg = req.body.msg;
-  		var paricipants = req.body.participants;
+  		var participants = req.body.participants;
   		var msgOwnerName = req.user.firstName;
       var dataId = req.body.convId;
-  		var msgTime = moment().format('DD-MM-YYYY, HH:mm:ss');
-  		var obj = {"msg": msg, "msgOwnerName": msgOwnerName, "participants": paricipants, "avatar": req.user.avatar, "msgTime": msgTime, "dataId": dataId};
+  		var msgTime = moment().format('DD-MM-YYYY, HH:mm');
+  		var obj = {"msg": msg, "msgOwnerName": msgOwnerName, "participants": participants, "avatar": req.user.avatar, "msgTime": msgTime, "dataId": dataId};
   		resolve(obj);
   	}).then(function(object){
-      if (object.participants[0].toString() == req.user.id.toString()){
+      if (object.participants[0] == req.user.id){
+        console.log("ca correspond")
         if(object.participants[1]){
           var userToNotify = object.participants[1];
           pusher.trigger(userToNotify, 'new-message', object);
         }
         res.send(true)
       } else {
+          console.log("ca ne correspond pas")
         if(object.participants[0]){
           var userToNotify2 = object.participants[0];
           pusher.trigger(userToNotify2, 'new-message', object);
@@ -1670,34 +1694,57 @@ router.post('/styleboxdelete', function(req, res){
 });
 
 router.get('/checkevals', function(req, res){
+  // if(req.user){
+  //   var connectedUser = req.user;
+  //   if(connectedUser.evals){
+  //     var validevals = [];
+  //     connectedUser.evals.forEach(function(eval, index, object){
+  //       if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
+  //         validevals.push(eval);
+  //       }
+  //       if(index+1  == object.length){
+  //         if(validevals){
+  //           res.send({"evals": validevals.length, "send": true});
+  //         } else {
+  //           res.send({"noevals": true});
+  //         }
+  //       }
+  //       if(object.length == 1){
+  //         if(validevals){
+  //           res.send({"evals": validevals.length, "send": true});
+  //         } else {
+  //           res.send({"noevals": true});
+  //         }
+  //       }
+  //     })
+  //   } else {
+  //     res.send({"noevals": true});
+  //   }
+  // } else {
+  //   res.send({"noevals": true});
+  // }
+
   if(req.user){
-    var connectedUser = req.user;
-    if(connectedUser.evals){
-      var validevals = [];
-      connectedUser.evals.forEach(function(eval, index, object){
+    var user = req.user;
+    var count = 0;
+    if(user.evals.length){
+      user.evals.forEach(function(eval, index, object){
         if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
-          validevals.push(eval);
-        }
-        if(index+1  == object.length){
-          if(validevals){
-            res.send({"evals": validevals.length, "send": true});
-          } else {
-            res.send({"noevals": true});
+          count++
+          if(index+1 == object.length){
+            res.send({"evals": count});
           }
-        }
-        if(object.length == 1){
-          if(validevals){
-            res.send({"evals": validevals.length, "send": true});
-          } else {
-            res.send({"noevals": true});
+        } else {
+          if(index+1 == object.length){
+            res.send({"evals": count});
           }
         }
       })
     } else {
-      res.send({"noevals": true});
+      res.send({"noeffect": true})
     }
   } else {
-    res.send({"noevals": true});
+    res.send({"noeffect": true})
   }
 });
 
@@ -1783,7 +1830,7 @@ router.get('/evaluate', function(req, res){
         });
 
         Demand.getDemandById(eval.fordemand, function(err, demand){
-          evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm:ss');
+          evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm');
         })
       }
       evalsArray.push(evalProto);
