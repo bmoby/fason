@@ -13,8 +13,8 @@
     "cookie-parser": "*",
     "dotenv": "^4.0.0",
     "express": "*",
-    "node-uuid": "^1.4.7",
     "express-device": "^0.4.2",
+    "express-google-analytics": "^1.0.2",
     "express-handlebars": "*",
     "express-session": "*",
     "express-validator": "*",
@@ -45,7 +45,7 @@
     "twilio": "^2.11.1"
   },
   "engines": {
-        "node": "7.8.0",
-        "npm": "4.4.4"
-    }
+    "node": "7.8.0",
+    "npm": "4.4.4"
+  }
 }

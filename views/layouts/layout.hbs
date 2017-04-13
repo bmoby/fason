@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -8,7 +7,6 @@
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Nunito">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/styles.css">
-
 </head>
 <body>
 	<div class="full-page loading-page">
@@ -35,26 +33,26 @@
 	<script src="/js/spinner.js"></script>
 	{{#if user}}
 		{{#if user.connu}}
-	<script type="text/javascript">
-		$('.commentconnubtn').on('click', function(){
-			var moyen = $('.selectconnu').val();
-			 if(moyen != "Moyen"){
-				 $.ajax({
-					 url: '/connu',
-					 method: 'POST',
-					 contentType: 'application/json',
-					 data: JSON.stringify({"moyen": moyen}),
-					 success: function(response){
-						 if(response.saveok){
-							 $('.commentconnu').text("Merci !");
-							 $('.connu-page').delay(500).fadeOut(400);
-						 }
+			<script type="text/javascript">
+				$('.commentconnubtn').on('click', function(){
+					var moyen = $('.selectconnu').val();
+					 if(moyen != "Moyen"){
+						 $.ajax({
+							 url: '/connu',
+							 method: 'POST',
+							 contentType: 'application/json',
+							 data: JSON.stringify({"moyen": moyen}),
+							 success: function(response){
+								 if(response.saveok){
+									 $('.commentconnu').text("Merci !");
+									 $('.connu-page').delay(500).fadeOut(400);
+								 }
+							 }
+						 })
 					 }
-				 })
-			 }
-		});
-	</script>
-	{{/if}}
+				});
+			</script>
 		{{/if}}
+	{{/if}}
 </body>
 </html>

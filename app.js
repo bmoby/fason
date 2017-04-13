@@ -13,6 +13,14 @@ var mongorelation = require('mongo-relation');
 var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
+// Get the module
+var expressGoogleAnalytics = require('express-google-analytics');
+
+// Insert your Google Analytics Id, Shoule be something like 'UA-12345678-9'
+var analytics = expressGoogleAnalytics('UA-97258254-1');
+
+//Add to express before your routes
+app.use(analytics);
 // Init App
 var app = express();
 
