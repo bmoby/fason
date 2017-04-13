@@ -46,8 +46,22 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // BodyParser Middleware
-var cache = new CacheControl().middleware
-app.get("/", cache("hours", 24), routes.get);
+app.get('/', function (req, res) {
+  res.setHeader('Content-Type', 'text/event-stream')
+  res.setHeader('Cache-Control', 'no-cache')
+
+  // send a ping approx every 2 seconds
+  var timer = setInterval(function () {
+    res.write('data: ping\n\n')
+
+    // !!! this is the important part
+    res.flush()
+  }, 2000)
+
+  res.on('close', function () {
+    clearInterval(timer)
+  })
+})
 // compress responses
 app.use(compression());
 var oneYear = 1 * 365 * 24 * 60 * 60 * 1000;
