@@ -45,17 +45,26 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // BodyParser Middleware
-app.use(compression({filter: shouldCompress}))
+// compress responses
+app.use(compression());
 
-function shouldCompress (req, res) {
-  if (req.headers['x-no-compression']) {
-    // don't compress responses with this request header
-    return false
-  }
+// server-sent event stream
+app.get('/events', function (req, res) {
+  res.setHeader('Content-Type', 'text/event-stream')
+  res.setHeader('Cache-Control', 'no-cache')
 
-  // fallback to standard filter function
-  return compression.filter(req, res)
-}
+  // send a ping approx every 2 seconds
+  var timer = setInterval(function () {
+    res.write('data: ping\n\n')
+
+    // !!! this is the important part
+    res.flush()
+  }, 2000)
+
+  res.on('close', function () {
+    clearInterval(timer)
+  })
+})
 app.use(bodyParser.json());
 app.use(analytics);
 app.use(bodyParser.urlencoded({ extended: false }));
