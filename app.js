@@ -13,6 +13,7 @@ var mongorelation = require('mongo-relation');
 var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
+var compression = require('compression')
 // Get the module
 var expressGoogleAnalytics = require('express-google-analytics');
 
@@ -44,7 +45,17 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // BodyParser Middleware
-app.use(express.compress());
+app.use(compression({filter: shouldCompress}))
+
+function shouldCompress (req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res)
+}
 app.use(bodyParser.json());
 app.use(analytics);
 app.use(bodyParser.urlencoded({ extended: false }));
