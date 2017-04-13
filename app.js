@@ -53,9 +53,8 @@ app.use(analytics);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(device.capture());
-
 // Set Static Folder
-app.use('/', express.static(__dirname + '/public/', { maxAge: oneYear }));
+app.use(express.static(path.join(__dirname, '/public'), { maxAge: oneYear }));
 
 // Express Session
 app.use(session({
