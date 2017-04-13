@@ -47,24 +47,7 @@ app.set('view engine', '.hbs');
 // BodyParser Middleware
 // compress responses
 app.use(compression());
-
-// server-sent event stream
-app.get('/events', function (req, res) {
-  res.setHeader('Content-Type', 'text/event-stream')
-  res.setHeader('Cache-Control', 'no-cache')
-
-  // send a ping approx every 2 seconds
-  var timer = setInterval(function () {
-    res.write('data: ping\n\n')
-
-    // !!! this is the important part
-    res.flush()
-  }, 2000)
-
-  res.on('close', function () {
-    clearInterval(timer)
-  })
-})
+var oneYear = 1 * 365 * 24 * 60 * 60 * 1000;
 app.use(bodyParser.json());
 app.use(analytics);
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -72,7 +55,7 @@ app.use(cookieParser());
 app.use(device.capture());
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/public', { maxAge: oneYear })));
 
 // Express Session
 app.use(session({
