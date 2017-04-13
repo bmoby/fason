@@ -14,6 +14,7 @@
     "cookie-parser": "*",
     "dotenv": "^4.0.0",
     "express": "*",
+    "express-cache-control": "^1.0.2",
     "express-device": "^0.4.2",
     "express-google-analytics": "^1.0.2",
     "express-handlebars": "*",

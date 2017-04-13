@@ -13,7 +13,8 @@ var mongorelation = require('mongo-relation');
 var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
-var compression = require('compression')
+var compression = require('compression');
+var CacheControl = require("express-cache-control");
 // Get the module
 var expressGoogleAnalytics = require('express-google-analytics');
 
@@ -45,6 +46,8 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // BodyParser Middleware
+var cache = new CacheControl().middleware
+app.get("/", cache("hours", 24), routes.get);
 // compress responses
 app.use(compression());
 var oneYear = 1 * 365 * 24 * 60 * 60 * 1000;
@@ -54,12 +57,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(device.capture());
 // Set Static Folder
-app.use(function (req, res, next) {
-    if (req.url.match(/^\/(css|js|img|font)\/.+/)) {
-        res.setHeader('Cache-Control', 'public, max-age=3600')
-    }
-    next();
-});
 app.use(express.static(path.join(__dirname, '/public')));
 
 // Express Session
