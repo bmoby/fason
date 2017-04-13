@@ -14,6 +14,11 @@ var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
 var compression = require('compression');
+var AWS = require('aws-sdk');
+AWS.config = {
+  accessKeyId: (process.env.AWS_KEY /*|| 'AKIAJ5ZF3LOCVCPMJ5LQ'*/),
+  secretAccessKey: (process.env.AWS_SECRET /*|| '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'*/)
+}
 // Get the module
 var expressGoogleAnalytics = require('express-google-analytics');
 
@@ -56,6 +61,48 @@ app.use(cookieParser());
 app.use(device.capture());
 // Set Static Folder
 app.use(express.static(path.join(__dirname, '/public')));
+
+app.get('/image/:id', function (req, res, next) {
+  if (!req.user.is.authenticated) {
+    var err = new Error()
+    err.status = 403
+    next(err)
+    return
+  }
+
+  aws.get('/image/' + req.params.id)
+  .on('error', next)
+  .on('response', function (resp) {
+    if (resp.statusCode !== 200) {
+      var err = new Error()
+      err.status = 404
+      next(err)
+      return
+    }
+
+    res.setHeader('Content-Length', resp.headers['content-length'])
+    res.setHeader('Content-Type', resp.headers['content-type'])
+
+    // cache-control?
+    // etag?
+    // last-modified?
+    // expires?
+
+    if (req.fresh) {
+      res.statusCode = 304
+      res.end()
+      return
+    }
+
+    if (req.method === 'HEAD') {
+      res.statusCode = 200
+      res.end()
+      return
+    }
+
+    resp.pipe(res)
+  })
+})
 
 // Express Session
 app.use(session({

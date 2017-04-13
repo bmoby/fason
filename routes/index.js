@@ -17,7 +17,7 @@ var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
 var CacheControl = require("express-cache-control");
-var cache = new CacheControl().middleware
+var cache = new CacheControl().middleware;
 
 
 // Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
