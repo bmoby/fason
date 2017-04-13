@@ -66,7 +66,7 @@ app.use(session({
 
 app.get('/*', function (req, res, next) {
 
-  if (req.url.indexOf("/images/") === 0 || req.url.indexOf("/stylesheets/") === 0 || req.url.indexOf("/styleboxphotosbianor/") === 0) {
+  if (req.url.indexOf("/images/") === 0 || req.url.indexOf("/stylesheets/") === 0 || req.url.indexOf("https://s3.amazonaws.com/styleboxphotosbianor/") === 0) {
     res.setHeader("Cache-Control", "public, max-age=2592000");
     res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
   }
