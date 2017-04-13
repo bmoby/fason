@@ -13,7 +13,6 @@
 		{{#if user.connu}}
 			<div class="full-page connu-page">
 			  {{> connu}}
-				<link rel="stylesheet" href="../css/niceselect.css">
 			</div>
 		{{/if}}
 	{{/if}}
@@ -29,6 +28,7 @@
 	<script src="/js/spinner.js"></script>
 	{{#if user}}
 		{{#if user.connu}}
+		<link rel="stylesheet" href="../css/niceselect.css">
 			<script type="text/javascript">
 				$('.commentconnubtn').on('click', function(){
 					var moyen = $('.selectconnu').val();
