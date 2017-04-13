@@ -19,8 +19,6 @@ var expressGoogleAnalytics = require('express-google-analytics');
 // Insert your Google Analytics Id, Shoule be something like 'UA-12345678-9'
 var analytics = expressGoogleAnalytics('UA-97258254-1');
 
-//Add to express before your routes
-app.use(analytics);
 // Init App
 var app = express();
 
@@ -47,6 +45,7 @@ app.set('view engine', '.hbs');
 
 // BodyParser Middleware
 app.use(bodyParser.json());
+app.use(analytics);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(device.capture());
