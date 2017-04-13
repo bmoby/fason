@@ -14,7 +14,6 @@ var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
 var compression = require('compression');
-var CacheControl = require("express-cache-control");
 // Get the module
 var expressGoogleAnalytics = require('express-google-analytics');
 
@@ -46,22 +45,7 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // BodyParser Middleware
-app.get('/', function (req, res) {
-  res.setHeader('Content-Type', 'text/event-stream')
-  res.setHeader('Cache-Control', 'no-cache')
 
-  // send a ping approx every 2 seconds
-  var timer = setInterval(function () {
-    res.write('data: ping\n\n')
-
-    // !!! this is the important part
-    res.flush()
-  }, 2000)
-
-  res.on('close', function () {
-    clearInterval(timer)
-  })
-})
 // compress responses
 app.use(compression());
 var oneYear = 1 * 365 * 24 * 60 * 60 * 1000;

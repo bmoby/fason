@@ -16,7 +16,8 @@ var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
-
+var CacheControl = require("express-cache-control");
+var cache = new CacheControl().middleware
 
 
 // Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
@@ -46,7 +47,7 @@ var transporter = nodemailer.createTransport("SMTP",{
 
 
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/', cache("hours", 3), function(req, res) {
   if(req.user){
     var notifcount = 0;
     var newdemands = 0;
