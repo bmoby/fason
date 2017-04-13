@@ -44,6 +44,7 @@ app.engine('.hbs', exphbs({
 app.set('view engine', '.hbs');
 
 // BodyParser Middleware
+app.use(express.compress());
 app.use(bodyParser.json());
 app.use(analytics);
 app.use(bodyParser.urlencoded({ extended: false }));
