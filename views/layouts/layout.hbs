@@ -6,10 +6,12 @@
 	<script src="/js/jquery.min.js"></script>
 </head>
 <body>
-	<div class="full-page loading-page">
+	<div class="full-page hidden loading-page">
 	  {{> loading}}
 	</div>
-
+	<div class="full-page hidden loading-page-first">
+	  {{> loadingfirst}}
+	</div>
 	{{#if user}}
 		{{#if user.connu}}
 			<div class="full-page connu-page">
@@ -19,24 +21,24 @@
 	{{/if}}
 	{{{body}}}
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
-	<script src="/pace/pace.js"></script>
-  <link href="/pace/themes/black/pace-theme-big-counter.css" rel="stylesheet" />
 	<script type="text/javascript">
 	function setCookie(c_name,value,exdays){var exdate=new Date();exdate.setDate(exdate.getDate() + exdays);var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());document.cookie=c_name + "=" + c_value;}
 	function getCookie(c_name){var c_value = document.cookie;var c_start = c_value.indexOf(" " + c_name + "=");if (c_start == -1){c_start = c_value.indexOf(c_name + "=");}if (c_start == -1){c_value = null;}else{c_start = c_value.indexOf("=", c_start) + 1;var c_end = c_value.indexOf(";", c_start);if (c_end == -1){c_end = c_value.length;}c_value = unescape(c_value.substring(c_start,c_end));}return c_value;}
 	function delCookie(name){document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';}
 	$(document).ready(function(){
-
     //Checks if the cookie already exists
     if (!getCookie('firsttime')){
         //Runs the code because the cookie doesn't exist and it's the user's first time
-
+        $('.loading-page-first').removeClass("hidden");
         //Set's the cookie to true so there is a value and the code shouldn't run again.
         setCookie('firsttime',true);
-    }
+    } else {
+			$('.loading-page').removeClass("hidden");
+		}
 	});
 	$(window).load(function(){
 		 $('.loading-page').fadeOut();
+		 $('.loading-page-first').removeClass("hidden");
 	});
 	</script>
 	<script src="//js.pusher.com/4.0/pusher.min.js"></script>
