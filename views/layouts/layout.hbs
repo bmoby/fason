@@ -30,6 +30,11 @@
     if (!getCookie('firsttime')){
         //Runs the code because the cookie doesn't exist and it's the user's first time
         $('.loading-page-first').removeClass("hidden");
+				function progress(percent, $element) {
+				    var progressBarWidth = percent * $element.width() / 100;
+				    $element.find('div').animate({ width: progressBarWidth }, 500).html(percent + "% ");
+				}
+				progress(0, $('#progressBar'));
         //Set's the cookie to true so there is a value and the code shouldn't run again.
         setCookie('firsttime',true);
     } else {
