@@ -6,9 +6,9 @@
 	<script src="/js/jquery.min.js"></script>
 </head>
 <body>
-	<div class="full-page hidden loading-page">
+	<!-- <div class="full-page hidden loading-page">
 	  {{> loading}}
-	</div>
+	</div> -->
 
 	{{#if user}}
 		{{#if user.connu}}
@@ -26,15 +26,7 @@
 	function getCookie(c_name){var c_value = document.cookie;var c_start = c_value.indexOf(" " + c_name + "=");if (c_start == -1){c_start = c_value.indexOf(c_name + "=");}if (c_start == -1){c_value = null;}else{c_start = c_value.indexOf("=", c_start) + 1;var c_end = c_value.indexOf(";", c_start);if (c_end == -1){c_end = c_value.length;}c_value = unescape(c_value.substring(c_start,c_end));}return c_value;}
 	function delCookie(name){document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';}
 	$(document).ready(function(){
-		paceOptions = {
-		  // Disable the 'elements' source
-		  elements: false,
 
-		  // Only show the progress on regular and ajax-y page navigation,
-		  // not every request
-		  restartOnRequestAfter: false
-		}
-		$(window).paceOptions
     //Checks if the cookie already exists
     if (!getCookie('firsttime')){
         //Runs the code because the cookie doesn't exist and it's the user's first time
@@ -45,9 +37,9 @@
 			$('.loading-page').removeClass("hidden");
 		}
 	});
-	$(window).load(function(){
-		 $('.loading-page').fadeOut();
-	});
+	// $(window).load(function(){
+	// 	 $('.loading-page').fadeOut();
+	// });
 	</script>
 	<script src="//js.pusher.com/4.0/pusher.min.js"></script>
 	<script src="/js/header.js"></script>
