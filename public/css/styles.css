@@ -3,21 +3,6 @@ h1, h2, h3, h4, h5, p, li, span, textarea, button, input[type="text"]{
   font-family: 'Nunito' !important;
 }
 
-#progressBar {
-    width: 400px;
-    height: 22px;
-    border: 1px solid #111;
-    background-color: #292929;
-}
-#progressBar div {
-    height: 100%;
-    color: #fff;
-    text-align: right;
-    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
-    width: 0;
-    background-color: #0099ff;
-}
-
 .pagination-container{
   text-align: center;
 }

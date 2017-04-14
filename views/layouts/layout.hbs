@@ -9,9 +9,7 @@
 	<div class="full-page hidden loading-page">
 	  {{> loading}}
 	</div>
-	<div class="full-page hidden loading-page-first">
-	  {{> loadingfirst}}
-	</div>
+
 	{{#if user}}
 		{{#if user.connu}}
 			<div class="full-page connu-page">
@@ -21,20 +19,26 @@
 	{{/if}}
 	{{{body}}}
 	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/js/pace.js"></script>
+  <link href="/js/templates/pace-theme-barber-shop.css" rel="stylesheet" />
 	<script type="text/javascript">
 	function setCookie(c_name,value,exdays){var exdate=new Date();exdate.setDate(exdate.getDate() + exdays);var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());document.cookie=c_name + "=" + c_value;}
 	function getCookie(c_name){var c_value = document.cookie;var c_start = c_value.indexOf(" " + c_name + "=");if (c_start == -1){c_start = c_value.indexOf(c_name + "=");}if (c_start == -1){c_value = null;}else{c_start = c_value.indexOf("=", c_start) + 1;var c_end = c_value.indexOf(";", c_start);if (c_end == -1){c_end = c_value.length;}c_value = unescape(c_value.substring(c_start,c_end));}return c_value;}
 	function delCookie(name){document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';}
 	$(document).ready(function(){
+		paceOptions = {
+		  // Disable the 'elements' source
+		  elements: false,
+
+		  // Only show the progress on regular and ajax-y page navigation,
+		  // not every request
+		  restartOnRequestAfter: false
+		}
+		$(window).paceOptions
     //Checks if the cookie already exists
     if (!getCookie('firsttime')){
         //Runs the code because the cookie doesn't exist and it's the user's first time
-        $('.loading-page-first').removeClass("hidden");
-				function progress(percent, $element) {
-				    var progressBarWidth = percent * $element.width() / 100;
-				    $element.find('div').animate({ width: progressBarWidth }, 500).html(percent + "% ");
-				}
-				progress(0, $('#progressBar'));
+
         //Set's the cookie to true so there is a value and the code shouldn't run again.
         setCookie('firsttime',true);
     } else {
@@ -43,7 +47,6 @@
 	});
 	$(window).load(function(){
 		 $('.loading-page').fadeOut();
-		 $('.loading-page-first').fadeOut();
 	});
 	</script>
 	<script src="//js.pusher.com/4.0/pusher.min.js"></script>
