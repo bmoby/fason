@@ -1,5 +1,6 @@
 $(document).ready(function(){
-
+  var audioElement = document.createElement('audio');
+  audioElement.setAttribute('src', '/sounds/message.mp3');
   setTimeout(function(){
     $.ajax({
       url: '/checkevals',
@@ -111,10 +112,12 @@ $(document).ready(function(){
                }
              }
            }
+            audioElement.play();
          });
 
          channel.bind('demands', function(data) {
            if(data){
+             audioElement.play();
              $('.notifCount').removeClass('hidden');
              var notifs = parseInt($('.notifCountIcon').text());
              var demandcout = parseInt($('.newdemandsnotifs').text());
