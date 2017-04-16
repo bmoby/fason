@@ -99,7 +99,8 @@ $(document).ready(function(){
 
          channel.bind('new-message', function(data) {
            if(data){
-             if(window.location.pathname != '/conv'){
+             alert(window.location.pathname)
+             if(window.location.pathname != '/conv/'){
                audioElement.play();
                $('.notifCount').removeClass('hidden');
                var notifs = parseInt($('.notifCountIcon').text());
