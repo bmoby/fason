@@ -99,7 +99,7 @@ $(document).ready(function(){
 
          channel.bind('new-message', function(data) {
            if(data){
-             if(window.location.pathname != '/inbox'){
+             if(window.location.pathname != '/conv'){
                $('.notifCount').removeClass('hidden');
                var notifs = parseInt($('.notifCountIcon').text());
                var messagescout = parseInt($('.newmessagesnotifs').text());
