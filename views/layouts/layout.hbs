@@ -33,7 +33,6 @@
     if (!getCookie('firsttime')){
         //Runs the code because the cookie doesn't exist and it's the user's first time
 				$('.loading-page').addClass("hidden");
-        $('.loading-page-first').removeClass("hidden");
         //Set's the cookie to true so there is a value and the code shouldn't run again.
         setCookie('firsttime',true);
     } else {
