@@ -100,6 +100,7 @@ $(document).ready(function(){
          channel.bind('new-message', function(data) {
            if(data){
              if(window.location.pathname != '/conv'){
+               audioElement.play();
                $('.notifCount').removeClass('hidden');
                var notifs = parseInt($('.notifCountIcon').text());
                var messagescout = parseInt($('.newmessagesnotifs').text());
@@ -112,7 +113,6 @@ $(document).ready(function(){
                }
              }
            }
-            audioElement.play();
          });
 
          channel.bind('demands', function(data) {
