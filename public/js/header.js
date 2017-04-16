@@ -99,7 +99,9 @@ $(document).ready(function(){
 
          channel.bind('new-message', function(data) {
            if(data){
-             if(!window.location.href.indexOf("conv") > -1){
+             if (window.location.href.indexOf("conv") != -1){
+               alert("ok ca marche")
+             } else {
                audioElement.play();
                $('.notifCount').removeClass('hidden');
                var notifs = parseInt($('.notifCountIcon').text());
