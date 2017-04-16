@@ -7,14 +7,10 @@
       type="image/png"
       href="/images/domain.png" />
 	<script src="/js/jquery.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
-	<div class="full-page loading-page">
-	  {{> loading}}
-	</div>
-	<div class="full-page loading-page-first">
-	  {{> loadingfirst}}
-	</div>
 	{{#if user}}
 		{{#if user.connu}}
 			<div class="full-page connu-page">
@@ -22,8 +18,13 @@
 			</div>
 		{{/if}}
 	{{/if}}
+	<div class="full-page loading-page">
+	  {{> loading}}
+	</div>
+	<div class="full-page loading-page-first">
+	  {{> loadingfirst}}
+	</div>
 	{{{body}}}
-	<script src="/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 	function setCookie(c_name,value,exdays){var exdate=new Date();exdate.setDate(exdate.getDate() + exdays);var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());document.cookie=c_name + "=" + c_value;}
 	function getCookie(c_name){var c_value = document.cookie;var c_start = c_value.indexOf(" " + c_name + "=");if (c_start == -1){c_start = c_value.indexOf(c_name + "=");}if (c_start == -1){c_value = null;}else{c_start = c_value.indexOf("=", c_start) + 1;var c_end = c_value.indexOf(";", c_start);if (c_end == -1){c_end = c_value.length;}c_value = unescape(c_value.substring(c_start,c_end));}return c_value;}
@@ -47,7 +48,6 @@
 	<script src="//js.pusher.com/4.0/pusher.min.js"></script>
 	<script src="/js/header.js"></script>
 	<script src="/js/spinner.js"></script>
-	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 	{{#if user}}
 		{{#if user.connu}}
 		<link rel="stylesheet" href="../css/niceselect.css">
