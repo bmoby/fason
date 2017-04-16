@@ -54,7 +54,7 @@ $(document).ready(function(){
         }
 
         if(response.userId){
-         var pusher = new Pusher('095ff3028ab7bceb6073', {
+         var pusher = new Pusher(process.env.PUSHER, {
            encrypted: true
          });
 
@@ -100,7 +100,7 @@ $(document).ready(function(){
          channel.bind('new-message', function(data) {
            if(data){
              if (window.location.href.indexOf("conv") != -1){
-               alert("ok ca marche")
+
              } else {
                audioElement.play();
                $('.notifCount').removeClass('hidden');
@@ -139,9 +139,6 @@ $(document).ready(function(){
 
 
   $('.close-icon').on('click', function(){
-    console.log(document.referrer);
-    console.log(document.referrer.toString());
-    console.log("http://fason.co/login");
     if(document.referrer && document.referrer.toString() != "http://fason.co/login"){
       window.location.replace(document.referrer);
     } else {
@@ -181,5 +178,4 @@ $(document).ready(function(){
       $('.header-menu').addClass('hidden');
     }
   });
-
 });

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var pusher = new Pusher('095ff3028ab7bceb6073', {
+  var pusher = new Pusher(process.env.PUSHER, {
     encrypted: true
   });
 
@@ -152,7 +152,7 @@ $(document).ready(function(){
   getUserChannel(function(response){
     var channel = pusher.subscribe(response);
     channel.bind('new-message', function(data) {
-      
+
       if(data.msg){
         $('.messages-container-div').append(
           '<div class="not-from-me">'+

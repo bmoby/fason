@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  var pusher = new Pusher('095ff3028ab7bceb6073', {
+  var pusher = new Pusher(process.env.PUSHER, {
     encrypted: true
   });
 

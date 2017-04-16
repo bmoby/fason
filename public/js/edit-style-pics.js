@@ -2,7 +2,6 @@ $(document).on('ready', function() {
 
   $('.select-style').niceSelect();
   $('.select-gender').niceSelect();
-
   $("#input-44").fileinput({
     showBrowse: false,
     showRemove: false,
