@@ -54,7 +54,7 @@ $(document).ready(function(){
         }
 
         if(response.userId){
-         var pusher = new Pusher(process.env.PUSHER, {
+         var pusher = new Pusher('095ff3028ab7bceb6073', {
            encrypted: true
          });
 
@@ -139,6 +139,9 @@ $(document).ready(function(){
 
 
   $('.close-icon').on('click', function(){
+    console.log(document.referrer);
+    console.log(document.referrer.toString());
+    console.log("http://fason.co/login");
     if(document.referrer && document.referrer.toString() != "http://fason.co/login"){
       window.location.replace(document.referrer);
     } else {
@@ -178,4 +181,5 @@ $(document).ready(function(){
       $('.header-menu').addClass('hidden');
     }
   });
+
 });
