@@ -9,10 +9,10 @@
 	<script src="/js/jquery.min.js"></script>
 </head>
 <body>
-	<div class="full-page hidden loading-page">
+	<div class="full-page loading-page">
 	  {{> loading}}
 	</div>
-	<div class="full-page hidden loading-page-first">
+	<div class="full-page loading-page-first">
 	  {{> loadingfirst}}
 	</div>
 	{{#if user}}
@@ -32,11 +32,12 @@
     //Checks if the cookie already exists
     if (!getCookie('firsttime')){
         //Runs the code because the cookie doesn't exist and it's the user's first time
+				$('.loading-page').addClass("hidden");
         $('.loading-page-first').removeClass("hidden");
         //Set's the cookie to true so there is a value and the code shouldn't run again.
         setCookie('firsttime',true);
     } else {
-			$('.loading-page').removeClass("hidden");
+			$('.loading-page-first').addClass("hidden");
 		}
 	});
 	$(window).load(function(){
