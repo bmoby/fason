@@ -23,20 +23,6 @@ var analytics = expressGoogleAnalytics(process.env.ANALYTICS);
 // Init App
 var app = express();
 
-var imagemin = require('imagemin');
-var imageminJpegtran = require('imagemin-jpegtran');
-var imageminPngquant = require('imagemin-pngquant');
-
-imagemin(['images/*.{jpg,png}'], 'build/images', {
-	plugins: [
-		imageminJpegtran(),
-		imageminPngquant({quality: '65-80'})
-	]
-}).then(files => {
-	console.log(files);
-	//=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
-});
-
 mongoose.connect(process.env.MONGO_URI /*|| 'mongodb://localhost:3001/bianor'*/);
 var db = mongoose.connection;
 
