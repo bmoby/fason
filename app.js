@@ -15,10 +15,8 @@ var fs = require('fs');
 var device = require('express-device');
 var compression = require('compression');
 // Get the module
-var expressGoogleAnalytics = require('express-google-analytics');
 
 // Insert your Google Analytics Id, Shoule be something like 'UA-12345678-9'
-var analytics = expressGoogleAnalytics(process.env.ANALYTICS);
 
 // Init App
 var app = express();
