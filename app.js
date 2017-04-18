@@ -54,6 +54,8 @@ app.use(analytics);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(device.capture());
+app.timeout = 1000;
+
 // Set Static Folder
 app.use(express.static(path.join(__dirname, '/public')));
 
