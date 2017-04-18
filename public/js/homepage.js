@@ -5,8 +5,8 @@ $(document).ready(function(){
     var img21 = $('#1-1');
     var img23 = $('#1-5');
     var height2 = img23.height() + img21.height();
-    $('.masonryContainer').css({"height": height2});
-    $('.masonryContainer').before('<div class="text-center styledescription"><p>Business casual</p></div>')
+    $('.masonryContainer1').css({"height": height2});
+    $('.masonryContainer1').before('<div class="text-center styledescription"><p>Business casual</p></div>')
     $('#gallery').masonry({
       itemSelector: '.item-masonry',
       columnWidth: '.sizer4',
@@ -14,8 +14,8 @@ $(document).ready(function(){
     });
   });
   $('.masonryContainer2').imagesLoaded(function(){
-    var img21 = $('#2-1');
-    var img23 = $('#2-3');
+    var img21 = $('#2-0');
+    var img23 = $('#2-5');
     var height2 = img23.height() + img21.height();
     $('.masonryContainer2').css({"height": height2});
     $('.masonryContainer2').before('<div class="text-center styledescription"><p>Bohemian</p></div>')
