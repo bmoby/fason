@@ -8,6 +8,12 @@
       href="/images/baab.png" />
 </head>
 <body>
+
+	<style media="screen">
+		.hide{
+			display: none;
+		}
+	</style>
 	{{#if user}}
 		{{#if user.connu}}
 			<div class="full-page connu-page">
@@ -21,7 +27,9 @@
 	<div class="full-page loading-page-first">
 	  {{> loadingfirst}}
 	</div>
-	{{{body}}}
+	<div class="bodypage hide">
+		{{{body}}}
+	</div>
 	<script type="text/javascript">
 	function setCookie(c_name,value,exdays){var exdate=new Date();exdate.setDate(exdate.getDate() + exdays);var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());document.cookie=c_name + "=" + c_value;}
 	function getCookie(c_name){var c_value = document.cookie;var c_start = c_value.indexOf(" " + c_name + "=");if (c_start == -1){c_start = c_value.indexOf(c_name + "=");}if (c_start == -1){c_value = null;}else{c_start = c_value.indexOf("=", c_start) + 1;var c_end = c_value.indexOf(";", c_start);if (c_end == -1){c_end = c_value.length;}c_value = unescape(c_value.substring(c_start,c_end));}return c_value;}
@@ -40,6 +48,7 @@
 	$(window).load(function(){
 		 $('.loading-page').fadeOut();
 		 $('.loading-page-first').fadeOut();
+		 $('.bodypage').removeClass('hide');
 	});
 	</script>
 	<script src="//js.pusher.com/4.0/pusher.min.js"></script>
