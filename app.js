@@ -48,7 +48,6 @@ app.set('view engine', '.hbs');
 app.use(compression());
 var oneYear = 1 * 365 * 24 * 60 * 60 * 1000;
 app.use(bodyParser.json());
-app.use(analytics);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(device.capture());
