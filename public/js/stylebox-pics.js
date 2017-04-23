@@ -14,12 +14,13 @@ $(document).ready(function() {
     initialPreviewAsData: false,
     minFileCount:3,
     msgFilesTooLess:'Look sera plus attractif avec 3 photos ou plus (minimum 3 photos).',
-    maxFileSize:5120, //5120kb=5mb
+    maxFileSize:5120,
     msgSizeTooLarge: 'Taille de la photo ne peut pas excéder 5 MB',
     allowedFileExtensions: ["png", "jpeg", "jpg"],
     dropZoneTitle: 'Glissez les images ici ou cliquez pour sélectionner.',
-    dropZoneClickTitle: '',
+    dropZoneClickTitle: ''
   });
+
 
 
 //********************************************** STYLEBOX PICS **********************************************
@@ -62,6 +63,7 @@ $(document).ready(function() {
   // creating stylebox after all photos are loaded to S3
   $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
     if(index+1 == data.files.length){
+      console.log("on s'execute la setcreator")
       setTimeout(function(){
         $.ajax({
           url: '/setcreatortostylebox',
