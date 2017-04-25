@@ -80,6 +80,7 @@
 
 .nice-select.disabled:after {
   border-color:#cccccc;
+    background-color: gray;
 }
 
 .nice-select.wide {
@@ -212,8 +213,10 @@
 }
 
 .nice-select .option.disabled {
-  background-color:transparent;
+  background-color: transparent;
+  text-align: center;
   color:#999;
+  font-weight: bold;
   cursor:default;
 }
 
@@ -224,4 +227,3 @@
 .no-csspointerevents .nice-select.open .list {
   display:block;
 }
-

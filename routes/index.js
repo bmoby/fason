@@ -264,6 +264,12 @@ router.get('/stylebox/:id', function(req, res){
         }
 
         switch(stylebox.style) {
+          case "allbeauty":
+            style = "Relooking beauté";
+          break;
+          case "all":
+            style = "Relooking vestimentaire";
+          break;
           case "casual":
             style = "Casual";
           break;
@@ -1691,36 +1697,6 @@ router.post('/styleboxdelete', function(req, res){
 });
 
 router.get('/checkevals', function(req, res){
-  // if(req.user){
-  //   var connectedUser = req.user;
-  //   if(connectedUser.evals){
-  //     var validevals = [];
-  //     connectedUser.evals.forEach(function(eval, index, object){
-  //       if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
-  //         validevals.push(eval);
-  //       }
-  //       if(index+1  == object.length){
-  //         if(validevals){
-  //           res.send({"evals": validevals.length, "send": true});
-  //         } else {
-  //           res.send({"noevals": true});
-  //         }
-  //       }
-  //       if(object.length == 1){
-  //         if(validevals){
-  //           res.send({"evals": validevals.length, "send": true});
-  //         } else {
-  //           res.send({"noevals": true});
-  //         }
-  //       }
-  //     })
-  //   } else {
-  //     res.send({"noevals": true});
-  //   }
-  // } else {
-  //   res.send({"noevals": true});
-  // }
-
   if(req.user){
     var user = req.user;
     var count = 0;
