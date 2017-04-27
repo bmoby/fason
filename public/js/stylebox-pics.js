@@ -60,6 +60,7 @@ $(document).ready(function() {
         }
       });
     } else {
+      $('.file-error-message').empty();
       $('.file-error-message').append('<span class="close kv-error-close">×</span> Look sera plus attractif avec 3 photos ou plus (minimum 3 photos).');
       $('.file-error-message').show();
     }

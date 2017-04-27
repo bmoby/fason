@@ -387,6 +387,29 @@ router.post('/register', function(req, res){
   		// User creation process caling the User model method to create the user
   		User.createUser(newUser, function(err, user){
   			if(err) throw err;
+        var mailOptions = {
+            from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+            to: "fason.contact@gmail.com", //
+            subject : "Un nouveau utilisateur vient de s'inscrire!",
+            html : "Nouveau user bro inscrit!"
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+        });
+
+        var mailOptions2 = {
+            from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+            to: user.email, //
+            subject : "Confirmation d'inscription",
+            html : "<p>Votre compte à été crée avec succées. Nous sommes heureux de vous compter parmis nos membres. <br> Connectez vous en appuyant <a href='http://fason.co/'>ICI</a></br>L'équipe Fason.</p>"
+        };
+        transporter.sendMail(mailOptions2, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+        });
   			req.login(newUser, function(err){
   				if (err){console.log(err);}
   				if (userType == "stylist"){

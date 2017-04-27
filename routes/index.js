@@ -879,6 +879,17 @@ router.post('/createstylebox', function(req, res){
         console.log(err)
         res.send({"stylebox": false});
       } else {
+        var mailOptions = {
+            from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+            to: "fason.contact@gmail.com", //
+            subject : "Encore un look!",
+            html : "yesss on a encore un look bro!"
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+        });
         emptyStylebox = stylebox.id;
         res.send({"stylebox": true});
       }
