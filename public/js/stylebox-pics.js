@@ -29,35 +29,40 @@ $(document).ready(function() {
 
   // Create stylebox event
   $('.createSP').on('click', function(){
-    var budget = $('.style-minbudget-input').val();
-    var title = $('.style-title-input').val();
-    var price = $('.style-price-input').val();
-    var city = $('.style-city-input').val();
-    var style = $('.select-style-proper').val();
-    var gender = $('.select-gender-proper').val();
-    var minTime = $('.select-minTime-proper').val();
-    var description = $('.stylebox-description').val();
-    var styleObject = {};
-    if(style == "Coiffure" || style == "Barbe" || style == "CoiffureColoration" || style == "CoiffureBarbe" || style == "CoiffureColorationBarbe" || style == "Maquillage" || style == "Manucure" || style == "Pedicure" || style == "ManucurePedicure" || style == "Sourcils" || style == "SoinVisage" || style == "SoinCorp" || style == "SoinVisageCorp" || style == "allbeauty"){
-      styleObject.vestimentaire = false;
-      styleObject.beaute = true;
-    }else{
-      styleObject.vestimentaire = true;
-      styleObject.beaute = false;
-    }
-    $.ajax({
-      url: '/createstylebox',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "style": style}),
-      success:function(response){
-        if (response.stylebox){
-          $('.fileinput-upload-button').click();
-        } else {
-          alert("Une erreur empéche la création de votre look. Veuillez réessayer plus tard.")
-        }
+    if($('.file-preview-frame').length >= 3){
+      var budget = $('.style-minbudget-input').val();
+      var title = $('.style-title-input').val();
+      var price = $('.style-price-input').val();
+      var city = $('.style-city-input').val();
+      var style = $('.select-style-proper').val();
+      var gender = $('.select-gender-proper').val();
+      var minTime = $('.select-minTime-proper').val();
+      var description = $('.stylebox-description').val();
+      var styleObject = {};
+      if(style == "Coiffure" || style == "Barbe" || style == "CoiffureColoration" || style == "CoiffureBarbe" || style == "CoiffureColorationBarbe" || style == "Maquillage" || style == "Manucure" || style == "Pedicure" || style == "ManucurePedicure" || style == "Sourcils" || style == "SoinVisage" || style == "SoinCorp" || style == "SoinVisageCorp" || style == "allbeauty"){
+        styleObject.vestimentaire = false;
+        styleObject.beaute = true;
+      }else{
+        styleObject.vestimentaire = true;
+        styleObject.beaute = false;
       }
-    });
+      $.ajax({
+        url: '/createstylebox',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "style": style}),
+        success:function(response){
+          if (response.stylebox){
+            $('.fileinput-upload-button').click();
+          } else {
+            alert("Une erreur empéche la création de votre look. Veuillez réessayer plus tard.")
+          }
+        }
+      });
+    } else {
+      $('.file-error-message').append('<span class="close kv-error-close">×</span> Look sera plus attractif avec 3 photos ou plus (minimum 3 photos).');
+      $('.file-error-message').show();
+    }
   });
 
   // creating stylebox after all photos are loaded to S3
