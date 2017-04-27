@@ -391,7 +391,7 @@ router.post('/register', function(req, res){
             from: '"Fason service client" <fason.contact@gmail.com>', // sender address
             to: "fason.contact@gmail.com", //
             subject : "Un nouveau utilisateur vient de s'inscrire!",
-            html : "Nouveau user bro inscrit! <br> "+ user.firstName +" "+user.lastName+" "+user.id;
+            html : "Nouveau user bro inscrit! <br> "+ user.firstName +" "+user.lastName+" "+user.id
         };
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
