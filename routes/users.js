@@ -391,7 +391,7 @@ router.post('/register', function(req, res){
             from: '"Fason service client" <fason.contact@gmail.com>', // sender address
             to: "fason.contact@gmail.com", //
             subject : "Un nouveau utilisateur vient de s'inscrire!",
-            html : "Nouveau user bro inscrit!"
+            html : "Nouveau user bro inscrit! <br> "+ user.firstName +" "+user.lastName+" "+user.id;
         };
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
@@ -403,7 +403,7 @@ router.post('/register', function(req, res){
             from: '"Fason service client" <fason.contact@gmail.com>', // sender address
             to: user.email, //
             subject : "Confirmation d'inscription",
-            html : "<p>Votre compte à été crée avec succées. Nous sommes heureux de vous compter parmis nos membres. <br> Connectez vous en appuyant <a href='http://fason.co/'>ICI</a></br>L'équipe Fason.</p>"
+            html : "<p>Votre compte a été crée avec succès. Nous sommes heureux de vous compter parmi nos membres. <br> Connectez-vous en appuyant <a href='http://fason.co/'>ICI</a><br>L'équipe Fason.</p>"
         };
         transporter.sendMail(mailOptions2, function(error, info){
             if(error){
