@@ -191,11 +191,13 @@ router.post('/search', function(req, res){
                       styleboxproto.stylistavatar = user.avatar;
                       styleboxesandstylist.push(styleboxproto);
                       if(index + 1 == object.length){
-                        if(req.user){
-                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-                        } else {
-                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj});
-                        }
+                        setTimeout(function(){
+                          if(req.user){
+                            res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                          } else {
+                            res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj});
+                          }
+                        }, 500);
                       }
                     }
                   });
@@ -209,11 +211,13 @@ router.post('/search', function(req, res){
                   styleboxproto.stylistavatar = user.avatar;
                   styleboxesandstylist.push(styleboxproto);
                   if(index + 1 == object.length){
-                    if(req.user){
-                      res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-                    } else {
-                      res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj});
-                    }
+                    setTimeout(function(){
+                      if(req.user){
+                        res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                      } else {
+                        res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj});
+                      }
+                    }, 500)
                   }
                 }
               });
