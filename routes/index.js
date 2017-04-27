@@ -107,7 +107,7 @@ router.get('/search', function(req, res){
 
 
 router.post('/search', function(req, res){
-  var city = req.body.city;
+  // var city = req.body.city;
   var gender = req.body.gender;
   var style = req.body.style;
 
@@ -115,9 +115,9 @@ router.post('/search', function(req, res){
     var options = {};
 
     options.creator = {"$exists" : true};
-    if(city){
-      options.city = { "$regex": city, "$options": "i" };
-    }
+    // if(city){
+    //   options.city = { "$regex": city, "$options": "i" };
+    // }
     if(gender != 'Homme & Femme'){
       options.gender = gender;
     }
@@ -145,7 +145,7 @@ router.post('/search', function(req, res){
           womans = true;
         }
 
-        var cityResend = req.body.city;
+        // var cityResend = req.body.city;
 
         // Send style info to autocomplete fields after the search
         var styleObj = {
@@ -192,9 +192,9 @@ router.post('/search', function(req, res){
                       styleboxesandstylist.push(styleboxproto);
                       if(index + 1 == object.length){
                         if(req.user){
-                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
                         } else {
-                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj});
+                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj});
                         }
                       }
                     }
@@ -210,9 +210,9 @@ router.post('/search', function(req, res){
                   styleboxesandstylist.push(styleboxproto);
                   if(index + 1 == object.length){
                     if(req.user){
-                      res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                      res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
                     } else {
-                      res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "cityResend": cityResend, "men": mens, "ladies": womans, "styleObj": styleObj});
+                      res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj});
                     }
                   }
                 }
