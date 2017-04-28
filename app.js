@@ -14,14 +14,9 @@ var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
 var compression = require('compression');
-// Get the module
-
-// Insert your Google Analytics Id, Shoule be something like 'UA-12345678-9'
-
-// Init App
 var app = express();
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:3001/bianor');
+mongoose.connect(process.env.MONGO_URI);
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
@@ -98,7 +93,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Set Port
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT));
 
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
