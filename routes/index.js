@@ -19,19 +19,18 @@ var AWS = require('aws-sdk');
 
 
 
-// Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
 var pusher = new Pusher({
-  appId: (process.env.PUSHER_ID || '283453'),
-  key: (process.env.PUSHER_KEY || '095ff3028ab7bceb6073'),
-  secret: (process.env.PUSHER_SECRET || '25077850beef8ae1d148'),
+  appId: (process.env.PUSHER_ID),
+  key: (process.env.PUSHER_KEY),
+  secret: (process.env.PUSHER_SECRET),
   encrypted: true
 });
 
-var client = new twilio.RestClient((process.env.TWILLIO_SECRET ||  'AC0f6433c5d0713b85184d77e30383fd4f'),( process.env.TWILLIO_KEY || 'cbac6157842210b60de45dab4f90f9fa'));
+var client = new twilio.RestClient((process.env.TWILLIO_SECRET),( process.env.TWILLIO_KEY));
 
 AWS.config = {
-  accessKeyId: (process.env.AWS_KEY || 'AKIAJ5ZF3LOCVCPMJ5LQ'),
-  secretAccessKey: (process.env.AWS_SECRET || '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')
+  accessKeyId: (process.env.AWS_KEY),
+  secretAccessKey: (process.env.AWS_SECRET)
 }
 var s3 = new AWS.S3();
 
@@ -40,12 +39,10 @@ var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: (process.env.MAIL_PASS || "bianor19871989")
+        pass: (process.env.MAIL_PASS)
     }
 });
 
-
-/* GET home page. */
 router.get('/', function(req, res) {
   if(req.user){
     var notifcount = 0;
@@ -96,7 +93,6 @@ router.post('/connu', function(req, res){
   }
 })
 
-// SEARCH PAGES
 router.get('/search', function(req, res){
   if(req.user){
     res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Veuillez appuyer sur Recherche.", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
@@ -467,7 +463,6 @@ router.post('/demand', function(req, res){
   var styleboxId = req.body.styleboxId;
   var forstyle = req.body.forstyle.toString();
   var creator = req.user.id;
-  // Setting the date
   var dateDay = date.substr(0, 2);
   var dateMonth = date.substr(3, 2);
   var dateYear = date.substr(6, 4);
@@ -486,7 +481,6 @@ router.post('/demand', function(req, res){
     }
 
     function updateDemands(callback){
-      // Updating demands if expired
       connectedUser.demands.forEach(function(demand, index, object){
         Demand.getDemandById(demand, function(err, dem){
           var newDate = moment(dem.createdTime);
@@ -773,8 +767,6 @@ router.get('/currentUser', function(req, res){
   }
 })
 
-// Send a demand router
-
 router.get('/createstylebox', function(req, res){
   if(req.user){
     if(req.user.stylist.status){
@@ -880,8 +872,8 @@ router.post('/createstylebox', function(req, res){
         res.send({"stylebox": false});
       } else {
         var mailOptions = {
-            from: '"Fason service client" <fason.contact@gmail.com>', // sender address
-            to: "fason.contact@gmail.com", //
+            from: '"Fason service client" <fason.contact@gmail.com>',
+            to: "fason.contact@gmail.com",
             subject : "Encore un look!",
             html : "yesss on a encore un look bro!"
         };

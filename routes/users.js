@@ -17,37 +17,33 @@ var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
-var client = new twilio.RestClient((process.env.TWILLIO_SECRET  ||  'AC0f6433c5d0713b85184d77e30383fd4f'),( process.env.TWILLIO_KEY || 'cbac6157842210b60de45dab4f90f9fa'));
-// Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
+var client = new twilio.RestClient((process.env.TWILLIO_SECRET),( process.env.TWILLIO_KEY));
+
 var pusher = new Pusher({
-  appId: (process.env.PUSHER_ID || '283453'),
-  key: (process.env.PUSHER_KEY || '095ff3028ab7bceb6073'),
-  secret: (process.env.PUSHER_SECRET || '25077850beef8ae1d148'),
+  appId: (process.env.PUSHER_ID),
+  key: (process.env.PUSHER_KEY),
+  secret: (process.env.PUSHER_SECRET),
   encrypted: true
 });
 
-// Phone code generator
 function randomIntFromInterval(min,max){
   return Math.floor(Math.random()*(max-min+1)+min);
 }
 
 
-// EMAIL SMTP SETTING -> This will be mailgun
 var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: (process.env.MAIL_PASS || "Mokoloko123")
+        pass: (process.env.MAIL_PASS)
     }
 });
-// Setting the body parser for json
 router.use(bodyParser.json());
 var rand, link, host;
 
-// REGISTRATION POST -> With variables for email verification process
 AWS.config = {
-  accessKeyId: (process.env.AWS_KEY || 'AKIAJ5ZF3LOCVCPMJ5LQ'),
-  secretAccessKey: (process.env.AWS_SECRET || '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')
+  accessKeyId: (process.env.AWS_KEY),
+  secretAccessKey: (process.env.AWS_SECRET)
 }
 var s3 = new AWS.S3();
 
@@ -317,9 +313,7 @@ router.post('/register', function(req, res){
     req.checkBody('password', 'Le mot de passe doit être compris entre 6 et 20 caractères.').len(6, 20);
   }
 
-  // rand is the string that will represent the email validation string that will be saved in the user schema in the DB
   rand =  bcrypt.hashSync(uuid.v1());
-	// all errors are stored here in errors variable
 	var errors = req.validationErrors() || [];
 
   var promise  = new Promise(function(resolve, reject){
@@ -367,11 +361,9 @@ router.post('/register', function(req, res){
     return errors
   }).then(function(result){
     if(result.length !== 0){
-      // promise to keep things ordered
       res.send({errors: result});
   	} else {
       var phoneCode = randomIntFromInterval(10000, 100000)
-  	   // if no error create a user prototype that will be sent to user model to be saved
   		var newUser = new User({
   			firstName: firstName,
   			lastName: lastName,
@@ -384,7 +376,6 @@ router.post('/register', function(req, res){
   		});
 
 
-  		// User creation process caling the User model method to create the user
   		User.createUser(newUser, function(err, user){
   			if(err) throw err;
         var mailOptions = {
@@ -400,7 +391,7 @@ router.post('/register', function(req, res){
         });
 
         var mailOptions2 = {
-            from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+            from: '"Fason service client" <fason.contact@gmail.com>',
             to: user.email, //
             subject : "Confirmation d'inscription",
             html : "<p>Votre compte a été crée avec succès. Nous sommes heureux de vous compter parmi nos membres. <br> Connectez-vous en appuyant <a href='http://fason.co/'>ICI</a><br>L'équipe Fason.</p>"
@@ -424,15 +415,12 @@ router.post('/register', function(req, res){
 });
 
 router.get('/verify', function(req, res){
-  // Getting the user by veritfy email string that is passed as param in the link that was sent to the user
   User.getUserByVerifyEmailString(req.query.id, function(err, user){
     if(err){
       console.log(err);
       res.send('Sorry there were something wrong please try again');
     } else {
-      // verifiying that the protocol is the same as expected
     		if(req.query.id == user.verifyEmailString){
-          // if so then we change the verified variable to true in the DB
     		  res.send("<h1>Félicitations, vous avez vérifié votre e-mail.</h1>");
     			user.varified = true;
     			user.save(function(err){
@@ -444,14 +432,12 @@ router.get('/verify', function(req, res){
             }
     			});
     	  } else {
-          // else we send an error BAD REQUEST
     		  res.end("Bad Request");
     	  }
     }
   });
 });
 
-// PASSPORT STRATEGY DECLARATION
 passport.use(new LocalStrategy({
 	usernameField: 'email',
   passwordField: 'password',
@@ -475,19 +461,16 @@ passport.use(new LocalStrategy({
    });
   }));
 
-// PASSPORT TOKEN SERIALIZATION
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
-// PASSPORT TOKEN DESERIALIZATION
 passport.deserializeUser(function(id, done) {
   User.getUserById(id, function(err, user) {
     done(err, user);
   });
 });
 
-// This method is for our ajax request to handle the errors if there is no more errors the next route will be called
 router.post('/login', function(req, res) {
     var lemail = req.body.lemail;
     var lpassword = req.body.lpassword;
@@ -530,7 +513,6 @@ router.post('/login', function(req, res) {
 });
 
 
-// This one is called when the /login route verify that there is no more errors so we can now sign in with the correct parameters
 router.post('/loginValid', passport.authenticate('local'), function(req, res){
   res.send(true);
 });
@@ -570,7 +552,6 @@ router.post('/requestpasswordreset', function(req, res){
       }
       user.resetPwdString = removeSpecials(uniqueId);
       user.save();
-      // SEND THE EMAIL PROCESS BEGIN ******************************************************
       var passwordResetLink = "http://"+req.get('host')+"/resetPassword/"+removeSpecials(uniqueId);
       var mailOptionsReset = {
           from: '"Fason service client" <fason.contact@gmail.com>', // sender address
@@ -619,14 +600,12 @@ router.get('/currentUser', function(req, res){
   }
 });
 
-//MESSAGE RECEIVE ROUTE
 router.post('/sendMsg', function(req, res){
   if(req.user){
     var from = req.user.firstName;
     var message = req.body.message;
     var styleboxId = req.body.styleboxId;
     var userId = req.user.id
-
     Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
       if(req.user.id == stylebox.creator){
         res.send({"creator": true})
