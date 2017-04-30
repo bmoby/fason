@@ -875,7 +875,7 @@ router.post('/createstylebox', function(req, res){
             from: '"Fason service client" <fason.contact@gmail.com>',
             to: "fason.contact@gmail.com",
             subject : "Encore un look!",
-            html : "yesss on a encore un look bro!"
+            html : "yesss on a encore un look bro! titre : <br>"+ newStyle.title +"<br> ID : <br>" + newStyle.id
         };
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
