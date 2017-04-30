@@ -94,6 +94,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Set Port
+app.set('port', (process.env.PORT));
 https.createServer({
     key: privateKey,
     cert: certificate
