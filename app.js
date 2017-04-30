@@ -7,6 +7,7 @@ var expressValidator = require('express-validator');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var https = require('https');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var mongorelation = require('mongo-relation');
@@ -36,8 +37,8 @@ app.engine('.hbs', exphbs({
 );
 
 app.set('view engine', '.hbs');
-
-// BodyParser Middleware
+var privateKey = fs.readFileSync( 'www_fason_co.key' );
+var certificate = fs.readFileSync( 'www_fason_co.pem' );
 
 // compress responses
 app.use(compression());
@@ -93,7 +94,10 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Set Port
-app.set('port', (process.env.PORT));
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, app).listen(process.env.PORT);
 
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
