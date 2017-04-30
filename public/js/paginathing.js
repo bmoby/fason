@@ -30,7 +30,7 @@
 
     pagination: function(type, page) {
       var _self = this;
-      var li = $('<li></li>');
+      var li = $('<li class="child"></li>');
       var a = $('<a></a>').attr('href', '#');
       var cssClass = type === 'number' ? _self.options.liClass : type;
       var text = type === 'number' ? page : _self.paginationText(type);
