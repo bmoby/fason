@@ -100,6 +100,10 @@ app.use('/users', users);
 // Set Port
 app.set('port', (process.env.PORT));
 
-app.listen(app.get('port'), function(){
-	console.log('Server started on port '+app.get('port'));
-});
+var privateKey = fs.readFileSync('./www_fason_co.key'),
+var certificate = fs.readFileSync('./www_fason_co.pem'),
+
+https.createServer({
+    key: privateKey,
+    cert: certificate
+}, app).listen(port);
