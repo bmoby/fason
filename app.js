@@ -7,7 +7,6 @@ var expressValidator = require('express-validator');
 var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var https = require('https');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var mongorelation = require('mongo-relation');
@@ -15,6 +14,11 @@ var formidable = require('formidable');
 var fs = require('fs');
 var device = require('express-device');
 var compression = require('compression');
+// Get the module
+
+// Insert your Google Analytics Id, Shoule be something like 'UA-12345678-9'
+
+// Init App
 var app = express();
 
 mongoose.connect(process.env.MONGO_URI);
@@ -37,8 +41,8 @@ app.engine('.hbs', exphbs({
 );
 
 app.set('view engine', '.hbs');
-var privateKey = fs.readFileSync( 'www_fason_co.key' );
-var certificate = fs.readFileSync( 'www_fason_co.pem' );
+
+// BodyParser Middleware
 
 // compress responses
 app.use(compression());
@@ -95,10 +99,6 @@ app.use('/users', users);
 
 // Set Port
 app.set('port', (process.env.PORT));
-https.createServer({
-    key: privateKey,
-    cert: certificate
-}, app).listen(process.env.PORT);
 
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
