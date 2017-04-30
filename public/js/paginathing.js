@@ -167,6 +167,7 @@
 
           _self.currentPage = page;
           _self.show(page);
+          $("html, body").animate({ scrollTop: 0 }, "slow");
         });
       });
     },
