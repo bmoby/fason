@@ -2036,20 +2036,30 @@ router.post('/sendm', function(req, res){
   if(req.user){
     if(req.user.email == "nohchi.eu@gmail.com"){
       var methodtype = req.body.methodtype;
+      var subject = req.body.subject;
+      var message = req.body.message;
       if(methodtype){
 
 
 
 
         if(methodtype == "everybody"){
-          var mailList = [];
           User.find({}, function(err, users){
             users.forEach(function(user, index, object){
-                mailList.push(user.email);
-                if(index+1 == object.length){
-                  console.log(mailList);
-                  res.send({"complete": true, "mailList": mailList})
-                }
+              var mailOptions = {
+                  from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+                  to: "nohchi.eu@gmail.com", // list of receivers
+                  subject : req.body.subject,
+                  html : req.body.message
+              };
+              transporter.sendMail(mailOptions, function(error, info){
+                  if(error){
+                      return console.log(error);
+                  }
+              });
+              if(index+1 == object.length){
+                res.send({"complete": true})
+              }
             });
           });
         }

@@ -2,17 +2,16 @@ $(document).ready(function(){
 
 
   $('.everybody').on('click', function(){
+    var message = $('.message').val();
+    var subject = $('.subject').val();
     $.ajax({
       url: "/sendm",
       method: "POST",
       contentType: "application/json",
-      data: JSON.stringify({"methodtype": "everybody"}),
+      data: JSON.stringify({"methodtype": "everybody", "message": message, "subject": subject}),
       success: function(response){
         if(response.complete){
-          alert("C bon ca a été envoyé");
-          alert(response.mailList[0]);
-          alert(response.mailList[1]);
-          alert(response.mailList[2]);
+          alert("C bon ca a été envoyé brozer");
         }
       }
     })
