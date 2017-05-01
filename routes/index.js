@@ -2020,4 +2020,49 @@ router.get('/resetPassword/:id', function(req, res){
 
 });
 
+router.get('/admincodes', function(req, res){
+  if(req.user){
+    if(req.user.email == "nohchi.eu@gmail.com"){
+      res.render("adminp");
+    } else {
+      res.redirect("https://fason.co/");
+    }
+  } else {
+    res.redirect("https://fason.co/");
+  }
+})
+
+router.post('/sendm', function(req, res){
+  if(req.user){
+    if(req.user.email == "nohchi.eu@gmail.com"){
+      var methodtype = req.body.methodtype;
+      if(methodtype){
+
+
+
+        if(methodtype == "everybody"){
+          var mailList = [];
+          var users = User.find();
+          user.forEach(function(user, index, object){
+            if(user){
+              mailList.push(user.email);
+              if(index+1 == object.length){
+                console.log(mailList);
+                res.send({"complete": true, "mailList": mailList})
+              }
+            }
+          })
+        }
+
+
+
+      }
+    } else {
+      res.redirect("https://fason.co/");
+    }
+  } else {
+    res.redirect("https://fason.co/");
+  }
+})
+
 module.exports = router;
