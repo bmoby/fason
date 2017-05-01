@@ -2038,20 +2038,21 @@ router.post('/sendm', function(req, res){
       var methodtype = req.body.methodtype;
       if(methodtype){
 
-        console.log(methodtype);
-        res.send({"complete": "hello"})
-        // if(methodtype == "clientsall"){
-        //   var mailList = [];
-        //   User.find({}, function(err, user){
-        //     if(user){
-        //       mailList.push(user.email);
-        //       if(index+1 == object.length){
-        //         console.log(mailList);
-        //         res.send({"complete": true, "mailList": mailList})
-        //       }
-        //     }
-        //   });
-        // }
+
+
+
+        if(methodtype == "everybody"){
+          var mailList = [];
+          User.find({}, function(err, users){
+            users.forEach(function(user, index, object){
+                mailList.push(user.email);
+                if(index+1 == object.length){
+                  console.log(mailList);
+                  res.send({"complete": true, "mailList": mailList})
+                }
+            });
+          });
+        }
 
 
 

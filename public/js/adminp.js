@@ -10,6 +10,9 @@ $(document).ready(function(){
       success: function(response){
         if(response.complete){
           alert("C bon ca a été envoyé");
+          alert(response.mailList[0]);
+          alert(response.mailList[1]);
+          alert(response.mailList[2]);
         }
       }
     })
