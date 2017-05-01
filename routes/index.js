@@ -2040,7 +2040,7 @@ router.post('/sendm', function(req, res){
 
 
 
-        if(methodtype == "everybody"){
+        if(methodtype == "clientsall"){
           var mailList = [];
           var users = User.find();
           user.forEach(function(user, index, object){
