@@ -38,7 +38,7 @@ $(document).ready(function(){
       data: JSON.stringify({"methodtype": "clientsall"}),
       success: function(response){
         if(response.complete){
-          alert("C bon ca a été envoyé");
+          alert(response.complete);
         }
       }
     })
