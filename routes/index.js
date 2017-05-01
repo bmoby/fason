@@ -2023,7 +2023,7 @@ router.get('/resetPassword/:id', function(req, res){
 router.get('/admincodes', function(req, res){
   if(req.user){
     if(req.user.email == "nohchi.eu@gmail.com"){
-      res.render("adminp");
+      res.render('adminp');
     } else {
       res.redirect("https://fason.co/");
     }
