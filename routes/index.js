@@ -2042,8 +2042,7 @@ router.post('/sendm', function(req, res){
 
         if(methodtype == "clientsall"){
           var mailList = [];
-          var users = User.find();
-          users.forEach(function(user, index, object){
+          User.find({}, function(err, user){
             if(user){
               mailList.push(user.email);
               if(index+1 == object.length){
@@ -2051,7 +2050,7 @@ router.post('/sendm', function(req, res){
                 res.send({"complete": true, "mailList": mailList})
               }
             }
-          })
+          });
         }
 
 
