@@ -2043,7 +2043,7 @@ router.post('/sendm', function(req, res){
         if(methodtype == "clientsall"){
           var mailList = [];
           var users = User.find();
-          user.forEach(function(user, index, object){
+          users.forEach(function(user, index, object){
             if(user){
               mailList.push(user.email);
               if(index+1 == object.length){
