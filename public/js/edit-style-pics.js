@@ -20,11 +20,13 @@ $(document).on('ready', function() {
     dropZoneClickTitle: '',
   });
 
+
 //********************************************** STYLEBOX PICS **********************************************
 //---------------------------------------------- UPLOADING TO S3 --------------------------------------------
 
   // Create stylebox event
   $('.createSP2').on('click', function(){
+    if($('.file-preview-frame').length >= 3){
     var budget = $('.style-minbudget-input').val();
     var title = $('.style-title-input').val();
     var price = $('.style-price-input').val();
@@ -60,6 +62,11 @@ $(document).on('ready', function() {
           }
         }
       });
+    } else {
+      $('.file-error-message').empty();
+      $('.file-error-message').append('<span class="close kv-error-close">×</span> Look sera plus attractif avec 3 photos ou plus (minimum 3 photos).');
+      $('.file-error-message').show();
+    }
   });
 
   // creating stylebox after all photos are loaded to S3
