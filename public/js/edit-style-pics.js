@@ -39,14 +39,13 @@ $(document).on('ready', function() {
     var styleObject = {};
     styleObject.style = $('.select-style-proper').val();
 
-    if(style == "casual" || style == "businesscasual" || style == "businessformal" || style == "business" || style == "streetwear"){
-      styleObject.vestimentaire = true;
-      styleObject.beaute = false;
-    }else{
+    if(style == "Coiffure" || style == "Barbe" || style == "CoiffureColoration" || style == "CoiffureBarbe" || style == "CoiffureColorationBarbe" || style == "Maquillage" || style == "Manucure" || style == "Pedicure" || style == "ManucurePedicure" || style == "Sourcils" || style == "SoinVisage" || style == "SoinCorp" || style == "SoinVisageCorp" || style == "allbeauty"){
       styleObject.vestimentaire = false;
       styleObject.beaute = true;
+    }else{
+      styleObject.vestimentaire = true;
+      styleObject.beaute = false;
     }
-    
 
       $.ajax({
         url: '/editstylebox',
