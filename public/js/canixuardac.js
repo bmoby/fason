@@ -5,7 +5,7 @@ $(document).ready(function(){
     var message = $('.message').val();
     var subject = $('.subject').val();
     $.ajax({
-      url: "/sendm",
+      url: "/dayahit",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({"methodtype": "everybody", "message": message, "subject": subject}),
@@ -19,7 +19,7 @@ $(document).ready(function(){
 
   $('.relookerall').on('click', function(){
     $.ajax({
-      url: "/sendm",
+      url: "/dayahit",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({"methodtype": "relookerall"}),
@@ -34,7 +34,7 @@ $(document).ready(function(){
 
   $('.clientsall').on('click', function(){
     $.ajax({
-      url: "/sendm",
+      url: "/dayahit",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({"methodtype": "clientsall"}),
@@ -49,7 +49,7 @@ $(document).ready(function(){
 
   $('.relookerno').on('click', function(){
     $.ajax({
-      url: "/sendm",
+      url: "/dayahit",
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify({"methodtype": "relookerno"}),

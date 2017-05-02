@@ -2020,7 +2020,7 @@ router.get('/resetPassword/:id', function(req, res){
 
 });
 
-router.get('/admincodes', function(req, res){
+router.get('/canidagyoxaryac', function(req, res){
   if(req.user){
     if(req.user.email == "nohchi.eu@gmail.com"){
       res.render('adminp');
@@ -2032,7 +2032,7 @@ router.get('/admincodes', function(req, res){
   }
 })
 
-router.post('/sendm', function(req, res){
+router.post('/dayahit', function(req, res){
   if(req.user){
     if(req.user.email == "nohchi.eu@gmail.com"){
       var methodtype = req.body.methodtype;
@@ -2048,7 +2048,7 @@ router.post('/sendm', function(req, res){
             users.forEach(function(user, index, object){
               var mailOptions = {
                   from: '"Fason service client" <fason.contact@gmail.com>', // sender address
-                  to: "nohchi.eu@gmail.com", // list of receivers
+                  to: user.email, // list of receivers
                   subject : req.body.subject,
                   html : req.body.message
               };
