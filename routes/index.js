@@ -866,6 +866,7 @@ router.post('/createstylebox', function(req, res){
       description: description
     });
 
+
     Stylebox.createNewStylebox(newStyle, function(err, stylebox){
       if(err) {
         console.log(err)
