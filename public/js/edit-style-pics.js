@@ -27,6 +27,7 @@ $(document).on('ready', function() {
   // Create stylebox event
   $('.createSP2').on('click', function(){
     if($('.file-preview-frame').length >= 3){
+      $(this).prop('disabled', true);
     var budget = $('.style-minbudget-input').val();
     var title = $('.style-title-input').val();
     var price = $('.style-price-input').val();

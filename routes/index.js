@@ -814,22 +814,43 @@ router.post('/load', uploadMulter.single('input44[]') , function(req, res, next)
       }
     });
   } else {
-    res.redirect('http://fason.co/');
+    res.redirect("https://www.fason.co/")
   }
 });
 
 router.get('/setcreatortostylebox', function(req, res){
   if(req.user){
     Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
-      var user = req.user;
-      stylebox.creator = user.id;
-      stylebox.save();
-      user.styleboxes.push(stylebox.id);
-      user.save();
-      res.send({"ok": true})
+      if(stylebox.photos.length < 3){
+        stylebox.remove(function (err) {
+          if(err){
+            console.log(err)
+          } else {
+            res.send({"errOcc": true})
+          }
+          // if no error, model is removed
+        });
+      } else {
+        var user = req.user;
+        stylebox.creator = user.id;
+        stylebox.save();
+        user.styleboxes.push(stylebox.id);
+        user.save();
+        res.send({"ok": true})
+      }
     })
   } else {
-    res.send({"ok": false})
+    if(emptyStylebox){
+      Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
+        stylebox.remove(function (err) {
+          if(err){
+            console.log(err)
+          }
+          // if no error, model is removed
+        });
+      })
+    }
+    res.send({"nouser": true});
   }
 });
 
@@ -876,7 +897,7 @@ router.post('/createstylebox', function(req, res){
             from: '"Fason service client" <fason.contact@gmail.com>',
             to: "fason.contact@gmail.com",
             subject : "Encore un look!",
-            html : "yesss on a encore un look bro! titre : <br>"+ newStyle.title +"<br> ID : <br>" + newStyle.id
+            html : "yesss on a encore un look bro! titre : <br>"+ newStyle.title +"<br> ID : <br>" + newStyle.id + "user that is creating this style is : " + req.user.id
         };
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
@@ -888,7 +909,7 @@ router.post('/createstylebox', function(req, res){
       }
     });
   } else {
-    res.redirect('http://fason.co/');
+    res.send({"nouser": true});
   }
 });
 

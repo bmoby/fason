@@ -30,6 +30,7 @@ $(document).ready(function() {
   // Create stylebox event
   $('.createSP').on('click', function(){
     if($('.file-preview-frame').length >= 3){
+      $(this).prop('disabled', true);
       var budget = $('.style-minbudget-input').val();
       var title = $('.style-title-input').val();
       var price = $('.style-price-input').val();
@@ -54,8 +55,21 @@ $(document).ready(function() {
         success:function(response){
           if (response.stylebox){
             $('.fileinput-upload-button').click();
-          } else {
-            alert("Une erreur empéche la création de votre look. Veuillez réessayer plus tard.")
+          }
+
+          if(response.nouser) {
+            $.confirm({
+              title: "Faible réseau",
+              content: "Votre réseau est faible et vous avez été déconnecté. Etes-vous sûr que vous avez un réseau fiable et voulez-vous réessayer tout de suite?",
+              buttons: {
+                  oui: function () {
+                    window.location.replace('https://fason.co/login');
+                  },
+                  non: function () {
+                    window.location.replace('https://fason.co/');
+                }
+              }
+            });
           }
         }
       });
@@ -78,9 +92,35 @@ $(document).ready(function() {
             if(response.ok){
               alert('Look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
               window.location.replace('http://fason.co/');
-            } else {
-              alert('Nous avons rencontré des problèmes lors de création de votre look, veuillez nous excuser et réessayer quelques minutes plus tard.');
-              window.location.replace('http://fason.co/');
+            }
+            if(response.nouser) {
+              $.confirm({
+                title: "Faible réseau",
+                content: "Votre réseau est faible et vous avez été déconnecté. Etes-vous sûr que vous avez un réseau fiable et voulez-vous réessayer tout de suite?",
+                buttons: {
+                    oui: function () {
+                      window.location.replace('https://fason.co/login');
+                    },
+                    non: function () {
+                      window.location.replace('https://fason.co/');
+                  }
+                }
+              });
+            }
+
+            if(response.errOcc) {
+              $.confirm({
+                title: "Faible réseau",
+                content: "Votre réseau est faible. Les trois photos obligatoires n'ont pas pu être enregistrées. Etes-vous sûr que votre réseau est fiable et voulez-vous recommencer tout de suite?",
+                buttons: {
+                    oui: function () {
+                      window.location.replace('https://fason.co/createstylebox');
+                    },
+                    non: function () {
+                      window.location.replace('https://fason.co/');
+                  }
+                }
+              });
             }
           }
         })
