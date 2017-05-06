@@ -9,7 +9,7 @@ $(document).ready(function() {
     showCaption: true,
     showCancel: false,
     showClose: true,
-    uploadUrl: '/load',
+    uploadUrl: '/',
     browseOnZoneClick: true,
     initialPreviewAsData: false,
     minFileCount:3,
@@ -27,9 +27,41 @@ $(document).ready(function() {
 //---------------------------------------------- UPLOADING TO S3 --------------------------------------------
 
 
+
+var CLOUD = "https://api.cloudinary.com/v1_1/fason/upload";
+var CLOUD_PRES = "puxsf4pt";
+
+var photos = [];
+$('#input-44').on('change', function(e){
+  $('.createSP').prop('disabled', true);
+  var file = e.target.files[0];
+  var formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", CLOUD_PRES);
+
+  axios({
+    url: CLOUD,
+    method: "POST",
+    headers: {'content-Type': 'application/x-www-form-urlencoded'},
+    data: formData
+  }).then(function(res){
+    photos.push(res.data.secure_url);
+    $('.kv-file-content').last().attr( "key", res.data.secure_url );
+    $('.createSP').prop('disabled', false);
+  }).catch(function(err){
+  console.log(err);
+  })
+})
+
+
+
   // Create stylebox event
   $('.createSP').on('click', function(){
     if($('.file-preview-frame').length >= 3){
+      var pics = [];
+      $('.kv-file-content').each(function(){
+        pics.push(this.getAttribute( "key" ));
+      });
       $(this).prop('disabled', true);
       var budget = $('.style-minbudget-input').val();
       var title = $('.style-title-input').val();
@@ -51,10 +83,11 @@ $(document).ready(function() {
         url: '/createstylebox',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "style": style}),
+        data: JSON.stringify({"budget": budget, "title": title, "price": price, "city": city, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "style": style, "pics": pics, "allphotos": photos}),
         success:function(response){
           if (response.stylebox){
-            $('.fileinput-upload-button').click();
+            alert('Look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
+            window.location.replace('https://fason.co/');
           }
 
           if(response.nouser) {
@@ -80,53 +113,7 @@ $(document).ready(function() {
     }
   });
 
-  // creating stylebox after all photos are loaded to S3
-  $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
-    if(index+1 == data.files.length){
-      console.log("on s'execute la setcreator")
-      setTimeout(function(){
-        $.ajax({
-          url: '/setcreatortostylebox',
-          method: 'GET',
-          success: function(response){
-            if(response.ok){
-              alert('Look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
-              window.location.replace('http://fason.co/');
-            }
-            if(response.nouser) {
-              $.confirm({
-                title: "Faible réseau",
-                content: "Votre réseau est faible et vous avez été déconnecté. Etes-vous sûr que vous avez un réseau fiable et voulez-vous réessayer tout de suite?",
-                buttons: {
-                    oui: function () {
-                      window.location.replace('https://fason.co/login');
-                    },
-                    non: function () {
-                      window.location.replace('https://fason.co/');
-                  }
-                }
-              });
-            }
 
-            if(response.errOcc) {
-              $.confirm({
-                title: "Faible réseau",
-                content: "Votre réseau est faible. Les trois photos obligatoires n'ont pas pu être enregistrées. Etes-vous sûr que votre réseau est fiable et voulez-vous recommencer tout de suite?",
-                buttons: {
-                    oui: function () {
-                      window.location.replace('https://fason.co/createstylebox');
-                    },
-                    non: function () {
-                      window.location.replace('https://fason.co/');
-                  }
-                }
-              });
-            }
-          }
-        })
-      }, 2000);
-    }
-  });
 
   $('.backToInfo').on('click', function(){
     $('.stylebox-pics-page').addClass('hidden');

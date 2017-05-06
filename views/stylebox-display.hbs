@@ -19,7 +19,7 @@
   <div class="grid">
     {{#each stylebox.photos}}
       <div class="grid-item sizer4">
-        <a href="https://s3.amazonaws.com/styleboxphotosfason/{{this}}" data-lightbox="image-{{this}}"><img src="https://s3.amazonaws.com/styleboxphotosfason/{{this}}" class="item-masonry-photo"></a>
+        <a href="{{this}}" data-lightbox="image-{{this}}"><img src="{{this}}" class="item-masonry-photo"></a>
       </div>
     {{/each}}
   </div>

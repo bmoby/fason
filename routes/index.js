@@ -781,78 +781,7 @@ router.get('/createstylebox', function(req, res){
 
 
 var uploadMulter = multer({dest: 'public/img'})
-var emptyStylebox = "";
 
-router.post('/load', uploadMulter.single('input44[]') , function(req, res, next){
-  if(req.user){
-    var fileName = {};
-    var file = req.file;
-    var stream = fs.createReadStream(file.path)
-    var imageType = file.mimetype.split('/').pop()
-    fileName = file.filename+'.'+imageType;
-
-    params = {
-      Bucket: 'styleboxphotosfason',
-      ACL: 'public-read',
-      Key: fileName,
-      Body: stream
-    };
-
-    s3.putObject(params, function(err, data){
-      if (err){
-        console.log(err)
-        res.send(false);
-      }else{
-        Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
-          stylebox.photos.push(fileName);
-          stylebox.save();
-          res.send(true);
-        })
-        fs.unlink(req.file.path, function(err){
-          if (err) console.error(err)
-        });
-      }
-    });
-  } else {
-    res.redirect("https://www.fason.co/")
-  }
-});
-
-router.get('/setcreatortostylebox', function(req, res){
-  if(req.user){
-    Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
-      if(stylebox.photos.length < 3){
-        stylebox.remove(function (err) {
-          if(err){
-            console.log(err)
-          } else {
-            res.send({"errOcc": true})
-          }
-          // if no error, model is removed
-        });
-      } else {
-        var user = req.user;
-        stylebox.creator = user.id;
-        stylebox.save();
-        user.styleboxes.push(stylebox.id);
-        user.save();
-        res.send({"ok": true})
-      }
-    })
-  } else {
-    if(emptyStylebox){
-      Stylebox.getStyleboxById(emptyStylebox, function(err, stylebox){
-        stylebox.remove(function (err) {
-          if(err){
-            console.log(err)
-          }
-          // if no error, model is removed
-        });
-      })
-    }
-    res.send({"nouser": true});
-  }
-});
 
 router.post('/createstylebox', function(req, res){
   if(req.user){
@@ -865,6 +794,8 @@ router.post('/createstylebox', function(req, res){
     var minTime = req.body.minTime;
     var city  = req.body.city;
     var description = req.body.description;
+    var pics = req.body.pics;
+    var photos = req.body.allphotos;
 
     function checkcity(citytest){
       if(citytest != ""){
@@ -882,9 +813,11 @@ router.post('/createstylebox', function(req, res){
       style: style,
       gender: gender,
       minTime: minTime,
+      photos: pics,
       city: checkcity(city),
       minBudget: budget,
-      description: description
+      description: description,
+      creator: req.user
     });
 
 
@@ -893,6 +826,9 @@ router.post('/createstylebox', function(req, res){
         console.log(err)
         res.send({"stylebox": false});
       } else {
+        var userto = req.user;
+        userto.styleboxes.push(stylebox.id);
+        userto.save();
         var mailOptions = {
             from: '"Fason service client" <fason.contact@gmail.com>',
             to: "fason.contact@gmail.com",
@@ -904,7 +840,7 @@ router.post('/createstylebox', function(req, res){
                 return console.log(error);
             }
         });
-        emptyStylebox = stylebox.id;
+        console.log(stylebox)
         res.send({"stylebox": true});
       }
     });
@@ -1762,6 +1698,8 @@ router.post('/editstylebox', function(req, res){
     var minTime = req.body.minTime;
     var city  = req.body.city;
     var description = req.body.description;
+    var photos = req.body.pics;
+    console.log(photos);
     function checkcity(citytest){
       if(citytest != ""){
         return citytest
@@ -1772,15 +1710,6 @@ router.post('/editstylebox', function(req, res){
 
     Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
       stylebox.photos.forEach(function(photo, index, object){
-        s3.deleteObject({
-          Bucket: 'styleboxphotosfason',
-          Key: photo
-        },function (err,data){
-          if(err){
-            console.log(err)
-          }
-        })
-
         if(index+1 == stylebox.photos.length){
           emptyStylebox = stylebox.id;
           stylebox.title = title;
@@ -1791,9 +1720,9 @@ router.post('/editstylebox', function(req, res){
           stylebox.vestimentaire = styleObject.vestimentaire;
           stylebox.beaute = styleObject.beaute;
           stylebox.minBudget = budget;
+          stylebox.photos = req.body.pics;
           stylebox.minTime = minTime;
           stylebox.city = checkcity(city);
-          stylebox.photos = [];
           stylebox.save();
           res.send({"edited": true});
         }

@@ -21,12 +21,41 @@ $(document).on('ready', function() {
   });
 
 
+  var CLOUD = "https://api.cloudinary.com/v1_1/fason/upload";
+  var CLOUD_PRES = "puxsf4pt";
+
+  var photos = [];
+  $('#input-44').on('change', function(e){
+    $('.createSP2').prop('disabled', true);
+    var file = e.target.files[0];
+    var formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUD_PRES);
+
+    axios({
+      url: CLOUD,
+      method: "POST",
+      headers: {'content-Type': 'application/x-www-form-urlencoded'},
+      data: formData
+    }).then(function(res){
+      photos.push(res.data.secure_url);
+      $('.kv-file-content').last().attr( "key", res.data.secure_url );
+      $('.createSP2').prop('disabled', false);
+    }).catch(function(err){
+    console.log(err);
+    })
+  })
+
 //********************************************** STYLEBOX PICS **********************************************
 //---------------------------------------------- UPLOADING TO S3 --------------------------------------------
 
   // Create stylebox event
   $('.createSP2').on('click', function(){
     if($('.file-preview-frame').length >= 3){
+      var pics = [];
+      $('.kv-file-content').each(function(){
+        pics.push(this.getAttribute( "key" ));
+      });
       $(this).prop('disabled', true);
     var budget = $('.style-minbudget-input').val();
     var title = $('.style-title-input').val();
@@ -52,11 +81,12 @@ $(document).on('ready', function() {
         url: '/editstylebox',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({"city": city, "styleboxId": styleboxId, "budget": budget, "title": title, "price": price, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "style": style}),
+        data: JSON.stringify({"city": city, "styleboxId": styleboxId, "budget": budget, "title": title, "price": price, "styleObject": styleObject, "gender": gender, "minTime": minTime, "description": description, "style": style, "pics": pics, "allphotos": photos}),
         success:function(response){
           if (response){
             if(response.edited){
-              $('.fileinput-upload-button').click();
+              alert('Look a été modifié. Vous pouvez le modifier ou supprimer dans "looks".');
+              window.location.replace('http://fason.co/mystyleboxes');
             } else {
               console.log("error please try later")
             }
@@ -67,14 +97,6 @@ $(document).on('ready', function() {
       $('.file-error-message').empty();
       $('.file-error-message').append('<span class="close kv-error-close">×</span> Look sera plus attractif avec 3 photos ou plus (minimum 3 photos).');
       $('.file-error-message').show();
-    }
-  });
-
-  // creating stylebox after all photos are loaded to S3
-  $('#input-44').on('fileuploaded', function(event, data, previewId, index) {
-    if(index+1 == data.files.length){
-      alert('Look a été modifié. Vous pouvez le modifier ou supprimer dans "looks".');
-      window.location.replace('http://fason.co/mystyleboxes');
     }
   });
 
