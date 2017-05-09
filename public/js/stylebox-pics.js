@@ -47,7 +47,9 @@ $('#input-44').on('change', function(e){
   }).then(function(res){
     photos.push(res.data.secure_url);
     $('.kv-file-content').last().attr( "key", res.data.secure_url );
-    $('.createSP').prop('disabled', false);
+    setTimeout(function(){
+      $('.createSP').prop('disabled', false);
+    }, 2500);
   }).catch(function(err){
   console.log(err);
   })

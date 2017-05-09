@@ -40,7 +40,9 @@ $(document).on('ready', function() {
     }).then(function(res){
       photos.push(res.data.secure_url);
       $('.kv-file-content').last().attr( "key", res.data.secure_url );
-      $('.createSP2').prop('disabled', false);
+      setTimeout(function(){
+        $('.createSP2').prop('disabled', false);
+      }, 2500);
     }).catch(function(err){
     console.log(err);
     })
