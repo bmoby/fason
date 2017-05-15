@@ -17,7 +17,7 @@ var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
-var client = new twilio.RestClient((process.env.TWILLIO_SECRET),( process.env.TWILLIO_KEY));
+var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY);
 
 var pusher = new Pusher({
   appId: (process.env.PUSHER_ID),

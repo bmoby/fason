@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 var Stylebox = require('./stylebox');
+var Eval = require('./eval');
 var Commentss = require('./comment');
 var Demand = require('./demand');
 var Conversation = require('./conversation');
@@ -40,7 +41,7 @@ var UserSchema = mongoose.Schema({
 		type: String,
 		required: true
 	},
-	evals: [{participated: {type: Boolean, default: false}, fordemand: String, forstylebox:String, startDate: Date, endDate: Date, stylistId: String, userId: String, createdTime: {type: Date, default: Date.now}}],
+	evals: [{ type:Schema.ObjectId, ref:"Eval" }],
 	styleboxes:[{ type:Schema.ObjectId, ref:"Stylebox" }],
 	demands:[{ type:Schema.ObjectId, ref:"Demand" }],
 	conversations: [{type : Schema.ObjectId, ref : 'Conversation'}],

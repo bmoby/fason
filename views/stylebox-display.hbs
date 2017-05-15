@@ -185,18 +185,20 @@
       <h4>Commentaires</h4>
     </div>
     {{#each styleboxcomments}}
-      <div class="row commentrow">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 text-center">
+      <div class="row general-row text-left">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-left">
           <div class="commentOwnerAva" style="background-image: url({{this.creatorAva}})">
           </div>
-          <p>{{this.creatorName}}</p>
+          <!-- <p>{{this.creatorName}}</p> -->
         </div>
-        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-9">
+        <div class="col-lg-8 col-md-8 col-sm-9 col-xs-9 commentseparator">
           <p class="commentbody">{{this.commentBody}}</p>
         </div>
       </div>
       <div class="row text-right commentCreatedDate">
-        <p>{{this.createdDate}}</p>
+        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-9 col-sm-offset-3 col-xs-9 col-xs-offset-3">
+          <p class="commentdate">{{this.createdDate}}</p>
+        </div>
       </div>
     {{/each}}
   {{/if}}

@@ -32,8 +32,8 @@ var CLOUD = "https://api.cloudinary.com/v1_1/fason/upload";
 var CLOUD_PRES = "puxsf4pt";
 
 var photos = [];
+$('.createSP').prop('disabled', true);
 $('#input-44').on('change', function(e){
-  $('.createSP').prop('disabled', true);
   var file = e.target.files[0];
   var formData = new FormData();
   formData.append("file", file);
@@ -47,6 +47,9 @@ $('#input-44').on('change', function(e){
   }).then(function(res){
     photos.push(res.data.secure_url);
     $('.kv-file-content').last().attr( "key", res.data.secure_url );
+    if($('.kv-file-content').length >= 3){
+      $('.createSP').prop('disabled', false);
+    }
     setTimeout(function(){
       $('.createSP').prop('disabled', false);
     }, 2500);
@@ -90,6 +93,15 @@ $('#input-44').on('change', function(e){
           if (response.stylebox){
             alert('Look a été publié. Vous pouvez le modifier ou supprimer dans "Looks".');
             window.location.replace('https://fason.co/');
+          }
+
+          if(response.errmsg){
+            alert("Une erreur a empéché l'enregistrement de vos photos veuillez les reséléctionner");
+            $('.kv-file-remove').each(function(){
+              this.click();
+            });
+            pics = [];
+            photos = [];
           }
 
           if(response.nouser) {

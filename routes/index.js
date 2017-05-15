@@ -4,6 +4,7 @@ var Conversation = require('../models/conversation');
 var Promise = require('promise');
 var Pusher = require('pusher');
 var User = require('../models/user');
+var Eval = require('../models/eval');
 var moment = require('moment');
 var Stylebox = require('../models/stylebox');
 var Connu = require('../models/connu');
@@ -26,7 +27,7 @@ var pusher = new Pusher({
   encrypted: true
 });
 
-var client = new twilio.RestClient((process.env.TWILLIO_SECRET),( process.env.TWILLIO_KEY));
+var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY );
 
 AWS.config = {
   accessKeyId: (process.env.AWS_KEY),
@@ -103,7 +104,7 @@ router.get('/search', function(req, res){
 
 
 router.post('/search', function(req, res){
-  // var city = req.body.city;
+  var city = req.body.city;
   var gender = req.body.gender;
   var style = req.body.style;
 
@@ -111,9 +112,9 @@ router.post('/search', function(req, res){
     var options = {};
 
     options.creator = {"$exists" : true};
-    // if(city){
-    //   options.city = { "$regex": city, "$options": "i" };
-    // }
+    if(city){
+      options.city = { "$regex": city, "$options": "i" }
+    }
     if(gender != 'Homme & Femme'){
       options.gender = gender;
     }
@@ -137,19 +138,20 @@ router.post('/search', function(req, res){
         if (obje.gender == "men"){
           mens = true;
         }
+
         if (obje.gender == "ladies"){
           womans = true;
         }
 
         // var cityResend = req.body.city;
-
         // Send style info to autocomplete fields after the search
+
         var styleObj = {
           vestimentaire: false,
           beaute: false,
         }
 
-        switch(obje.style) {
+        switch(obje.style){
             case "vestimentaire":
                 styleObj.vestimentaire = true;
                 break;
@@ -220,9 +222,9 @@ router.post('/search', function(req, res){
           })
         } else {
           if(req.user){
-            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun look ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun look ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length})
           } else {
-            res.render('search', {"user": req.user, "errmsg": "Aucun look ne correspond à votre recherche"});
+            res.render('search', {"user": req.user, "errmsg": "Aucun look ne correspond à votre recherche"})
           }
         }
       }
@@ -230,233 +232,235 @@ router.post('/search', function(req, res){
   }).catch(function(err){
     console.log(err);
   })
-});
+})
 
 router.get('/stylebox/:id', function(req, res){
   var commentList = [];
   var styleboxId = req.params.id;
   Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-    if(stylebox.comments){
-      stylebox.comments.forEach(function(comment, indexcom, objectcom){
-        Comments.getCommentById(comment, function(err, com){
-          if(err){
-            console.log(err)
-          } else {
-            if(moment(com.showDate) < moment()){
-              var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, HH:mm');
-              com.createdDate = formatedCreated;
-              commentList.push(com);
-            }
-          }
-        })
-      })
-    }
-    User.getUserById(stylebox.creator, function(err, user){
-      if(err){
-        console.log(err)
-      } else {
-        var gender = "";
-        var style = "";
-        if (stylebox.gender == "ladies"){
-          gender = "femme"
-        } else {
-          gender = "homme"
-        }
-
-        switch(stylebox.style) {
-          case "allbeauty":
-            style = "Relooking beauté";
-          break;
-          case "all":
-            style = "Relooking vestimentaire";
-          break;
-          case "casual":
-            style = "Casual";
-          break;
-          case "businesscasual":
-            style = "Business casual";
-          break;
-          case "businessformal":
-            style = "Business formal";
-          break;
-          case "streetwear":
-            style = "Streetwear";
-          break;
-          case "CocktailChic":
-            style = "Cocktail chic";
-          break;
-          case "SemiFormal":
-            style = "Semi-formal";
-          break;
-          case "BlackTie":
-            style = "Black tie";
-          break;
-          case "WhiteTie":
-            style = "White tie";
-          break;
-          case "Bohemian":
-            style = "Bohemian";
-          break;
-          case "Arty":
-            style = "Arty";
-          break;
-          case "Chic":
-            style = "Chic";
-          break;
-          case "Classic":
-            style = "Classic";
-          break;
-          case "Exotic":
-            style = "Exotic";
-          break;
-          case "Flamboyant":
-            style = "Flamboyant";
-          break;
-          case "Sophisticated":
-            style = "Sophisticated";
-          break;
-          case "Sexy":
-            style = "Sexy";
-          break;
-          case "Western":
-            style = "Western";
-          break;
-          case "Traditional":
-            style = "Traditional";
-          break;
-          case "Preppy":
-            style = "Preppy";
-          break;
-          case "Punk":
-            style = "Punk";
-          break;
-          case "Tomboy":
-            style = "Tomboy";
-          break;
-          case "Rocker":
-            style = "Rocker";
-          break;
-          case "Goth":
-            style = "Goth";
-          break;
-          case "Coiffure":
-            style = "Coiffure";
-          break;
-          case "Barbe":
-            style = "Tailler la barbe";
-          break;
-          case "CoiffureColoration":
-            style = "Coiffure et coloration";
-          break;
-          case "CoiffureBarbe":
-            style = "Coiffure et tailler la barbe";
-          break;
-          case "CoiffureColorationBarbe":
-            style = "Coiffure, coloration et tailler la barbe";
-          break;
-          case "Maquillage":
-            style = "Maquillage";
-          break;
-          case "Manucure":
-            style = "Manucure";
-          break;
-          case "Pedicure":
-            style = "Pédicure";
-          break;
-          case "ManucurePedicure":
-            style = "Manucure et pédicure";
-          break;
-          case "Sourcils":
-            style = "Sourcils";
-          break;
-          case "SoinVisage":
-            style = "Soin visage";
-          break;
-          case "SoinCorp":
-            style = "Soin corps";
-          break;
-          case "SoinVisageCorp":
-            style = "Soin visage et corps";
-          break;
-          default:
-            style = "not found";
-               break;
-        }
-
-        var haveToVerify = false;
-        if(req.user){
-          if(req.user.varified == false || req.user.phoneIsVerified == false){
-            haveToVerify = true;
-          }
-        }
-        var stylistNeededInfo = {"firstName": user.firstName, "lastName": user.lastName, "avatar": user.avatar, "description": user.stylist.description, "availability": user.stylist.availability};
-        var rating = {};
-        var general = 0;
-        var communication = 0;
-        var quality = 0;
-        var ponctuality = 0;
-        var precision = 0;
-        if(user.rating.length){
-          user.rating.forEach(function(rat, index, object){
-            communication = communication + rat.communication;
-            quality = quality + rat.qualityprice;
-            ponctuality = ponctuality + rat.ponctuality;
-            precision = precision + rat.precision;
-
-            if(index+1 == user.rating.length){
-              rating.quality = quality/user.rating.length;
-              rating.communication = communication/user.rating.length;
-              rating.ponctuality = ponctuality/user.rating.length;
-              rating.precision = precision/user.rating.length;
-              rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
-              rating.number = user.rating.length;
-              if(req.user){
-                res.render('stylebox-display',
-                  {"styleboxcomments": commentList,
-                    "stylebox": stylebox,
-                    "rating": rating,
-                    "stylist": stylistNeededInfo,
-                    "gender": gender,
-                    "style": style,
-                    "user": req.user,
-                    "newmessages": req.user.notifications.length,
-                    "haveToVerify": haveToVerify,
-                    "newdemands": req.user.demandNotifications.length,
-                    "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-              } else {
-                res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
+    if(stylebox){
+      if(stylebox.comments){
+        stylebox.comments.forEach(function(comment, indexcom, objectcom){
+          Comments.getCommentById(comment, function(err, com){
+            if(err){
+              console.log(err)
+            } else {
+              if(moment(com.showDate) < moment()){
+                var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, HH:mm');
+                com.createdDate = formatedCreated;
+                commentList.push(com);
               }
             }
-          });
+          })
+        })
+      }
+      User.getUserById(stylebox.creator, function(err, user){
+        if(err){
+          console.log(err)
         } else {
-          rating.quality = -1;
-          rating.communication = -1;
-          rating.ponctuality = -1;
-          rating.precision = -1;
-          rating.general = -1;
-          rating.number = 0;
-          if(req.user){
-            res.render('stylebox-display',
-            {"styleboxcomments": commentList,
-            "stylebox": stylebox,
-            "rating": rating,
-            "stylist": stylistNeededInfo,
-            "style": style,
-            "gender": gender,
-            "user": req.user,
-            "newmessages": req.user.notifications.length,
-            "haveToVerify": haveToVerify,
-            "newdemands": req.user.demandNotifications.length,
-            "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+          var gender = "";
+          var style = "";
+          if (stylebox.gender == "ladies"){
+            gender = "femme"
           } else {
-            res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
+            gender = "homme"
+          }
+
+          switch(stylebox.style){
+            case "allbeauty":
+              style = "Relooking beauté";
+            break;
+            case "all":
+              style = "Relooking vestimentaire";
+            break;
+            case "casual":
+              style = "Casual";
+            break;
+            case "businesscasual":
+              style = "Business casual";
+            break;
+            case "businessformal":
+              style = "Business formal";
+            break;
+            case "streetwear":
+              style = "Streetwear";
+            break;
+            case "CocktailChic":
+              style = "Cocktail chic";
+            break;
+            case "SemiFormal":
+              style = "Semi-formal";
+            break;
+            case "BlackTie":
+              style = "Black tie";
+            break;
+            case "WhiteTie":
+              style = "White tie";
+            break;
+            case "Bohemian":
+              style = "Bohemian";
+            break;
+            case "Arty":
+              style = "Arty";
+            break;
+            case "Chic":
+              style = "Chic";
+            break;
+            case "Classic":
+              style = "Classic";
+            break;
+            case "Exotic":
+              style = "Exotic";
+            break;
+            case "Flamboyant":
+              style = "Flamboyant";
+            break;
+            case "Sophisticated":
+              style = "Sophisticated";
+            break;
+            case "Sexy":
+              style = "Sexy";
+            break;
+            case "Western":
+              style = "Western";
+            break;
+            case "Traditional":
+              style = "Traditional";
+            break;
+            case "Preppy":
+              style = "Preppy";
+            break;
+            case "Punk":
+              style = "Punk";
+            break;
+            case "Tomboy":
+              style = "Tomboy";
+            break;
+            case "Rocker":
+              style = "Rocker";
+            break;
+            case "Goth":
+              style = "Goth";
+            break;
+            case "Coiffure":
+              style = "Coiffure";
+            break;
+            case "Barbe":
+              style = "Tailler la barbe";
+            break;
+            case "CoiffureColoration":
+              style = "Coiffure et coloration";
+            break;
+            case "CoiffureBarbe":
+              style = "Coiffure et tailler la barbe";
+            break;
+            case "CoiffureColorationBarbe":
+              style = "Coiffure, coloration et tailler la barbe";
+            break;
+            case "Maquillage":
+              style = "Maquillage";
+            break;
+            case "Manucure":
+              style = "Manucure";
+            break;
+            case "Pedicure":
+              style = "Pédicure";
+            break;
+            case "ManucurePedicure":
+              style = "Manucure et pédicure";
+            break;
+            case "Sourcils":
+              style = "Sourcils";
+            break;
+            case "SoinVisage":
+              style = "Soin visage";
+            break;
+            case "SoinCorp":
+              style = "Soin corps";
+            break;
+            case "SoinVisageCorp":
+              style = "Soin visage et corps";
+            break;
+            default:
+              style = "not found";
+            break;
+          }
+
+          var haveToVerify = false;
+          if(req.user){
+            if(req.user.varified == false || req.user.phoneIsVerified == false){
+              haveToVerify = true;
+            }
+          }
+          var stylistNeededInfo = {"firstName": user.firstName, "lastName": user.lastName, "avatar": user.avatar, "description": user.stylist.description, "availability": user.stylist.availability};
+          var rating = {};
+          var general = 0;
+          var communication = 0;
+          var quality = 0;
+          var ponctuality = 0;
+          var precision = 0;
+          if(user.rating.length){
+            user.rating.forEach(function(rat, index, object){
+              communication = communication + rat.communication;
+              quality = quality + rat.qualityprice;
+              ponctuality = ponctuality + rat.ponctuality;
+              precision = precision + rat.precision;
+
+              if(index+1 == user.rating.length){
+                rating.quality = quality/user.rating.length;
+                rating.communication = communication/user.rating.length;
+                rating.ponctuality = ponctuality/user.rating.length;
+                rating.precision = precision/user.rating.length;
+                rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
+                rating.number = user.rating.length;
+                if(req.user){
+                  res.render('stylebox-display',
+                    {"styleboxcomments": commentList,
+                      "stylebox": stylebox,
+                      "rating": rating,
+                      "stylist": stylistNeededInfo,
+                      "gender": gender,
+                      "style": style,
+                      "user": req.user,
+                      "newmessages": req.user.notifications.length,
+                      "haveToVerify": haveToVerify,
+                      "newdemands": req.user.demandNotifications.length,
+                      "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                } else {
+                  res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
+                }
+              }
+            });
+          } else {
+            rating.quality = -1;
+            rating.communication = -1;
+            rating.ponctuality = -1;
+            rating.precision = -1;
+            rating.general = -1;
+            rating.number = 0;
+            if(req.user){res.render('stylebox-display',
+              {"styleboxcomments": commentList,
+              "stylebox": stylebox,
+              "rating": rating,
+              "stylist": stylistNeededInfo,
+              "style": style,
+              "gender": gender,
+              "user": req.user,
+              "newmessages": req.user.notifications.length,
+              "haveToVerify": haveToVerify,
+              "newdemands": req.user.demandNotifications.length,
+              "allNotifications": req.user.demandNotifications.length + req.user.notifications.length})
+            } else {
+              res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
+            }
           }
         }
-      }
-    })
-  });
-});
-
+      })
+    } else {
+      res.render('notfound')
+    }
+  })
+})
 
 router.post('/demand', function(req, res){
   var date = req.body.date;
@@ -493,17 +497,6 @@ router.post('/demand', function(req, res){
                     user.demands.forEach(function(deman, indexdem, objectdem){
                       if(deman == dem.id){
                         user.demands.splice(indexdem, 1);
-                        user.save();
-                        if(req.user.id == user.id){
-                          connectedUser = user;
-                        };
-                      }
-                    })
-                  }
-                  if(user.evals.length){
-                    user.evals.forEach(function(eval, indexeval, objecteval){
-                      if(eval.fordemand == dem.id){
-                        user.evals.splice(indexeval, 1);
                         user.save();
                       }
                     })
@@ -583,61 +576,39 @@ router.post('/demand', function(req, res){
               })
             }
 
-            savedDemand.participants.forEach(function(participant, indexx, objectt){
-              function addDays(date, days) {
-                  var result = new Date(date);
-                  result.setDate(result.getDate() + days);
-                  return result;
-              };
-              var startDate = savedDemand.time;
-              if(participant.toString() == savedDemand.creator.toString()){
-                if(indexx == 0){
-                  User.getUserById(participant, function(err, user){
-                    if(err){
-                      console.log(err)
-                    } else {
-                      var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "stylistId":savedDemand.participants[1] };
-                      user.evals.push(eval);
-                      user.save();
-                    }
-                  })
-                } else {
-                  User.getUserById(participant, function(err, user){
-                    if(err){
-                      console.log(err)
-                    } else {
-                      var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "stylistId":savedDemand.participants[0] };
-                      user.evals.push(eval);
-                      user.save();
-                    }
-                  })
-                }
-              }
+            function addDays(date, days) {
+                var result = new Date(date);
+                result.setDate(result.getDate() + days);
+                return result;
+            };
 
-              if(participant.toString() != savedDemand.creator.toString()){
-                if(indexx == 0){
-                  User.getUserById(participant, function(err, user){
-                    if(err){
+           var newEval = new Eval();
+           newEval.startDate = savedDemand.time;
+           newEval.endDate = addDays(savedDemand.time, 14);
+           newEval.clientId = req.user.id;
+           newEval.stylistId = stylebox.creator;
+           newEval.forDemand = savedDemand.id;
+           newEval.forStylebox = stylebox.id;
+           setTimeout(function(){
+             Eval.createNewEval(newEval, function(err, savedEval){
+               if(err){
+                 console.log(err)
+               } else {
+                 savedDemand.participants.forEach(function(par, indexpar, objectpar){
+                   User.getUserById(par, function(err, user){
+                     if(err){
                       console.log(err)
-                    } else {
-                      var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "userId": savedDemand.participants[1] };
-                      user.evals.push(eval);
+                    }
+                    if(user){
+                      user.evals.push(savedEval);
                       user.save();
                     }
-                  })
-                } else {
-                  User.getUserById(participant, function(err, user){
-                    if(err){
-                      console.log(err)
-                    } else {
-                      var eval = {"startDate": startDate, "endDate": addDays(startDate, 14), "forstylebox" : stylebox.id, "fordemand": savedDemand.id, "userId": savedDemand.participants[0] };
-                      user.evals.push(eval);
-                      user.save();
-                    }
-                  })
-                }
-              }
-            });
+                   })
+                 })
+               }
+             })
+           }, 500);
+
           })
         } else {
           req.user.demands.forEach(function(demId, index){
@@ -805,45 +776,58 @@ router.post('/createstylebox', function(req, res){
       }
     }
 
-    var newStyle = new Stylebox({
-      title: title,
-      price:price,
-      vestimentaire: styleObject.vestimentaire,
-      beaute: styleObject.beaute,
-      style: style,
-      gender: gender,
-      minTime: minTime,
-      photos: pics,
-      city: checkcity(city),
-      minBudget: budget,
-      description: description,
-      creator: req.user
-    });
+    if(pics.length >= 3){
+      var  stopThis = false;
+      pics.forEach(function(pic, index, object){
+        if(pic == null){
+          res.send({"errmsg": true});
+          stopThis = true;
+        }
+
+        if(index+1 == object.length && stopThis == false){
+          var newStyle = new Stylebox({
+            title: title,
+            price:price,
+            vestimentaire: styleObject.vestimentaire,
+            beaute: styleObject.beaute,
+            style: style,
+            gender: gender,
+            minTime: minTime,
+            photos: pics,
+            city: checkcity(city),
+            minBudget: budget,
+            description: description,
+            creator: req.user
+          });
 
 
-    Stylebox.createNewStylebox(newStyle, function(err, stylebox){
-      if(err) {
-        console.log(err)
-        res.send({"stylebox": false});
-      } else {
-        var userto = req.user;
-        userto.styleboxes.push(stylebox.id);
-        userto.save();
-        var mailOptions = {
-            from: '"Fason service client" <fason.contact@gmail.com>',
-            to: "fason.contact@gmail.com",
-            subject : "Encore un look!",
-            html : "yesss on a encore un look bro! titre : <br>"+ newStyle.title +"<br> ID : <br>" + newStyle.id + "user that is creating this style is : " + req.user.id
-        };
-        transporter.sendMail(mailOptions, function(error, info){
-            if(error){
-                return console.log(error);
+          Stylebox.createNewStylebox(newStyle, function(err, stylebox){
+            if(err) {
+              console.log(err)
+              res.send({"stylebox": false});
+            } else {
+              var userto = req.user;
+              userto.styleboxes.push(stylebox.id);
+              userto.save();
+              var mailOptions = {
+                  from: '"Fason service client" <fason.contact@gmail.com>',
+                  to: "fason.contact@gmail.com",
+                  subject : "Encore un look!",
+                  html : "yesss on a encore un look bro! titre : <br>"+ newStyle.title +"<br> ID : <br>" + newStyle.id + "user that is creating this style is : " + req.user.id
+              };
+              transporter.sendMail(mailOptions, function(error, info){
+                  if(error){
+                      return console.log(error);
+                  }
+              });
+              res.send({"stylebox": true});
             }
-        });
-        console.log(stylebox)
-        res.send({"stylebox": true});
-      }
-    });
+          });
+        }
+      })
+    } else {
+      res.send({"errmsg": true});
+    }
   } else {
     res.send({"nouser": true});
   }
@@ -1246,14 +1230,6 @@ router.get('/demandes', function(req, res){
                         }
                       })
                     }
-                    if(user.evals.length){
-                      user.evals.forEach(function(eval, indexeval, objecteval){
-                        if(eval.fordemand == dem.id){
-                          user.evals.splice(indexeval, 1);
-                          user.save();
-                        }
-                      })
-                    }
                     if(user.demandNotifications.length){
                       user.demandNotifications.forEach(function(notif, indexnotif, objectnotif){
                         if(notif.demandid == dem.id){
@@ -1428,15 +1404,6 @@ router.post('/acceptdemand', function(req, res){
           })
         }
 
-        if(userst.evals.length){
-          userst.evals.forEach(function(evalst, indexste, objectste){
-            if(demand.id.toString() == evalst.fordemand.toString()){
-              userst.evals.splice(indexste, 1);
-              userst.save();
-            }
-          })
-        }
-
         User.getUserById(clientId, function(err, clientS){
           if(err){
             console.log(err)
@@ -1454,15 +1421,6 @@ router.post('/acceptdemand', function(req, res){
               clientS.demandNotifications.forEach(function(demclN, indexclN, objectclN){
                 if(demclN.demandid.toString() == demand.id.toString()){
                   clientS.demandNotifications.splice(indexclN, 1);
-                  clientS.save();
-                }
-              })
-            }
-
-            if(clientS.evals.length){
-              clientS.evals.forEach(function(evalcl, indexcle, objectcle){
-                if(demand.id.toString() == evalcl.fordemand.toString()){
-                  clientS.evals.splice(indexcle, 1);
                   clientS.save();
                 }
               })
@@ -1485,12 +1443,6 @@ router.post('/declinedemand', function(req, res){
       dem.save();
       dem.participants.forEach(function(userid){
         User.getUserById(userid, function(err, user){
-          user.evals.forEach(function(eval, index2, object2){
-            if(eval.fordemand == dem.id){
-              object2.splice(index2, 1);
-              user.save();
-            }
-          })
           user.demandNotifications.forEach(function(notif, index, object){
             if(notif.demandid == dem.id){
               object.splice(index, 1);
@@ -1667,16 +1619,35 @@ router.get('/checkevals', function(req, res){
     var count = 0;
     if(user.evals.length){
       user.evals.forEach(function(eval, index, object){
-        if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
-          count++
-          if(index+1 == object.length){
-            res.send({"evals": count, "send":true});
+        Eval.getEvalById(eval.toString(), function(err, evalu){
+          if(err){
+            console.log(err)
           }
-        } else {
-          if(index+1 == object.length){
-            res.send({"evals": count, "send":true});
+
+          if(evalu){
+            if(evalu.stylistId == req.user.id){
+              if(evalu.stylistCommented){
+              } else {
+                if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
+                  count = count+1;
+                  if(index+1  == object.length){
+                    res.send({"evals": count, "send": true});
+                  }
+                }
+              }
+            } else {
+              if(evalu.clientCommented){
+              } else {
+                if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
+                  count = count+1;
+                  if(index+1 == object.length){
+                    res.send({"evals": count, "send": true});
+                  }
+                }
+              }
+            }
           }
-        }
+        })
       })
     } else {
       res.send({"noeffect": true})
@@ -1699,7 +1670,6 @@ router.post('/editstylebox', function(req, res){
     var city  = req.body.city;
     var description = req.body.description;
     var photos = req.body.pics;
-    console.log(photos);
     function checkcity(citytest){
       if(citytest != ""){
         return citytest
@@ -1737,58 +1707,62 @@ router.get('/evaluate', function(req, res){
   if(req.user){
     var connectedUser = req.user;
     var evalsArray = [];
-    connectedUser.evals.forEach(function(eval, index, object){
-      if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment() && eval.participated == false){
-        var evalProto = {};
-        evalProto.evalId = eval.id;
-        if(eval.stylistId){
-          User.getUserById(eval.stylistId, function(err, user){
-            if(user){
-              evalProto.stylistId = eval.stylistId;
-              evalProto.stylistAvatar = user.avatar;
-              evalProto.stylistName = user.lastName;
+    connectedUser.evals.forEach(function(evall, index, object){
+      Eval.getEvalById(evall, function(err, eval){
+        if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment()){
+          var evalProto = {};
+          evalProto.evalId = eval.id;
+
+          if(eval.stylistId == req.user.id){
+            User.getUserById(eval.clientId, function(err, user){
+              if(user){
+                evalProto.userId = eval.clientId;
+                evalProto.userAvatar = user.avatar;
+                evalProto.userName = user.lastName;
+              } else {
+
+                evalProto.problem = true;
+              }
+            });
+          } else {
+            User.getUserById(eval.stylistId, function(err, user){
+              if(user){
+                evalProto.stylistId = eval.stylistId;
+                evalProto.stylistAvatar = user.avatar;
+                evalProto.stylistName = user.lastName;
+              } else {
+                evalProto.problem = true;
+              }
+            });
+          }
+
+          Stylebox.getStyleboxById(eval.forStylebox, function(err, stylebox){
+            if(stylebox){
+              evalProto.styleboxTitle = stylebox.title;
+              evalProto.styleboxId = stylebox.id;
+            } else {
+              evalProto.styleboxTitle = "Existe plus";
+            }
+          });
+
+          Demand.getDemandById(eval.forDemand, function(err, demand){
+            if(demand){
+              evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm');
             } else {
               evalProto.problem = true;
             }
-          });
-        } else {
-          User.getUserById(eval.userId, function(err, user){
-            if(user){
-              evalProto.userId = eval.userId;
-              evalProto.userAvatar = user.avatar;
-              evalProto.userName = user.lastName;
+          })
+
+          setTimeout(function(){
+            if(evalProto.problem){
+              object.splice(index, 1);
+              connectedUser.save();
             } else {
-              evalProto.problem = true;
+              evalsArray.push(evalProto);
             }
-          });
+          }, 500);
         }
-
-        Stylebox.getStyleboxById(eval.forstylebox, function(err, stylebox){
-          if(stylebox){
-            evalProto.styleboxTitle = stylebox.title;
-            evalProto.styleboxId = stylebox.id;
-          } else {
-            evalProto.problem = true;
-          }
-        });
-
-        Demand.getDemandById(eval.fordemand, function(err, demand){
-          if(demand){
-            evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm');
-          } else {
-            evalProto.problem = true;
-          }
-        })
-
-        setTimeout(function(){
-          if(evalProto.problem){
-            object.splice(index, 1);
-            connectedUser.save();
-          } else {
-            evalsArray.push(evalProto);
-          }
-        }, 500);
-      }
+      })
     });
 
     setTimeout(function(){
@@ -1821,19 +1795,22 @@ router.post('/evaluate', function(req, res){
         commentObject.creatorAva = connectedUser.avatar;
         commentObject.creatorName = connectedUser.lastName;
         connectedUser.evals.forEach(function(eval, indexe, objecte){
-          if(eval.id == evalId){
-            commentObject.showDate = eval.endDate;
-            Comments.createNewComment(commentObject, function(err, savedComment){
-              if(err){
-                console.log(err)
-              } else {
-                stylist.comments.push(savedComment);
-                stylist.save();
-              }
+            Eval.getEvalById(evalId, function(err, evall){
+              commentObject.showDate = evall.endDate;
+              evall.clientCommented = true;
+              evall.save();
+              objecte.splice(indexe, 1);
+              connectedUser.save();
+              Comments.createNewComment(commentObject, function(err, savedComment){
+                if(err){
+                  console.log(err)
+                } else {
+                  stylist.comments.push(savedComment);
+                  stylist.save();
+                }
+              });
             })
-            eval.participated = true;
-            connectedUser.save();
-          }
+
         })
 
         var ratingObj = {"precision": precision, "qualityprice": quality, "communication": communication, "ponctuality": ponctuality};
@@ -1848,22 +1825,24 @@ router.post('/evaluate', function(req, res){
         commentObject.creator = connectedUser.id;
         commentObject.foruser = userId;
         commentObject.commentBody = comment.toString();
-        commentObject.stylebox = styleboxId;
         commentObject.creatorAva = connectedUser.avatar;
         connectedUser.evals.forEach(function(eval, indexe, objecte){
-          if(eval.id == evalId){
-            commentObject.showDate = eval.endDate;
-            Comments.createNewComment(commentObject, function(err, savedComment){
-              if(err){
-                console.log(err)
-              } else {
-                userc.comments.push(savedComment);
-                userc.save();
-              }
+
+            Eval.getEvalById(evalId, function(err, evall){
+              commentObject.showDate = evall.endDate;
+              evall.stylistCommented = true;
+              evall.save();
+              objecte.splice(indexe, 1);
+              connectedUser.save();
+              Comments.createNewComment(commentObject, function(err, savedComment){
+                if(err){
+                  console.log(err)
+                } else {
+                  userc.comments.push(savedComment);
+                  userc.save();
+                }
+              })
             })
-            eval.participated = true;
-            connectedUser.save();
-          }
         })
       })
     }

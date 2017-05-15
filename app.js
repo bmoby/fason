@@ -16,8 +16,6 @@ var device = require('express-device');
 var compression = require('compression');
 // Get the module
 
-// Insert your Google Analytics Id, Shoule be something like 'UA-12345678-9'
-
 // Init App
 var app = express();
 
@@ -41,8 +39,6 @@ app.engine('.hbs', exphbs({
 );
 
 app.set('view engine', '.hbs');
-
-// BodyParser Middleware
 
 // compress responses
 app.use(compression());

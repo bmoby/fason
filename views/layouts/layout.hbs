@@ -21,7 +21,14 @@
 	  {{> loading}}
 	</div>
 		{{{body}}}
+
 	<script type="text/javascript">
+
+	if(window.location.pathname == '/search'){
+		setTimeout(function(){
+			$('.loading-page').fadeOut();
+		}, 5000);
+	}
 	$(window).load(function(){
 		 $('.loading-page').fadeOut();
 	});
