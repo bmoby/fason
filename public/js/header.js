@@ -6,7 +6,6 @@ $(document).ready(function(){
       url: '/checkevals',
       method: 'GET',
       success: function(response){
-        console.log(response);
         if(response.send){
           var notifs = response.evals;
           if(notifs > 0){
@@ -21,11 +20,7 @@ $(document).ready(function(){
            }
             $('.notifCount').removeClass('hidden');
             $('.notifCountIcon').text(newnotifcount);
-          } else {
-            console.log("Evals are = to 0")
           }
-        } else {
-          console.log("there is a problem in the route")
         }
 
         if(response.noeffect){
