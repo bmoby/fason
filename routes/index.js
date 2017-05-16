@@ -1635,7 +1635,11 @@ router.get('/checkevals', function(req, res){
               if(evalu.stylistCommented){
                 console.log("okeyno")
                 if(index+1  == object.length){
-                  res.send({"evals": count, "send": true});
+                  if(count){
+                    res.send({"evals": count, "send": true});
+                  } else {
+                    res.send({"noeffect": true})
+                  }
                 }
               } else {
                 if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
@@ -1648,7 +1652,11 @@ router.get('/checkevals', function(req, res){
             } else {
               if(evalu.clientCommented){
                 if(index+1 == object.length){
-                  res.send({"evals": count, "send": true});
+                  if(count){
+                    res.send({"evals": count, "send": true});
+                  } else {
+                    res.send({"noeffect": true})
+                  }
                 }
               } else {
                 if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
@@ -1657,6 +1665,14 @@ router.get('/checkevals', function(req, res){
                     res.send({"evals": count, "send": true});
                   }
                 }
+              }
+            }
+          } else {
+            if(index+1 == object.length){
+              if(count){
+                res.send({"evals": count, "send": true});
+              } else {
+                res.send({"noeffect": true})
               }
             }
           }
