@@ -7,6 +7,7 @@ $(document).ready(function(){
       method: 'GET',
       cache: false,
       success: function(response){
+        console.log(response);
         if(response.send){
           var notifs = response.evals;
           if(notifs > 0){
