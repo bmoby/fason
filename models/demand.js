@@ -34,6 +34,7 @@ var DemandSchema = mongoose.Schema({
   forstyle: {type: String, default: "Style inconnu"},
   creatorName: {type: String, default: "Relooker"},
   commented: [{type : Schema.ObjectId, ref : 'User'}],
+  forStylebox: [{type : Schema.ObjectId, ref : 'Stylebox'}],
   createdTime:{type:Date, default:Date.now}
 });
 
@@ -48,6 +49,7 @@ module.exports.createNewDemand = function(newDemand, callback){
   demand.forstyle = newDemand.forstyle;
   demand.participants = newDemand.participants;
   demand.time = newDemand.time;
+  demand.forStylebox = newDemand.forStylebox;
   demand.creatorName = newDemand.creatorName;
   demand.save(callback);
 }

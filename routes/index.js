@@ -532,6 +532,7 @@ router.post('/demand', function(req, res){
             creator: creator,
             participants:[creator, stylebox.creator],
             time: demandTime,
+            forStylebox: styleboxId,
             creatorName: req.user.lastName,
             forstyle: forstyle
           }
@@ -588,6 +589,7 @@ router.post('/demand', function(req, res){
                     creator: creator,
                     participants:[creator, stylebox.creator],
                     time: demandTime,
+                    forStylebox: styleboxId,
                     creatorName: req.user.lastName,
                     forstyle: forstyle
                   }
@@ -1338,9 +1340,9 @@ router.post('/acceptdemand', function(req, res){
         newEval.endDate = addDays(demand.time, 14);
         newEval.stylistId = req.user.id;
         newEval.forDemand = demand.id;
-
         newEval.clientId = req.user.id;
-        newEval.forStylebox = demand.forstyle;
+        newEval.forStylebox = demand.forStylebox;
+        console.log(demand.forstyle, "FOR STYLE FOR EVAL");
         demand.participants.forEach(function(par, inde, obje){
           if(par != req.user.id){
             newEval.clientId = par;
@@ -1623,7 +1625,7 @@ router.get('/checkevals', function(req, res){
     var count = 0;
     if(user.evals.length){
       user.evals.forEach(function(eval, index, object){
-        Eval.getEvalById(eval.toString(), function(err, evalu){
+        Eval.getEvalById(eval, function(err, evalu){
           if(err){
             console.log(err)
           }
@@ -1631,6 +1633,10 @@ router.get('/checkevals', function(req, res){
           if(evalu){
             if(evalu.stylistId == req.user.id){
               if(evalu.stylistCommented){
+                console.log("okeyno")
+                if(index+1  == object.length){
+                  res.send({"evals": count, "send": true});
+                }
               } else {
                 if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
                   count = count+1;
@@ -1641,6 +1647,9 @@ router.get('/checkevals', function(req, res){
               }
             } else {
               if(evalu.clientCommented){
+                if(index+1 == object.length){
+                  res.send({"evals": count, "send": true});
+                }
               } else {
                 if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
                   count = count+1;
