@@ -1631,26 +1631,36 @@ router.get('/checkevals', function(req, res){
           }
 
           if(evalu){
+            console.log("ON A TROUVE UNE EVALUATION")
             if(evalu.stylistId == req.user.id){
+              console.log("EVALUATION POUR LE STYLIST")
               if(evalu.stylistCommented){
+                console.log("IL A DEJA COMMENTE")
                 console.log("okeyno")
                 if(index+1  == object.length){
+                  console.log("ON A L'EVAL ET ON A TERMINE", count)
                   if(count){
+                    console.log("Y A CES TRUCS A ENVOYER", count)
                     res.send({"evals": count, "send": true});
                   } else {
                     res.send({"noeffect": true})
                   }
                 }
               } else {
+                console.log("IL A JAMAIS COMMENTE LE STYLIST")
                 if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
+                  console.log("LES CRITERES SONT BON")
                   count = count+1;
                   if(index+1  == object.length){
+                    console.log("ON A TERMINE DE PARCOURIR LA LISTE")
                     res.send({"evals": count, "send": true});
                   }
                 }
               }
             } else {
+                console.log("C'EST UN CLIENT ET NON PAS UN STYLIST")
               if(evalu.clientCommented){
+                console.log("IL A DEJA COMMENTEE")
                 if(index+1 == object.length){
                   if(count){
                     res.send({"evals": count, "send": true});
@@ -1659,9 +1669,12 @@ router.get('/checkevals', function(req, res){
                   }
                 }
               } else {
+                console.log("LE CLIENT N'A JAMAIS COMMENTEEE")
                 if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
+                  console.log("LES CRITERES SONT BON")
                   count = count+1;
                   if(index+1 == object.length){
+                    console.log("ON A FINI DE PARCOURIR LA LISTE")
                     res.send({"evals": count, "send": true});
                   }
                 }
@@ -1674,6 +1687,8 @@ router.get('/checkevals', function(req, res){
               } else {
                 res.send({"noeffect": true})
               }
+            } else {
+              console.log("C'ETAIT CA LE PB")
             }
           }
         })
