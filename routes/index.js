@@ -27,7 +27,7 @@ var pusher = new Pusher({
   encrypted: true
 });
 
-var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY );
+var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY);
 
 AWS.config = {
   accessKeyId: (process.env.AWS_KEY),
@@ -142,9 +142,6 @@ router.post('/search', function(req, res){
         if (obje.gender == "ladies"){
           womans = true;
         }
-
-        // var cityResend = req.body.city;
-        // Send style info to autocomplete fields after the search
 
         var styleObj = {
           vestimentaire: false,
@@ -474,7 +471,6 @@ router.post('/demand', function(req, res){
   var jsonDate = dateYear+'-'+dateMonth+'-'+dateDay+'T'+dateTime;
   var demandTime = new Date(jsonDate);
   var connectedUser = req.user;
-
   var promise = new Promise(function(resolve, reject){
     if(req.user.demands.length == 0){
       resolve(connectedUser)
@@ -517,7 +513,9 @@ router.post('/demand', function(req, res){
                   }, 2000)
               })
           } else {
-            callback(connectedUser)
+            if(index +1 == object.length){
+              callback(connectedUser)
+            }
           }
         })
       })
@@ -575,40 +573,6 @@ router.post('/demand', function(req, res){
                 })
               })
             }
-
-            function addDays(date, days) {
-                var result = new Date(date);
-                result.setDate(result.getDate() + days);
-                return result;
-            };
-
-           var newEval = new Eval();
-           newEval.startDate = savedDemand.time;
-           newEval.endDate = addDays(savedDemand.time, 14);
-           newEval.clientId = req.user.id;
-           newEval.stylistId = stylebox.creator;
-           newEval.forDemand = savedDemand.id;
-           newEval.forStylebox = stylebox.id;
-           setTimeout(function(){
-             Eval.createNewEval(newEval, function(err, savedEval){
-               if(err){
-                 console.log(err)
-               } else {
-                 savedDemand.participants.forEach(function(par, indexpar, objectpar){
-                   User.getUserById(par, function(err, user){
-                     if(err){
-                      console.log(err)
-                    }
-                    if(user){
-                      user.evals.push(savedEval);
-                      user.save();
-                    }
-                   })
-                 })
-               }
-             })
-           }, 500);
-
           })
         } else {
           req.user.demands.forEach(function(demId, index){
@@ -1361,8 +1325,48 @@ router.post('/acceptdemand', function(req, res){
         demand.approuved = true;
         demand.valid = false;
         demand.save();
-        var demandId = demand.creator.toString();
-        pusher.trigger(demandId, 'demands', {"demandAccepter": true});
+        var creatorId = demand.creator.toString();
+
+        function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        };
+
+        var newEval = new Eval();
+        newEval.startDate = demand.time;
+        newEval.endDate = addDays(demand.time, 14);
+        newEval.stylistId = req.user.id;
+        newEval.forDemand = demand.id;
+
+        newEval.clientId = req.user.id;
+        newEval.forStylebox = demand.forstyle;
+        demand.participants.forEach(function(par, inde, obje){
+          if(par != req.user.id){
+            newEval.clientId = par;
+            setTimeout(function(){
+              Eval.createNewEval(newEval, function(err, savedEval){
+                if(err){
+                  console.log(err)
+                } else {
+                  demand.participants.forEach(function(par, indexpar, objectpar){
+                    User.getUserById(par, function(err, user){
+                      if(err){
+                       console.log(err)
+                     }
+                     if(user){
+                       user.evals.push(savedEval);
+                       user.save();
+                     }
+                    })
+                  })
+                }
+              })
+            }, 500);
+          }
+        })
+
+        pusher.trigger(creatorId, 'demands', {"demandAccepter": true});
         User.getUserById(demand.creator, function(err, user){
           if(err){
             console.log(err)
