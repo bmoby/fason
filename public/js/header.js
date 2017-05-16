@@ -5,7 +5,6 @@ $(document).ready(function(){
     $.ajax({
       url: '/checkevals',
       method: 'GET',
-      cache: false,
       success: function(response){
         console.log(response);
         if(response.send){
