@@ -1670,6 +1670,8 @@ router.get('/checkevals', function(req, res){
                 }
               } else {
                 console.log("LE CLIENT N'A JAMAIS COMMENTEEE")
+                console.log(count, " THIS IS THE COUNT")
+                console.log(evalu)
                 if(moment(evalu.startDate) < moment() && moment(evalu.endDate) > moment()){
                   console.log("LES CRITERES SONT BON")
                   count = count+1;
@@ -1677,6 +1679,8 @@ router.get('/checkevals', function(req, res){
                     console.log("ON A FINI DE PARCOURIR LA LISTE")
                     res.send({"evals": count, "send": true});
                   }
+                } else {
+                  console.log("LES CRITERES SONT PAS BONS")
                 }
               }
             }
