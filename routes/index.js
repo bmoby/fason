@@ -5,6 +5,7 @@ var Promise = require('promise');
 var Pusher = require('pusher');
 var User = require('../models/user');
 var Eval = require('../models/eval');
+var Stat = require('../models/stats');
 var moment = require('moment');
 var Stylebox = require('../models/stylebox');
 var Connu = require('../models/connu');
@@ -72,6 +73,59 @@ router.get('/', function(req, res) {
     res.render('index');
   }
 });
+
+
+
+
+
+router.get('/:id/:ib', function(req, res) {
+
+var creator = req.params.id;
+var subject = req.params.ib;
+
+var stat = new Stat();
+stat.creator = creator;
+stat.subject = subject;
+
+  setTimeout(function(){
+    Stat.createNewStat(stat, function(err, createdStat){
+      if(err){
+        console.log(err);
+      }
+    });
+  }, 500);
+
+  if(req.user){
+    var notifcount = 0;
+    var newdemands = 0;
+    var allnotifs = 0;
+
+    if(req.user.notifications.length){
+      notifcount = req.user.notifications.length;
+    }
+
+    if(req.user.demandNotifications.length){
+      newdemands = req.user.demandNotifications.length;
+    }
+
+    if(req.user.demandNotifications.length || req.user.notifications.length){
+      allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
+    } else if (req.user.demandNotifications.length && req.user.notifications.length){
+      allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
+    }
+
+    res.render('index', {"user": req.user,
+                          "newmessages": notifcount,
+                          "newdemands": newdemands,
+                          "allNotifications": allnotifs});
+  } else {
+    res.render('index');
+  }
+});
+
+
+
+
 
 router.post('/connu', function(req, res){
   if(req.user){
@@ -628,6 +682,18 @@ router.post('/demand', function(req, res){
                           res.send({"ok": true})
                         }
                       });
+                      var demanidd = savedDemand.id;
+                      var mailOptions = {
+                          from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+                          to: "fason.contact@gmal.com", // list of receivers
+                          subject : "New dem bro",
+                          html : "Nouvelle demande pas encore acceptée <br><br> id : "+demanidd;
+                      };
+                      transporter.sendMail(mailOptions, function(error, info){
+                          if(error){
+                              return console.log(error);
+                          }
+                      });
                     }
                   })
                 }
@@ -779,7 +845,7 @@ router.post('/createstylebox', function(req, res){
                   from: '"Fason service client" <fason.contact@gmail.com>',
                   to: "fason.contact@gmail.com",
                   subject : "Encore un look!",
-                  html : "yesss on a encore un look bro! titre : <br>"+ newStyle.title +"<br> ID : <br>" + newStyle.id + "user that is creating this style is : " + req.user.id
+                  html : "yesss on a encore un look bro! titre : <br>"+ newStyle.title +"<br> ID : <br>" + newStyle.id + " <br><br>User that is creating this style is : <br>" + req.user.id
               };
               transporter.sendMail(mailOptions, function(error, info){
                   if(error){
@@ -1367,6 +1433,18 @@ router.post('/acceptdemand', function(req, res){
             }, 500);
           }
         })
+        var demIdd = demand.id;
+        var mailOptions = {
+            from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+            to: "fason.contact@gmal.com", // list of receivers
+            subject : "Dem accepted bro",
+            html : "Demande accépté <br><br> id : "+ demIdd;
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+        });
 
         pusher.trigger(creatorId, 'demands', {"demandAccepter": true});
         User.getUserById(demand.creator, function(err, user){
