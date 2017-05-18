@@ -687,7 +687,7 @@ router.post('/demand', function(req, res){
                           from: '"Fason service client" <fason.contact@gmail.com>', // sender address
                           to: "fason.contact@gmal.com", // list of receivers
                           subject : "New dem bro",
-                          html : "Nouvelle demande pas encore acceptée <br><br> id : "+demanidd;
+                          html : "Nouvelle demande pas encore acceptée <br><br> id : "+demanidd
                       };
                       transporter.sendMail(mailOptions, function(error, info){
                           if(error){
@@ -1438,7 +1438,7 @@ router.post('/acceptdemand', function(req, res){
             from: '"Fason service client" <fason.contact@gmail.com>', // sender address
             to: "fason.contact@gmal.com", // list of receivers
             subject : "Dem accepted bro",
-            html : "Demande accépté <br><br> id : "+ demIdd;
+            html : "Demande accépté <br><br> id : "+ demIdd
         };
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
