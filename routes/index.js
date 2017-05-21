@@ -87,13 +87,15 @@ var stat = new Stat();
 stat.creator = creator;
 stat.subject = subject;
 
-  setTimeout(function(){
-    Stat.createNewStat(stat, function(err, createdStat){
-      if(err){
-        console.log(err);
-      }
-    });
-  }, 500);
+  if(creator != "stylebox" && creator != "conv" && creator != "styleboxedit" && creator != "resetPassword"){
+    setTimeout(function(){
+      Stat.createNewStat(stat, function(err, createdStat){
+        if(err){
+          console.log(err);
+        }
+      });
+    }, 500);
+  }
 
   if(req.user){
     var notifcount = 0;
