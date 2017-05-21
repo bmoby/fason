@@ -87,7 +87,6 @@ var stat = new Stat();
 stat.creator = creator;
 stat.subject = subject;
 
-  if(creator != "stylebox" && creator != "conv" && creator != "styleboxedit" && creator != "resetPassword"){
     setTimeout(function(){
       Stat.createNewStat(stat, function(err, createdStat){
         if(err){
@@ -95,7 +94,6 @@ stat.subject = subject;
         }
       });
     }, 500);
-  }
 
   if(req.user){
     var notifcount = 0;
