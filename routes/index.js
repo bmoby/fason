@@ -115,7 +115,7 @@ router.get('/', function(req, res) {
               styleboxesandstylist.push(styleboxproto);
               if(index + 1 == object.length){
                 setTimeout(function(){
-                  res.render('index', {"styleboxes": styleboxesandstylist});
+                  res.render('index', {"styleboxes": styleboxesandstylist, "user": req.user,"newmessages": notifcount,"newdemands": newdemands,"allNotifications": allnotifs});
                 }, 500)
               }
             };
