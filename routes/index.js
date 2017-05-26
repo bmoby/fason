@@ -46,6 +46,10 @@ var transporter = nodemailer.createTransport("SMTP",{
 });
 
 router.get('/', function(req, res) {
+
+  var styleboxes=['5926c426e9af4a00048f5782','59023e25706a880004de41e2','591373768deed30004c84d53','58ff12e576678d00041d4be2'];
+  var styleboxesandstylist = [];
+
   if(req.user){
     var notifcount = 0;
     var newdemands = 0;
@@ -65,13 +69,118 @@ router.get('/', function(req, res) {
       allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
     }
 
-    res.render('index', {"user": req.user,
-                          "newmessages": notifcount,
-                          "newdemands": newdemands,
-                          "allNotifications": allnotifs});
+    styleboxes.forEach(function(object0,index,object){
+      Stylebox.getStyleboxById(object0, function(err, stylebox){
+        if (err){
+          res.render('index', {"user": req.user,"newmessages": notifcount,"newdemands": newdemands,"allNotifications": allnotifs});
+        }else{
+          User.getUserById(stylebox.creator, function(err, user){
+            var rating = {};
+            var general = 0;
+            var communication = 0;
+            var quality = 0;
+            var ponctuality = 0;
+            var precision = 0;
+            if(user.rating.length){
+              user.rating.forEach(function(rat, index2, object2){
+                communication = communication + rat.communication;
+                quality = quality + rat.qualityprice;
+                ponctuality = ponctuality + rat.ponctuality;
+                precision = precision + rat.precision;
+
+                if(index2+1 == user.rating.length){
+                  var styleboxproto = stylebox;
+                  rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
+                  rating.number = user.rating.length;
+                  styleboxproto.rating = rating;
+                  //separator
+                  styleboxproto.stylistname = user.lastName;
+                  styleboxproto.stylistavatar = user.avatar;
+                  styleboxesandstylist.push(styleboxproto);
+                  if(index + 1 == object.length){
+                    setTimeout(function(){
+                      res.render('index', {"styleboxes": styleboxesandstylist, "user": req.user,"newmessages": notifcount,"newdemands": newdemands,"allNotifications": allnotifs});
+                    }, 500);
+                  }
+                }
+              });
+            }else{
+              var styleboxproto = stylebox;
+              rating.general = -1;
+              rating.number = 0;
+              styleboxproto.rating = rating;
+              //separator
+              styleboxproto.stylistname = user.lastName;
+              styleboxproto.stylistavatar = user.avatar;
+              styleboxesandstylist.push(styleboxproto);
+              if(index + 1 == object.length){
+                setTimeout(function(){
+                  res.render('index', {"styleboxes": styleboxesandstylist});
+                }, 500)
+              }
+            };
+          });
+        }
+
+      });
+    });
+
   } else {
-    res.render('index');
-  }
+    styleboxes.forEach(function(object0,index,object){
+      Stylebox.getStyleboxById(object0, function(err, stylebox){
+        if(err){
+          res.render('index');
+        }else{
+          User.getUserById(stylebox.creator,function(err,user){
+            var rating = {};
+            var general = 0;
+            var communication = 0;
+            var quality = 0;
+            var ponctuality = 0;
+            var precision = 0;
+            if(user.rating.length){
+              user.rating.forEach(function(rat, index2, object2){
+                communication = communication + rat.communication;
+                quality = quality + rat.qualityprice;
+                ponctuality = ponctuality + rat.ponctuality;
+                precision = precision + rat.precision;
+
+                if(index2+1 == user.rating.length){
+                  var styleboxproto = stylebox;
+                  rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
+                  rating.number = user.rating.length;
+                  styleboxproto.rating = rating;
+                  //separator
+                  styleboxproto.stylistname = user.lastName;
+                  styleboxproto.stylistavatar = user.avatar;
+                  styleboxesandstylist.push(styleboxproto);
+                  if(index + 1 == object.length){
+                    setTimeout(function(){
+                      res.render('index', {"styleboxes": styleboxesandstylist});
+                    }, 500);
+                  };
+                };
+              });
+            }else{
+              var styleboxproto = stylebox;
+              rating.general = -1;
+              rating.number = 0;
+              styleboxproto.rating = rating;
+              //separator
+              styleboxproto.stylistname = user.lastName;
+              styleboxproto.stylistavatar = user.avatar;
+              styleboxesandstylist.push(styleboxproto);
+              if(index + 1 == object.length){
+                setTimeout(function(){
+                  res.render('index', {"styleboxes": styleboxesandstylist});
+                }, 500)
+              };
+            };
+          });
+        };
+      });
+    });
+  };
 });
 
 
