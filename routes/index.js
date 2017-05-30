@@ -187,50 +187,25 @@ router.get('/', function(req, res) {
 
 
 
-// router.get('/:id/:ib', function(req, res) {
-//
-// var creator = req.params.id;
-// var subject = req.params.ib;
-//
-// var stat = new Stat();
-// stat.creator = creator;
-// stat.subject = subject;
-//
-//     setTimeout(function(){
-//       Stat.createNewStat(stat, function(err, createdStat){
-//         if(err){
-//           console.log(err);
-//         }
-//       });
-//     }, 500);
-//
-//   if(req.user){
-//     var notifcount = 0;
-//     var newdemands = 0;
-//     var allnotifs = 0;
-//
-//     if(req.user.notifications.length){
-//       notifcount = req.user.notifications.length;
-//     }
-//
-//     if(req.user.demandNotifications.length){
-//       newdemands = req.user.demandNotifications.length;
-//     }
-//
-//     if(req.user.demandNotifications.length || req.user.notifications.length){
-//       allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
-//     } else if (req.user.demandNotifications.length && req.user.notifications.length){
-//       allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
-//     }
-//
-//     res.render('index', {"user": req.user,
-//                           "newmessages": notifcount,
-//                           "newdemands": newdemands,
-//                           "allNotifications": allnotifs});
-//   } else {
-//     res.render('index');
-//   }
-// });
+router.get('/unsubscribe/:id/:ib', function(req, res) {
+
+var creator = req.params.id;
+var subject = req.params.ib;
+
+var stat = new Stat();
+stat.creator = creator;
+stat.subject = subject;
+
+    setTimeout(function(){
+      Stat.createNewStat(stat, function(err, createdStat){
+        if(err){
+          console.log(err);
+        }
+      });
+    }, 500);
+
+    res.render('unsubscribed', {"email": creator});
+});
 
 
 
