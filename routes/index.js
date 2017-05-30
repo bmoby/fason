@@ -204,7 +204,7 @@ stat.subject = subject;
       });
     }, 500);
 
-    res.render('unsubscribed', {"email": creator});
+    res.render('unsubscribe', {"email": creator});
 });
 
 
