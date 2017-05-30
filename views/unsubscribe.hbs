@@ -9,5 +9,9 @@
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-  $('.loading-page').fadeOut();
+  $(document).ready(function(){
+    setTimeout(function(){
+      $('.loading-page').fadeOut();
+    }, 500);
+  })
 </script>
