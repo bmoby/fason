@@ -11,20 +11,6 @@
 <script type="text/javascript" src="../js/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/homepage.js"></script>
 <script type="text/javascript">
-alert("HELLO");
-  function removeloadinf(){
-    $('.loading-page').empty();
-
-    setTimeout(function(){
-      removeloadinf();
-    }, 3000)
-  }
-
-  removeloadinf();
+var str = "Votre email" + {{email}} + "à été retiré de notre liste et vous n'allez plus recevoir des emails de notre part. Nous vous prions de nous exuser pour la gene occasionnée."
+alert(str);
 </script>
-
-<div class="row text-center">
-  <br><br><br><br><br><br>
-  <h1>Votre email {{email}} à été retiré de notre liste et vous n'allez plus recevoir des emails de notre part.</h1>
-  <h2>Nous vous prions de nous exuser pour la gene occasionnée.</h2>
-</div>
