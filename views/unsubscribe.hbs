@@ -1,10 +1,3 @@
-<div class="row text-center">
-  <br><br><br><br><br><br>
-  <h1>Votre email {{email}} à été retiré de notre liste et vous n'allez plus recevoir des emails de notre part.</h1>
-  <h2>Nous vous prions de nous exuser pour la gene occasionnée.</h2>
-</div>
-
-
 <script src="../js/jquery.min.js"></script>
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 <script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -18,9 +11,19 @@
 <script type="text/javascript" src="../js/imagesloaded.pkgd.min.js"></script>
 <script type="text/javascript" src="../js/homepage.js"></script>
 <script type="text/javascript">
-  $(document).ready(function(){
+  function removeloadinf(){
+    $('.loading-page').empty();
+
     setTimeout(function(){
-      $('.loadpage').empty();
-    }, 500);
-  })
+      removeloadinf();
+    }, 3000)
+  }
+
+  removeloadinf();
 </script>
+
+<div class="row text-center">
+  <br><br><br><br><br><br>
+  <h1>Votre email {{email}} à été retiré de notre liste et vous n'allez plus recevoir des emails de notre part.</h1>
+  <h2>Nous vous prions de nous exuser pour la gene occasionnée.</h2>
+</div>

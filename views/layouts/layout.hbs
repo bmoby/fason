@@ -20,6 +20,7 @@
 	<div class="full-page loading-page">
 	  {{> loading}}
 	</div>
+	
 		{{{body}}}
 
 	<script type="text/javascript">
@@ -28,10 +29,6 @@
 		setTimeout(function(){
 			$('.loading-page').fadeOut();
 		}, 5000);
-	}
-	if(window.location.pathname == '/unsubscribe'){
-			$('.loading-page').fadeOut();
-			$('.loadpage').empty();
 	}
 	$(window).load(function(){
 		 $('.loading-page').fadeOut();
