@@ -197,11 +197,13 @@ stat.creator = creator;
 stat.subject = subject;
 
     setTimeout(function(){
-      Stat.createNewStat(stat, function(err, createdStat){
-        if(err){
-          console.log(err);
-        }
-      });
+      if(creator.indexOf("@") > -1){
+        Stat.createNewStat(stat, function(err, createdStat){
+          if(err){
+            console.log(err);
+          }
+        });
+      }
     }, 500);
 
     res.render('unsubscribe', {"email": creator});
