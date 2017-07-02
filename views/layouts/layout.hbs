@@ -1,13 +1,13 @@
-<html>
+<html prefix="og: http://ogp.me/ns#">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="keywords" content="fason, relooking, stylistes, relookers particuliers, mode, fashion">
-	<meta name="description" content="Fason est la première plateforme mode qui vous met en relation avec des relookers particuliers." />
-	<title>Fason</title>
-	<link rel="icon"
-      type="image/png"
-      href="/images/baab.png" />
+	<div class="oldmetas"> <!-- changes -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="fason, relooking, stylistes, relookers particuliers, mode, fashion">
+    <meta class="metaDescription" name="description" content="Fason est la première plateforme mode qui vous met en relation avec des relookers particuliers." /> -->
+    <title>Fason</title>
+    <link rel="icon" type="image/png" href="/images/baab.png" />
+  </div>
 </head>
 <body>
 	{{#if user}}
@@ -20,7 +20,7 @@
 	<div class="full-page loading-page">
 	  {{> loading}}
 	</div>
-	
+
 		{{{body}}}
 
 	<script type="text/javascript">
@@ -74,5 +74,19 @@
 	  ga('send', 'pageview');
 
 	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+	    if(window.location.pathname == '/stylebox/{{styleboxId}}'){
+        $('.oldmetas').remove();
+        var title=$('.forstyleTitle').text();
+        var description=$('.forstyleDescription').text();
+        var photoUrl=$('.masoneryContainer').find("a").attr('href');
+
+        $('head').append('<meta property="og:title" content='+title+'>');
+        $('head').append('<meta property="og:description" content='+description+'>');
+		    $('head').append('<meta property="og:image:secure_url" content='+photoUrl+'>');
+		  }
+		});
+</script>
 </body>
 </html>

@@ -375,229 +375,230 @@ router.get('/stylebox/:id', function(req, res){
   var commentList = [];
   var styleboxId = req.params.id;
   Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-    if(stylebox){
-      if(stylebox.comments){
-        stylebox.comments.forEach(function(comment, indexcom, objectcom){
-          Comments.getCommentById(comment, function(err, com){
-            if(err){
-              console.log(err)
-            } else {
-              if(moment(com.showDate) < moment()){
-                var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, HH:mm');
-                com.createdDate = formatedCreated;
-                commentList.push(com);
-              }
+    if(stylebox.comments){
+      stylebox.comments.forEach(function(comment, indexcom, objectcom){
+        Comments.getCommentById(comment, function(err, com){
+          if(err){
+            console.log(err)
+          } else {
+            if(moment(com.showDate) < moment()){
+              var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, HH:mm');
+              com.createdDate = formatedCreated;
+              commentList.push(com);
             }
-          })
+          }
         })
-      }
-      User.getUserById(stylebox.creator, function(err, user){
-        if(err){
-          console.log(err)
+      })
+    }
+    User.getUserById(stylebox.creator, function(err, user){
+      if(err){
+        console.log(err)
+      } else {
+        var gender = "";
+        var style = "";
+        if (stylebox.gender == "ladies"){
+          gender = "femme"
         } else {
-          var gender = "";
-          var style = "";
-          if (stylebox.gender == "ladies"){
-            gender = "femme"
-          } else {
-            gender = "homme"
-          }
+          gender = "homme"
+        }
 
-          switch(stylebox.style){
-            case "allbeauty":
-              style = "Relooking beauté";
-            break;
-            case "all":
-              style = "Relooking vestimentaire";
-            break;
-            case "casual":
-              style = "Casual";
-            break;
-            case "businesscasual":
-              style = "Business casual";
-            break;
-            case "businessformal":
-              style = "Business formal";
-            break;
-            case "streetwear":
-              style = "Streetwear";
-            break;
-            case "CocktailChic":
-              style = "Cocktail chic";
-            break;
-            case "SemiFormal":
-              style = "Semi-formal";
-            break;
-            case "BlackTie":
-              style = "Black tie";
-            break;
-            case "WhiteTie":
-              style = "White tie";
-            break;
-            case "Bohemian":
-              style = "Bohemian";
-            break;
-            case "Arty":
-              style = "Arty";
-            break;
-            case "Chic":
-              style = "Chic";
-            break;
-            case "Classic":
-              style = "Classic";
-            break;
-            case "Exotic":
-              style = "Exotic";
-            break;
-            case "Flamboyant":
-              style = "Flamboyant";
-            break;
-            case "Sophisticated":
-              style = "Sophisticated";
-            break;
-            case "Sexy":
-              style = "Sexy";
-            break;
-            case "Western":
-              style = "Western";
-            break;
-            case "Traditional":
-              style = "Traditional";
-            break;
-            case "Preppy":
-              style = "Preppy";
-            break;
-            case "Punk":
-              style = "Punk";
-            break;
-            case "Tomboy":
-              style = "Tomboy";
-            break;
-            case "Rocker":
-              style = "Rocker";
-            break;
-            case "Goth":
-              style = "Goth";
-            break;
-            case "Coiffure":
-              style = "Coiffure";
-            break;
-            case "Barbe":
-              style = "Tailler la barbe";
-            break;
-            case "CoiffureColoration":
-              style = "Coiffure et coloration";
-            break;
-            case "CoiffureBarbe":
-              style = "Coiffure et tailler la barbe";
-            break;
-            case "CoiffureColorationBarbe":
-              style = "Coiffure, coloration et tailler la barbe";
-            break;
-            case "Maquillage":
-              style = "Maquillage";
-            break;
-            case "Manucure":
-              style = "Manucure";
-            break;
-            case "Pedicure":
-              style = "Pédicure";
-            break;
-            case "ManucurePedicure":
-              style = "Manucure et pédicure";
-            break;
-            case "Sourcils":
-              style = "Sourcils";
-            break;
-            case "SoinVisage":
-              style = "Soin visage";
-            break;
-            case "SoinCorp":
-              style = "Soin corps";
-            break;
-            case "SoinVisageCorp":
-              style = "Soin visage et corps";
-            break;
-            default:
-              style = "not found";
-            break;
-          }
+        switch(stylebox.style) {
+          case "allbeauty":
+            style = "Relooking beauté";
+          break;
+          case "all":
+            style = "Relooking vestimentaire";
+          break;
+          case "casual":
+            style = "Casual";
+          break;
+          case "businesscasual":
+            style = "Business casual";
+          break;
+          case "businessformal":
+            style = "Business formal";
+          break;
+          case "streetwear":
+            style = "Streetwear";
+          break;
+          case "CocktailChic":
+            style = "Cocktail chic";
+          break;
+          case "SemiFormal":
+            style = "Semi-formal";
+          break;
+          case "BlackTie":
+            style = "Black tie";
+          break;
+          case "WhiteTie":
+            style = "White tie";
+          break;
+          case "Bohemian":
+            style = "Bohemian";
+          break;
+          case "Arty":
+            style = "Arty";
+          break;
+          case "Chic":
+            style = "Chic";
+          break;
+          case "Classic":
+            style = "Classic";
+          break;
+          case "Exotic":
+            style = "Exotic";
+          break;
+          case "Flamboyant":
+            style = "Flamboyant";
+          break;
+          case "Sophisticated":
+            style = "Sophisticated";
+          break;
+          case "Sexy":
+            style = "Sexy";
+          break;
+          case "Western":
+            style = "Western";
+          break;
+          case "Traditional":
+            style = "Traditional";
+          break;
+          case "Preppy":
+            style = "Preppy";
+          break;
+          case "Punk":
+            style = "Punk";
+          break;
+          case "Tomboy":
+            style = "Tomboy";
+          break;
+          case "Rocker":
+            style = "Rocker";
+          break;
+          case "Goth":
+            style = "Goth";
+          break;
+          case "Coiffure":
+            style = "Coiffure";
+          break;
+          case "Barbe":
+            style = "Tailler la barbe";
+          break;
+          case "CoiffureColoration":
+            style = "Coiffure et coloration";
+          break;
+          case "CoiffureBarbe":
+            style = "Coiffure et tailler la barbe";
+          break;
+          case "CoiffureColorationBarbe":
+            style = "Coiffure, coloration et tailler la barbe";
+          break;
+          case "Maquillage":
+            style = "Maquillage";
+          break;
+          case "Manucure":
+            style = "Manucure";
+          break;
+          case "Pedicure":
+            style = "Pédicure";
+          break;
+          case "ManucurePedicure":
+            style = "Manucure et pédicure";
+          break;
+          case "Sourcils":
+            style = "Sourcils";
+          break;
+          case "SoinVisage":
+            style = "Soin visage";
+          break;
+          case "SoinCorp":
+            style = "Soin corps";
+          break;
+          case "SoinVisageCorp":
+            style = "Soin visage et corps";
+          break;
+          default:
+            style = "not found";
+               break;
+        }
 
-          var haveToVerify = false;
-          if(req.user){
-            if(req.user.varified == false || req.user.phoneIsVerified == false){
-              haveToVerify = true;
-            }
-          }
-          var stylistNeededInfo = {"firstName": user.firstName, "lastName": user.lastName, "avatar": user.avatar, "description": user.stylist.description, "availability": user.stylist.availability};
-          var rating = {};
-          var general = 0;
-          var communication = 0;
-          var quality = 0;
-          var ponctuality = 0;
-          var precision = 0;
-          if(user.rating.length){
-            user.rating.forEach(function(rat, index, object){
-              communication = communication + rat.communication;
-              quality = quality + rat.qualityprice;
-              ponctuality = ponctuality + rat.ponctuality;
-              precision = precision + rat.precision;
-
-              if(index+1 == user.rating.length){
-                rating.quality = quality/user.rating.length;
-                rating.communication = communication/user.rating.length;
-                rating.ponctuality = ponctuality/user.rating.length;
-                rating.precision = precision/user.rating.length;
-                rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
-                rating.number = user.rating.length;
-                if(req.user){
-                  res.render('stylebox-display',
-                    {"styleboxcomments": commentList,
-                      "stylebox": stylebox,
-                      "rating": rating,
-                      "stylist": stylistNeededInfo,
-                      "gender": gender,
-                      "style": style,
-                      "user": req.user,
-                      "newmessages": req.user.notifications.length,
-                      "haveToVerify": haveToVerify,
-                      "newdemands": req.user.demandNotifications.length,
-                      "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-                } else {
-                  res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
-                }
-              }
-            });
-          } else {
-            rating.quality = -1;
-            rating.communication = -1;
-            rating.ponctuality = -1;
-            rating.precision = -1;
-            rating.general = -1;
-            rating.number = 0;
-            if(req.user){res.render('stylebox-display',
-              {"styleboxcomments": commentList,
-              "stylebox": stylebox,
-              "rating": rating,
-              "stylist": stylistNeededInfo,
-              "style": style,
-              "gender": gender,
-              "user": req.user,
-              "newmessages": req.user.notifications.length,
-              "haveToVerify": haveToVerify,
-              "newdemands": req.user.demandNotifications.length,
-              "allNotifications": req.user.demandNotifications.length + req.user.notifications.length})
-            } else {
-              res.render('stylebox-display', {"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
-            }
+        var haveToVerify = false;
+        if(req.user){
+          if(req.user.varified == false || req.user.phoneIsVerified == false){
+            haveToVerify = true;
           }
         }
-      })
-    } else {
-      res.render('notfound')
-    }
-  })
-})
+        var stylistNeededInfo = {"firstName": user.firstName, "lastName": user.lastName, "avatar": user.avatar, "description": user.stylist.description, "availability": user.stylist.availability};
+        var rating = {};
+        var general = 0;
+        var communication = 0;
+        var quality = 0;
+        var ponctuality = 0;
+        var precision = 0;
+        if(user.rating.length){
+          user.rating.forEach(function(rat, index, object){
+            communication = communication + rat.communication;
+            quality = quality + rat.qualityprice;
+            ponctuality = ponctuality + rat.ponctuality;
+            precision = precision + rat.precision;
+
+            if(index+1 == user.rating.length){
+              rating.quality = quality/user.rating.length;
+              rating.communication = communication/user.rating.length;
+              rating.ponctuality = ponctuality/user.rating.length;
+              rating.precision = precision/user.rating.length;
+              rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
+              rating.number = user.rating.length;
+              if(req.user){
+                res.render('stylebox-display',
+                  {"styleboxId":styleboxId,
+                    "styleboxcomments": commentList,
+                    "stylebox": stylebox,
+                    "rating": rating,
+                    "stylist": stylistNeededInfo,
+                    "gender": gender,
+                    "style": style,
+                    "user": req.user,
+                    "newmessages": req.user.notifications.length,
+                    "haveToVerify": haveToVerify,
+                    "newdemands": req.user.demandNotifications.length,
+                    "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+              } else {
+                res.render('stylebox-display', {"styleboxId":styleboxId,"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
+              }
+            }
+          });
+        } else {
+          rating.quality = -1;
+          rating.communication = -1;
+          rating.ponctuality = -1;
+          rating.precision = -1;
+          rating.general = -1;
+          rating.number = 0;
+          if(req.user){
+            res.render('stylebox-display',
+            {"styleboxId":styleboxId,
+            "styleboxcomments": commentList,
+            "stylebox": stylebox,
+            "rating": rating,
+            "stylist": stylistNeededInfo,
+            "style": style,
+            "gender": gender,
+            "user": req.user,
+            "newmessages": req.user.notifications.length,
+            "haveToVerify": haveToVerify,
+            "newdemands": req.user.demandNotifications.length,
+            "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+          } else {
+            res.render('stylebox-display', {"styleboxId":styleboxId, "styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
+          }
+        }
+      }
+    })
+  });
+});
+
+
 
 router.post('/demand', function(req, res){
   var date = req.body.date;
