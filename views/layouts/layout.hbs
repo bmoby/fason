@@ -4,8 +4,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="keywords" content="fason, relooking vestimentaire, relooking beauté, styliste personnel paris, shopper personnel paris, personal shopper paris, personal stylist paris, relookers particuliers paris, startup mode">
 	<div class="oldmetas"> <!-- changes -->
-    <meta class="metaDescription" name="description" content="Fason est la première startup dans la mode qui vous met en relation avec des relookers particuliers." />
-    <title>Fason</title>
+    <meta property="og:description" content="Fason est la première startup dans la mode qui vous met en relation avec des relookers particuliers." />
+		<meta property="og:title" content='Fason'>
   </div>
 	<link rel="icon" type="image/png" href="/images/baab.png" />
 </head>
@@ -83,8 +83,8 @@
         var description=$('.forstyleDescription').text();
         var photoUrl=$('.masoneryContainer').find("a").attr('href');
 
-        $('head').append('<title>'+title+'</title>');
-        $('head').append('<meta class="metaDescription" name="description" content="'+description+'" />');
+        $('head').append('<meta property="og:title" content='+title+'>');
+        $('head').append('<meta property="og:description" content='+description+'>');
 		    $('head').append('<meta property="og:image:secure_url" content='+photoUrl+'>');
 		  }
 		});
