@@ -1,12 +1,24 @@
 <html prefix="og: http://ogp.me/ns#">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="keywords" content="fason, relooking vestimentaire, relooking beauté, styliste personnel paris, shopper personnel paris, personal shopper paris, personal stylist paris, relookers particuliers paris, startup mode">
-	<div class="oldmetas"> <!-- changes -->
-    <meta property="og:description" content="Fason est la première startup dans la mode qui vous met en relation avec des relookers particuliers." />
-		<meta property="og:title" content='Fason'>
-  </div>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="fason, relooking vestimentaire, relooking beauté, styliste personnel paris, shopper personnel paris, personal shopper paris, personal stylist paris, relookers particuliers paris, startup mode">
+		<script type="text/javascript">
+			setTimeout(function(){
+				if(window.location.pathname == '/stylebox'){
+					var description=$('.forstyleDescription').text();
+					$('.metas').append('<meta class="metaDescription" name="description" content="'+description+'"/>')
+				} else {
+					$('.metas').append('<meta class="metaDescription" name="description" content="Fason est la première startup dans la mode qui vous met en relation avec des relookers particuliers." />')
+				}
+			}, 500)
+		</script>
+    <title>Fason</title>
+
+		<div class="metas">
+
+		</div>
 	<link rel="icon" type="image/png" href="/images/baab.png" />
 </head>
 
@@ -75,19 +87,6 @@
 	  ga('send', 'pageview');
 
 	</script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-	    if(window.location.pathname == '/stylebox/{{styleboxId}}'){
-        $('.oldmetas').remove();
-        var title=$('.forstyleTitle').text();
-        var description=$('.forstyleDescription').text();
-        var photoUrl=$('.masoneryContainer').find("a").attr('href');
 
-        $('head').append('<meta property="og:title" content='+title+'>');
-        $('head').append('<meta property="og:description" content='+description+'>');
-		    $('head').append('<meta property="og:image:secure_url" content='+photoUrl+'>');
-		  }
-		});
-</script>
 </body>
 </html>
