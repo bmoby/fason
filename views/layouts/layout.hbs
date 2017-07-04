@@ -70,9 +70,9 @@
 	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
 	  ga('create', 'UA-97547937-2', 'auto');
-	  ga('send', 'pageview');
-
+	  ga('send', 'pageview')
 	</script>
+
   <script type="text/javascript">
 	$(document).ready(function(){
 		if(window.location.pathname == '/stylebox/{{styleboxId}}'){
@@ -90,7 +90,7 @@
 			$('head').append('<meta property="og:title" content='+title+'>');
 			$('head').append('<meta property="og:type" content="website">');
 			$('head').append('<meta property="og:secure_url" content='+"https://www.fason.co/stylebox/{{styleboxId}}"+'>');
-			$('head').append('<meta property="og:image:secure_url" content='+"photoUrl"+'>');
+			$('head').append('<meta property="og:image:secure_url" content='+photoUrl+'>');
 			$('head').append('<meta property="og:description" content='+description+'>');
 			$('head').append('<meta property="og:width" content>');
 			$('head').append('<meta property="og:height" content>');
