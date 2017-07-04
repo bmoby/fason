@@ -1,10 +1,12 @@
-<html prefix="og: http://ogp.me/ns#">
+<html lang="fr" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="fason, relooking vestimentaire, relooking beauté, styliste personnel paris, shopper personnel paris, personal shopper paris, personal stylist paris, relookers particuliers paris, startup mode">
-    <meta property="og:description" content="Fason est la première startup dans la mode qui vous met en relation avec des relookers particuliers.">
-    <title>Fason</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<div class="oldmetas">
+	    <meta name="keywords" content="fason, relooking vestimentaire, relooking beauté, styliste personnel paris, shopper personnel paris, personal shopper paris, personal stylist paris, relookers particuliers paris, startup mode">
+	    <meta name="description" content="Fason est la première startup dans la mode qui vous met en relation avec des relookers particuliers.">
+			<title>Fason : Stylistes Personnels, Shoppers Personnels</title>
+	  </div>
 	<link rel="icon" type="image/png" href="/images/baab.png" />
 </head>
 <body>
@@ -20,7 +22,6 @@
 	</div>
 
 		{{{body}}}
-    <!-- nodmon converter TEST2222 -->
 	<script type="text/javascript">
 
 	if(window.location.pathname == '/search'){
@@ -71,23 +72,30 @@
 	  ga('create', 'UA-97547937-2', 'auto');
 	  ga('send', 'pageview');
 
-	</script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-	    if(window.location.pathname == '/stylebox/{{styleboxId}}'){
-        // $('.oldmetas').remove();
-        var title=$('.forstyleTitle').text();
-        var description=$('.forstyleDescription').text();
-        var photoUrl=$('.masoneryContainer').find("a").attr('href');
+    <script type="text/javascript">
+  $(document).ready(function(){
+  	if(window.location.pathname == '/stylebox/{{styleboxId}}'){
+  		$('.oldmetas').remove();
+  		var title=$('.forstyleTitle').text();
+  		var description=$('.forstyleDescription').text();
+  		var photoUrl=$('.masoneryContainer').find("a").attr('href');
 
-        $('head').append('<meta property="og:type" content="website">');
-        $('head').append('<meta property="og:title" content='+title+'>');
-        $('head').append('<meta property="og:description" content='+description+'>');
-    		$('head').append('<meta property="og:image:secure_url" content='+photoUrl+'>');
-        $('head').append('<meta property="fb:app_id" content="EAACEdEose0cBAFfnKabZActtz5SlymBRVIQOQlXUdAyJ3lZBFZA0bTrw7ITsNcGAfASmeXMtR6CWw0nZBzX6K3e71W5qRgcARRAMrd1WcM1ZAHJ1gIHwqerCSxRJZBlEeEz5rI46EkyKPoQc0FsnRsWHUdNQIkahGZBK6Kck8BX2XpaX0ZAVqNGiDbCcbcTZBJsktLzhnglJjpQZDZD"/>');
-        $('head').append('<meta property="fb:admins " content="415137618819195">');
-		  }
-		});
-</script>
+  		$('head').append('<title>'+title+'</title>');
+  		$('head').append('<meta name="description" content='+description+'>');
+  		// $('head').append('<meta property="fb:app_id" content="EAACEdEose0cBAFsZACUB1KPW8WoA1QW42j9HvetbrdsNUXsiisqoDOlDdzkicu8GupQNtGPWkCMa2xo9QMGgJhZACFZAwpDrQx7PkrHrvxluDFF2VeL88ZBrEDLFrwlJWcfCe4LYQ809A8Eq7FeI7dy8VuDEPt8VZAsuXlwUZAMSt4oypSbu9HmvZCpNsbHQXeedTHitPiHogZDZD"/>');
+  		// $('head').append('		<meta property="fb:admins " content="415137618819195">')
+  		$('head').append('		<meta property="fb:app_id " content="415137618819195">')
+  		$('head').append('<meta property="og:site_name" content="Fason">');
+  		$('head').append('<meta property="og:title" content='+title+'>');
+  		$('head').append('<meta property="og:type" content="website">');
+  		$('head').append('<meta property="og:secure_url" content='+"https://www.fason.co/stylebox/{{styleboxId}}"+'>');
+  		$('head').append('<meta property="og:image:secure_url" content='+"photoUrl"+'>');
+  		$('head').append('<meta property="og:description" content='+description+'>');
+  		$('head').append('<meta property="og:width" content>');
+  		$('head').append('<meta property="og:height" content>');
+  		$('head').append('<meta property="og:locale" content="fr_FR">');
+  	}
+  });
+  </script>
 </body>
 </html>
