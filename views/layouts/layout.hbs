@@ -76,19 +76,18 @@
   <script type="text/javascript">
   $(document).ready(function(){
   	if(window.location.pathname == '/stylebox/{{styleboxId}}'){
-      var url=window.location.href
+      // var url=window.location.href
   		var title=$('.forstyleTitle').text();
   		var description=$('.forstyleDescription').text();
   		var photoUrl=$('.masoneryContainer').find("a").attr('href');
 
   		document.title=title;
   		$("meta[name='description']").attr("content", description);
-      $('head').append('<link rel="canonical" href="'+url+'">');
       $('head').append('<meta property="fb:app_id" content="665196237011417"/>');
   		$('head').append('<meta property="og:site_name" content="Fason">');
   		$('head').append('<meta property="og:title" content="'+title+'">');
   		$('head').append('<meta property="og:type" content="website">');
-  		$('head').append('<meta property="og:url" content="'+url+'">');
+  		$('head').append('<meta property="og:url" content='+"https://www.fason.co/stylebox/{{styleboxId}}"+'>');
   		$('head').append('<meta property="og:image" content='+photoUrl+'>');
   		$('head').append('<meta property="og:description" content="'+description+'">');
   		$('head').append('<meta property="og:width" content>');
