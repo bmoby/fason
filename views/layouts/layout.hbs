@@ -74,17 +74,13 @@
   <script type="text/javascript">
   $(document).ready(function(){
   	if(window.location.pathname == '/stylebox/{{styleboxId}}'){
-  		// $('.oldmetas').remove();
   		var title=$('.forstyleTitle').text();
   		var description=$('.forstyleDescription').text();
   		var photoUrl=$('.masoneryContainer').find("a").attr('href');
 
-  		// $('head').append('<title>'+title+'</title>');
   		document.title=title;
   		$("meta[name='description']").attr("content", description);
-  		// $('head').append('<meta property="fb:app_id" content="EAACEdEose0cBAFlSqVdkpeUb5vXw2UoTg7c86rvK1dNOmCQKank4NIdRzqZBUbSzwFBDNkaQnuZC6WfBwFq6n6vT6cgTsoBFUth6VIbZCC2xrnbSDbioZA6KXwK5o6ueKpQmPyQuJ3VRZCUKfnyHawXqRG3zF3PcpD6yhR7HSSlTO12aZAaUhzGIcv4pirftEZD"/>');
-  		// $('head').append('<meta property="fb:admins " content="415137618819195">')
-  		$('head').append('<meta property="fb:app_id " content="415137618819195">')
+  		$('head').append('<meta property="fb:admins " content="415137618819195">')
   		$('head').append('<meta property="og:site_name" content="Fason">');
   		$('head').append('<meta property="og:title" content='+title+'>');
   		$('head').append('<meta property="og:type" content="website">');
