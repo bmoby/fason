@@ -1,5 +1,5 @@
-<!-- <html lang="fr" xmlns:fb="http://ogp.me/ns/fb#"> -->
-<html lang="fr" prefix="og: http://ogp.me/ns#">
+<html lang="fr" xmlns:fb="http://ogp.me/ns/fb#">
+<!-- <html lang="fr" prefix="og: http://ogp.me/ns#"> -->
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,7 +81,8 @@
 
   		document.title=title;
   		$("meta[name='description']").attr("content", description);
-  		$('head').append('<meta property="fb:admins " content="415137618819195">')
+      $('head').append('<meta property="fb:app_id" content="665196237011417"/>');
+  		// $('head').append('<meta property="fb:admins " content="415137618819195">')
   		$('head').append('<meta property="og:site_name" content="Fason">');
   		$('head').append('<meta property="og:title" content="'+title+'">');
   		$('head').append('<meta property="og:type" content="website">');
