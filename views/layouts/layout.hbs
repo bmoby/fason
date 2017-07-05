@@ -82,6 +82,7 @@
 
   		document.title=title;
   		$("meta[name='description']").attr("content", description);
+      $('head').append('<link rel="canonical" href='+"https://www.fason.co/stylebox/{{styleboxId}}"+'>');
       $('head').append('<meta property="fb:app_id" content="665196237011417"/>');
   		$('head').append('<meta property="og:site_name" content="Fason">');
   		$('head').append('<meta property="og:title" content="'+title+'">');
