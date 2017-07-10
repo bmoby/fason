@@ -1,0 +1,79 @@
+.tutorialContainer{
+  margin-top: 50;
+}
+.tutorialContainer, .imgTutoRow{
+  margin-left: 0;
+  margin-right: 0;
+}
+.genTuto{
+  margin:0;
+  border-bottom: 1px solid #e8e8e8;
+  width: 100%
+}
+.defTutot{
+ border-bottom: 0px;
+}
+.descTuto{
+  height: 500px;
+}
+.mdTutoLook, .mdTutoChoisirRelooker{
+  margin-top: 150px;
+}
+.mdTutoRecherche, .defText{
+  margin-top: 100px;
+}
+.mdTutoRDV, .mdTutoFinal{
+  margin-top: 130px;
+}
+.tutorialContainer img{
+  height: 200px;
+  width:200px;
+}
+.smTuto{
+  margin: 10 10
+}
+.defMot{
+  font-weight: 900;
+}
+.tutoImg1{
+  position: relative;
+  margin-left: 165px;
+  margin-top: 50px;
+}
+.tutoImg2{
+  position: relative;
+  margin-top: 50px;
+  margin-left: 25px;
+}
+.tutoImg3{
+  .position: relative;
+  margin-left: 150px;
+}
+@media (max-width: 768px) {
+  .descTuto{
+    height: inherit;
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+  .descTuto h3{
+    margin-bottom:50px;
+  }
+  .xsTextdiv{
+    margin-top: 50;
+    text-align: left;
+  }
+  .xsTextDef{
+    text-align: justify;
+  }
+  .tutorialContainer img{
+    height: 150px;
+    width:150px;
+  }
+  .tutoImg1, .tutoImg2{
+    margin: 0;
+  }
+  .tutoImg3{
+    margin-top: -16px;
+    margin-left: 0;
+  }
+}
