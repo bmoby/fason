@@ -26,11 +26,11 @@
 	if(window.location.pathname == '/search'){
 		setTimeout(function(){
 			$('.loading-page').fadeOut();
-		}, 5000);
+		}, 3000);
 	}
-	$(window).load(function(){
-		 $('.loading-page').fadeOut();
-	});
+	setTimeout(function(){
+		$('.loading-page').fadeOut();
+	},3000)
 	</script>
 	<script src="//js.pusher.com/4.0/pusher.min.js"></script>
 	<script src="/js/header.js"></script>
