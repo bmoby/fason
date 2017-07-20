@@ -46,6 +46,23 @@
   .position: relative;
   margin-left: 150px;
 }
+@media (max-width: 1024px) {
+  .tutoImg1{
+    position: relative;
+    margin-left: 50px;
+    margin-top: 50px;
+  }
+
+  .tutoImg2{
+    position: relative;
+    margin-left: 20px;
+    margin-top: 50px;
+  }
+
+  .tutoImg3{
+    margin-left: 30px;
+  }
+}
 @media (max-width: 768px) {
   .descTuto{
     height: inherit;
