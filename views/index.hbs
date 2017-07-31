@@ -1,4 +1,3 @@
-
 {{#if user}}
   {{> userheader}}
 {{else}}
@@ -19,111 +18,17 @@
       <p class="text-left" id="jombo-paragraph1">Rencontrez les relookers particuliers et découvrez votre style </p>
     </div>
 
-
-
 {{> searchbar}}
-<br>
+
+<div class="hidden-xs searchbarpadding"></div>
+
+
 {{#if styleboxes}}
-  <div class="" style="margin-left: 10px; margin-right: 10px; margin-bottom: 40px;">
-    <h4>Retrouvez tous les stylistes personnels en faisant la recherche</h4>
-  {{#each styleboxes}}
-    {{> stylebox}}
-  {{/each}}
-  </div>
-{{else}}
-  <div class="photosContainer">
-    <div class="masonryContainer4">
-      <div id="gallery3">
-        <div class="item-masonry sizer4">
-          <img id='4-5' class="item-masonry-photo" src="/images/chic look/img1.gif" alt="chic look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='4-0' class="item-masonry-photo" src="/images/chic look/img2.gif" alt="chic look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='4-1' class="item-masonry-photo" src="/images/chic look/img3.gif" alt="chic look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='4-2' class="item-masonry-photo" src="/images/chic look/img4.gif" alt="chic look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='4-3' class="item-masonry-photo" src="/images/chic look/img5.gif" alt="chic look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='4-4' class="item-masonry-photo" src="/images/chic look/img6.gif" alt="chic look">
-        </div>
-      </div>
+    <div id="stylistContainer">
+      {{#each styleboxes}}
+        {{> stylebox}}
+      {{/each}}
     </div>
-
-    <div class="masonryContainer1">
-      <div id="gallery">
-        <div class="item-masonry sizer4">
-          <img id='1-4' class="item-masonry-photo" src="/images/business casual look/img4.gif" alt="business casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='1-1' class="item-masonry-photo" src="/images/business casual look/img2.gif" alt="business casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='1-2' class="item-masonry-photo" src="/images/business casual look/img5.gif" alt="business casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='1-3' class="item-masonry-photo" src="/images/business casual look/img3.gif" alt="business casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='1-0' class="item-masonry-photo" src="/images/business casual look/img1.gif" alt="business casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='1-5' class="item-masonry-photo" src="/images/business casual look/img6.gif" alt="business casual look">
-        </div>
-      </div>
-    </div>
-
-    <div class="masonryContainer2">
-      <div id="gallery1">
-        <div class="item-masonry sizer4">
-          <img id='2-0' class="item-masonry-photo" src="/images/bohemian look/img1.gif" alt="bohemian look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='2-3' class="item-masonry-photo" src="/images/bohemian look/img6.gif" alt="bohemian look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='2-2' class="item-masonry-photo" src="/images/bohemian look/img3.gif" alt="bohemian look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='2-4' class="item-masonry-photo" src="/images/bohemian look/img4.gif" alt="bohemian look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='2-5' class="item-masonry-photo" src="/images/bohemian look/img5.gif" alt="bohemian look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='2-1' class="item-masonry-photo" src="/images/bohemian look/img2.gif" alt="bohemian look">
-        </div>
-      </div>
-    </div>
-
-    <div class="masonryContainer3">
-      <div id="gallery2">
-        <div class="item-masonry sizer4">
-          <img id='3-5' class="item-masonry-photo" src="/images/casual look/img6.gif" alt="casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='3-1' class="item-masonry-photo" src="/images/casual look/img2.gif" alt="casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='3-3' class="item-masonry-photo" src="/images/casual look/img3.gif" alt="casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='3-4' class="item-masonry-photo" src="/images/casual look/img4.gif" alt="casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='3-2' class="item-masonry-photo" src="/images/casual look/img5.gif" alt="casual look">
-        </div>
-        <div class="item-masonry sizer4">
-          <img id='3-0' class="item-masonry-photo" src="/images/casual look/img1.gif" alt="casual look">
-        </div>
-      </div>
-    </div>
-  </div>
 {{/if}}
 
 <br>
@@ -131,158 +36,142 @@
 <br>
 <br>
 <br>
-<div class="row tutorialContainer hidden-sm hidden-xs">
-  <div class="row genTuto">
-    <h1 class="text-center">Comment ça marche</h1>
-  </div>
-  <div class="row genTuto descTuto">
-    <div class="mdTutoLook col-md-4 col-md-offset-1 col-lg-4 col-lg-offset-1">
-      <h3>Recherche d'un look</h3>
-      <p>Vous avez un rendez-vous d'affaires, un entretien de stage ou d'embauche? Vous cherchez un style pour une occasion spéciale (mariage, conférence de presse, etc.) ou tout simplement un look quotidien ? Relookers de Fason vous aideront, quelle que soit l'occasion.</p>
-    </div>
-    <div class="col-md-6 col-lg-6 text-center">
-      <img class="tutoImg1" src="/images/relooking tutorial/costume.png" alt="costume rencontre d’affaire, entretien d’embauche, business look">
-      <img class="tutoImg2" src="/images/relooking tutorial/robe.png" alt="robe de mariage, soirée, rendez-vous avec un mec">
-      <img class="tutoImg3" src="/images/relooking tutorial/chpeauicon.png" alt="recherche un look/style vestimentaire ?">
-    </div>
-  </div>
-  <div class="row genTuto descTuto">
-    <div class="col-md-6 text-center">
-      <img class="tutoImg1" src="/images/relooking tutorial/fille.png" alt="styliste personnelle femme">
-      <img class="tutoImg2" src="/images/relooking tutorial/garcon.png" alt="styliste personnel homme">
-      <img class="tutoImg3" src="/images/relooking tutorial/search.png" alt="personal shopper">
-    </div>
-    <div class="mdTutoRecherche col-md-4 col-md-offset-1">
-      <h3>Trouver un styliste personnel</h3>
-      <p>Dans la barre de recherche, choisissez les critères qui vous correspondent.</p>
-      <p>Avec le critère "Vestimentaire", vous y trouverez tous les looks vestimentaires : business look, business casual look, streetwear look, etc.</p>
-      <p>En ce qui concerne le critère "Beauté", les stylistes personnels vous y proposent : maquillage, coiffure et coloration, tailler la barbe, etc.</p>
-    </div>
-  </div>
-  <div class="row genTuto descTuto">
-    <div class="mdTutoChoisirRelooker col-md-4 col-md-offset-1">
-      <h3>Choisir un relooker</h3>
-      <p>Choisissez un relooker selon son expérience dans la mode, ses notes, le prix horaire du service de relooking, la description de look, le budget conseillé pour le shopping.</p>
-    </div>
-    <div class="col-md-6 text-center">
-      <img class="tutoImg1" src="/images/relooking tutorial/budget.png" alt="budget conseillé pour le shopping par shopper personnel">
-      <img class="tutoImg2" src="/images/relooking tutorial/evaluation.png" alt="description de look par shopper personnel et prix horaire de relooking">
-      <img class="tutoImg3" src="/images/relooking tutorial/experience.png" alt="expéreince de shopper personnel">
-    </div>
-  </div>
-  <div class="row genTuto descTuto">
-    <div class="col-md-6 text-center">
-      <img class="tutoImg1" src="/images/relooking tutorial/calendrier.png" alt="disponibilités hebdomadaires de relooker personnel">
-      <img class="tutoImg2" src="/images/relooking tutorial/contact.png" alt="conacter pour plus de renseignements le relooker personnel">
-      <img class="tutoImg3" src="/images/relooking tutorial/accord.png" alt="accord de faire le shopping, relooking vestimentraire chez soi, shopping à ma place">
-    </div>
-    <div class="mdTutoRDV col-md-4 col-md-offset-1">
-      <h3>Prendre rendez-vous</h3>
-      <p>Avant de prendre le rendez-vous, renseignez-vous sur les disponibilités hebdomadaires de relooker personnel.</p>
-      <p>Si vous avez des questions supplémentaires par rapport à l'accompagnement shopping, au relooking ou à la mise en valeur de la garde-robe, contactez le styliste personnel via le messenger de Fason.</p>
-    </div>
-  </div>
-  <div class="row genTuto descTuto">
-    <div class="mdTutoFinal col-md-4 col-md-offset-1">
-      <h3>Paiement, évaluation et commentaire</h3>
-      <p>Une fois le service est rendu, payez le relooker personnel en liquide. Le paiement online sera mis à disposition bientôt.</p>
-      <p>Évaluez et laissez un commentaire de votre expérience de relooking.</p>
-    </div>
-    <div class="col-md-6 text-center">
-      <img class="tutoImg1" src="/images/relooking tutorial/evaluer.png" alt="évaluer le service relooking">
-      <img class="tutoImg2" src="/images/relooking tutorial/comment.png" alt="commenter le service relooking">
-      <img class="tutoImg3" src="/images/relooking tutorial/liquid.png" alt="payer en liquide le service de relooking">
-    </div>
-  </div>
-  <div class="row genTuto descTuto defTutot">
-    <div class="defText col-md-6 col-md-offset-3">
-      <h3>Quelques définitions</h3>
-      <p><span class="defMot">Styliste Personnel</span> est une personne qui conseille habituellement les individus de nouvelles tendances de la mode, des styles de vêtements, des couleurs, de la coiffure, du maquillage, et de la barbe.</p>
-      <p><span class="defMot">Shopper Personnel</span> est une personne qui rend les même services que le/la Styliste Personnelle et fait le shopping à la place de son client.</p>
-    </div>
-  </div>
-</div>
 
-
-<div class="row tutorialContainer hidden-md hidden-lg">
-  <div class="row genTuto">
-    <h1 class="text-center">Comment ça marche</h1>
-  </div>
-  <div class="row genTuto descTuto text-center">
-    <h3>Recherche d'un look</h3>
-    <div class="row imgTutoRow">
-      <img class="tutoImg1" src="/images/relooking tutorial/costume.png" alt="costume rencontre d’affaire, entretien d’embauche, business look">
-      <img class="tutoImg2" src="/images/relooking tutorial/robe.png" alt="robe de mariage, soirée, rendez-vous avec un mec">
+<div class="row tutorialContainerMain">
+  <div class="row tutorialContainer hidden-sm hidden-xs">
+    <div class="row genTuto">
+      <h1 class="text-center">Comment ça marche</h1>
     </div>
-    <div class="row imgTutoRow">
-      <img class="tutoImg3" src="/images/relooking tutorial/chpeauicon.png" alt="recherche un look/style vestimentaire ?">
+    <div class="row genTuto descTuto">
+      <div class="mdTutoLook col-md-4 col-md-offset-1">
+        <div>
+          <h3>Recherche d'un look</h3>
+          <p>Vous avez un rendez-vous d'affaires, un entretien d'embauche ou de stage ? Vous cherchez un style pour une occasion spéciale (mariage, conférence de presse, etc.) ou tout simplement un look quotidien ? Relookers de Fason vous aideront, quelle que soit l'occasion.</p>
+        </div>
+      </div>
+      <div class="col-md-6 text-center relooking-img">
+        <img src="/images/relookingtutorial/first.png" alt="costume rencontre d’affaire, entretien d’embauche, business look, robe de mariage, soirée, rendez-vous avec un mec. recherche un look/style vestimentaire ?">
+      </div>
     </div>
-    <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
-      <p>Vous avez un rendez-vous d'affaires, un entretien d'embauche ou de stage ? Vous cherchez un style pour une occasion spéciale (mariage, conférence de presse, etc.) ou tout simplement un look quotidien ? Relookers de Fason vous aideront, quelle que soit l'occasion.</p>
+    <div class="row genTuto descTuto">
+      <div class="col-md-6 text-center relooking-img">
+        <img src="/images/relookingtutorial/second.png" alt="styliste personnelle femme / homme, personal shopper">
+      </div>
+      <div class="mdTutoRecherche col-md-4 col-md-offset-1">
+        <div>
+          <h3>Trouver un styliste personnel</h3>
+          <p>Dans la barre de recherche, choisissez les critères qui vous correspondent.</p>
+          <p>Avec le critère "Vestimentaire", vous y trouverez tous les services de relooking vestimentaire : accompagnement shopping, tri de la garde-robe, etc.</p>
+          <p>En choisissant le critère "Beauté", vous y trouverez tous les services de relooking beauté : maquillage, coiffure et coloration, tailler de barbe, etc.</p>
+          <p>En ce qui concerne le critère “Cours”, les stylistes personnels vous y proposent les cours de relooking : morphologie, taille de barbe, couleurs, manucure, etc.</p>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row genTuto descTuto text-center">
-    <h3>Trouver un styliste personnel</h3>
-    <div class="row imgTutoRow">
-      <img class="tutoImg1" src="/images/relooking tutorial/fille.png" alt="styliste personnelle femme">
-      <img class="tutoImg2" src="/images/relooking tutorial/garcon.png" alt="styliste personnel homme">
+    <div class="row genTuto descTuto">
+      <div class="mdTutoChoisirRelooker col-md-4 col-md-offset-1">
+        <div>
+          <h3>Choisir un relooker</h3>
+          <p>Choisissez un relooker selon son expérience dans la mode, ses notes, le prix horaire du service de relooking et les services de relooking proposés.</p>
+        </div>
+      </div>
+      <div class="col-md-6 text-center relooking-img">
+        <img src="/images/relookingtutorial/third.png" alt="prix horaire de relooking, expéreince de shopper personnel, déroulement de relooking personnel">
+      </div>
     </div>
-    <div class="row imgTutoRow">
-      <img class="tutoImg3" src="/images/relooking tutorial/search.png" alt="personal shopper">
+    <div class="row genTuto descTuto">
+      <div class="col-md-6 text-center relooking-img">
+        <img src="/images/relookingtutorial/fourth.png" alt="accord avec le relooker personnel, relooking vestimentraire chez soi, shopping à ma place, contacter du relooker personnel">
+      </div>
+      <div class="mdTutoRDV col-md-4 col-md-offset-1">
+        <div>
+          <h3>Prendre rendez-vous</h3>
+          <p>Avant de prendre le rendez-vous, renseignez-vous sur les disponibilités hebdomadaires de relooker personnel.</p>
+          <p>Si vous avez des questions supplémentaires par rapport à l'accompagnement shopping, au relooking ou à la mise en valeur de la garde-robe, contactez le styliste personnel via le messenger de Fason.</p>
+        </div>
+      </div>
     </div>
-    <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
-      <p>Dans la barre de recherche, choisissez les critères qui vous correspondent.</p>
-      <p>Avec le critère "Vestimentaire", vous y trouverez tous les looks vestimentaires : business look, business casual look, streetwear look, etc.</p>
-      <p>En ce qui concerne le critère "Beauté", les stylistes personnels vous y proposent : maquillage, coiffure et coloration, tailler la barbe, etc.</p>
+    <div class="row genTuto descTuto">
+      <div class="mdTutoFinal col-md-4 col-md-offset-1">
+        <div class="">
+          <h3>Paiement, évaluation et commenttaire</h3>
+          <p>Une fois le service est rendu, payez le relooker personnel en liquide. Le paiement online sera mis à disposition bientôt.</p>
+          <p>Évaluez et laissez un commentaire de votre expérience de relooking.</p>
+        </div>
+      </div>
+      <div class="col-md-6 text-center relooking-img">
+        <img src="/images/relookingtutorial/fifth.png" alt="évaluer le service relooking, commenter le service relooking, payer en liquide le service de relooking">
+      </div>
     </div>
-  </div>
-  <div class="row genTuto descTuto text-center">
-    <h3>Choisir un relooker</h3>
-    <div class="row imgTutoRow">
-      <img class="tutoImg1" src="/images/relooking tutorial/budget.png" alt="budget conseillé pour le shopping par shopper personnel">
-      <img class="tutoImg2" src="/images/relooking tutorial/evaluation.png" alt="description de look par shopper personnel et prix horaire de relooking">
-    </div>
-    <div class="row imgTutoRow">
-      <img class="tutoImg3" src="/images/relooking tutorial/experience.png" alt="expéreince de shopper personnel">
-    </div>
-    <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
-      <p>Choisissez un relooker selon son expérience dans la mode, ses notes, le prix horaire du service de relooking, la description de look, le budget conseillé pour le shopping.</p>
-    </div>
-  </div>
-  <div class="row genTuto descTuto text-center">
-    <h3>Prendre rendez-vous</h3>
-    <div class="row imgTutoRow">
-      <img class="tutoImg1" src="/images/relooking tutorial/calendrier.png" alt="disponibilités hebdomadaires de relooker personnel">
-      <img class="tutoImg2" src="/images/relooking tutorial/contact.png" alt="conacter pour plus de renseignements le relooker personnel">
-    </div>
-    <div class="row imgTutoRow">
-      <img class="tutoImg3" src="/images/relooking tutorial/accord.png" alt="accord de faire le shopping, relooking vestimentraire chez soi, shopping à ma place">
-    </div>
-    <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
-      <p>Avant de prendre le rendez-vous, renseignez-vous sur les disponibilités hebdomadaires de relooker personnel.</p>
-      <p>Si vous avez des questions supplémentaires par rapport à l'accompagnement shopping, au relooking ou à la mise en valeur de la garde-robe, contactez le styliste personnel via le messenger de Fason.</p>
-    </div>
-  </div>
-  <div class="row genTuto descTuto text-center">
-    <h3>Paiement, évaluation et commentaire</h3>
-    <div class="row imgTutoRow">
-      <img class="tutoImg1" src="/images/relooking tutorial/evaluer.png" alt="évaluer le service relooking">
-      <img class="tutoImg2" src="/images/relooking tutorial/comment.png" alt="commenter le service relooking">
-    </div>
-    <div class="row imgTutoRow">
-      <img class="tutoImg3" src="/images/relooking tutorial/liquid.png" alt="payer en liquide le service de relooking">
-    </div>
-    <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
-      <p>Une fois le service est rendu, payez le relooker personnel en liquide. Le paiement online sera mis à disposition bientôt.</p>
-      <p>Évaluez et laissez un commentaire de votre expérience de relooking.</p>
+    <div class="row genTuto descTuto defTutot">
+      <div class="defText col-md-6 col-md-offset-3">
+        <h3>Quelques définitions</h3>
+        <p><span class="defMot">Styliste Personnel</span> est une personne qui conseille habituellement les individus de nouvelles tendances de la mode, des styles de vêtements, des couleurs, de la coiffure, du maquillage, et de la barbe.</p>
+        <p><span class="defMot">Shopper Personnel</span> est une personne qui rend les même services que le Styliste Personnelle et fait le shopping à la place de son client.</p>
+      </div>
     </div>
   </div>
 
-  <div class="row genTuto descTuto text-center">
-    <h3>Quelques définitions</h3>
-    <div class="xsTextDef col-xs-12 col-sm-10 col-sm-offset-1">
-      <p><span class="defMot">Styliste Personnel</span> est une personne qui conseille habituellement les individus de nouvelles tendances de la mode, des styles de vêtements, des couleurs, de la coiffure, du maquillage, et de la barbe.</p>
-      <p><span class="defMot">Shopper Personnel</span> est une personne qui rend les même services que le/la Styliste Personnelle et fait le shopping à la place de son client.</p>
+  <div class="row tutorialContainer hidden-md hidden-lg">
+    <div class="row genTuto">
+      <h1 class="text-center">Comment ça marche</h1>
+    </div>
+    <div class="row genTuto descTuto text-center">
+      <h3 class="tutoSubject">Recherche d'un look</h3>
+      <div class="row imgTutoRow">
+        <img src="/images/relookingtutorial/first.png" alt="costume rencontre d’affaire, entretien d’embauche, business look, robe de mariage, soirée, rendez-vous avec un mec. recherche un look/style vestimentaire ?">
+      </div>
+      <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
+        <p>Vous avez un rendez-vous d'affaires, un entretien d'embauche ou de stage ? Vous cherchez un style pour une occasion spéciale (mariage, conférence de presse, etc.) ou tout simplement un look quotidien ? Relookers de Fason vous aideront, quelle que soit l'occasion.</p>
+      </div>
+    </div>
+    <div class="row genTuto descTuto">
+      <h3 class="tutoSubject">Trouver un styliste personnel</h3>
+      <div class="row imgTutoRow">
+        <img src="/images/relookingtutorial/second.png" alt="styliste personnelle femme / homme, personal shopper">
+      </div>
+      <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
+        <p>Dans la barre de recherche, choisissez les critères qui vous correspondent.</p>
+        <p>Avec le critère "Vestimentaire", vous y trouverez tous les services de relooking vestimentaire : accompagnement shopping, tri de la garde-robe, etc.</p>
+        <p>En choisissant le critère "Beauté", vous y trouverez tous les services de relooking beauté : maquillage, coiffure et coloration, tailler de barbe, etc.</p>
+        <p>En ce qui concerne le critère “Cours”, les stylistes personnels vous y proposent les cours de relooking : morphologie, taille de barbe, couleurs, manucure, etc.</p>
+      </div>
+    </div>
+    <div class="row genTuto descTuto">
+      <h3 class="tutoSubject">Choisir un relooker</h3>
+      <div class="row imgTutoRow">
+        <img src="/images/relookingtutorial/third.png" alt="prix horaire de relooking, expéreince de shopper personnel, déroulement de relooking personnel">
+      </div>
+      <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
+        <p>Choisissez un relooker selon son expérience dans la mode, ses notes, le prix horaire du service de relooking et les services de relooking proposés.</p>
+      </div>
+    </div>
+    <div class="row genTuto descTuto">
+      <h3 class="tutoSubject">Prendre rendez-vous</h3>
+      <div class="row imgTutoRow">
+        <img src="/images/relookingtutorial/fourth.png" alt="accord avec le relooker personnel, relooking vestimentraire chez soi, shopping à ma place, contacter du relooker personnel">
+      </div>
+      <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
+        <p>Avant de prendre le rendez-vous, renseignez-vous sur les disponibilités hebdomadaires de relooker personnel.</p>
+        <p>Si vous avez des questions supplémentaires par rapport à l'accompagnement shopping, au relooking ou à la mise en valeur de la garde-robe, contactez le styliste personnel via le messenger de Fason.</p>
+      </div>
+    </div>
+    <div class="row genTuto descTuto">
+      <h3 class="tutoSubject">Paiement, évaluation et commenttaire</h3>
+      <div class="row imgTutoRow">
+        <img src="/images/relookingtutorial/fifth.png" alt="évaluer le service relooking, commenter le service relooking, payer en liquide le service de relooking">
+      </div>
+      <div class="xsTextdiv col-xs-12 col-sm-10 col-sm-offset-1">
+        <p>Une fois le service est rendu, payez le relooker personnel en liquide. Le paiement online sera mis à disposition bientôt.</p>
+        <p>Évaluez et laissez un commentaire de votre expérience de relooking.</p>
+      </div>
+    </div>
+
+    <div class="row genTuto descTuto">
+      <h3 class="tutoSubject">Quelques définitions</h3>
+      <div class="xsTextDef col-xs-12 col-sm-10 col-sm-offset-1">
+        <p><span class="defMot">Styliste Personnel</span> est une personne qui conseille habituellement les individus de nouvelles tendances de la mode, des styles de vêtements, des couleurs, de la coiffure, du maquillage, et de la barbe.</p>
+        <p><span class="defMot">Shopper Personnel</span> est une personne qui rend les même services que le Styliste Personnelle et fait le shopping à la place de son client.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -291,13 +180,15 @@
   <script src="../js/jquery.min.js"></script>
   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
   <script src="../bootstrap/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="../css/fontawesomestarso.css">
   <link rel="stylesheet" href="../css/niceselect.css">
-  <link rel="stylesheet" href="../css/homenav.css">
   <link rel="stylesheet" href="../css/tutorial.css">
-  <script type="text/javascript" src="../js/jquery.barrating.js"></script>
-  <script type="text/javascript" src="../js/editcreatebarrating.js"></script>
+  <link rel="stylesheet" href="../css/homenav.css">
+  <link rel="stylesheet" href="../css/stylebox.css">
+  <link rel="stylesheet" href="../css/fontawesomestarso.css">
+
   <script type="text/javascript" src="../js/jquery.nice-select.min.js"></script>
   <script type="text/javascript" src="../js/masonry.pkgd.min.js"></script>
   <script type="text/javascript" src="../js/imagesloaded.pkgd.min.js"></script>
   <script type="text/javascript" src="../js/homepage.js"></script>
+  <script type="text/javascript" src="../js/jquery.appear.js"></script>
+  <script type="text/javascript" src="../js/jquery.barrating.js"></script>

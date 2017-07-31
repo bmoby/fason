@@ -5,6 +5,24 @@ $(document).ready(function(){
     displayErrorText: false
   });
 
+  $('.select-avatar').on('click', function(){
+    $('.avatarUpload').click()
+  })
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('.select-avatar').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $(".avatarUpload").change(function(){
+      readURL(this);
+  });
+
 
   $('.update-btn').on('click', function(){
     $('.errorsBlock').empty();
@@ -24,7 +42,7 @@ $(document).ready(function(){
       url: '/users/updateprofil',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({"userAvailability": userAvailability, "userDescription":userDescription, "userFirstName": userFirstName, "userLastName":userLastName, "userEmail":userEmail, "userPhone":userPhone, "userPassword":userPassword, "userCity":userCity, "descriptionCount":descriptionCount}),
+      data: JSON.stringify({"userFirstName": userFirstName, "userLastName":userLastName, "userEmail":userEmail, "userPhone":userPhone, "userPassword":userPassword}),
       success: function(response){
         if (response.errors){
           response.errors.forEach(function(error){

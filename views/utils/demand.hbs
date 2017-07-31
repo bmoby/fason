@@ -4,17 +4,13 @@
   </div>
   <div class="container" id="login-container">
     <h2 class="login-register-title text-center">Prendre rendez-vous</h2>
-    <div class="row general-row">
-        <div class="text-center">
-            <div class="stylebox-display-avatar" {{#if stylist.avatar}} style="background-image: url({{stylist.avatar}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
-            <h4 class="availability-contact-demand-firstName">{{stylist.lastName}}</h4>
-        </div>
-    </div>
       {{#if haveToVerify}}
       <div class="haveVerified dem-page hidden">
         {{#if stylist.availability}}
         <h4>Disponibilités:</h4>
-        <p class="logn-register-paragraph">{{stylist.availability}}</p>
+        {{#eachNewLine stylebox.availability}}
+      		<p class="logn-register-paragraph">{{this}}</p>
+      	{{/eachNewLine}}
         {{/if}}
         <p class="logn-register-paragraph error-after">Choisissez la date et heure puis appuyez sur le boutton "Prendre rendez-vous".</p>
         <div class="row login-container-row demand-row">
@@ -31,9 +27,9 @@
       </div>
       {{/if}}
       <div class="all-demand-container">
-        <p class="logn-register-paragraph">Pour la sécurité de notre plateforme, vous devez confirmer que vous êtes le propriétaire du numéro de téléphone et de l'adresse e-mail que vous avez fourni lors de votre inscription.</p>
         {{#if user}}
           {{#if haveToVerify}}
+          <p class="logn-register-paragraph">Pour la sécurité de notre plateforme, vous devez confirmer que vous êtes le propriétaire du numéro de téléphone et de l'adresse e-mail que vous avez fourni lors de votre inscription.</p>
             {{#unless user.varified}}
               <div class="row envoyer-un-message-btn login-register-btn-row email-verify-row text-right">
                   <div>
@@ -80,7 +76,7 @@
             <div class="dem-page">
               {{#if stylist.availability}}
               <h4>Disponibilités:</h4>
-              <p class="logn-register-paragraph">{{stylist.availability}}</p>
+              <p class="logn-register-paragraph">{{stylebox.availability}}</p>
               {{/if}}
               <p class="logn-register-paragraph error-after">Choisissez la date et heure puis appuyez sur le bouton "Prendre rendez-vous".</p>
               <div class="row login-container-row demand-row">

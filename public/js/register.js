@@ -48,6 +48,24 @@ $(document).ready(function(){
     }
   });
 
+  $('.select-avatar').on('click', function(){
+    $('.avatarUpload').click();
+  })
+
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        $('.select-avatar').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $(".avatarUpload").change(function(){
+      readURL(this);
+  });
+
   $('.user-type input').iCheck({
     radioClass: 'iradio_square-purple'
   });

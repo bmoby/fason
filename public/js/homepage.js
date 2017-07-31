@@ -52,4 +52,35 @@ $(document).ready(function(){
     });
   });
 
+  // changes
+  $('.comment-ca-marche').click(function(e){
+    e.preventDefault();
+    console.log('comment ca marche')
+    $('body,html').animate({
+          scrollTop: $('.tutorialContainerMain').offset().top
+      }, 2000);
+      return false;
+  });
+  // changes
+
+  $('#stylistContainer').imagesLoaded(function(){
+    console.log('images loaded')
+    $('#stylistContainer').masonry({
+      itemSelector: '.stylist-masonry',
+      columnWidth: '.stylist-sizer',
+      percentPosition: true
+    });
+  })
+
+  $('.rating').each(function(){
+    var styleboxId = this.getAttribute("data-stylebox-id");
+    var ratingValue = this.getAttribute("data-rating-value");
+
+    $('.general-rating-'+styleboxId).barrating({
+      theme: "fontawesome-stars-o",
+      initialRating: ratingValue,
+      readonly: true
+    });
+  })
+
 })

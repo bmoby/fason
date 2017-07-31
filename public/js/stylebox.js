@@ -1,4 +1,9 @@
 $(document).ready(function(){
+
+  $('.off').each(function(){
+    $(this).find('img').addClass('hidden');
+  })
+
   var pusher = new Pusher('095ff3028ab7bceb6073', {
     encrypted: true
   });
@@ -25,6 +30,7 @@ $(document).ready(function(){
       columnWidth: '.sizer4'
     });
   })
+
 
   $('.masoneryContainer').imagesLoaded(function(){
     var img1 = $('.grid-item').eq(0);

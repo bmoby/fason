@@ -26,8 +26,6 @@ var UserSchema = mongoose.Schema({
 		unique: true,
 		required: true
 	},
-	city: String,
-	comments:[{ type:Schema.ObjectId, ref:"Commentss" }],
 	firstName: {
 		type: String,
 		required: true
@@ -42,7 +40,7 @@ var UserSchema = mongoose.Schema({
 		required: true
 	},
 	evals: [{ type:Schema.ObjectId, ref:"Eval" }],
-	styleboxes:[{ type:Schema.ObjectId, ref:"Stylebox" }],
+	styleboxes:{ type:Schema.ObjectId, ref:"Stylebox" },
 	demands:[{ type:Schema.ObjectId, ref:"Demand" }],
 	conversations: [{type : Schema.ObjectId, ref : 'Conversation'}],
 	varified: {
@@ -56,32 +54,12 @@ var UserSchema = mongoose.Schema({
 	verifyEmailString: {
 		type: String
 	},
-	rating: [{
-		"precision":{
-			type: Number,
-			default: 0
-		},
-		"qualityprice": {
-			type: Number,
-			default: 0
-		},
-		"communication":{
-			type: Number,
-			default: 0
-		},
-		"ponctuality":{
-			type: Number,
-			default: 0
-		}
-	}],
 	resetPwdString: { type: String, default: ""},
 	stylist: {
 		status: {
 			type: Boolean,
 			default: false
 		},
-		description: String,
-		availability: String,
 		stylistSince: { type : Date, default: Date.now }
 	},
 	notifications: [{"notifMsg": String, "notifType": String, "notifTime": { type : Date, default: Date.now }, "msgId": String}],

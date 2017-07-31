@@ -4,12 +4,6 @@
 </div>
 <div class="container" id="login-container">
   <h2 class="login-register-title text-center">Disponibilité</h2>
-  <div class="row general-row">
-      <div class="text-center">
-        <div class="stylebox-display-avatar" {{#if stylist.avatar}} style="background-image: url({{stylist.avatar}})" {{else}} style="background-image: url(/images/noavatar.png)"{{/if}}></div>
-          <h4 class="availability-contact-demand-firstName">{{stylist.lastName}}</h4>
-      </div>
-  </div>
     {{#if stylist.availability}}
       <p class="logn-register-paragraph paragrapg-border">{{stylist.availability}}</p>
     {{else}}

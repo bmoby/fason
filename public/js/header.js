@@ -153,24 +153,6 @@ $(document).ready(function(){
     $('.full-page').addClass('hidden');
   })
 
-  $('.select-avatar').on('click', function(){
-    $('.avatarUpload').click();
-  })
-
-  function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        $('.select-avatar').attr('src', e.target.result);
-      }
-      reader.readAsDataURL(input.files[0]);
-    }
-  }
-
-  $(".avatarUpload").change(function(){
-      readURL(this);
-  });
-
   $('.header-ava').on('click', function(e){
     e.stopPropagation();
     $('.header-menu').toggleClass('hidden');
@@ -181,5 +163,36 @@ $(document).ready(function(){
       $('.header-menu').addClass('hidden');
     }
   });
+
+  // changes
+  $('.comment-ca-marche').click(function(e){
+    e.preventDefault();
+    if(window.location.pathname==='/' || window.location.pathname==='/cmc'){
+        console.log('comment-ca-marches')
+        $('body,html').animate({
+              scrollTop: $('.tutorialContainerMain').offset().top
+          }, 2000);
+    }else{
+      window.location.assign('/cmc', function(){
+        $('body,html').animate({
+              scrollTop: $('.tutorialContainerMain').offset().top
+          }, 2000);
+          console.log('no no no noooooooooo')
+      });
+    };
+
+      return false;
+  });
+
+  if(window.location.pathname==='/cmc'){
+    setTimeout(function () {
+      console.log('comment-ca-marches')
+      $('body,html').animate({
+            scrollTop: $('.tutorialContainerMain').offset().top
+        }, 2000);
+    }, 1000);
+  };
+
+  // changes
 
 });

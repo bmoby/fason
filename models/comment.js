@@ -5,12 +5,10 @@ var relationship = require("mongoose-relationship");
 var Schema = mongoose.Schema;
 // Comment Schema
 
-
 var CommentSchema = mongoose.Schema({
   creator: {type: Schema.ObjectId},
   creatorAva: {type:String},
   creatorName: {type:String},
-  foruser: {type: Schema.ObjectId, ref:"User", childPath:"comments"},
   stylebox: {type: Schema.ObjectId, ref:"Stylebox", childPath:"comments"},
   commentBody: {
 		type: String,

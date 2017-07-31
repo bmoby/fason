@@ -20,21 +20,4 @@ $(document).ready(function(){
       }
     })
   });
-
-  $('#evaluateUserBtn').on('click', function(){
-    var styleboxId = this.getAttribute("data-stylebox-id");
-    var evalId = this.getAttribute("data-eval-id");
-    var userId = this.getAttribute("data-user-id");
-    var comment = $('.eval-comment-text').val();
-
-    $.ajax({
-      url: '/evaluate',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({"userId": userId, "styleboxId": styleboxId, "evalId": evalId, "comment": comment}),
-      success: function(response){
-        window.location.replace('http://fason.co/');
-      }
-    })
-  });
 });

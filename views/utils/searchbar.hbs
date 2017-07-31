@@ -2,44 +2,49 @@
     <div class="row">
         <div class="col-md-12">
             <h2 class="text-left home-search-search-title">Recherche </h2>
-            <p class="text-left home-search-paragraph">Entrez vos critères et retrouvez des stylistes personnels de Paris. Bientôt dans d’autres villes.</p>
+            <p class="text-left home-search-paragraph">Entrez vos critères et retrouvez des relookers particuliers de Paris. Bientôt dans d’autres villes.</p>
         </div>
     </div>
+    <!-- changes -->
     <div class="row" id="home-search-container-first-row">
       <form class="" action="/search" method="post">
         <!-- {{cityResend}} est celui qui revien la ville a remplacer dans value apres -->
-        <div class="col-lg-4 col-md-4 col-sm-4 home-search-row-city">
+        <div class="col-lg-4 col-md-3 col-sm-3 home-search-row-city">
             <input type="text" class="city-search mainLoginInput" placeholder="Entrez votre ville" name="city" value="Paris, France" disabled>
         </div>
-        <div class="col-lg-5 col-md-5 col-sm-5 home-search-row-selections">
+        <div class="col-lg-5 col-md-6 col-sm-7 home-search-row-selections">
             <div class="row search-selection-row">
-                <div class="col-lg-6 col-md-6 col-sm-6 selection-column-one">
+                <div class="col-lg-6 col-md-6 col-sm-7 selection-column-one">
                     <select class="select-gender wide" name="gender">
-                        <optgroup label="">
-                          <option disable>Homme & Femme</option>
-                          <option value="men" class="men">Homme</option>
-                          <option value="ladies" class="ladies">Femme</option>
-                        </optgroup>
+                      <optgroup label="">
+                        <option disable>Homme & Femme</option>
+                        <option value="men" class="men">Homme</option>
+                        <option value="ladies" class="ladies">Femme</option>
+                      </optgroup>
                     </select>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 selection-column-one">
+                <div class="col-lg-6 col-md-6 col-sm-5 selection-column-one">
                     <select class="select-style wide" name="style">
-                        <optgroup label="">
-                          <option value="vestimentaire">Vestimentaire</option>
-                          <option value="beaute">Beauté</option>
-                        </optgroup>
+                      <optgroup label="">
+                        <option value="relooking">Relooking</option>
+                        <option value="vestimentaire">Vestimentaire</option>
+                        <option value="beaute">Beauté</option>
+                        <option value="corses">Cours</option>
+                      </optgroup>
                     </select>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-3 home-search-row-seachbtn">
+        <div class="col-lg-3 col-md-3 col-sm-2 home-search-row-seachbtn">
             <button class="btn btn-default" type="submit" id="home-search-btn">Recherche</button>
         </div>
       </form>
     </div>
+    <!-- changes -->
+
 </div>
 <div class="container visible-xs-block home-xs-search-container">
-  <p class="text-left home-search-paragraph">Entrez vos critères et retrouvez des stylistes personnels de Paris. Bientôt dans d’autres villes.</p>
+  <p class="text-left home-search-paragraph">Entrez vos critères et retrouvez des relookers particuliers de Paris. Bientôt dans d’autres villes.</p>
 </div>
 <div class="container visible-xs-block home-xs-search-container">
     <div class="row home-xs-search-row">

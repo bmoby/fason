@@ -17,12 +17,12 @@ var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
-var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY);
-
+var client = new twilio.RestClient((process.env.TWILLIO_SECRET ||  'AC0f6433c5d0713b85184d77e30383fd4f'),( process.env.TWILLIO_KEY || 'cbac6157842210b60de45dab4f90f9fa'));
+// Params setting for pusher -> REAL TIME NOTIFICATIONS SYSTEM
 var pusher = new Pusher({
-  appId: (process.env.PUSHER_ID),
-  key: (process.env.PUSHER_KEY),
-  secret: (process.env.PUSHER_SECRET),
+  appId: (process.env.PUSHER_ID || '283453'),
+  key: (process.env.PUSHER_KEY || '095ff3028ab7bceb6073'),
+  secret: (process.env.PUSHER_SECRET || '25077850beef8ae1d148'),
   encrypted: true
 });
 
@@ -35,19 +35,52 @@ var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: (process.env.MAIL_PASS)
+        pass: (process.env.MAIL_PASS || "Mokoloko123")
     }
 });
 router.use(bodyParser.json());
 var rand, link, host;
 
 AWS.config = {
-  accessKeyId: (process.env.AWS_KEY),
-  secretAccessKey: (process.env.AWS_SECRET)
+  accessKeyId: (process.env.AWS_KEY || 'AKIAJ5ZF3LOCVCPMJ5LQ'),
+  secretAccessKey: (process.env.AWS_SECRET || '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')
 }
 var s3 = new AWS.S3();
 
 var uploadMulter = multer({dest: 'public/img'})
+
+router.post('/setavatarStyle', uploadMulter.single('displayImage'), function(req, res){
+  if(req.user){
+    var fileName = {};
+    var file = req.file;
+    var stream = fs.createReadStream(file.path)
+    var imageType = file.mimetype.split('/').pop()
+    fileName = file.filename+'.'+imageType;
+    params = {
+      Bucket: 'styleboxphotosfason',
+      ACL: 'public-read',
+      Key: fileName,
+      Body: stream
+    };
+
+    s3.putObject(params, function(err, data){
+      if (err){
+        console.log(err)
+      }else{
+        fs.unlink(req.file.path, function(err){
+          if (err) console.error(err)
+        });
+      }
+    });
+
+    var user = req.user;
+    user.avatar = "https://s3.amazonaws.com/styleboxphotosfason/"+fileName;
+    user.save();
+    res.end();
+  } else {
+    res.redirect('https://fason.co');
+  }
+})
 
 router.post('/setavatar', uploadMulter.single('displayImage'), function(req, res){
   if(req.file){
@@ -122,18 +155,13 @@ router.post('/updateprofil', function(req, res){
       var userLastName = req.body.userLastName;
       var userEmail = req.body.userEmail;
       var userPhone = req.body.userPhone;
-      var userCity = req.body.userCity;
-      var userDescription = req.body.userDescription;
-      var userAvailability = req.body.userAvailability;
       var userPassword = req.body.userPassword;
       var user = req.user;
-      var descriptionCount = req.body.descriptionCount;
 
       req.checkBody('userFirstName', 'Veuillez saisir votre nom.').notEmpty();
     	req.checkBody('userLastName', 'Veuillez saisir votre prénom.').notEmpty();
     	req.checkBody('userEmail', 'Veuillez saisir votre e-mail.').notEmpty();
       req.checkBody('userPhone', 'Veuillez saisir votre numéro de potable.').notEmpty();
-      req.checkBody('userCity', "Veuillez saisir votre ville de résidence.").notEmpty();
       req.checkBody('userEmail', 'Veuillez saisir votre e-mail.').isEmail();
 
       if(userPassword){
@@ -142,11 +170,6 @@ router.post('/updateprofil', function(req, res){
 
       var errors = req.validationErrors() || [];
 
-      if(req.user.stylist.status){
-        if(descriptionCount < 200){
-          errors.push({"msg":"Résumez votre expérience dans la mode/beuté (minimum 200 caractères)."});
-        }
-      }
 
       if(errors.length){
         console.log(errors);
@@ -154,16 +177,6 @@ router.post('/updateprofil', function(req, res){
       } else {
         if(userFirstName !== user.firstName){
           user.firstName = userFirstName;
-          user.save();
-        }
-
-        if(userAvailability){
-          user.stylist.availability = userAvailability;
-          user.save();
-        }
-
-        if(userDescription){
-          user.stylist.description = userDescription;
           user.save();
         }
 
@@ -211,11 +224,6 @@ router.post('/updateprofil', function(req, res){
           user.save();
         }
 
-
-        if(userCity !== user.city){
-          user.city = userCity;
-          user.save();
-        }
         callback(user)
       }
     }

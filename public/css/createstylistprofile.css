@@ -1,0 +1,161 @@
+.stylist-profile-service, .stylist-profile-women, .stylist-profile-men{
+  cursor:pointer;
+  color:#9b9b9b !important;
+}
+
+.create-stylist-profile-experience-text, .create-stylist-profile-steps-text, .create-stylist-profile-availability-text{
+  outline: 0px solid transparent;
+  color:#9b9b9b !important;
+  background-color: #fafafa;
+  padding: 10px;
+  margin-bottom: 11px;
+  border-radius: 3px;
+  border: none;
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+  font-family: 'Nunito' !important;
+
+}
+
+
+.create-stylist-profile-availability, .create-stylist-profile-experience, .create-stylist-profile-steps, .stylist-profile-service-text{
+  color:#6b6a6a !important;
+  font-family: 'Nunito' !important;
+}
+
+.stylist-profile-price{
+  color: white;
+  position: absolute;
+  bottom: 2px;
+  left: -4px;
+  background-color: rgba(60,63,64,0.8);
+  padding: 10px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+.hiddenformavatar{
+  display: none;
+}
+
+.priceinput, .prixh{
+  display: inline;
+}
+
+.priceinput{
+  outline: 0px solid transparent;
+  color:#9b9b9b !important;
+  background-color: #fafafa;
+  padding: 10px;
+  width: 50px;
+  margin-bottom: 11px;
+  border-radius: 3px;
+  border: none;
+  overflow: hidden;
+  font-family: 'Nunito' !important;
+}
+
+.prixh{
+  background-color: #fafafa;
+  height: 40px;
+}
+
+.finaliserbtn{
+  margin-right: 20px;
+  margin-top: 5px;
+}
+
+.errorblock{
+  border: none !important;
+}
+
+.stylebox-display-avatar{
+  cursor: pointer;
+}
+
+.errorsoccured{
+  border: 1px solid #ff6063 !important;
+  border-radius: 3px !important;
+  padding-top: 21px !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 15px !important;
+}
+
+.errorsoccured p{
+  color: #9b9b9b;
+}
+
+.off p{
+  color: #9b9b9b;
+}
+
+.on p{
+  color: black !important;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*.experience-price, .relooking-services, .relooking-steps, .relooking-gender, .relooking-availability{
+  height: 100%;
+  width:100%;
+}
+
+.relooking-services, .relooking-steps, .relooking-gender, .relooking-availability{
+  display:none;
+}
+
+.create-stylist-profile-fields-container{
+  padding: 50px !important;
+}
+
+.create-stylist-profile-input{
+  width: 100%;
+  height: 65px;
+  border: 1px solid rgb(219,219,219);
+  padding: 15px;
+  font-size: 1.2em;
+}
+
+.create-stylist-profile-textarea{
+  width: 100%;
+  padding: 15px;
+  height: 150px;
+  resize: none;
+  border: 1px solid rgb(219,219,219);
+  margin-top: 10px;
+}
+
+.create-stylist-profile-btn-container{
+  position: fixed;
+  bottom: 0px;
+  height: 80px;
+  z-index: 99;
+  background-color: white;
+  left: 0;
+}
+
+.tuto-create-stylist-profile-container{
+  padding: 200px !important;
+  background-color: #fafafa;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.tuto-create-stylist-profile{
+  background-color: white;
+  border: 1px solid rgb(219,219,219);
+  padding: 30px !important;
+}*/

@@ -10,6 +10,7 @@
   {{> searchbar}}
 </div>
 
+<!-- changes -->
 <div class="styleboxes-search-container">
     {{#if errmsg}}
     <div class="errmsgc">
@@ -18,15 +19,15 @@
     {{/if}}
 
     {{#if styleboxes}}
-      <div class="pagination-looks text-center">
-        <ul id="listitems">
+        <div id="stylistContainer">
           {{#each styleboxes}}
-          <li>{{> stylebox}}</li>
+            {{> stylebox}}
           {{/each}}
-        </ul>
-      </div>
+        </div>
     {{/if}}
 </div>
+<!-- changes -->
+
 <script src="../js/jquery.min.js"></script>
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 <script src="../bootstrap/js/bootstrap.min.js"></script>
@@ -36,6 +37,12 @@
 <script type="text/javascript" src="../js/jquery.barrating.js"></script>
 <script type="text/javascript" src="../js/editcreatebarrating.js"></script>
 <script type="text/javascript" src="../js/search.js"></script>
+
+<!-- changes -->
+<script type="text/javascript" src="../js/imagesloaded.pkgd.min.js"></script>
+<script type="text/javascript" src="../js/masonry.pkgd.min.js"></script>
+<!-- changes -->
+
 <link rel="stylesheet" href="../css/fontawesomestarso.css">
 <link rel="stylesheet" href="../css/niceselect.css">
 <link rel="stylesheet" href="./css/searchbarxs.css">

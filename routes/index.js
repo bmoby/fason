@@ -19,20 +19,18 @@ var fs = require('fs');
 var multer = require('multer');
 var AWS = require('aws-sdk');
 
-
-
 var pusher = new Pusher({
-  appId: (process.env.PUSHER_ID),
-  key: (process.env.PUSHER_KEY),
-  secret: (process.env.PUSHER_SECRET),
+  appId: (process.env.PUSHER_ID || '283453'),
+  key: (process.env.PUSHER_KEY || '095ff3028ab7bceb6073'),
+  secret: (process.env.PUSHER_SECRET || '25077850beef8ae1d148'),
   encrypted: true
 });
 
-var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY);
+var client = new twilio.RestClient((process.env.TWILLIO_SECRET ||  'AC0f6433c5d0713b85184d77e30383fd4f'),( process.env.TWILLIO_KEY || 'cbac6157842210b60de45dab4f90f9fa'));
 
 AWS.config = {
-  accessKeyId: (process.env.AWS_KEY),
-  secretAccessKey: (process.env.AWS_SECRET)
+  accessKeyId: (process.env.AWS_KEY || 'AKIAJ5ZF3LOCVCPMJ5LQ'),
+  secretAccessKey: (process.env.AWS_SECRET || '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')
 }
 var s3 = new AWS.S3();
 
@@ -41,176 +39,169 @@ var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: (process.env.MAIL_PASS)
+        pass: (process.env.MAIL_PASS || "Mokoloko123")
     }
 });
-
 router.get('/', function(req, res) {
+  var styleboxeslist = ["59760b6ba88a351bcf0aa9f1", "59760b6ba88a351bcf0aa9f2", "597b5f0e7b07ff2666c7082e"];
+  var liststyleboxes = [];
 
-  var styleboxes=['5926c426e9af4a00048f5782','59023e25706a880004de41e2','591373768deed30004c84d53','58ff12e576678d00041d4be2'];
-  var styleboxesandstylist = [];
-
-  if(req.user){
-    var notifcount = 0;
-    var newdemands = 0;
-    var allnotifs = 0;
-
-    if(req.user.notifications.length){
-      notifcount = req.user.notifications.length;
-    }
-
-    if(req.user.demandNotifications.length){
-      newdemands = req.user.demandNotifications.length;
-    }
-
-    if(req.user.demandNotifications.length || req.user.notifications.length){
-      allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
-    } else if (req.user.demandNotifications.length && req.user.notifications.length){
-      allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
-    }
-
-    styleboxes.forEach(function(object0,index,object){
-      Stylebox.getStyleboxById(object0, function(err, stylebox){
-        if (err){
-          res.render('index', {"user": req.user,"newmessages": notifcount,"newdemands": newdemands,"allNotifications": allnotifs});
-        }else{
+  function generalfunc(callback){
+    styleboxeslist.forEach(function(styleboxid, indexs, objects){
+      Stylebox.getStyleboxById(styleboxid, function(err, stylebox){
+        if(stylebox){
           User.getUserById(stylebox.creator, function(err, user){
-            var rating = {};
-            var general = 0;
-            var communication = 0;
-            var quality = 0;
-            var ponctuality = 0;
-            var precision = 0;
-            if(user.rating.length){
-              user.rating.forEach(function(rat, index2, object2){
-                communication = communication + rat.communication;
-                quality = quality + rat.qualityprice;
-                ponctuality = ponctuality + rat.ponctuality;
-                precision = precision + rat.precision;
+            var generalRat = 0;
+            var sommeRat = 0;
+            if(stylebox.rating.length){
+              stylebox.rating.forEach(function(rat, indexx, objectt){
+                var sommeOneRat = rat.precision + rat.qualityprice + rat.communication + rat.ponctuality;
+                var moyenneOneRat = sommeOneRat/4;
+                sommeRat = sommeRat + moyenneOneRat;
 
-                if(index2+1 == user.rating.length){
-                  var styleboxproto = stylebox;
-                  rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
-                  rating.number = user.rating.length;
-                  styleboxproto.rating = rating;
-                  //separator
-                  styleboxproto.stylistname = user.lastName;
-                  styleboxproto.stylistavatar = user.avatar;
-                  styleboxesandstylist.push(styleboxproto);
-                  if(index + 1 == object.length){
-                    setTimeout(function(){
-                      res.render('index', {"styleboxes": styleboxesandstylist, "user": req.user,"newmessages": notifcount,"newdemands": newdemands,"allNotifications": allnotifs});
-                    }, 500);
+                if(indexx+1 == objectt.length){
+                  generalRat = sommeRat / objectt.length;
+                  var styleboxproto = {};
+                  styleboxproto.firstName = user.firstName;
+                  styleboxproto.stylistava = user.avatar;
+                  styleboxproto.price = stylebox.price;
+                  styleboxproto.description = stylebox.description;
+                  styleboxproto.id = stylebox.id;
+                  styleboxproto.rating = generalRat;
+                  liststyleboxes.push(styleboxproto);
+                  if(indexs == 2){
+                    callback(liststyleboxes);
                   }
                 }
-              });
-            }else{
-              var styleboxproto = stylebox;
-              rating.general = -1;
-              rating.number = 0;
-              styleboxproto.rating = rating;
-              //separator
-              styleboxproto.stylistname = user.lastName;
-              styleboxproto.stylistavatar = user.avatar;
-              styleboxesandstylist.push(styleboxproto);
-              if(index + 1 == object.length){
-                setTimeout(function(){
-                  res.render('index', {"styleboxes": styleboxesandstylist, "user": req.user,"newmessages": notifcount,"newdemands": newdemands,"allNotifications": allnotifs});
-                }, 500)
+              })
+            } else {
+              var styleboxproto = {};
+              styleboxproto.rating = -1;
+              styleboxproto.firstName = user.firstName;
+              styleboxproto.stylistava = user.avatar;
+              styleboxproto.price = stylebox.price;
+              styleboxproto.id = stylebox.id;
+              styleboxproto.description = stylebox.description;
+              liststyleboxes.push(styleboxproto);
+              if(indexs+1 == objects.length){
+                callback(liststyleboxes);
               }
-            };
-          });
+            }
+          })
+        } else {
+          console.log("here is going the rand code");
         }
-
       });
     });
+  }
 
-  } else {
-    styleboxes.forEach(function(object0,index,object){
-      Stylebox.getStyleboxById(object0, function(err, stylebox){
-        if(err){
-          res.render('index');
-        }else{
-          User.getUserById(stylebox.creator,function(err,user){
-            var rating = {};
-            var general = 0;
-            var communication = 0;
-            var quality = 0;
-            var ponctuality = 0;
-            var precision = 0;
-            if(user.rating.length){
-              user.rating.forEach(function(rat, index2, object2){
-                communication = communication + rat.communication;
-                quality = quality + rat.qualityprice;
-                ponctuality = ponctuality + rat.ponctuality;
-                precision = precision + rat.precision;
+  generalfunc(function(stylelist){
+    console.log(stylelist)
+    if(req.user){
+      var notifcount = 0;
+      var newdemands = 0;
+      var allnotifs = 0;
 
-                if(index2+1 == user.rating.length){
-                  var styleboxproto = stylebox;
-                  rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
-                  rating.number = user.rating.length;
-                  styleboxproto.rating = rating;
-                  //separator
-                  styleboxproto.stylistname = user.lastName;
-                  styleboxproto.stylistavatar = user.avatar;
-                  styleboxesandstylist.push(styleboxproto);
-                  if(index + 1 == object.length){
-                    setTimeout(function(){
-                      res.render('index', {"styleboxes": styleboxesandstylist});
-                    }, 500);
-                  };
-                };
-              });
-            }else{
-              var styleboxproto = stylebox;
-              rating.general = -1;
-              rating.number = 0;
-              styleboxproto.rating = rating;
-              //separator
-              styleboxproto.stylistname = user.lastName;
-              styleboxproto.stylistavatar = user.avatar;
-              styleboxesandstylist.push(styleboxproto);
-              if(index + 1 == object.length){
-                setTimeout(function(){
-                  res.render('index', {"styleboxes": styleboxesandstylist});
-                }, 500)
-              };
-            };
-          });
-        };
+      if(req.user.notifications.length){
+        notifcount = req.user.notifications.length;
+      }
+
+      if(req.user.demandNotifications.length){
+        newdemands = req.user.demandNotifications.length;
+      }
+
+      if(req.user.demandNotifications.length || req.user.notifications.length){
+        allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
+      } else if (req.user.demandNotifications.length && req.user.notifications.length){
+        allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
+      }
+      res.render('index', {"user": req.user,"newmessages": notifcount,"newdemands": newdemands,"allNotifications": allnotifs, "styleboxes":stylelist});
+    } else {
+      res.render('index', {"styleboxes":stylelist});
+    };
+  })
+});
+
+router.get('/cmc', function(req, res) {
+  var styleboxeslist = ["59760b6ba88a351bcf0aa9f1", "59760b6ba88a351bcf0aa9f2", "597b5f0e7b07ff2666c7082e"];
+  var liststyleboxes = [];
+
+  function generalfunc(callback){
+    styleboxeslist.forEach(function(styleboxid, indexs, objects){
+      Stylebox.getStyleboxById(styleboxid, function(err, stylebox){
+        if(stylebox){
+          User.getUserById(stylebox.creator, function(err, user){
+            var generalRat = 0;
+            var sommeRat = 0;
+            if(stylebox.rating.length){
+              stylebox.rating.forEach(function(rat, indexx, objectt){
+                var sommeOneRat = rat.precision + rat.qualityprice + rat.communication + rat.ponctuality;
+                var moyenneOneRat = sommeOneRat/4;
+                sommeRat = sommeRat + moyenneOneRat;
+
+                if(indexx+1 == objectt.length){
+                  generalRat = sommeRat / objectt.length;
+                  var styleboxproto = {};
+                  styleboxproto.firstName = user.firstName;
+                  styleboxproto.stylistava = user.avatar;
+                  styleboxproto.price = stylebox.price;
+                  styleboxproto.description = stylebox.description;
+                  styleboxproto.id = stylebox.id;
+                  styleboxproto.rating = generalRat;
+                  liststyleboxes.push(styleboxproto);
+                  if(indexs == 2){
+                    callback(liststyleboxes);
+                  }
+                }
+              })
+            } else {
+              var styleboxproto = {};
+              styleboxproto.rating = -1;
+              styleboxproto.firstName = user.firstName;
+              styleboxproto.stylistava = user.avatar;
+              styleboxproto.price = stylebox.price;
+              styleboxproto.id = stylebox.id;
+              styleboxproto.description = stylebox.description;
+              liststyleboxes.push(styleboxproto);
+              if(indexs+1 == objects.length){
+                callback(liststyleboxes);
+              }
+            }
+          })
+        } else {
+          console.log("here is going the rand code");
+        }
       });
     });
   };
-});
 
+  generalfunc(function(stylelist){
+    console.log(stylelist)
+    if(req.user){
+      var notifcount = 0;
+      var newdemands = 0;
+      var allnotifs = 0;
 
-
-
-
-router.get('/unsubscribe/:id/:ib', function(req, res) {
-
-var creator = req.params.id;
-var subject = req.params.ib;
-
-var stat = new Stat();
-stat.creator = creator;
-stat.subject = subject;
-
-    setTimeout(function(){
-      if(creator.indexOf("@") > -1){
-        Stat.createNewStat(stat, function(err, createdStat){
-          if(err){
-            console.log(err);
-          }
-        });
+      if(req.user.notifications.length){
+        notifcount = req.user.notifications.length;
       }
-    }, 500);
 
-    res.render('unsubscribe', {"email": creator});
+      if(req.user.demandNotifications.length){
+        newdemands = req.user.demandNotifications.length;
+      }
+
+      if(req.user.demandNotifications.length || req.user.notifications.length){
+        allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
+      } else if (req.user.demandNotifications.length && req.user.notifications.length){
+        allnotifs = req.user.demandNotifications.length + req.user.notifications.length;
+      }
+      res.render('index', {"user": req.user,"newmessages": notifcount,"newdemands": newdemands,"allNotifications": allnotifs, "styleboxes":stylelist});
+    } else {
+      res.render('index', {"styleboxes":stylelist});
+    };
+  });
+
 });
-
-
-
 
 
 router.post('/connu', function(req, res){
@@ -246,120 +237,94 @@ router.get('/search', function(req, res){
 router.post('/search', function(req, res){
   var city = req.body.city;
   var gender = req.body.gender;
-  var style = req.body.style;
+  var categorie = req.body.style;
+
+  // Helper functions
+  function calculaterating(rating, callback){
+    var generalRat = 0;
+    var sommeRat = 0;
+    if(rating.length){
+      rating.forEach(function(rat, index, object){
+        var sommeOneRat = rat.precision + rat.qualityprice + rat.communication + rat.ponctuality;
+        var moyenneOneRat = sommeOneRat/4;
+        sommeRat = sommeRat + moyenneOneRat;
+
+        if(index+1 == object.length){
+          generalRat = sommeRat / object.length;
+          console.log("evaluations le compte est", object.length)
+          callback(generalRat);
+        }
+      })
+    } else {
+      callback(-1);
+    }
+  }
 
   var promise = new Promise(function(resolve, reject){
     var options = {};
-
     options.creator = {"$exists" : true};
+    options.valid = true;
     if(city){
       options.city = { "$regex": city, "$options": "i" }
     }
-    if(gender != 'Homme & Femme'){
-      options.gender = gender;
+    if(gender == "men"){
+      options.men = true;
+    }
+    if(gender == "ladies"){
+      options.women = true;
+    }
+    if(categorie == "vestimentaire"){
+      options.relookingtrue = true;
+    }
+    if(categorie == "beaute"){
+      options.beautetrue = true;
     }
 
-    if(style == "vestimentaire"){
-      options.vestimentaire = true;
-      options.beaute = false;
-    } else if(style == "beaute"){
-      options.vestimentaire = false;
-      options.beaute = true;
+    if(categorie == "corses"){
+      options.corsestrue = true;
     }
-
     resolve(options);
   }).then(function(obje){
     Stylebox.find(obje, function(err, styleboxes){
       if (err){
         console.log(err)
       } else {
-        var mens = false;
-        var womans = false;
-        if (obje.gender == "men"){
-          mens = true;
-        }
-
-        if (obje.gender == "ladies"){
-          womans = true;
-        }
-
-        var styleObj = {
-          vestimentaire: false,
-          beaute: false,
-        }
-
-        switch(obje.style){
-            case "vestimentaire":
-                styleObj.vestimentaire = true;
-                break;
-            case "beaute":
-                styleObj.beaute = true;
-                break;
-            default:
-                 break;
-        }
-
         var styleboxesandstylist = [];
         if(styleboxes.length != 0){
           styleboxes.forEach(function(stylebox, index, object){
               User.getUserById(stylebox.creator, function(err, user){
-                var rating = {};
-                var general = 0;
-                var communication = 0;
-                var quality = 0;
-                var ponctuality = 0;
-                var precision = 0;
-                if(user.rating.length){
-                  user.rating.forEach(function(rat, index2, object2){
-                    communication = communication + rat.communication;
-                    quality = quality + rat.qualityprice;
-                    ponctuality = ponctuality + rat.ponctuality;
-                    precision = precision + rat.precision;
-
-                    if(index2+1 == user.rating.length){
-                      var styleboxproto = stylebox;
-                      rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
-                      rating.number = user.rating.length;
-                      styleboxproto.rating = rating;
-                      //separator
-                      styleboxproto.stylistname = user.lastName;
-                      styleboxproto.stylistavatar = user.avatar;
-                      styleboxesandstylist.push(styleboxproto);
+                var stylistava = user.avatar;
+                var name = user.firstName;
+                var generalRat = -1;
+                  if(stylebox.rating.length != 0){
+                    calculaterating(stylebox.rating, function(raag){
+                      generalRat = raag;
+                      var styleboxProto = {"firstName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
+                      styleboxesandstylist.push(styleboxProto);
                       if(index + 1 == object.length){
-                        setTimeout(function(){
-                          if(req.user){
-                            res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-                          } else {
-                            res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj});
-                          }
-                        }, 500);
+                        if(req.user){
+                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length,   "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                        } else {
+                          res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user});
+                        }
+                      }
+                    });
+                  } else {
+                    var styleboxProto = {"firstName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
+                    styleboxesandstylist.push(styleboxProto);
+                    if(index + 1 == object.length){
+                      if(req.user){
+                        res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length,   "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+                      } else {
+                        res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user});
                       }
                     }
-                  });
-                } else {
-                  var styleboxproto = stylebox;
-                  rating.general = -1;
-                  rating.number = 0;
-                  styleboxproto.rating = rating;
-                  //separator
-                  styleboxproto.stylistname = user.lastName;
-                  styleboxproto.stylistavatar = user.avatar;
-                  styleboxesandstylist.push(styleboxproto);
-                  if(index + 1 == object.length){
-                    setTimeout(function(){
-                      if(req.user){
-                        res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "newmessages": req.user.notifications.length, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-                      } else {
-                        res.render('search', {"styleboxes": styleboxesandstylist, "user": req.user, "options": obje, "men": mens, "ladies": womans, "styleObj": styleObj});
-                      }
-                    }, 500)
                   }
-                }
               });
           })
         } else {
           if(req.user){
-            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun look ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length})
+            res.render('search', {"user": req.user, "newmessages": req.user.notifications.length, "errmsg": "Aucun relooker ne correspond à votre recherche", "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length})
           } else {
             res.render('search', {"user": req.user, "errmsg": "Aucun look ne correspond à votre recherche"})
           }
@@ -372,232 +337,80 @@ router.post('/search', function(req, res){
 })
 
 router.get('/stylebox/:id', function(req, res){
-  var commentList = [];
   var styleboxId = req.params.id;
-  Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-    if(stylebox.comments){
-      stylebox.comments.forEach(function(comment, indexcom, objectcom){
-        Comments.getCommentById(comment, function(err, com){
-          if(err){
-            console.log(err)
+  function calculaterating(rating, callback){
+    var sommeRat = 0;
+    var precisionRat = 0;
+    var qualitypriceRat = 0;
+    var communicationRat = 0;
+    var ponctualityRat =0;
+
+    if(rating.length){
+      rating.forEach(function(rat, index, object){
+        var sommeOneRat = rat.precision + rat.qualityprice + rat.communication + rat.ponctuality;
+        var moyenneOneRat = sommeOneRat/4;
+        sommeRat = sommeRat + moyenneOneRat;
+        precisionRat = precisionRat + rat.precision;
+        qualitypriceRat = qualitypriceRat + rat.qualityprice;
+        communicationRat = communicationRat + rat.communication;
+        ponctualityRat = ponctualityRat + rat.ponctuality;
+
+        if(index+1 == object.length){
+          var generalRat = sommeRat / object.length;
+          var precRat = precisionRat / object.length;
+          var qualiRat = qualitypriceRat / object.length;
+          var commuRat = communicationRat / object.length;
+          var ponctuRat = ponctualityRat / object.length;
+
+          var allRats = {"general": generalRat, "precision": precRat, "quality": qualiRat, "communication": commuRat, "ponctuality": ponctuRat};
+          callback(allRats);
+        }
+      })
+    } else {
+      var allRats = {"general": -1, "precision": -1, "quality": -1, "communication": -1, "ponctuality": -1};
+      callback(allRats);
+    }
+  }
+
+  var styleboxproto = {};
+  var promise = new Promise(function(resolve, reject){
+    var haveToVerify = false;
+    if(req.user){
+      if(req.user.varified == false || req.user.phoneIsVerified == false){
+        haveToVerify = true;
+      }
+    }
+    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
+      User.getUserById(stylebox.creator, function(err, user){
+        calculaterating(stylebox.rating, function(allrats){
+          styleboxproto.lastName = user.lastName;
+          styleboxproto.price = stylebox.price;
+          styleboxproto.avatar = user.avatar;
+          styleboxproto.description = stylebox.description;
+          styleboxproto.generalprocess = stylebox.generalprocess;
+          styleboxproto.id = stylebox.id;
+          styleboxproto.city = stylebox.city;
+          styleboxproto.men = stylebox.men;
+          styleboxproto.women = stylebox.women;
+          styleboxproto.relooking = stylebox.relooking;
+          styleboxproto.beaute = stylebox.beaute;
+          styleboxproto.corses = stylebox.corses;
+          styleboxproto.rating = allrats;
+          styleboxproto.number = stylebox.rating.length;
+          // Hnadlebars helpers
+
+          if(req.user){
+            console.log(styleboxproto)
+            res.render('stylebox-display',{user: req.user, stylebox: styleboxproto, "haveToVerify": haveToVerify})
           } else {
-            if(moment(com.showDate) < moment()){
-              var formatedCreated = moment(com.createdTime).format('DD-MM-YYYY, HH:mm');
-              com.createdDate = formatedCreated;
-              commentList.push(com);
-            }
+            console.log(styleboxproto)
+            res.render('stylebox-display',{stylebox: styleboxproto})
           }
         })
       })
-    }
-    User.getUserById(stylebox.creator, function(err, user){
-      if(err){
-        console.log(err)
-      } else {
-        var gender = "";
-        var style = "";
-        if (stylebox.gender == "ladies"){
-          gender = "femme"
-        } else {
-          gender = "homme"
-        }
-
-        switch(stylebox.style) {
-          case "allbeauty":
-            style = "Relooking beauté";
-          break;
-          case "all":
-            style = "Relooking vestimentaire";
-          break;
-          case "casual":
-            style = "Casual";
-          break;
-          case "businesscasual":
-            style = "Business casual";
-          break;
-          case "businessformal":
-            style = "Business formal";
-          break;
-          case "streetwear":
-            style = "Streetwear";
-          break;
-          case "CocktailChic":
-            style = "Cocktail chic";
-          break;
-          case "SemiFormal":
-            style = "Semi-formal";
-          break;
-          case "BlackTie":
-            style = "Black tie";
-          break;
-          case "WhiteTie":
-            style = "White tie";
-          break;
-          case "Bohemian":
-            style = "Bohemian";
-          break;
-          case "Arty":
-            style = "Arty";
-          break;
-          case "Chic":
-            style = "Chic";
-          break;
-          case "Classic":
-            style = "Classic";
-          break;
-          case "Exotic":
-            style = "Exotic";
-          break;
-          case "Flamboyant":
-            style = "Flamboyant";
-          break;
-          case "Sophisticated":
-            style = "Sophisticated";
-          break;
-          case "Sexy":
-            style = "Sexy";
-          break;
-          case "Western":
-            style = "Western";
-          break;
-          case "Traditional":
-            style = "Traditional";
-          break;
-          case "Preppy":
-            style = "Preppy";
-          break;
-          case "Punk":
-            style = "Punk";
-          break;
-          case "Tomboy":
-            style = "Tomboy";
-          break;
-          case "Rocker":
-            style = "Rocker";
-          break;
-          case "Goth":
-            style = "Goth";
-          break;
-          case "Coiffure":
-            style = "Coiffure";
-          break;
-          case "Barbe":
-            style = "Tailler la barbe";
-          break;
-          case "CoiffureColoration":
-            style = "Coiffure et coloration";
-          break;
-          case "CoiffureBarbe":
-            style = "Coiffure et tailler la barbe";
-          break;
-          case "CoiffureColorationBarbe":
-            style = "Coiffure, coloration et tailler la barbe";
-          break;
-          case "Maquillage":
-            style = "Maquillage";
-          break;
-          case "Manucure":
-            style = "Manucure";
-          break;
-          case "Pedicure":
-            style = "Pédicure";
-          break;
-          case "ManucurePedicure":
-            style = "Manucure et pédicure";
-          break;
-          case "Sourcils":
-            style = "Sourcils";
-          break;
-          case "SoinVisage":
-            style = "Soin visage";
-          break;
-          case "SoinCorp":
-            style = "Soin corps";
-          break;
-          case "SoinVisageCorp":
-            style = "Soin visage et corps";
-          break;
-          default:
-            style = "not found";
-               break;
-        }
-
-        var haveToVerify = false;
-        if(req.user){
-          if(req.user.varified == false || req.user.phoneIsVerified == false){
-            haveToVerify = true;
-          }
-        }
-        var stylistNeededInfo = {"firstName": user.firstName, "lastName": user.lastName, "avatar": user.avatar, "description": user.stylist.description, "availability": user.stylist.availability};
-        var rating = {};
-        var general = 0;
-        var communication = 0;
-        var quality = 0;
-        var ponctuality = 0;
-        var precision = 0;
-        if(user.rating.length){
-          user.rating.forEach(function(rat, index, object){
-            communication = communication + rat.communication;
-            quality = quality + rat.qualityprice;
-            ponctuality = ponctuality + rat.ponctuality;
-            precision = precision + rat.precision;
-
-            if(index+1 == user.rating.length){
-              rating.quality = quality/user.rating.length;
-              rating.communication = communication/user.rating.length;
-              rating.ponctuality = ponctuality/user.rating.length;
-              rating.precision = precision/user.rating.length;
-              rating.general = (quality+communication+ponctuality+precision)/(user.rating.length * 4);
-              rating.number = user.rating.length;
-              if(req.user){
-                res.render('stylebox-display',
-                  {"styleboxId":styleboxId,
-                    "styleboxcomments": commentList,
-                    "stylebox": stylebox,
-                    "rating": rating,
-                    "stylist": stylistNeededInfo,
-                    "gender": gender,
-                    "style": style,
-                    "user": req.user,
-                    "newmessages": req.user.notifications.length,
-                    "haveToVerify": haveToVerify,
-                    "newdemands": req.user.demandNotifications.length,
-                    "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-              } else {
-                res.render('stylebox-display', {"styleboxId":styleboxId,"styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
-              }
-            }
-          });
-        } else {
-          rating.quality = -1;
-          rating.communication = -1;
-          rating.ponctuality = -1;
-          rating.precision = -1;
-          rating.general = -1;
-          rating.number = 0;
-          if(req.user){
-            res.render('stylebox-display',
-            {"styleboxId":styleboxId,
-            "styleboxcomments": commentList,
-            "stylebox": stylebox,
-            "rating": rating,
-            "stylist": stylistNeededInfo,
-            "style": style,
-            "gender": gender,
-            "user": req.user,
-            "newmessages": req.user.notifications.length,
-            "haveToVerify": haveToVerify,
-            "newdemands": req.user.demandNotifications.length,
-            "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-          } else {
-            res.render('stylebox-display', {"styleboxId":styleboxId, "styleboxcomments": commentList, "stylebox": stylebox, "rating": rating, "stylist": stylistNeededInfo,  "style": style, "gender": gender, "haveToVerify": haveToVerify});
-          }
-        }
-      }
     })
-  });
+  })
 });
-
 
 
 router.post('/demand', function(req, res){
@@ -858,12 +671,8 @@ router.get('/currentUser', function(req, res){
 })
 
 router.get('/createstylebox', function(req, res){
-  if(req.user){
-    if(req.user.stylist.status){
-      res.render('createstylebox', {user: req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-    } else {
-      res.render('become-stylist', {user: req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-    }
+  if(req.user && !req.user.styleboxes){
+    res.render('createstylistprofile', {"user": req.user});
   } else {
     res.redirect('http://fason.co/');
   }
@@ -872,85 +681,109 @@ router.get('/createstylebox', function(req, res){
 
 var uploadMulter = multer({dest: 'public/img'})
 
-
 router.post('/createstylebox', function(req, res){
-  if(req.user){
-    var budget = req.body.budget;
-    var title = req.body.title;
-    var price = req.body.price;
-    var styleObject = req.body.styleObject;
-    var style = req.body.style;
-    var gender = req.body.gender;
-    var minTime = req.body.minTime;
-    var city  = req.body.city;
-    var description = req.body.description;
-    var pics = req.body.pics;
-    var photos = req.body.allphotos;
+  var aboutme = req.body.description;
+  var availability = req.body.availability;
+  var generalprocess = req.body.generalprocess;
+  var price = req.body.price;
+  var relooking = req.body.relooking;
+  var men = req.body.men;
+  var women = req.body.women
+  var beaute = req.body.beaute;
+  var corses = req.body.corses;
+  var creator = req.user.id;
+  var relookingtrue = req.body.relookingtrue;
+  var beautetrue = req.body.beautetrue;
+  var corsestrue = req.body.corsestrue;
 
-    function checkcity(citytest){
-      if(citytest != ""){
-        return citytest
-      } else {
-        return req.user.city;
-      }
-    }
-
-    if(pics.length >= 3){
-      var  stopThis = false;
-      pics.forEach(function(pic, index, object){
-        if(pic == null){
-          res.send({"errmsg": true});
-          stopThis = true;
-        }
-
-        if(index+1 == object.length && stopThis == false){
-          var newStyle = new Stylebox({
-            title: title,
-            price:price,
-            vestimentaire: styleObject.vestimentaire,
-            beaute: styleObject.beaute,
-            style: style,
-            gender: gender,
-            minTime: minTime,
-            photos: pics,
-            city: checkcity(city),
-            minBudget: budget,
-            description: description,
-            creator: req.user
-          });
-
-
-          Stylebox.createNewStylebox(newStyle, function(err, stylebox){
-            if(err) {
-              console.log(err)
-              res.send({"stylebox": false});
-            } else {
-              var userto = req.user;
-              userto.styleboxes.push(stylebox.id);
-              userto.save();
-              var mailOptions = {
-                  from: '"Fason service client" <fason.contact@gmail.com>',
-                  to: "fason.contact@gmail.com",
-                  subject : "Encore un look!",
-                  html : "yesss on a encore un look bro! titre : <br>"+ newStyle.title +"<br> ID : <br>" + newStyle.id + " <br><br>User that is creating this style is : <br>" + req.user.id
-              };
-              transporter.sendMail(mailOptions, function(error, info){
-                  if(error){
-                      return console.log(error);
-                  }
-              });
-              res.send({"stylebox": true});
-            }
-          });
-        }
-      })
+  // Function check all info
+  var stylistProfile  = new Stylebox({"relookingtrue":relookingtrue, "beautetrue":beautetrue, "corsestrue":corsestrue, "availability": availability, "description": aboutme, "creator": creator, "generalprocess": generalprocess, "price": price, "relooking": relooking, "beaute":beaute, "corses": corses, "valid": false, "men": men, "women": women, "city":"Paris, France"});
+  stylistProfile.save(function(err, newStyle){
+    if(err){
+      console.log(err)
     } else {
-      res.send({"errmsg": true});
+      console.log("Profile created with success");
+      var creator2 = req.user;
+      creator2.styleboxes = newStyle.id;
+      creator2.save();
+      res.send({"created": true});
     }
+  });
+})
+
+router.get("/deletestylebox", function(req, res){
+  var user = req.user;
+  Stylebox.findByIdAndRemove(user.styleboxes, function (err,offer){
+    if(err) {
+      throw err;
+    } else {
+      user.styleboxes = "";
+      user.save();
+      res.send({"ok": true})
+    }
+  })
+})
+
+router.get('/getStylebox', function(req, res){
+
+  if(req.user && req.user.styleboxes){
+    Stylebox.getStyleboxById(req.user.styleboxes, function(err, stylebox){
+      if(err){
+        console.log(err)
+      } else {
+        res.send({"stylebox":stylebox});
+      }
+    })
   } else {
-    res.send({"nouser": true});
+    res.redirect("https://www.fason.co");
+  }
+
+})
+
+router.get("/updatestylistprofile", function(req, res){
+  if(req.user && req.user.styleboxes){
+    Stylebox.getStyleboxById(req.user.styleboxes, function(err, stylebox){
+      if(err){
+        console.log(err)
+      } else {
+        res.render("updatestylistprofile", {"user":req.user, "stylebox":stylebox});
+      }
+    })
+  } else {
+    res.redirect("https://www.fason.co")
   }
 });
+
+router.post('/updatestylistprofile', function(req, res){
+  var stylebox = req.body.modifiedStylebox;
+  var user = req.user;
+
+  Stylebox.getStyleboxById(user.styleboxes, function(err, style){
+    if(err){
+      console.log(err)
+    } else {
+      style.description = stylebox.description;
+      style.generalprocess = stylebox.generalprocess;
+      style.availability = stylebox.availability;
+      style.men = stylebox.men;
+      style.women = stylebox.women;
+      style.relooking = stylebox.relooking;
+      style.beaute = stylebox.beaute;
+      style.corses = stylebox.corses;
+      style.price = stylebox.price;
+      style.relookingtrue = stylebox.relookingtrue;
+      style.beautetrue = stylebox.beautetrue;
+      style.corsestrue = stylebox.corsestrue;
+      style.save(function(err){
+        if(err){
+          console.log(err)
+        } else {
+          res.send({'updated':true});
+        }
+      })
+    }
+  })
+})
 
 // Get the conversations and display them when log into inbox page
 var conversationsArray = [];
@@ -1330,6 +1163,7 @@ router.get('/demandes', function(req, res){
       // Updating demands if expired
       if(connectedUser.demands.length){
         connectedUser.demands.forEach(function(demand, index, object){
+          console.log(demand, "THIS IS THE DEMAND")
           Demand.getDemandById(demand, function(err, dem){
             var newDate = moment(dem.createdTime);
             var now = moment();
@@ -1470,6 +1304,7 @@ router.get('/demandes', function(req, res){
   }
 })
 
+
 router.post('/acceptdemand', function(req, res){
   if(req.user){
     var demandId = req.body.demandId;
@@ -1493,40 +1328,30 @@ router.post('/acceptdemand', function(req, res){
         newEval.endDate = addDays(demand.time, 14);
         newEval.stylistId = req.user.id;
         newEval.forDemand = demand.id;
-        newEval.clientId = req.user.id;
+        newEval.clientId = demand.creator;
         newEval.forStylebox = demand.forStylebox;
-        console.log(demand.forstyle, "FOR STYLE FOR EVAL");
-        demand.participants.forEach(function(par, inde, obje){
-          if(par != req.user.id){
-            newEval.clientId = par;
-            setTimeout(function(){
-              Eval.createNewEval(newEval, function(err, savedEval){
-                if(err){
-                  console.log(err)
-                } else {
-                  demand.participants.forEach(function(par, indexpar, objectpar){
-                    User.getUserById(par, function(err, user){
-                      if(err){
-                       console.log(err)
-                     }
-                     if(user){
-                       user.evals.push(savedEval);
-                       user.save();
-                     }
-                    })
-                  })
-                }
-              })
-            }, 500);
+        Eval.createNewEval(newEval, function(err, newEva){
+          User.getUserById(demand.creator, function(err, client){
+            client.evals.push(newEva.id);
+            client.demandNotifications.push({"demandid":demand.id});
+            client.save();
+          })
+        })
+        var user2 = req.user;
+        user2.demandNotifications.forEach(function(notif, index, object){
+          if(notif.demandid == demand.id){
+            object.splice(index, 1);
+            user2.save();
           }
         })
-        var demIdd = demand.id;
+
         var mailOptions = {
             from: '"Fason service client" <fason.contact@gmail.com>', // sender address
             to: "fason.contact@gmal.com", // list of receivers
             subject : "Dem accepted bro",
-            html : "Demande accépté <br><br> id : "+ demIdd
+            html : "Demande accépté <br><br> id : "+ demand.id
         };
+
         transporter.sendMail(mailOptions, function(error, info){
             if(error){
                 return console.log(error);
@@ -1534,25 +1359,9 @@ router.post('/acceptdemand', function(req, res){
         });
 
         pusher.trigger(creatorId, 'demands', {"demandAccepter": true});
-        User.getUserById(demand.creator, function(err, user){
-          if(err){
-            console.log(err)
-          } else {
-            user.demandNotifications.push({"demandid": demand.id});
-            user.save();
-            var user2 = req.user;
-            user2.demandNotifications.forEach(function(notif, index, object){
-              if(notif.demandid == demand.id){
-                object.splice(index, 1);
-                user2.save();
-              }
-            })
-          }
-        });
         res.send({"status": true, "appoinementTime": appoinementTime});
       } else {
         var userst = req.user;
-        var clientId = demand.creator;
         demand.declined = true;
         demand.valid = false;
         demand.save();
@@ -1575,7 +1384,7 @@ router.post('/acceptdemand', function(req, res){
           })
         }
 
-        User.getUserById(clientId, function(err, clientS){
+        User.getUserById(demand.creator, function(err, clientS){
           if(err){
             console.log(err)
           } else {
@@ -1612,24 +1421,20 @@ router.post('/declinedemand', function(req, res){
     Demand.getDemandById(demandId, function(err, dem){
       dem.valid = false;
       dem.save();
-      dem.participants.forEach(function(userid){
-        User.getUserById(userid, function(err, user){
-          user.demandNotifications.forEach(function(notif, index, object){
-            if(notif.demandid == dem.id){
-              object.splice(index, 1);
-              user.save();
-            }
-          });
-          user.demands.forEach(function(demand, index2, object2){
-            if(demand == dem.id){
-              object2.splice(index2, 1);
-              user.save();
-            }
-          });
-        })
-      });
-
       User.getUserById(dem.creator, function(err, user){
+        user.demandNotifications.forEach(function(notif, index, object){
+          if(notif.demandid == dem.id){
+            object.splice(index, 1);
+            user.save();
+          }
+        });
+        user.demands.forEach(function(demand, index2, object2){
+          if(demand == dem.id){
+            object2.splice(index2, 1);
+            user.save();
+          }
+        });
+
         client.sms.messages.create({
           to:user.phone,
           from:'+33644607659',
@@ -1642,143 +1447,6 @@ router.post('/declinedemand', function(req, res){
       })
     })
     res.send(true);
-  } else {
-    res.redirect('http://fason.co/');
-  }
-});
-
-router.get('/mystyleboxes', function(req, res){
-  if(req.user){
-    var styleboxes = [];
-    if(req.user.styleboxes.length){
-      req.user.styleboxes.forEach(function(stylebox, index, object){
-        Stylebox.getStyleboxById(stylebox, function(err, style){
-          if(err){
-            console.log(err)
-          } else {
-            var rating = {};
-            var general = 0;
-            var communication = 0;
-            var quality = 0;
-            var ponctuality = 0;
-            var precision = 0;
-            if(req.user.rating.length){
-              req.user.rating.forEach(function(rat, index2, object2){
-                communication = communication + rat.communication;
-                quality = quality + rat.qualityprice;
-                ponctuality = ponctuality + rat.ponctuality;
-                precision = precision + rat.precision;
-
-                if(index2+1 == req.user.rating.length){
-                  var styleboxproto = style;
-                  rating.general = (quality+communication+ponctuality+precision)/(req.user.rating.length * 4);
-                  rating.number = object2.length;
-                  styleboxproto.rating = rating;
-                  //separator
-                  styleboxproto.stylistname = req.user.lastName;
-                  styleboxproto.stylistavatar = req.user.avatar;
-                  styleboxes.push(styleboxproto);
-                  if(index+1 == req.user.styleboxes.length){
-                    res.render('mystyles', {"user": req.user, "styleboxes": styleboxes, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-                  }
-                }
-              })
-            } else {
-              var styleboxproto = style;
-              rating.general = -1;
-              rating.number = 0;
-              styleboxproto.rating = rating;
-              styleboxproto.stylistname = req.user.lastName;
-              styleboxproto.stylistavatar = req.user.avatar;
-              styleboxes.push(styleboxproto);
-              if(index+1 == req.user.styleboxes.length){
-                res.render('mystyles', {"user": req.user, "styleboxes": styleboxes, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-              }
-            }
-          }
-        })
-      })
-    } else {
-      res.render('mystyles', {"user": req.user, "err": "Vous n'avez aucun look en ligne. Créez en un en cliquant sur le lien suivant :", "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-    }
-  } else {
-    res.redirect('http://fason.co/')
-  }
-});
-
-router.get('/styleboxedit/:id', function(req, res){
-  if(req.user){
-    var styleboxId = req.params.id;
-    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-      if(err){
-        console.log(err)
-        res.redirect('http://fason.co/');
-      } else {
-        if (stylebox.creator == req.user.id) {
-          var stylistNeededInfo = {"firstName": req.user.firstName, "lastName": req.user.lastName, "avatar": req.user.avatar, "description": req.user.stylist.description, "availability": req.user.stylist.availability};
-          var rating = {};
-          var general = 0;
-          var communication = 0;
-          var quality = 0;
-          var ponctuality = 0;
-          var precision = 0;
-          if(req.user.rating.length){
-            req.user.rating.forEach(function(rat, index, object){
-              communication = communication + rat.communication;
-              quality = quality + rat.qualityprice;
-              ponctuality = ponctuality + rat.ponctuality;
-              precision = precision + rat.precision;
-
-              if(index+1 == req.user.rating.length){
-                rating.quality = quality/req.user.rating.length;
-                rating.communication = communication/req.user.rating.length;
-                rating.ponctuality = ponctuality/req.user.rating.length;
-                rating.precision = precision/req.user.rating.length;
-                rating.general = (quality+communication+ponctuality+precision)/(req.user.rating.length * 4);
-                rating.number = req.user.rating.length;
-                res.render('editstylebox',
-                {"stylebox": stylebox,
-                "rating": rating,
-                "stylist": stylistNeededInfo,
-                "user": req.user,
-                "newmessages": req.user.notifications.length,
-                "newdemands": req.user.demandNotifications.length,
-                "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-              }
-            });
-          } else {
-            res.render('editstylebox', {"stylebox": stylebox,"rating": rating, "stylist": stylistNeededInfo, user: req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-          }
-        } else {
-          res.redirect('http://fason.co/');
-        }
-      }
-    })
-  } else {
-    res.redirect('http://fason.co/');
-  }
-})
-
-router.post('/styleboxdelete', function(req, res){
-  if(req.user){
-    var styleboxId = req.body.styleboxId;
-    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-      if(stylebox.creator == req.user.id){
-        req.user.styleboxes.forEach(function(style, index, object){
-          if(style == stylebox.id){
-            object.splice(index, 1);
-            req.user.save();
-            stylebox.remove(function (err) {
-                // if no error, your model is removed
-                if(err){
-                  console.log(err)
-                }
-            });
-            res.send({list:req.user.styleboxes.length});
-          }
-        })
-      }
-    });
   } else {
     res.redirect('http://fason.co/');
   }
@@ -1866,52 +1534,6 @@ router.get('/checkevals', function(req, res){
   }
 });
 
-router.post('/editstylebox', function(req, res){
-  if(req.user){
-    var styleboxId = req.body.styleboxId;
-    var budget = req.body.budget;
-    var title = req.body.title;
-    var price = req.body.price;
-    var styleObject = req.body.styleObject;
-    var style = req.body.style;
-    var gender = req.body.gender;
-    var minTime = req.body.minTime;
-    var city  = req.body.city;
-    var description = req.body.description;
-    var photos = req.body.pics;
-    function checkcity(citytest){
-      if(citytest != ""){
-        return citytest
-      } else {
-        return req.user.city;
-      }
-    }
-
-    Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-      stylebox.photos.forEach(function(photo, index, object){
-        if(index+1 == stylebox.photos.length){
-          emptyStylebox = stylebox.id;
-          stylebox.title = title;
-          stylebox.price = price;
-          stylebox.gender = gender;
-          stylebox.description = description;
-          stylebox.style = style;
-          stylebox.vestimentaire = styleObject.vestimentaire;
-          stylebox.beaute = styleObject.beaute;
-          stylebox.minBudget = budget;
-          stylebox.photos = req.body.pics;
-          stylebox.minTime = minTime;
-          stylebox.city = checkcity(city);
-          stylebox.save();
-          res.send({"edited": true});
-        }
-      })
-    });
-  } else {
-    res.redirect('http://fason.co/');
-  }
-})
-
 router.get('/evaluate', function(req, res){
   if(req.user){
     var connectedUser = req.user;
@@ -1920,63 +1542,57 @@ router.get('/evaluate', function(req, res){
       Eval.getEvalById(evall, function(err, eval){
         if(moment(eval.startDate) < moment() && moment(eval.endDate) > moment()){
           var evalProto = {};
-          evalProto.evalId = eval.id;
-
-          if(eval.stylistId == req.user.id){
-            User.getUserById(eval.clientId, function(err, user){
-              if(user){
-                evalProto.userId = eval.clientId;
-                evalProto.userAvatar = user.avatar;
-                evalProto.userName = user.lastName;
-              } else {
-
-                evalProto.problem = true;
-              }
-            });
-          } else {
+          function getevalinfo(callback){
+            evalProto.evalId = eval.id;
             User.getUserById(eval.stylistId, function(err, user){
               if(user){
                 evalProto.stylistId = eval.stylistId;
+                evalProto.styleboxId = eval.forStylebox;
+                console.log(eval.forStylebox,eval.forStylebox,eval.forStylebox,eval.forStylebox,eval.forStylebox)
                 evalProto.stylistAvatar = user.avatar;
                 evalProto.stylistName = user.lastName;
+                Demand.getDemandById(eval.forDemand, function(err, demand){
+                  if(demand){
+                    evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm');
+                    callback();
+                  } else {
+                    evalProto.problem = true;
+                    callback();
+                  }
+                })
               } else {
                 evalProto.problem = true;
+                Demand.getDemandById(eval.forDemand, function(err, demand){
+                  if(demand){
+                    evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm');
+                    callback();
+                  } else {
+                    evalProto.problem = true;
+                    callback();
+                  }
+                })
               }
             });
           }
 
-          Stylebox.getStyleboxById(eval.forStylebox, function(err, stylebox){
-            if(stylebox){
-              evalProto.styleboxTitle = stylebox.title;
-              evalProto.styleboxId = stylebox.id;
-            } else {
-              evalProto.styleboxTitle = "Existe plus";
+          getevalinfo(function(){
+            function laststade(callback2){
+              if(evalProto.problem){
+                object.splice(index, 1);
+                connectedUser.save();
+                callback2();
+              } else {
+                evalsArray.push(evalProto);
+                callback2();
+              }
             }
+            laststade(function(){
+              res.render('evaluate', {"evalsArray": evalsArray, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
+            })
           });
-
-          Demand.getDemandById(eval.forDemand, function(err, demand){
-            if(demand){
-              evalProto.makeover = moment(demand.time).format('DD-MM-YYYY, HH:mm');
-            } else {
-              evalProto.problem = true;
-            }
-          })
-
-          setTimeout(function(){
-            if(evalProto.problem){
-              object.splice(index, 1);
-              connectedUser.save();
-            } else {
-              evalsArray.push(evalProto);
-            }
-          }, 500);
         }
       })
     });
-
-    setTimeout(function(){
-      res.render('evaluate', {"evalsArray": evalsArray, "user": req.user, "newmessages": req.user.notifications.length, "newdemands": req.user.demandNotifications.length, "allNotifications": req.user.demandNotifications.length + req.user.notifications.length});
-    }, 1000);
   } else {
     res.redirect('http://fason.co/');
   }
@@ -1984,78 +1600,58 @@ router.get('/evaluate', function(req, res){
 
 router.post('/evaluate', function(req, res){
   if(req.user){
-    var stylistId = req.body.stylistId;
     var styleboxId = req.body.styleboxId;
     var evalId = req.body.evalId;
     var userId = req.body.userId;
-    var connectedUser = req.user;
     var communication = req.body.communication;
     var precision = req.body.precision;
     var quality = req.body.quality;
     var ponctuality = req.body.ponctuality;
     var comment = req.body.comment;
-    if(stylistId){
-      var commentObject = {};
-      User.getUserById(stylistId, function(err, stylist){
-        commentObject.creator = connectedUser.id;
-        commentObject.foruser = stylistId;
-        commentObject.commentBody = comment.toString();
-        commentObject.stylebox = styleboxId;
-        commentObject.creatorAva = connectedUser.avatar;
-        commentObject.creatorName = connectedUser.lastName;
-        connectedUser.evals.forEach(function(eval, indexe, objecte){
-            Eval.getEvalById(evalId, function(err, evall){
-              commentObject.showDate = evall.endDate;
-              evall.clientCommented = true;
-              evall.save();
-              objecte.splice(indexe, 1);
-              connectedUser.save();
-              Comments.createNewComment(commentObject, function(err, savedComment){
-                if(err){
-                  console.log(err)
-                } else {
-                  stylist.comments.push(savedComment);
-                  stylist.save();
-                }
-              });
-            })
-
-        })
-
-        var ratingObj = {"precision": precision, "qualityprice": quality, "communication": communication, "ponctuality": ponctuality};
-        stylist.rating.push(ratingObj);
-        stylist.save();
-      })
+    var currentuser = req.user;
+    var demand = {};
+    var evaluation = {};
+    console.log(styleboxId, evalId, "THIS INFOOOS");
+    function getallneededinfos(callback){
+      currentuser.demands.forEach(function(dem, index, obj){
+        if(dem.forStylebox == styleboxId){
+            demand = dem;
+        }
+        if(index+1 == obj.length){
+          Eval.getEvalById(evalId, function(err, eval){
+            evaluation = eval;
+            eval.clientCommented = true;
+            eval.save();
+            callback();
+          })
+        }
+      });
     }
 
-    if(userId){
-      var commentObject = {};
-      User.getUserById(userId, function(err, userc){
-        commentObject.creator = connectedUser.id;
-        commentObject.foruser = userId;
-        commentObject.commentBody = comment.toString();
-        commentObject.creatorAva = connectedUser.avatar;
-        connectedUser.evals.forEach(function(eval, indexe, objecte){
-
-            Eval.getEvalById(evalId, function(err, evall){
-              commentObject.showDate = evall.endDate;
-              evall.stylistCommented = true;
-              evall.save();
-              objecte.splice(indexe, 1);
-              connectedUser.save();
-              Comments.createNewComment(commentObject, function(err, savedComment){
-                if(err){
-                  console.log(err)
-                } else {
-                  userc.comments.push(savedComment);
-                  userc.save();
-                }
-              })
+    getallneededinfos(function(){
+      // var showDate = moment(evaluation.createdTime, "DD-MM-YYYY").add(14, 'days');
+      var commentObj = {"creator":req.user, "creatorAva": req.user.avatar, "creatorName": req.user.firstName, "stylebox":styleboxId, "commentBody":comment, "showDate":evaluation.endDate};
+      var evalObj = {"precision":precision, "qualityprice":quality, "ponctuality":ponctuality, "communication":communication}
+      Comments.createNewComment(commentObj, function(err, comment){
+        if(err){
+          console.log(err)
+        }
+        Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
+          console.log(stylebox)
+          stylebox.comments.push(comment.id);
+          stylebox.rating.push(evalObj);
+          stylebox.save(function(){
+            currentuser.evals.forEach(function(eval, index, obj){
+              if(eval == evalId){
+                currentuser.evals.splice(index, 1);
+                currentuser.save();
+                res.send(true);
+              }
             })
+          });
         })
       })
-    }
-    res.send(true);
+    })
   } else {
     res.redirect('http://fason.co/');
   }
@@ -2178,10 +1774,6 @@ router.post('/dayahit', function(req, res){
       var subject = req.body.subject;
       var message = req.body.message;
       if(methodtype){
-
-
-
-
         if(methodtype == "everybody"){
           User.find({}, function(err, users){
             users.forEach(function(user, index, object){
@@ -2202,9 +1794,6 @@ router.post('/dayahit', function(req, res){
             });
           });
         }
-
-
-
       }
     } else {
       res.redirect("https://fason.co/");

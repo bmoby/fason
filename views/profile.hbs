@@ -10,7 +10,7 @@
     <div class="row errorsBlock hiddenclass">
     </div>
     <div class="row login-container-row text-center">
-      <img class="stylebox-display-avatar select-avatar" {{#if user.avatar}} src="{{userAvatar}}" {{else}} src="https://fason.herokuapp.com/images/noavatar.png"{{/if}}>
+      <img class="stylebox-display-avatar select-avatar" {{#if user.avatar}} src="{{user.avatar}}" {{else}} src="https://fason.herokuapp.com/images/noavatar.png"{{/if}}>
       </img>
 
       <form  method="post" action="/users/updateavatar", enctype="multipart/form-data">
@@ -40,33 +40,12 @@
         </div>
     </div>
     <div class="row login-container-row">
-        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-envelope-o email-icon"></i></div>
-        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userCityUpdate" class="input-sm mainLoginInput login-register-text-field city-search" type="text" inputmode="text" placeholder="Ville de résidence" value="{{userCity}}" disabled>
-        </div>
-    </div>
-    <div class="row login-container-row">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-mobile-phone phone-icon"></i></div>
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
             <input id="userPhoneUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="13" inputmode="tel" placeholder="Numéro de portable" value="{{userPhone}}">
         </div>
     </div>
 
-    {{#if userDescription}}
-    <div class="row stylebox-info-input-row general-row">
-      <div class="col-md-12 general-column">
-          <textarea class="stylebox-description mainLoginInput stylebox-create-textarea about-me" placeholder="Résumez votre expérience dans la mode/beauté: école, blogue ou autre (minimum 200 caractères).">{{userDescription}}</textarea>
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if userAvailability}}
-    <div class="row stylebox-info-input-row general-row">
-      <div class="col-md-12 general-column">
-        <textarea class="stylebox-create-textarea mainLoginInput availability-input" placeholder="Disponibilités hebdomadaires : heures/jours.">{{userAvailability}}</textarea>
-      </div>
-    </div>
-    {{/if}}
     <div class="row login-container-row">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-ellipsis-h password-icon"></i></div>
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">

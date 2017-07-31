@@ -1,0 +1,194 @@
+
+<div class="demand-page hidden full-page">
+  {{> demand}}
+</div>
+
+<div class="availabilities-page hidden full-page">
+  {{> availabilities}}
+</div>
+
+<div class="message-page hidden full-page">
+  {{> message}}
+</div>
+
+{{#if user}}
+  {{> userheader}}
+{{else}}
+  {{> header}}
+{{/if}}
+
+
+<div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12 stylist-display-container padding-zero">
+  <div class="col-md-3 col-sm-4 col-xs-12 padding-zero stylist-left-side-container" style="margin-bottom:40px;">
+    <div class="col-md-12 col-sm-12 col-xs-12 padding-zero stylist-left-side">
+      <div {{#if user.avatar}} style="background-image: url({{user.avatar}})" class="stylebox-display-avatar" {{else}} style="background-image: url(/images/noavatar.png)" class="stylebox-display-avatar noavatar"{{/if}}></div>
+
+      <form  method="post" class="myform" action="/users/setavatarStyle", enctype="multipart/form-data" target="uploader_iframe">
+        <input type="file" accept=".jpg, .jpeg, .png" class="avatarUpload hidden" name="displayImage">
+        <input type="submit" value="Submit" class="hidden submitavatar">
+      </form>
+      <iframe id="uploader_iframe" name="uploader_iframe" style="display: none;"></iframe>
+    </div>
+    <div class="col-md-5 col-sm-6 col-xs-6 padding-zero text-left">
+      <p>Paris, France</p>
+    </div>
+  </div>
+  <div class="col-md-9 col-sm-8 col-xs-12 stylist-infos-container">
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row errorblock">
+
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row">
+      <h4 style="margin-top:6px;">À propos de moi</h4>
+      <p class="create-stylist-profile-experience">Résumez votre expérience de styliste personnel : école, blogue ou autre (minimum 200 caractères).</p>
+      <textarea  class="create-stylist-profile-experience-text" placeholder="Entrez le texte ici"/></textarea>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row">
+      <h4 class="notesh4">Prix horaire</h4>
+      <p class="create-stylist-profile-experience">N'utilisez pas les symboles $ et €, entrez uniquement le prix en chiffres.</p>
+      <div class="priceinput">
+        <input type="text" class="priceinput priceinputter" placeholder="--"> € / heur
+      </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row">
+      <h4 class="notesh4">Étapes de relooking</h4>
+        <p class="reate-stylist-profile-steps">Expliquez comment le relooking se déroulera pendant le relooking vestimentaire / relooking beauté / cours de relooking  (minimum 200 caractères).</p>
+      <textarea  class="create-stylist-profile-steps-text" placeholder="Entrez le texte ici"/></textarea>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row">
+      <h4 class="notesh4">Services relooking vestimentaire</h4>
+      <div class="col-md-12 col-sm-12 col-xs-12 stylist-profile-service-text padding-zero">
+        <p>Choisissez les services de relooking vestimentaire que vous maîtrisez en appuyant sur le texte :</p>
+      </div>
+      <div class="off relook col-md-6 col-sm-12 col-xs-12 stylist-profile-service padding-zero" data-rl="reve-shoppingvotreplace">
+        <p>Shopping à votre place</p>
+      </div>
+      <div class="off relook col-md-6 col-sm-12 col-xs-12 stylist-profile-service padding-zero" data-rl="reve-accompshopping">
+        <p>Accompagnement shopping</p>
+      </div>
+      <div class="off relook col-md-6 col-sm-12 col-xs-12 stylist-profile-service padding-zero" data-rl="reve-trigrdrob">
+        <p>Tri de la garde-robe</p>
+      </div>
+      <div class="off relook col-md-6 col-sm-12 col-xs-12 stylist-profile-service padding-zero" data-rl="reve-tourmagville">
+        <p>Faire un tour des prêts-à-porter</p>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row">
+      <h4 class="notesh4">Services relooking beauté</h4>
+      <div class="col-md-12 col-sm-12 col-xs-12 stylist-profile-service-text padding-zero">
+        <p>Choisissez les services de relooking beauté que vous maîtrisez en appuyant sur le texte :</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-maqui">
+        <p>Maquillage</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-coiff">
+        <p>Coiffure</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-color">
+        <p>Coloration</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-manuc">
+        <p>Manucure</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-pedic">
+        <p>Pédicure</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-surci">
+        <p>Sourcils</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-soinviz">
+        <p>Soins du visage</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-soincor">
+        <p>Soins du corps</p>
+      </div>
+      <div class="off beauty col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-be="beau-tailbarb">
+        <p>Taille de barbe</p>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row">
+      <h4 class="notesh4">Cours de relooking</h4>
+      <div class="col-md-12 col-sm-12 col-xs-12 stylist-profile-service-text padding-zero">
+        <p>Choisissez les services de cours de relooking que vous maîtrisez en appuyant sur le texte :</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-maqui">
+        <p>Maquillage</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-coiff">
+        <p>Coiffure</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-color">
+        <p>Coloration</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-manuc">
+        <p>Manucure</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-pedic">
+        <p>Pédicure</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-surci">
+        <p>Sourcils</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-soinviz">
+        <p>Soins du visage</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-soincor">
+        <p>Soins du corps</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-tailbarb">
+        <p>Taille de barbe</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-couleur">
+        <p>Couleurs</p>
+      </div>
+      <div class="off corses col-md-4 col-sm-6 col-xs-6 stylist-profile-service padding-zero" data-co="cour-morpho">
+        <p>Morphologie</p>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row">
+      <h4 class="notesh4">Homme / femme</h4>
+      <div class="col-md-12 col-sm-12 col-xs-12 stylist-profile-service-text padding-zero">
+        <p>Choisissez relooking homme / femme en appuyant sur le texte :</p>
+      </div>
+      <div class="off col-md-4 col-sm-6 col-xs-6 stylist-profile-service genderhomme padding-zero">
+        <p>Relooking homme</p>
+      </div>
+      <div class="off col-md-4 col-sm-6 col-xs-6 stylist-profile-service genderfemme padding-zero">
+        <p>Relooking femme</p>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 stylist-infos-row">
+      <h4 class="notesh4">Disponibilités hebdomadaires</h4>
+      <p class="create-stylist-profile-availability">Vos disponibilités hebdomadaires sont indispensables pour le client afin de faire la demande de relooking.</p>
+      <textarea class="create-stylist-profile-availability-text" placeholder="Entrez le texte ici"></textarea>
+    </div>
+    <div class="row text-right">
+      <button type="button" class="btn btn-default finaliserbtn login-register-btn">Envoyer ma demande</button>
+    </div>
+  </div>
+</div>
+
+<div class="row commentRow">
+</div>
+<div class="hidden-xs">
+  {{> footer}}
+</div>
+
+<script src="../js/jquery.min.js"></script>
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/restylenavbar.css">
+<link rel="stylesheet" href="../css/headerpadding.css">
+<link rel="stylesheet" href="../css/createstylistprofile.css">
+<link rel="stylesheet" href="../css/stylebox-display.css">
+<link rel="stylesheet" href="../css/anim.css">
+
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/createstylistprofile.js"></script>
+<script type="text/javascript" src="../js/autogrow.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.1.0/jquery-confirm.min.css">

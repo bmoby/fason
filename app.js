@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
+var Handlebars = require('handlebars');
 var expressValidator = require('express-validator');
 var session = require('express-session');
 var passport = require('passport');
@@ -20,7 +21,7 @@ var compression = require('compression');
 // new test
 var app = express();
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:3001/bianor");
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
@@ -31,13 +32,22 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
   defaultLayout:'layout',
   partialsDir: __dirname + '/views/utils/',
+  handlebars: Handlebars,
   extname: '.hbs',
     helpers: {
       last: function(array){return array[array.length -1].msg;},
-      subject: function(str){if (str.length > 50) return str.substring(0,50) + '...'; return str; }
+      subject: function(str){if (str.length > 50) return str.substring(0,50) + '...'; return str; },
+      eachNewLine: function (str, options) {
+      	var accum = '';
+      	var data = Handlebars.createFrame(options, options.hash);
+      	var arr = str.split(/\r?\n/);
+        arr.map(function(str) {
+      		if (str) accum += options.fn(str.trim(), {data: data});
+      	});
+        return accum;
+      }
     }
-  })
-);
+  }));
 
 app.set('view engine', '.hbs');
 
@@ -60,14 +70,14 @@ app.use(session({
     resave: true
 }));
 
-app.get('/*', function (req, res, next) {
-  if (req.url.indexOf("/images/") === 0 || req.url.indexOf("/stylesheets/") === 0) {
-    res.setHeader("Cache-Control", "public, max-age=2592000");
-    res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
-  }
-  var reqType = req.headers["x-forwarded-proto"];
-  reqType == 'https' ? next() : res.redirect("https://" + req.headers.host + req.url);
-});
+// app.get('/*', function (req, res, next) {
+//   if (req.url.indexOf("/images/") === 0 || req.url.indexOf("/stylesheets/") === 0) {
+//     res.setHeader("Cache-Control", "public, max-age=2592000");
+//     res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
+//   }
+//   var reqType = req.headers["x-forwarded-proto"];
+//   reqType == 'https' ? next() : res.redirect("https://" + req.headers.host + req.url);
+// });
 
 // Passport init
 app.use(passport.initialize());
@@ -95,7 +105,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Set Port
-app.set('port', (process.env.PORT));
+app.set('port', (process.env.PORT || 3000));
 
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
