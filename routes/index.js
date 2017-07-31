@@ -20,17 +20,17 @@ var multer = require('multer');
 var AWS = require('aws-sdk');
 
 var pusher = new Pusher({
-  appId: (process.env.PUSHER_ID || '283453'),
-  key: (process.env.PUSHER_KEY || '095ff3028ab7bceb6073'),
-  secret: (process.env.PUSHER_SECRET || '25077850beef8ae1d148'),
+  appId: (process.env.PUSHER_ID),
+  key: (process.env.PUSHER_KEY),
+  secret: (process.env.PUSHER_SECRET),
   encrypted: true
 });
 
-var client = new twilio.RestClient((process.env.TWILLIO_SECRET ||  'AC0f6433c5d0713b85184d77e30383fd4f'),( process.env.TWILLIO_KEY || 'cbac6157842210b60de45dab4f90f9fa'));
+var client = new twilio.RestClient(process.env.TWILLIO_SECRET, process.env.TWILLIO_KEY);
 
 AWS.config = {
-  accessKeyId: (process.env.AWS_KEY || 'AKIAJ5ZF3LOCVCPMJ5LQ'),
-  secretAccessKey: (process.env.AWS_SECRET || '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')
+  accessKeyId: (process.env.AWS_KEY),
+  secretAccessKey: (process.env.AWS_SECRET)
 }
 var s3 = new AWS.S3();
 
@@ -39,11 +39,11 @@ var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: (process.env.MAIL_PASS || "Mokoloko123")
+        pass: (process.env.MAIL_PASS)
     }
 });
 router.get('/', function(req, res) {
-  var styleboxeslist = ["59760b6ba88a351bcf0aa9f1", "59760b6ba88a351bcf0aa9f2", "597b5f0e7b07ff2666c7082e"];
+  var styleboxeslist = ["59023e25706a880004de41e2", "5908a0d3e9c0420004aa7873", "59004e38d69fa00004b1be88","5926c125e9af4a00048f5781","58ff12e576678d00041d4be2","5907598f25a0760004f2abbc"];
   var liststyleboxes = [];
 
   function generalfunc(callback){

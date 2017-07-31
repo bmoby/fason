@@ -21,7 +21,7 @@ var compression = require('compression');
 // new test
 var app = express();
 
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:3001/bianor");
+mongoose.connect(process.env.MONGO_URI);
 var db = mongoose.connection;
 
 var routes = require('./routes/index');
@@ -70,14 +70,14 @@ app.use(session({
     resave: true
 }));
 
-// app.get('/*', function (req, res, next) {
-//   if (req.url.indexOf("/images/") === 0 || req.url.indexOf("/stylesheets/") === 0) {
-//     res.setHeader("Cache-Control", "public, max-age=2592000");
-//     res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
-//   }
-//   var reqType = req.headers["x-forwarded-proto"];
-//   reqType == 'https' ? next() : res.redirect("https://" + req.headers.host + req.url);
-// });
+app.get('/*', function (req, res, next) {
+  if (req.url.indexOf("/images/") === 0 || req.url.indexOf("/stylesheets/") === 0) {
+    res.setHeader("Cache-Control", "public, max-age=2592000");
+    res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());
+  }
+  var reqType = req.headers["x-forwarded-proto"];
+  reqType == 'https' ? next() : res.redirect("https://" + req.headers.host + req.url);
+});
 
 // Passport init
 app.use(passport.initialize());
@@ -105,7 +105,7 @@ app.use('/', routes);
 app.use('/users', users);
 
 // Set Port
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT));
 
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
