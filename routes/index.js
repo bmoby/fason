@@ -294,12 +294,12 @@ router.post('/search', function(req, res){
           styleboxes.forEach(function(stylebox, index, object){
               User.getUserById(stylebox.creator, function(err, user){
                 var stylistava = user.avatar;
-                var name = user.firstName;
+                var name = user.lasttName;
                 var generalRat = -1;
                   if(stylebox.rating.length != 0){
                     calculaterating(stylebox.rating, function(raag){
                       generalRat = raag;
-                      var styleboxProto = {"firstName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
+                      var styleboxProto = {"lasttName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
                       styleboxesandstylist.push(styleboxProto);
                       if(index + 1 == object.length){
                         if(req.user){
@@ -310,7 +310,7 @@ router.post('/search', function(req, res){
                       }
                     });
                   } else {
-                    var styleboxProto = {"firstName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
+                    var styleboxProto = {"lasttName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
                     styleboxesandstylist.push(styleboxProto);
                     if(index + 1 == object.length){
                       if(req.user){
