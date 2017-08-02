@@ -139,9 +139,6 @@ $(document).ready(function(){
 
 
   $('.close-icon').on('click', function(){
-    console.log(document.referrer);
-    console.log(document.referrer.toString());
-    console.log("http://fason.co/login");
     if(document.referrer && document.referrer.toString() != "http://fason.co/login"){
       window.location.replace(document.referrer);
     } else {
@@ -164,11 +161,10 @@ $(document).ready(function(){
     }
   });
 
-  // changes
+
   $('.comment-ca-marche').click(function(e){
     e.preventDefault();
     if(window.location.pathname==='/' || window.location.pathname==='/cmc'){
-        console.log('comment-ca-marches')
         $('body,html').animate({
               scrollTop: $('.tutorialContainerMain').offset().top
           }, 2000);
@@ -177,7 +173,6 @@ $(document).ready(function(){
         $('body,html').animate({
               scrollTop: $('.tutorialContainerMain').offset().top
           }, 2000);
-          console.log('no no no noooooooooo')
       });
     };
 
@@ -186,13 +181,9 @@ $(document).ready(function(){
 
   if(window.location.pathname==='/cmc'){
     setTimeout(function () {
-      console.log('comment-ca-marches')
       $('body,html').animate({
             scrollTop: $('.tutorialContainerMain').offset().top
         }, 2000);
     }, 1000);
   };
-
-  // changes
-
 });

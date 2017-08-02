@@ -10,63 +10,67 @@
 
       <div class="row login-container-row text-center">
         <img class="stylebox-display-avatar select-avatar" src="https://fason.herokuapp.com/images/noavatar.png"></img>
-        <form  method="post" action="/users/setavatar", enctype="multipart/form-data">
+        <form  method="post" action="/users/registerform", enctype="multipart/form-data">
           <input type="text" name="userId" class="hidden useridtoserver">
-          <input type="text" name="userType" class="hidden userType">
+          <input type="text" name="userType" class="hidden userType" class="userType">
           <input type="file" accept=".jpg, .jpeg, .png" class="avatarUpload hidden" name="displayImage">
           <input type="submit" value="Submit" class="hidden submitavatar">
-        </form>
         <p>Avatar</p>
       </div>
       <div class="row login-container-row">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-user-o firstname-icon"></i></div>
           <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-              <input id="firstName" class="input-sm mainLoginInput login-register-text-field" maxlength="27" type="text" pattern="[a-zA-Z]" placeholder="Nom">
+              <input id="firstName" name="firstName" class="input-sm mainLoginInput login-register-text-field" placeholder="Nom">
           </div>
       </div>
       <div class="row login-container-row">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-user-o lastname-icon"></i></div>
           <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-              <input id="lastName" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="27" pattern="[a-zA-Z]" placeholder="Prénom">
+              <input id="lastName" name="lastName" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="27" placeholder="Prénom">
           </div>
       </div>
       <div class="row login-container-row">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-map-marker"></i></div>
           <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-              <input id="userCity" class="input-sm mainLoginInput login-register-text-field city-search" type="text" inputmode="text" value="Paris, France" pattern="[a-zA-Z]" placeholder="Ville de résidence" disabled>
+              <input id="userCity" name="city" class="input-sm mainLoginInput login-register-text-field city-search" type="text" inputmode="text" value="Paris, France" placeholder="Ville de résidence" disabled>
           </div>
       </div>
       <div class="row login-container-row">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-envelope-o email-icon"></i></div>
           <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-              <input id="userEmail" class="input-sm mainLoginInput login-register-text-field" type="text" inputmode="email" placeholder="E-mail">
+              <input id="userEmail" name="email" class="input-sm mainLoginInput login-register-text-field" type="text" inputmode="email" placeholder="E-mail">
           </div>
       </div>
       <div class="row login-container-row">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-mobile-phone phone-icon"></i></div>
           <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-              <input id="userPhone" class="input-sm mainLoginInput login-register-text-field" type="text" inputmode="tel" maxlength="13" placeholder="Numéro de portable">
+              <input id="userPhone" name="phone" class="input-sm mainLoginInput login-register-text-field" type="text" inputmode="tel" maxlength="13" placeholder="Numéro de portable">
           </div>
       </div>
       <div class="row login-container-row">
           <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-ellipsis-h password-icon"></i></div>
           <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-              <input id="userPassword" class="input-sm mainLoginInput  login-register-text-field" type="password" minlength="6" placeholder="Mot de passe">
+              <input id="userPassword" name="password" class="input-sm mainLoginInput  login-register-text-field" type="password" minlength="6" placeholder="Mot de passe">
           </div>
       </div>
+      <input type="text" name="simpleuser" value="off" class="hidden clientchekvalue">
+      <input type="text" name="stylist" value="off" class="hidden stylistchekvalue">
+      <input type="text" name="conditions" value="off" class="hidden conditionchecked">
+      <button type="submit" class="hidden submitregister" name="button"></button>
+      </form>
       <div class="row login-container-row user-type">
         <!-- to get value use $(".user-type input[type='radio']:checked").val() -->
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-          <input type="radio" name="iCheck" class="user-type-checkbox" value="client"> <p class="inlinetext checkboxestext">Client </p></input>
+            <button type="button" class="checkboxstyle iamclient"></button><p class="checkp">Client</p>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-          <input type="radio" name="iCheck" class="user-type-checkbox" value="stylist"> <p class="inlinetext checkboxestext">Relooker</p></input>
+            <button type="button" class="checkboxstyle iamstylist"></button><p class="checkp">Stylist</p>
         </div>
       </div>
       <div class="row login-container-row conditions">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <!-- to take the value use .is(":checked") -->
-          <input type="checkbox"><p class="inlinetext checkboxestext">J'accepte les <a href="/conditions">conditions générales</a> d'utilisation</p></input>
+          <button type="button" class="checkboxstyle acceptconditions"></button><p class="inlinetext checkp checkboxestext">J'accepte les <a href="/conditions">conditions générales</a> d'utilisation</p>
         </div>
       </div>
       <div class="row login-register-btn-row text-right">

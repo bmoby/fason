@@ -1,4 +1,38 @@
 $(document).ready(function(){
+  // CHECKBOXES
+  $('.iamclient').on('click', function(){
+    if(!$(this).hasClass('checkboxstylepress')){
+      $(this).addClass('checkboxstylepress');
+      $('.clientchekvalue').val("on");
+      $('.iamstylist').removeClass('checkboxstylepress')
+      $('.stylistchekvalue').val("off");
+      console.log($('.clientchekvalue').val())
+    }
+  })
+
+  $('.iamstylist').on('click', function(){
+    if(!$(this).hasClass('checkboxstylepress')){
+      $(this).addClass('checkboxstylepress');
+      $('.stylistchekvalue').val("on");
+      $('.iamclient').removeClass('checkboxstylepress')
+      $('.clientchekvalue').val("off");
+      console.log($('.clientchekvalue').val())
+    }
+  })
+
+  $('.acceptconditions').on('click', function(){
+      if(!$(this).hasClass('checkboxstylepress')){
+        $(this).addClass('checkboxstylepress');
+        $('.conditionchecked').val("on");
+        console.log($('.conditionchecked').val())
+      } else {
+        $(this).removeClass('checkboxstylepress');
+        $('.conditionchecked').val("off");
+        console.log($('.conditionchecked').val());
+      }
+  })
+
+
   // REGISTER JQUERY ERROR HANDLING PROCESS
   $('.register-btn').on('click', function(){
     // getting the data from the fields
@@ -9,10 +43,10 @@ $(document).ready(function(){
     var city = $('#userCity').val();
     var lpass = $('#userPassword').val();
     var pass = lpass.toLowerCase();
-
     var phone = $('#userPhone').val();
-    var userType = $(".user-type input[type='radio']:checked").val();
-    var conditions =  $(".conditions input").is(":checked");
+    var client = $('.clientchekvalue').val();
+    var stylist = $('.stylistchekvalue').val();
+    var conditions =  $('.conditionchecked').val();
     // removing all existing error messages from the html page
     $('.oneError').remove();
     // Ajax request to the server
@@ -20,7 +54,7 @@ $(document).ready(function(){
       url: '/users/register',
       method: 'POST',
       contentType: 'application/json',
-      data: JSON.stringify({ "firstName": first, "city": city, "lastName": last, "email": emai, "password": pass, "phone": phone, "userType": userType, "conditions": conditions}),
+      data: JSON.stringify({ "firstName": first, "city": city, "lastName": last, "email": emai, "password": pass, "phone": phone, "conditions": conditions, "client":client, "stylist":stylist}),
       success: function(response){
         if (response.errors){
           response.errors.forEach(function(error){
@@ -31,14 +65,7 @@ $(document).ready(function(){
           });
         } else {
           if(response.ok){
-            $('.useridtoserver').val(response.userId);
-            if(response.stylist){
-              $('.userType').val("stylist");
-              $('.submitavatar').click();
-            }else{
-              $('.userType').val("user");
-              $('.submitavatar').click();
-            }
+            $('.submitregister').click();
           }
         }
       }

@@ -1,9 +1,5 @@
 $(document).ready(function(){
 
-  $('.stylebox-description').textcounter({
-    stopInputAtMaximum: false,
-    displayErrorText: false
-  });
 
   $('.select-avatar').on('click', function(){
     $('.avatarUpload').click()
@@ -53,7 +49,8 @@ $(document).ready(function(){
           });
         }
         if(response.ok){
-          $('.updateavatar').click();
+          $('#userEmailUpdate').val(userEmail);
+          $('.submitupdateprofile').click();
         }
       }
     });

@@ -35,7 +35,7 @@ var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: (process.env.MAIL_PASS)
+        pass: (process.env.MAIL_PASS || "Stylebox19871989-")
     }
 });
 router.use(bodyParser.json());
@@ -82,55 +82,7 @@ router.post('/setavatarStyle', uploadMulter.single('displayImage'), function(req
   }
 })
 
-router.post('/setavatar', uploadMulter.single('displayImage'), function(req, res){
-  if(req.file){
-    var fileName = {};
-    var file = req.file;
-    var stream = fs.createReadStream(file.path)
-    var imageType = file.mimetype.split('/').pop()
-    fileName = file.filename+'.'+imageType;
-    params = {
-      Bucket: 'styleboxphotosfason',
-      ACL: 'public-read',
-      Key: fileName,
-      Body: stream
-    };
 
-    s3.putObject(params, function(err, data){
-      if (err){
-        console.log(err)
-      }else{
-        fs.unlink(req.file.path, function(err){
-          if (err) console.error(err)
-        });
-      }
-    });
-
-    User.getUserById(req.body.userId, function(err, user){
-      if(err){
-        console.log(err)
-      }else{
-        user.avatar = "https://s3.amazonaws.com/styleboxphotosfason/"+fileName
-        user.save();
-        if(req.body.userType == "user"){
-          setTimeout(function () {
-            res.redirect("http://fason.co/")
-          }, 1000)
-        } else {
-          setTimeout(function () {
-            res.redirect("http://fason.co/createstylebox")
-          }, 1000)
-        }
-      }
-    })
-  } else {
-    if(req.body.userType == "user"){
-      res.redirect("http://fason.co/")
-    } else {
-      res.redirect("http://fason.co/createstylebox")
-    }
-  }
-})
 
 router.get('/updateprofil', function(req, res){
   if(req.user){
@@ -140,102 +92,70 @@ router.get('/updateprofil', function(req, res){
     var userPhone = req.user.phone;
     var userAvatar = req.user.avatar;
     var userCity = req.user.city;
-    var userDescription = req.user.stylist.description;
-    var userAvailability = req.user.stylist.availability;
-    res.render('profile', {"userAvailability": userAvailability, "userDescription":userDescription, "userAvatar": userAvatar, "userFirstName":userFirstName, "userLastName":userLastName, "userCity":userCity, "userEmail":userEmail, "userPhone":userPhone, "user":req.user});
+    res.render('profile', {"userAvatar": userAvatar, "userFirstName":userFirstName, "userLastName":userLastName, "userCity":userCity, "userEmail":userEmail, "userPhone":userPhone, "user":req.user});
   } else {
     res.redirect("http://fason.co/")
   }
 });
 
-router.post('/updateprofil', function(req, res){
+router.post('/updateprofilform', uploadMulter.single('displayImage'), function(req, res){
   if(req.user){
-    function updateprofil(callback){
-      var userFirstName = req.body.userFirstName;
-      var userLastName = req.body.userLastName;
-      var userEmail = req.body.userEmail;
-      var userPhone = req.body.userPhone;
-      var userPassword = req.body.userPassword;
-      var user = req.user;
-
-      req.checkBody('userFirstName', 'Veuillez saisir votre nom.').notEmpty();
-    	req.checkBody('userLastName', 'Veuillez saisir votre prénom.').notEmpty();
-    	req.checkBody('userEmail', 'Veuillez saisir votre e-mail.').notEmpty();
-      req.checkBody('userPhone', 'Veuillez saisir votre numéro de potable.').notEmpty();
-      req.checkBody('userEmail', 'Veuillez saisir votre e-mail.').isEmail();
-
-      if(userPassword){
-        req.checkBody('userPassword', 'Le mot de passe doit être compris entre 6 et 20 caractères.').len(6, 20);
-      }
-
-      var errors = req.validationErrors() || [];
-
-
-      if(errors.length){
-        console.log(errors);
-        res.send({"errors":errors})
-      } else {
-        if(userFirstName !== user.firstName){
-          user.firstName = userFirstName;
-          user.save();
-        }
-
-        if(userPassword){
-          user.password = bcrypt.hashSync(userPassword);
-          user.save();
-        }
-
-        if(userLastName !== user.lastName){
-          user.lastName = userLastName;
-          user.save();
-        }
-
-        if(userEmail !== user.email){
-          user.email = userEmail;
-          user.varified = false;
-          rand =  bcrypt.hashSync(uuid.v1());
-          user.verifyEmailString = rand;
-          link = "http://"+req.get('host')+"/users/verify?id="+rand;
-          host = "http://"+req.get('host');
-          var mailOptions = {
-              from: '"Fason service client" <fason.contact@gmail.com>',
-              to: userEmail,
-              subject : "Confirmation de votre e-mail sur Fason",
-              html : "Bonjour,<br> Veuillez confirmer votre e-mail afin de valider votre compte sur FASON.<br><a href="+link+">Appuyez ici pour confirmer</a>"
-          };
-          transporter.sendMail(mailOptions, function(error, info){
-              if(error){
-                  return console.log(error);
-              }
-          });
-          user.save();
-        }
-
-        if(userPhone !== req.user.phone){
-          if (userPhone.charAt(0) == 0){
-            userPhone = userPhone.substring(1);
-            userPhone = "+33"+phone;
-          }
-
-          var phoneCode = randomIntFromInterval(10000, 100000);
-          user.phone = userPhone;
-          user.phoneVerification = phoneCode;
-          user.phoneIsVerified = false;
-          user.save();
-        }
-
-        callback(user)
-      }
+    var userFirstName = req.body.userFirstName;
+    var userLastName = req.body.userLastName;
+    var userEmail = req.body.userEmail;
+    var userPhone = req.body.userPhone;
+    var userPassword = req.body.userPassword;
+    var user = req.user;
+    console.log("VARS", userFirstName, userLastName, userEmail, userPhone, userPassword);
+    if(userFirstName !== user.firstName){
+      user.firstName = userFirstName;
+      user.save();
     }
 
-    updateprofil(function(user){user.save(); res.send({"ok":true})})
-  } else {
-    res.redirect("http://fason.co/")
-  }
-});
+    if(userPassword){
+      user.password = bcrypt.hashSync(userPassword);
+      user.save();
+    }
 
-router.post('/updateavatar', uploadMulter.single('displayImage'), function(req, res){
-  if(req.user){
+    if(userLastName !== user.lastName){
+      user.lastName = userLastName;
+      user.save();
+    }
+
+    if(userEmail !== user.email){
+      user.email = userEmail;
+      user.varified = false;
+      rand =  bcrypt.hashSync(uuid.v1());
+      user.verifyEmailString = rand;
+      link = "http://"+req.get('host')+"/users/verify?id="+rand;
+      host = "http://"+req.get('host');
+      var mailOptions = {
+          from: '"Fason service client" <fason.contact@gmail.com>',
+          to: userEmail,
+          subject : "Confirmation de votre e-mail sur Fason",
+          html : "Bonjour,<br> Veuillez confirmer votre e-mail afin de valider votre compte sur FASON.<br><a href="+link+">Appuyez ici pour confirmer</a>"
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+              return console.log(error);
+          }
+      });
+      user.save();
+    }
+
+    if(userPhone !== req.user.phone){
+      if (userPhone.charAt(0) == 0){
+        userPhone = userPhone.substring(1);
+        userPhone = "+33"+phone;
+      }
+
+      var phoneCode = randomIntFromInterval(10000, 100000);
+      user.phone = userPhone;
+      user.phoneVerification = phoneCode;
+      user.phoneIsVerified = false;
+      user.save();
+    }
+
     if(req.file){
       var actualava = req.user.avatar;
       var n = actualava.lastIndexOf('/');
@@ -265,39 +185,102 @@ router.post('/updateavatar', uploadMulter.single('displayImage'), function(req, 
             if (err) console.error(err)
           });
         }
+
       });
 
-      User.getUserById(req.user.id, function(err, user){
-        if(err){
-          console.log(err)
-        }else{
-          user.avatar = "https://s3.amazonaws.com/styleboxphotosfason/"+fileName
-          user.save();
-          setTimeout(function () {
-            res.redirect("http://fason.co/")
-          }, 1000)
-
-        }
-      })
-    } else {
-      res.redirect("http://fason.co/")
+      setTimeout(function(){
+        user.avatar = "https://s3.amazonaws.com/styleboxphotosfason/"+fileName
+        user.save();
+      },200)
     }
+  }
+
+  setTimeout(function(){
+    res.redirect("https://www.fason.co");
+  }, 1000);
+
+})
+
+router.post('/updateprofil', function(req, res){
+
+  function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
+  if(req.user){
+      var userFirstName = req.body.userFirstName;
+      var userLastName = req.body.userLastName;
+      var userEmail = req.body.userEmail;
+      var userPhone = req.body.userPhone;
+      var userPassword = req.body.userPassword;
+      var user = req.user;
+      var errors = [];
+
+      // Body-Validations with express validators
+      if(!userFirstName){
+        var err = {param:'userFirstName', msg: 'Veuillez saisir votre nom.', value: "yes"}
+        errors.push(err);
+      }
+      if(!userLastName){
+        var err = {param:'userLastName', msg: 'Veuillez saisir votre prénom.', value: "yes"}
+        errors.push(err);
+      }
+      if(!userEmail){
+        var err = {param:'userEmail', msg: 'Veuillez saisir votre e-mail.', value: "yes"}
+        errors.push(err);
+      }
+      if(!userPhone){
+        var err = {param:'userPhone', msg: 'Veuillez saisir votre numéro de potable.', value: "yes"}
+        errors.push(err);
+      }
+
+      if(userEmail != ""){
+        if(!validateEmail(userEmail)){
+          var err = {param:'userEmail', msg: "E-mail n'est pas valide.", value: "yes"}
+          errors.push(err);
+        }
+      }
+
+      if(userPassword){
+        if(userPassword.length < 6 && userPassword.length > 20){
+          var err = {param:'userPassword', msg: "Le mot de passe doit être compris entre 6 et 20 caractères.", value: "yes"}
+          errors.push(err);
+        }
+      }
+
+
+      setTimeout(function(){
+        if(errors.length){
+          console.log(errors);
+          res.send({"errors":errors});
+        } else {
+          res.send({"ok":true});
+        }
+      }, 500);
   } else {
     res.redirect("http://fason.co/")
   }
-})
-
+});
 
 router.post('/register', function(req, res){
+
+  function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
 	var firstName = req.body.firstName;
 	var lastName = req.body.lastName;
 	var email = req.body.email;
 	var password = req.body.password;
-  var city = req.body.city;
+  var city = "Paris, France";
 	var terms = req.body.conditions;
+  var client = req.body.client;
+  var stylist = req.body.stylist;
   var phone = req.body.phone;
   var userType = req.body.userType;
-
+  var errors = [];
   if (phone != null){
     if (phone.charAt(0) == 0){
       phone = phone.substring(1);
@@ -306,23 +289,51 @@ router.post('/register', function(req, res){
   }
 
 	// Body-Validations with express validators
-  req.checkBody('firstName', 'Veuillez saisir votre nom.').notEmpty();
-	req.checkBody('lastName', 'Veuillez saisir votre prénom.').notEmpty();
-  req.checkBody("city", "Veuillez saisir votre ville de résidence.").notEmpty();
-	req.checkBody('email', 'Veuillez saisir votre e-mail.').notEmpty();
-  req.checkBody('phone', 'Veuillez saisir votre numéro de potable.').notEmpty();
-  req.checkBody("userType", "Précisez quel type d'utilisateur êtes-vous.").notEmpty();
+  if(!firstName){
+    var err = {param:'firstName', msg: 'Veuillez saisir votre nom.', value: "yes"}
+    errors.push(err);
+  }
+  if(!lastName){
+    var err = {param:'lastName', msg: 'Veuillez saisir votre prénom.', value: "yes"}
+    errors.push(err);
+  }
+  if(!email){
+    var err = {param:'email', msg: 'Veuillez saisir votre e-mail.', value: "yes"}
+    errors.push(err);
+  }
+  if(!phone){
+    var err = {param:'phone', msg: 'Veuillez saisir votre numéro de potable.', value: "yes"}
+    errors.push(err);
+  }
+  if(client == "off" && stylist == "off"){
+    var err = {param:'userType', msg: "Précisez quel type d'utilisateur êtes-vous.", value: "yes"}
+    errors.push(err);
+  }
 
   if(email != ""){
-    req.checkBody('email', "E-mail n'est pas valide.").isEmail();
+    if(!validateEmail(email)){
+      var err = {param:'email', msg: "E-mail n'est pas valide.", value: "yes"}
+      errors.push(err);
+    }
   }
-	req.checkBody('password', 'Veuillez saisir le mot de passe.').notEmpty();
-  if(password != ""){
-    req.checkBody('password', 'Le mot de passe doit être compris entre 6 et 20 caractères.').len(6, 20);
+  if(!password){
+    var err = {param:'password', msg: "Veuillez saisir le mot de passe.", value: "yes"}
+    errors.push(err);
+  }
+
+  if(password){
+    if(password.length < 6 && password.length > 20){
+      var err = {param:'password', msg: "Le mot de passe doit être compris entre 6 et 20 caractères.", value: "yes"}
+      errors.push(err);
+    }
+  }
+
+  if(terms == "off"){
+    var err = {param:'conditions', msg: "Veuillez accepter les conditions générales d'utilisation."}
+    errors.push(err);
   }
 
   rand =  bcrypt.hashSync(uuid.v1());
-	var errors = req.validationErrors() || [];
 
   var promise  = new Promise(function(resolve, reject){
     User.getUserByEmail(email, function(err, user){
@@ -363,64 +374,119 @@ router.post('/register', function(req, res){
     } else if (result.phone == 'yes' && errors == null){
       errors.push({param:'userexists2', msg: 'Un membre avec ce numéro de portable existe déjà.', value: "yes"});
     }
-    if(terms == false){
-      errors.push({param:'conditions', msg: "Veuillez accepter les conditions générales d'utilisation."});
-    }
     return errors
   }).then(function(result){
     if(result.length !== 0){
       res.send({errors: result});
   	} else {
-      var phoneCode = randomIntFromInterval(10000, 100000)
-  		var newUser = new User({
-  			firstName: firstName,
-  			lastName: lastName,
-  			email: email,
-        city: city,
-  			password: password,
-        verifyEmailString: rand,
-        phone: phone,
-        phoneVerification: phoneCode
-  		});
-
-
-  		User.createUser(newUser, function(err, user){
-  			if(err) throw err;
-        var mailOptions = {
-            from: '"Fason service client" <fason.contact@gmail.com>', // sender address
-            to: "fason.contact@gmail.com", //
-            subject : "Un nouveau utilisateur vient de s'inscrire!",
-            html : "Nouveau user bro inscrit! <br> "+ user.firstName +" "+user.lastName+" "+user.id
-        };
-        transporter.sendMail(mailOptions, function(error, info){
-            if(error){
-                return console.log(error);
-            }
-        });
-
-        var mailOptions2 = {
-            from: '"Fason service client" <fason.contact@gmail.com>',
-            to: user.email, //
-            subject : "Confirmation d'inscription",
-            html : "<p>Votre compte a été crée avec succès. Nous sommes heureux de vous compter parmi nos membres. <br> Connectez-vous en appuyant <a href='http://fason.co/'>ICI</a><br>L'équipe Fason.</p>"
-        };
-        transporter.sendMail(mailOptions2, function(error, info){
-            if(error){
-                return console.log(error);
-            }
-        });
-  			req.login(newUser, function(err){
-  				if (err){console.log(err);}
-  				if (userType == "stylist"){
-  					res.send({"stylist": true, "ok":true, "userId":user.id});
-  				} else {
-  					res.send({"user": true, "ok":true, "userId":user.id});
-  				}
-  			});
-  		});
+      res.send({"ok":true});
   	}
   });
 });
+
+router.post('/registerform', uploadMulter.single('displayImage'), function(req, res){
+
+  var firstName = req.body.firstName;
+	var lastName = req.body.lastName;
+	var email = req.body.email;
+	var password = req.body.password;
+  var city = "Paris, France";
+  var phone = req.body.phone;
+  var client = req.body.simpleuser;
+  var ava = "https://fason.herokuapp.com/images/noavatar.png";
+
+  function checkifava(callbackk){
+    if(req.file){
+      console.log("THERE IS A FILE")
+      var file = req.file;
+      var stream = fs.createReadStream(file.path)
+      var imageType = file.mimetype.split('/').pop()
+      var fileName = file.filename+'.'+imageType;
+      ava = "https://s3.amazonaws.com/styleboxphotosfason/"+file.filename+'.'+imageType;
+      console.log(ava, "AVA DEFINED")
+      params = {
+        Bucket: 'styleboxphotosfason',
+        ACL: 'public-read',
+        Key: fileName,
+        Body: stream
+      };
+
+      s3.putObject(params, function(err, data){
+        if (err){
+          console.log(err)
+        }else{
+          fs.unlink(req.file.path, function(err){
+            if (err){
+              console.log(err)
+              console.log("ERROR OF UNLINK")
+            } else {
+              console.log("UNLINK NO PROBLEMS")
+            }
+          });
+          callbackk();
+        }
+      });
+    } else {
+      console.log("CALLED BACK WITOUT FILE")
+      callbackk();
+    }
+  }
+
+
+  checkifava(function(){
+    console.log("CALLED BACK THE FONCTION")
+    var phoneCode = randomIntFromInterval(10000, 100000)
+    var newUser = new User({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      city: city,
+      avatar: ava,
+      password: password,
+      verifyEmailString: rand,
+      phone: phone,
+      phoneVerification: phoneCode
+    });
+
+    console.log(newUser);
+
+
+    User.createUser(newUser, function(err, user){
+      if(err) throw err;
+      var mailOptions = {
+          from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+          to: "fason.contact@gmail.com", //
+          subject : "Un nouveau utilisateur vient de s'inscrire!",
+          html : "Nouveau user bro inscrit! <br> "+ user.firstName +" "+user.lastName+" "+user.id
+      };
+      transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+            console.log(error);
+          }
+      });
+
+      var mailOptions2 = {
+          from: '"Fason service client" <fason.contact@gmail.com>',
+          to: user.email, //
+          subject : "Confirmation d'inscription",
+          html : "<p>Votre compte a été crée avec succès. Nous sommes heureux de vous compter parmi nos membres. <br> Connectez-vous en appuyant <a href='http://fason.co/'>ICI</a><br>L'équipe Fason.</p>"
+      };
+      transporter.sendMail(mailOptions2, function(error, info){
+          if(error){
+            console.log(error);
+          }
+      });
+      req.login(newUser, function(err){
+        if (err){console.log(err)}
+        if(client == "on"){
+          res.redirect("http://fason.co/")
+        } else {
+          res.redirect("http://fason.co/createstylebox")
+        }
+      });
+    });
+  })
+})
 
 router.get('/verify', function(req, res){
   User.getUserByVerifyEmailString(req.query.id, function(err, user){
@@ -480,15 +546,29 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/login', function(req, res) {
+
+  function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
     var lemail = req.body.lemail;
     var lpassword = req.body.lpassword;
-    req.checkBody('lemail', 'Veuillez saisir votre e-mail.').notEmpty();
-    if (lemail){
-      req.checkBody('lemail', "E-mail n'est pas valide.").isEmail();
+    var errors = [];
+    if(!lemail){
+      var err = {param:'lemail', msg: 'Veuillez saisir votre e-mail.', value: "yes"}
+      errors.push(err);
     }
-    req.checkBody('lpassword', 'Veuillez saisir votre mot de passe.').notEmpty();
-
-    var errors = req.validationErrors() || [];
+    if (lemail){
+      if(!validateEmail(lemail)){
+        var err = {param:'lemail', msg: "E-mail n'est pas valide.", value: "yes"}
+        errors.push(err);
+      }
+    }
+    if(!lpassword){
+      var err = {param:'lpassword', msg: "Veuillez saisir votre mot de passe.", value: "yes"}
+      errors.push(err);
+    }
       var promise = new Promise(function(resolve, reject){
         User.getUserByEmail(lemail, function(err, user){
           if (user){
@@ -538,7 +618,7 @@ router.post('/requestpasswordreset', function(req, res){
   var email = lemail.toLowerCase();
   req.checkBody('email', "Veuillez entrer votre e-mail").notEmpty();
   req.checkBody('email', 'Adresse e-mail invalid').isEmail();
-  var errors = req.validationErrors() || [];
+  var errors = req.getValidationResult() || [];
 
    User.getUserByEmail(req.body.email, function(err, user){
     if (!user){
@@ -558,6 +638,7 @@ router.post('/requestpasswordreset', function(req, res){
           }
           return res;
       }
+
       user.resetPwdString = removeSpecials(uniqueId);
       user.save();
       var passwordResetLink = "http://"+req.get('host')+"/resetPassword/"+removeSpecials(uniqueId);

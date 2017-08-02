@@ -142,7 +142,7 @@ router.get('/cmc', function(req, res) {
                 if(indexx+1 == objectt.length){
                   generalRat = sommeRat / objectt.length;
                   var styleboxproto = {};
-                  styleboxproto.firstName = user.firstName;
+                  styleboxproto.lastName = user.lastName;
                   styleboxproto.stylistava = user.avatar;
                   styleboxproto.price = stylebox.price;
                   styleboxproto.description = stylebox.description;
@@ -157,7 +157,7 @@ router.get('/cmc', function(req, res) {
             } else {
               var styleboxproto = {};
               styleboxproto.rating = -1;
-              styleboxproto.firstName = user.firstName;
+              styleboxproto.lastName = user.lastName;
               styleboxproto.stylistava = user.avatar;
               styleboxproto.price = stylebox.price;
               styleboxproto.id = stylebox.id;
@@ -294,12 +294,12 @@ router.post('/search', function(req, res){
           styleboxes.forEach(function(stylebox, index, object){
               User.getUserById(stylebox.creator, function(err, user){
                 var stylistava = user.avatar;
-                var name = user.lastName;
+                var name = user.firstName;
                 var generalRat = -1;
                   if(stylebox.rating.length != 0){
                     calculaterating(stylebox.rating, function(raag){
                       generalRat = raag;
-                      var styleboxProto = {"lastName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
+                      var styleboxProto = {"firstName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
                       styleboxesandstylist.push(styleboxProto);
                       if(index + 1 == object.length){
                         if(req.user){
@@ -310,7 +310,7 @@ router.post('/search', function(req, res){
                       }
                     });
                   } else {
-                    var styleboxProto = {"lastName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
+                    var styleboxProto = {"firstName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
                     styleboxesandstylist.push(styleboxProto);
                     if(index + 1 == object.length){
                       if(req.user){
@@ -381,37 +381,40 @@ router.get('/stylebox/:id', function(req, res){
       }
     }
     Stylebox.getStyleboxById(styleboxId, function(err, stylebox){
-      User.getUserById(stylebox.creator, function(err, user){
-        calculaterating(stylebox.rating, function(allrats){
-          styleboxproto.lastName = user.lastName;
-          styleboxproto.price = stylebox.price;
-          styleboxproto.avatar = user.avatar;
-          styleboxproto.description = stylebox.description;
-          styleboxproto.generalprocess = stylebox.generalprocess;
-          styleboxproto.id = stylebox.id;
-          styleboxproto.city = stylebox.city;
-          styleboxproto.men = stylebox.men;
-          styleboxproto.women = stylebox.women;
-          styleboxproto.relooking = stylebox.relooking;
-          styleboxproto.beaute = stylebox.beaute;
-          styleboxproto.corses = stylebox.corses;
-          styleboxproto.rating = allrats;
-          styleboxproto.number = stylebox.rating.length;
-          // Hnadlebars helpers
+      if(stylebox){
+        User.getUserById(stylebox.creator, function(err, user){
+          calculaterating(stylebox.rating, function(allrats){
+            styleboxproto.lastName = user.lastName;
+            styleboxproto.price = stylebox.price;
+            styleboxproto.avatar = user.avatar;
+            styleboxproto.description = stylebox.description;
+            styleboxproto.generalprocess = stylebox.generalprocess;
+            styleboxproto.id = stylebox.id;
+            styleboxproto.city = stylebox.city;
+            styleboxproto.men = stylebox.men;
+            styleboxproto.women = stylebox.women;
+            styleboxproto.relooking = stylebox.relooking;
+            styleboxproto.beaute = stylebox.beaute;
+            styleboxproto.corses = stylebox.corses;
+            styleboxproto.rating = allrats;
+            styleboxproto.number = stylebox.rating.length;
+            // Hnadlebars helpers
 
-          if(req.user){
-            console.log(styleboxproto)
-            res.render('stylebox-display',{user: req.user, stylebox: styleboxproto, "haveToVerify": haveToVerify})
-          } else {
-            console.log(styleboxproto)
-            res.render('stylebox-display',{stylebox: styleboxproto})
-          }
+            if(req.user){
+              console.log(styleboxproto)
+              res.render('stylebox-display',{user: req.user, stylebox: styleboxproto, "haveToVerify": haveToVerify})
+            } else {
+              console.log(styleboxproto)
+              res.render('stylebox-display',{stylebox: styleboxproto})
+            }
+          })
         })
-      })
+      } else {
+        res.render('styleboxnotfound')
+      }
     })
   })
 });
-
 
 router.post('/demand', function(req, res){
   var date = req.body.date;
@@ -498,7 +501,7 @@ router.post('/demand', function(req, res){
               var comDate = moment(savedDemand.time, "DD-MM-YYYY").add(14, 'days');
               var demandee = {
                 type: "recu",
-                client: req.user.firstName,
+                client: req.user.lastName,
                 clientAva: req.user.avatar,
                 date: jsonDate,
                 commentTime: comDate,
@@ -554,7 +557,7 @@ router.post('/demand', function(req, res){
                       var comDate = moment(savedDemand.time, "DD-MM-YYYY").add(14, 'days');
                       var demand = {
                         type: "recu",
-                        client: req.user.firstName,
+                        client: req.user.lastName,
                         clientAva: req.user.avatar,
                         date: jsonDate,
                         commentTime: comDate,
@@ -802,7 +805,7 @@ if(req.user){
             var promise2 = new Promise(function(resolve, reject){
               if(req.user.id == conv.participants[0]) {
                 User.getUserById(conv.participants[1], function(err, user){
-                  secondName = user.firstName;
+                  secondName = user.lastName;
                   secondAva = user.avatar;
                   conv.messages.forEach(function(msg){
                     req.user.notifications.forEach(function(msgNotif){
@@ -815,7 +818,7 @@ if(req.user){
                 });
                } else {
                   User.getUserById(conv.participants[0], function(err, user){
-                    secondName = user.firstName;
+                    secondName = user.lastName;
                     secondAva = user.avatar;
                     conv.messages.forEach(function(msg){
                       req.user.notifications.forEach(function(msgNotif){
@@ -918,10 +921,10 @@ router.post('/getmessages', function(req, res){
 router.get('/getMyInfo', function(req, res){
   if(req.user){
     var avatar = req.user.avatar;
-    var firstName = req.user.firstName;
+    var lastName = req.user.lastName;
     var now = Date.now();
     var msgTime = moment(now).format('DD-MM-YYYY, HH:mm');
-    res.send({"found": true, "avatar": avatar, "firstname": firstName, "time":msgTime});
+    res.send({"found": true, "avatar": avatar, "firstname": lastName, "time":msgTime});
   } else {
     res.send({"err": "userNotFound"});
   }
@@ -984,7 +987,7 @@ router.post('/saveMsg', function(req, res){
             conversation.messages.push({
               msg: messageToSave,
               msgOwner: req.user.id,
-              msgOwnerName: req.user.firstName,
+              msgOwnerName: req.user.lastName,
               msgOwnerAva: req.user.avatar
             });
             conversation.activeTime = moment();
@@ -1033,7 +1036,7 @@ router.post('/msgNotif', function(req, res){
     var promise = new Promise(function(resolve, reject){
   		var msg = req.body.msg;
   		var participants = req.body.participants;
-  		var msgOwnerName = req.user.firstName;
+  		var msgOwnerName = req.user.lastName;
       var dataId = req.body.convId;
   		var msgTime = moment().format('DD-MM-YYYY, HH:mm');
   		var obj = {"msg": msg, "msgOwnerName": msgOwnerName, "participants": participants, "avatar": req.user.avatar, "msgTime": msgTime, "dataId": dataId};
@@ -1630,7 +1633,7 @@ router.post('/evaluate', function(req, res){
 
     getallneededinfos(function(){
       // var showDate = moment(evaluation.createdTime, "DD-MM-YYYY").add(14, 'days');
-      var commentObj = {"creator":req.user, "creatorAva": req.user.avatar, "creatorName": req.user.firstName, "stylebox":styleboxId, "commentBody":comment, "showDate":evaluation.endDate};
+      var commentObj = {"creator":req.user, "creatorAva": req.user.avatar, "creatorName": req.user.lastName, "stylebox":styleboxId, "commentBody":comment, "showDate":evaluation.endDate};
       var evalObj = {"precision":precision, "qualityprice":quality, "ponctuality":ponctuality, "communication":communication}
       Comments.createNewComment(commentObj, function(err, comment){
         if(err){
@@ -1801,6 +1804,54 @@ router.post('/dayahit', function(req, res){
   } else {
     res.redirect("https://fason.co/");
   }
+});
+
+router.get('/canidagyoxaryac', function(req, res){
+  if(req.user){
+    if(req.user.email == "nohchi.eu@gmail.com"){
+      res.render('canixuardac');
+    } else {
+      res.redirect("https://fason.co/");
+    }
+  } else {
+    res.redirect("https://fason.co/");
+  }
 })
+
+router.post('/dayahit', function(req, res){
+  if(req.user){
+    if(req.user.email == "nohchi.eu@gmail.com"){
+      var methodtype = req.body.methodtype;
+      var subject = req.body.subject;
+      var message = req.body.message;
+      if(methodtype){
+        if(methodtype == "everybody"){
+          User.find({styleboxes: { $ne: null }}, function(err, users){
+            users.forEach(function(user, index, object){
+              var mailOptions = {
+                  from: '"Fason service client" <fason.contact@gmail.com>', // sender address
+                  to: user.email, // list of receivers
+                  subject : req.body.subject,
+                  html : req.body.message
+              };
+              transporter.sendMail(mailOptions, function(error, info){
+                  if(error){
+                      return console.log(error);
+                  }
+              });
+              if(index+1 == object.length){
+                res.send({"complete": true})
+              }
+            });
+          });
+        }
+      }
+    } else {
+      res.redirect("https://fason.co/");
+    }
+  } else {
+    res.redirect("https://fason.co/");
+  }
+});
 
 module.exports = router;

@@ -12,46 +12,47 @@
     <div class="row login-container-row text-center">
       <img class="stylebox-display-avatar select-avatar" {{#if user.avatar}} src="{{user.avatar}}" {{else}} src="https://fason.herokuapp.com/images/noavatar.png"{{/if}}>
       </img>
-
-      <form  method="post" action="/users/updateavatar", enctype="multipart/form-data">
-        <input type="text" name="userId" class="hidden useridtoserver">
-        <input type="text" name="userType" class="hidden userType">
-        <input type="file" accept=".jpg, .jpeg, .png" class="avatarUpload hidden" name="displayImage">
-        <input type="submit" value="Submit" class="hidden updateavatar">
-      </form>
       <p>Avatar</p>
-    </div>
-    <div class="row login-container-row">
-        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-user-o firstname-icon"></i></div>
-        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userFirstNameUpdate" class="input-sm mainLoginInput login-register-text-field" maxlength="27" type="text" placeholder="Nom" value="{{userFirstName}}">
+
+      <form  method="post" action="/users/updateprofilform", enctype="multipart/form-data">
+        <input type="file" accept=".jpg, .jpeg, .png" class="avatarUpload hidden" name="displayImage">
+
+        <div class="row login-container-row">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-user-o firstname-icon"></i></div>
+            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+                <input id="userFirstNameUpdate" name="userFirstName" class="input-sm mainLoginInput login-register-text-field" maxlength="27" type="text" placeholder="Nom" value="{{userFirstName}}">
+            </div>
         </div>
-    </div>
-    <div class="row login-container-row">
-        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-user-o lastname-icon"></i></div>
-        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userLastNameUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="27" placeholder="Prénom" value="{{userLastName}}">
+        <div class="row login-container-row">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-user-o lastname-icon"></i></div>
+            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+                <input id="userLastNameUpdate" name="userLastName" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="27" placeholder="Prénom" value="{{userLastName}}">
+            </div>
         </div>
-    </div>
-    <div class="row login-container-row">
-        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-envelope-o email-icon"></i></div>
-        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userEmailUpdate" class="input-sm mainLoginInput login-register-text-field" type="text"  inputmode="email" placeholder="E-mail" value="{{userEmail}}">
+        <div class="row login-container-row">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-envelope-o email-icon"></i></div>
+            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+                <input id="userEmailUpdate" name="userEmail" class="input-sm mainLoginInput login-register-text-field" type="text"  inputmode="email" placeholder="E-mail" value="{{userEmail}}">
+            </div>
         </div>
-    </div>
-    <div class="row login-container-row">
-        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-mobile-phone phone-icon"></i></div>
-        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userPhoneUpdate" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="13" inputmode="tel" placeholder="Numéro de portable" value="{{userPhone}}">
+        <div class="row login-container-row">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-mobile-phone phone-icon"></i></div>
+            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+                <input id="userPhoneUpdate" name="userPhone" class="input-sm mainLoginInput login-register-text-field" type="text" maxlength="13" inputmode="tel" placeholder="Numéro de portable" value="{{userPhone}}">
+            </div>
         </div>
+
+        <div class="row login-container-row">
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-ellipsis-h password-icon"></i></div>
+            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
+                <input id="userPasswordUpdate" name="userPassword" class="input-sm mainLoginInput login-register-text-field" type="password" minlength="6" placeholder="Mot de passe">
+            </div>
+        </div>
+
+        <button type="submit" class="submitupdateprofile hidden" name="button"></button>
+      </form>
     </div>
 
-    <div class="row login-container-row">
-        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-ellipsis-h password-icon"></i></div>
-        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9 login-register-field-style-2">
-            <input id="userPasswordUpdate" class="input-sm mainLoginInput login-register-text-field" type="password" minlength="6" placeholder="Mot de passe">
-        </div>
-    </div>
     <div class="row login-register-btn-row text-right">
         <div>
             <button class="btn btn-default login-register-btn update-btn" type="button">Mettre à jour</button>

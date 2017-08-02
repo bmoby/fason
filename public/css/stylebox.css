@@ -283,8 +283,17 @@ div.row.rating-row {
   overflow: hidden;
 }
 
-.stylist-expereince-name{
+.stylist-expereince-stylebox{
   padding: 20px 20px 0 20px;
+  max-height: 500px;
+  overflow: hidden;
+}
+.stylist-expereince-stylebox p{
+    margin: 0;
+}
+
+.stylist-name-stylebox{
+  padding: 0px 20px;
 }
 
 @media (max-width:800px) {
@@ -299,7 +308,7 @@ div.row.rating-row {
     border-radius: 3px;
     overflow: hidden;
   }
-  .stylist-expereince-name{
+  .stylist-expereince-stylebox{
     padding: 10px 10px 0 10px;
   }
 }
@@ -316,7 +325,7 @@ div.row.rating-row {
     border-radius: 3px;
     overflow: hidden;
   }
-  .stylist-expereince-name{
+  .stylist-expereinc-stylebox{
     padding: 10px 10px 0 10px;
   }
 }
