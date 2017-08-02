@@ -62,7 +62,7 @@ router.get('/', function(req, res) {
                 if(indexx+1 == objectt.length){
                   generalRat = sommeRat / objectt.length;
                   var styleboxproto = {};
-                  styleboxproto.firstName = user.firstName;
+                  styleboxproto.lastName = user.lastName;
                   styleboxproto.stylistava = user.avatar;
                   styleboxproto.price = stylebox.price;
                   styleboxproto.description = stylebox.description;
@@ -77,7 +77,7 @@ router.get('/', function(req, res) {
             } else {
               var styleboxproto = {};
               styleboxproto.rating = -1;
-              styleboxproto.firstName = user.firstName;
+              styleboxproto.lastName = user.lastName;
               styleboxproto.stylistava = user.avatar;
               styleboxproto.price = stylebox.price;
               styleboxproto.id = stylebox.id;
@@ -294,12 +294,12 @@ router.post('/search', function(req, res){
           styleboxes.forEach(function(stylebox, index, object){
               User.getUserById(stylebox.creator, function(err, user){
                 var stylistava = user.avatar;
-                var name = user.lasttName;
+                var name = user.lastName;
                 var generalRat = -1;
                   if(stylebox.rating.length != 0){
                     calculaterating(stylebox.rating, function(raag){
                       generalRat = raag;
-                      var styleboxProto = {"lasttName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
+                      var styleboxProto = {"lastName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
                       styleboxesandstylist.push(styleboxProto);
                       if(index + 1 == object.length){
                         if(req.user){
@@ -310,7 +310,7 @@ router.post('/search', function(req, res){
                       }
                     });
                   } else {
-                    var styleboxProto = {"lasttName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
+                    var styleboxProto = {"lastName": name, "stylistava": stylistava, "description": stylebox.description, "rating": generalRat, "ratCount": stylebox.rating.length, "price": stylebox.price, "id": stylebox.id};
                     styleboxesandstylist.push(styleboxProto);
                     if(index + 1 == object.length){
                       if(req.user){
