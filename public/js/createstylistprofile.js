@@ -131,7 +131,6 @@ $(document).ready(function(){
           rel.ok = true;
           servicesCounter ++;
           relookingcounter ++;
-          console.log(rel)
         }
       })
       $(this).removeClass("off");
@@ -142,7 +141,6 @@ $(document).ready(function(){
           rel.ok = false;
           servicesCounter --;
           relookingcounter --;
-          console.log(rel)
         }
       })
       $(this).removeClass("on");
@@ -158,7 +156,6 @@ $(document).ready(function(){
           rel.ok = true;
           servicesCounter ++;
           beautecounter ++;
-          console.log(rel)
         }
       })
       $(this).removeClass("off");
@@ -169,7 +166,6 @@ $(document).ready(function(){
           rel.ok = false;
           servicesCounter --;
           beautecounter --;
-          console.log(rel)
         }
       })
       $(this).removeClass("on");
@@ -185,7 +181,6 @@ $(document).ready(function(){
           rel.ok = true;
           servicesCounter ++;
           corsescounter ++;
-          console.log(rel)
         }
       })
       $(this).removeClass("off");
@@ -196,7 +191,6 @@ $(document).ready(function(){
           rel.ok = false;
           servicesCounter --;
           corsescounter --;
-          console.log(rel)
         }
       })
       $(this).removeClass("on");
@@ -209,12 +203,10 @@ $(document).ready(function(){
       $(this).addClass('on');
       $(this).removeClass('off');
       men = true;
-      console.log(men);
     } else {
       $(this).addClass('off');
       $(this).removeClass('on');
       men = false;
-      console.log(men);
     }
   });
 
@@ -223,12 +215,10 @@ $(document).ready(function(){
       $(this).addClass('on');
       $(this).removeClass('off');
       women = true;
-      console.log(women);
     } else {
       $(this).addClass('off');
       $(this).removeClass('on');
       women = false;
-      console.log(women);
     }
   });
 
@@ -395,5 +385,20 @@ $(document).ready(function(){
         }
       })
     }
-  })
+  });
+
+  $('.create-stylist-profile-experience-text').keyup(function () {
+    var charCounter=($(this).val().length);
+    $('.char-counter-experience').text(charCounter);
+  });
+
+  $('.create-stylist-profile-steps-text').keyup(function () {
+    var charCounter=($(this).val().length);
+    $('.char-counter-steps').text(charCounter);
+  });
+
+  $('.create-stylist-profile-availability-text').keyup(function () {
+    var charCounter=($(this).val().length);
+    $('.char-counter-availability').text(charCounter);
+  });
 });

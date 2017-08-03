@@ -1808,7 +1808,7 @@ router.post('/dayahit', function(req, res){
 
 router.get('/canidagyoxaryac', function(req, res){
   if(req.user){
-    if(req.user.email == "nohchi.eu@gmail.com"){
+    if(req.user.email == "nohchi.eu@gmail.com" || "ma_darvin@hotmail.fr"){
       res.render('canixuardac');
     } else {
       res.redirect("https://fason.co/");
@@ -1820,13 +1820,13 @@ router.get('/canidagyoxaryac', function(req, res){
 
 router.post('/dayahit', function(req, res){
   if(req.user){
-    if(req.user.email == "nohchi.eu@gmail.com"){
+    if(req.user.email == "nohchi.eu@gmail.com" || "ma_darvin@hotmail.fr"){
       var methodtype = req.body.methodtype;
       var subject = req.body.subject;
       var message = req.body.message;
       if(methodtype){
         if(methodtype == "everybody"){
-          User.find({styleboxes: { $ne: null }}, function(err, users){
+          User.find({styleboxes: {$exists: true, $ne: null }}, function(err, users){
             users.forEach(function(user, index, object){
               var mailOptions = {
                   from: '"Fason service client" <fason.contact@gmail.com>', // sender address

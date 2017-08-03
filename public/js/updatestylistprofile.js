@@ -36,7 +36,6 @@ $(document).ready(function(){
             corsescounter ++;
           }
         })
-        console.log(stylebox);
       }
     })
   }, 500);
@@ -51,7 +50,6 @@ $(document).ready(function(){
           stylebox.relooking[index].ok = true;
           servicesCounter ++;
           relookingcounter ++;
-          console.log(stylebox.relooking[index].ok)
         }
       })
       $(this).removeClass("off");
@@ -62,7 +60,6 @@ $(document).ready(function(){
           stylebox.relooking[index].ok = false;
           servicesCounter --;
           relookingcounter --;
-          console.log(rel)
         }
       })
       $(this).removeClass("on");
@@ -78,7 +75,6 @@ $(document).ready(function(){
           stylebox.beaute[index].ok = true;
           servicesCounter ++;
           beautecounter ++;
-          console.log(rel)
         }
       })
       $(this).removeClass("off");
@@ -89,7 +85,6 @@ $(document).ready(function(){
           stylebox.beaute[index].ok = false;
           servicesCounter --;
           beautecounter --;
-          console.log(rel)
         }
       })
       $(this).removeClass("on");
@@ -105,7 +100,6 @@ $(document).ready(function(){
           stylebox.corses[index].ok = true;
           servicesCounter ++;
           corsescounter ++;
-          console.log(rel)
         }
       })
       $(this).removeClass("off");
@@ -116,7 +110,6 @@ $(document).ready(function(){
           stylebox.corses[index].ok = false;
           servicesCounter --;
           corsescounter --;
-          console.log(rel)
         }
       })
       $(this).removeClass("on");
@@ -129,12 +122,10 @@ $(document).ready(function(){
       $(this).addClass('on');
       $(this).removeClass('off');
       stylebox.men = true;
-      console.log(stylebox.men);
     } else {
       $(this).addClass('off');
       $(this).removeClass('on');
       stylebox.men = false;
-      console.log(stylebox.men);
     }
   });
 
@@ -143,12 +134,10 @@ $(document).ready(function(){
       $(this).addClass('on');
       $(this).removeClass('off');
       stylebox.women = true;
-      console.log(stylebox.women);
     } else {
       $(this).addClass('off');
       $(this).removeClass('on');
       stylebox.women = false;
-      console.log(stylebox.women);
     }
   });
 
@@ -302,5 +291,20 @@ $(document).ready(function(){
         }
       })
     }
-  })
+  });
+
+  $('.create-stylist-profile-experience-text').keyup(function () {
+    var charCounter=($(this).val().length);
+    $('.char-counter-experience').text(charCounter);
+  });
+
+  $('.create-stylist-profile-steps-text').keyup(function () {
+    var charCounter=($(this).val().length);
+    $('.char-counter-steps').text(charCounter);
+  });
+
+  $('.create-stylist-profile-availability-text').keyup(function () {
+    var charCounter=($(this).val().length);
+    $('.char-counter-availability').text(charCounter);
+  });
 });
