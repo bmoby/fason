@@ -19,7 +19,7 @@
 }
 
 
-.create-stylist-profile-availability, .create-stylist-profile-experience, .create-stylist-profile-steps, .stylist-profile-service-text{
+.create-stylist-profile-availability, .create-stylist-profile-experience, .create-stylist-profile-steps, .stylist-profile-service-text, .char-counter{
   color:#6b6a6a !important;
   font-family: 'Nunito' !important;
 }
