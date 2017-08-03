@@ -77,7 +77,7 @@ router.get('/', function(req, res) {
             } else {
               var styleboxproto = {};
               styleboxproto.rating = -1;
-              styleboxproto.lastName = user.lastName;
+              styleboxproto.firstName = user.lastName;
               styleboxproto.stylistava = user.avatar;
               styleboxproto.price = stylebox.price;
               styleboxproto.id = stylebox.id;
