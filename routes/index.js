@@ -1760,7 +1760,7 @@ router.get('/resetPassword/:id', function(req, res){
 
 router.get('/canidagyoxaryac', function(req, res){
   if(req.user){
-    if(req.user.email == "nohchi.eu@gmail.com"){
+    if(req.user.email == "nohchi.eu@gmail.com" || req.user.email =="ma_darvin@hotmail.fr"){
       res.render('canixuardac');
     } else {
       res.redirect("https://fason.co/");
@@ -1770,57 +1770,10 @@ router.get('/canidagyoxaryac', function(req, res){
   }
 })
 
-router.post('/dayahit', function(req, res){
-  if(req.user){
-    if(req.user.email == "nohchi.eu@gmail.com"){
-      var methodtype = req.body.methodtype;
-      var subject = req.body.subject;
-      var message = req.body.message;
-      if(methodtype){
-        if(methodtype == "everybody"){
-          User.find({}, function(err, users){
-            users.forEach(function(user, index, object){
-              var mailOptions = {
-                  from: '"Fason service client" <fason.contact@gmail.com>', // sender address
-                  to: user.email, // list of receivers
-                  subject : req.body.subject,
-                  html : req.body.message
-              };
-              transporter.sendMail(mailOptions, function(error, info){
-                  if(error){
-                      return console.log(error);
-                  }
-              });
-              if(index+1 == object.length){
-                res.send({"complete": true})
-              }
-            });
-          });
-        }
-      }
-    } else {
-      res.redirect("https://fason.co/");
-    }
-  } else {
-    res.redirect("https://fason.co/");
-  }
-});
-
-router.get('/canidagyoxaryac', function(req, res){
-  if(req.user){
-    if(req.user.email == "nohchi.eu@gmail.com" || "ma_darvin@hotmail.fr"){
-      res.render('canixuardac');
-    } else {
-      res.redirect("https://fason.co/");
-    }
-  } else {
-    res.redirect("https://fason.co/");
-  }
-})
 
 router.post('/dayahit', function(req, res){
   if(req.user){
-    if(req.user.email == "nohchi.eu@gmail.com" || "ma_darvin@hotmail.fr"){
+    if(req.user.email == "nohchi.eu@gmail.com" || req.user.email =="ma_darvin@hotmail.fr"){
       var methodtype = req.body.methodtype;
       var subject = req.body.subject;
       var message = req.body.message;
