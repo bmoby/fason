@@ -62,7 +62,7 @@ router.get('/', function(req, res) {
                 if(indexx+1 == objectt.length){
                   generalRat = sommeRat / objectt.length;
                   var styleboxproto = {};
-                  styleboxproto.lastName = user.lastName;
+                  styleboxproto.firstName = user.lastName;
                   styleboxproto.stylistava = user.avatar;
                   styleboxproto.price = stylebox.price;
                   styleboxproto.description = stylebox.description;
@@ -123,7 +123,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/cmc', function(req, res) {
-  var styleboxeslist = ["59760b6ba88a351bcf0aa9f1", "59760b6ba88a351bcf0aa9f2", "597b5f0e7b07ff2666c7082e"];
+  var styleboxeslist = ["59023e25706a880004de41e2", "5908a0d3e9c0420004aa7873", "59004e38d69fa00004b1be88","5926c125e9af4a00048f5781","58ff12e576678d00041d4be2","5907598f25a0760004f2abbc"];
   var liststyleboxes = [];
 
   function generalfunc(callback){
@@ -142,7 +142,7 @@ router.get('/cmc', function(req, res) {
                 if(indexx+1 == objectt.length){
                   generalRat = sommeRat / objectt.length;
                   var styleboxproto = {};
-                  styleboxproto.lastName = user.lastName;
+                  styleboxproto.firstName = user.lastName;
                   styleboxproto.stylistava = user.avatar;
                   styleboxproto.price = stylebox.price;
                   styleboxproto.description = stylebox.description;
@@ -157,7 +157,7 @@ router.get('/cmc', function(req, res) {
             } else {
               var styleboxproto = {};
               styleboxproto.rating = -1;
-              styleboxproto.lastName = user.lastName;
+              styleboxproto.firstName = user.lastName;
               styleboxproto.stylistava = user.avatar;
               styleboxproto.price = stylebox.price;
               styleboxproto.id = stylebox.id;
