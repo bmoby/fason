@@ -6,12 +6,8 @@
     <h2 class="login-register-title text-center">Prendre rendez-vous</h2>
       {{#if haveToVerify}}
       <div class="haveVerified dem-page hidden">
-        {{#if stylist.availability}}
-        <h4>Disponibilités:</h4>
-        {{#eachNewLine stylebox.availability}}
-      		<p class="logn-register-paragraph">{{this}}</p>
-      	{{/eachNewLine}}
-        {{/if}}
+        <h4>Disponibilités</h4>
+        <p class="logn-register-paragraph" style="border:1px solid #dbdbdb;border-radius:3px;margin-bottom:50px;">{{stylebox.availability}}</p>
         <p class="logn-register-paragraph error-after">Choisissez la date et heure puis appuyez sur le boutton "Prendre rendez-vous".</p>
         <div class="row login-container-row demand-row">
             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-calendar-check-o password-icon"></i></div>
@@ -29,6 +25,8 @@
       <div class="all-demand-container">
         {{#if user}}
           {{#if haveToVerify}}
+          <h4>Disponibilités</h4>
+          <p class="logn-register-paragraph" style="border:1px solid #dbdbdb;border-radius:3px;margin-bottom:50px;">{{stylebox.availability}}</p>
           <p class="logn-register-paragraph">Pour la sécurité de notre plateforme, vous devez confirmer que vous êtes le propriétaire du numéro de téléphone et de l'adresse e-mail que vous avez fourni lors de votre inscription.</p>
             {{#unless user.varified}}
               <div class="row envoyer-un-message-btn login-register-btn-row email-verify-row text-right">
@@ -74,10 +72,8 @@
             {{/unless}}
           {{else}}
             <div class="dem-page">
-              {{#if stylist.availability}}
-              <h4>Disponibilités:</h4>
-              <p class="logn-register-paragraph">{{stylebox.availability}}</p>
-              {{/if}}
+              <h4>Disponibilités</h4>
+              <p class="logn-register-paragraph" style="border:1px solid #dbdbdb;border-radius:3px;margin-bottom:50px;">{{stylebox.availability}}</p>
               <p class="logn-register-paragraph error-after">Choisissez la date et heure puis appuyez sur le bouton "Prendre rendez-vous".</p>
               <div class="row login-container-row demand-row">
                   <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center login-register-filed-style"><i class="fa fa-calendar-check-o password-icon"></i></div>
@@ -94,6 +90,8 @@
           {{/if}}
           {{else}}
           <div class="row login-register-btn-row">
+            <h4>Disponibilités</h4>
+            <p class="logn-register-paragraph" style="border:1px solid #dbdbdb;border-radius:3px;margin-bottom:50px;">{{stylebox.availability}}</p>
             <p class="logn-register-paragraph">Pour prendre rendez-vous avec le Relooker conectez-vous ou inscrivez-vous sur Fason.</p>
             <p class="register-link">Je n'ai pas de compte sur Fason</p>
           </div>

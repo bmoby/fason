@@ -398,6 +398,7 @@ router.get('/stylebox/:id', function(req, res){
             styleboxproto.corses = stylebox.corses;
             styleboxproto.rating = allrats;
             styleboxproto.number = stylebox.rating.length;
+            styleboxproto.availability = stylebox.availability;
             // Hnadlebars helpers
 
             if(req.user){
