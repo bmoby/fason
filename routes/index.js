@@ -765,6 +765,7 @@ router.post('/updatestylistprofile', function(req, res){
     if(err){
       console.log(err)
     } else {
+      style.valid=true;
       style.description = stylebox.description;
       style.generalprocess = stylebox.generalprocess;
       style.availability = stylebox.availability;
