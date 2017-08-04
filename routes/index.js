@@ -294,7 +294,7 @@ router.post('/search', function(req, res){
           styleboxes.forEach(function(stylebox, index, object){
               User.getUserById(stylebox.creator, function(err, user){
                 var stylistava = user.avatar;
-                var name = user.firstName;
+                var name = user.lastName;
                 var generalRat = -1;
                   if(stylebox.rating.length != 0){
                     calculaterating(stylebox.rating, function(raag){
