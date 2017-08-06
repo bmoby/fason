@@ -22,62 +22,6 @@ $(document).ready(function(){
     });
   })
 
-  //loading images before masonry executed
-  $('.masoneryContainer').imagesLoaded(function(){
-    $('.grid').masonry({
-      // options
-      itemSelector: '.grid-item',
-      columnWidth: '.sizer4'
-    });
-  })
-
-
-  $('.masoneryContainer').imagesLoaded(function(){
-    var img1 = $('.grid-item').eq(0);
-    var img2 = $('.grid-item').eq(1);
-    var img3 = $('.grid-item').eq(2);
-    var height1 = img1.height();
-    var height2 = img2.height();
-    var height3 = img3.height();
-
-    function getmaxwidth(a, b, c){
-      if(a>b && a>c){
-        return a
-      } else if (b>a && b>c) {
-        return b
-      } else {
-        return c
-      }
-    }
-
-    function getminwidth(a, b, c){
-      if(a<b && a<c){
-        return a
-      } else if (b<a && b<c) {
-        return b
-      } else {
-        return c
-      }
-    }
-
-
-    function sendheight(){
-      if ($('.grid-item').length < 6){
-        return getminwidth(height1, height2, height3)
-      } else {
-        return getmaxwidth(height1, height2, height3)
-      }
-    }
-
-    $('.masoneryContainer').readmore({
-      speed: 2000,
-      lessLink: '<div class="up-div"><p class="afficherPhotos"></p><i class="glyphicon glyphicon-menu-up afficherLesPhotos"></i></div>',
-      moreLink: '<div class="up-div"><p class="afficherPhotos"></p><i class="glyphicon glyphicon-menu-down afficherLesPhotos"></i></div>',
-      collapsedHeight: sendheight()
-    });
-
-  })
-
   $('.stylistDescription').readmore({
     speed: 500,
     lessLink: '<a href="" class="afficher">Réduire</a>',
