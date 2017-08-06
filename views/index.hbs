@@ -22,13 +22,16 @@
 
 <div class="hidden-xs searchbarpadding"></div>
 
-
 {{#if styleboxes}}
-    <div id="stylistContainer">
-      {{#each styleboxes}}
-        {{> stylebox}}
-      {{/each}}
+<div class="masonry-layout">
+  {{#each styleboxes}}
+  <div class="masonry-layout__panel">
+    <div class="masonry-layout__panel-content">
+      {{> stylebox}}
     </div>
+  </div>
+  {{/each}}
+</div>
 {{/if}}
 
 <br>
