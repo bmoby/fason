@@ -35,7 +35,7 @@ var transporter = nodemailer.createTransport("SMTP",{
     service: "Gmail",
     auth: {
         user: "fason.contact@gmail.com",
-        pass: (process.env.MAIL_PASS || "Stylebox19871989-")
+        pass: (process.env.MAIL_PASS)
     }
 });
 router.use(bodyParser.json());
